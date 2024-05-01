@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+ 
+.button-reports 
+{
+  @apply border border-[#002A78] px-4  py-[2px] bg-white rounded-3xl
+}
+
+
+:focus{
+
+  color: #002A78 ;
+  list-style-type:initial ;
+
+
+}
+
+ 
+
+/* width */
+::-webkit-scrollbar {
+  margin-top:3px; 
+
+  width: 7px;
+
+  direction:ltr;
+}
+::-webkit-scrollbar-button{
+  margin: 5px;
+}
+
+
+/* ::-webkit-scrollbar-corner{
+  background: none; 
+}
+
+
+
+
+    
+
+
+
+/* Track */
+ ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 3px rgb(209, 217, 233);
+    border-radius: 23px;
+    
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #002A78;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background:#002A78;
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.shadowForDrop{
+  box-shadow: -3px 0px 14px 0px rgba(0,0,0,0.1);
+}
+
+
+
+.white-image {
+  filter: grayscale(100%) brightness(1000%);
+}
+.container{
+  width:640px;
+  height:360px;
+  background:#ff0000;
+  position:relative;
+  overflow:hidden;
+}
+
+.container .box{
+  width:50px;
+  height:50px;
+  left:50px;
+  top:50px;
+  position:absolute;
+  background:#0000ff;
+  cursor:move;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ::-webkit-scrollbar {
+  width: 10px;
+} */
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+} */
+ 
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: red; 
+  border-radius: 10px;
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+} */
+
