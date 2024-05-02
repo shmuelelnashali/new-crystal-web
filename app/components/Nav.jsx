@@ -10,7 +10,7 @@ export default function Nav() {
         <Link href={"/permissions"}> <li className=''>הרשאות</li></Link>
         <Link href={"/mission"}><li className=''>ניהול משימות</li></Link>
         <Link href={"/absenceManagement"}><li className=''>ניהול היעדרויות</li></Link>
-        <Link href={"/absenceManagement"}><li className=''>ניהול הסכמים</li></Link>
+        <Link href={"/agreementsManagement"}><li className=''>ניהול הסכמים</li></Link>
         <Link href={"/organization"}><li className=''>ניהול עץ אירגוני</li></Link>
         <Link href={"/calendar"}><li className=''>ניהול לוחות שנה</li></Link>
         <Link href={"/reports"}><li className=''>דוחות</li></Link>

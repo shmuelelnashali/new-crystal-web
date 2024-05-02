@@ -64,35 +64,53 @@ export default function UpdateEmployee({
           key={key}
           className={`relative ${optionsMap[key] ? "flex " : ""}`}
         >
-          <input
+          <div
+          className="flex item-center text-center"
             onClick={(e) => {
               setUpdateMode(null);
               handleOpen(key);
             }}
-            onChange={(e) => {
-              handleDateChange(e, data.id, key);
-            }}
-            className={`border w-full rounded-full  text-right pr-2 pl-4 border-[#002A78] ${
-              key === "start" || key === "end" ? "pl-1 pr-3 " : ""
-            } `}
-            type={key === "start" || key === "end" ? "date" : "text"}
-            value={key === "start" || key === "end" ? formatDate(value) : value}
-          />
+          > 
+            <input
+              onChange={(e) => {
+                handleDateChange(e, data.id, key);
+              }}
+              className={` border w-full rounded-full   pr-2 pl-4 border-[#002A78] 
+
+              ${"FOR EMPLOYEES PAGE"}
+              ${key === "start" || key === "end" ? "pl-1 pr-3 " : ""}
+              ${optionsMap[key] ? "cursor-pointer" : ""} 
+
+              ${"FOR AGREEMENTS PAGE"}
+              ${key === "id" || key=== "enterTime" || key=== "exitTime" || key=== "overTimeLimit" || key=== "hoursAmount" || key=== "breakType" 
+              ? "w-[66.666667%] m-auto text-center" : "text-right"}
+             
+
+              `}
+              type={key === "start" || key === "end" ? "date" : "text"}
+              value={
+                key === "start" || key === "end" ?  formatDate(value) : value
+              }
+            />
+
+            {optionsMap[key] && (
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+                <Image
+                  src={"/optionArrow.svg"}
+                  width={7}
+                  height={7}
+                  alt="arrow"
+                />
+              </div>
+            )}
+          </div>
 
           {ifEmpty && value === "" && (
-            <div className="absolute text-red-600 text-sm font-medium mr-5">שדה זה חסר</div>
-          )}
-
-          {optionsMap[key] && (
-            <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
-              <Image
-                src={"/optionArrow.svg"}
-                width={7}
-                height={7}
-                alt="arrow"
-              />
+            <div className="absolute text-red-600 text-sm font-medium mr-5">
+              שדה זה חסר
             </div>
           )}
+
           {toggleUpdateInput && optionsMap[key] && selectOption === key && (
             <div className="absolute inset-y-7 w-full z-20 mt-1 border  rounded ">
               <ul className="flex flex-col  p-1  bg-white rounded shadowForDrop">

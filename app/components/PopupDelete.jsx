@@ -27,11 +27,12 @@ export default function PopupDelete({
           onClick={() => showPopup(false)}
           className=" w-full flex justify-end mt-0 hover:cursor-pointer"
         >
-          <Image src={"/xx.svg"} width={15} height={15} alt="x" />
+          <Image src={"/x.svg"} width={15} height={15} alt="x" />
         </div>
         <h1 className="font-bold leading-6	"> {headerText} </h1>
         <p>
-          {messageText} "{objectToDelete.firstName} {objectToDelete.lastName}"?
+          {messageText} "{objectToDelete.firstName}{objectToDelete.lastName}{objectToDelete.agreementName}"?
+          
         </p>
         <div className="flex w-full  justify-end mt-4">
           <button

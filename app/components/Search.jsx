@@ -9,10 +9,11 @@ export default function Search({textBtn, addNew, addImage}) {
 
       <button 
       onClick={()=>addNew()}
-      className="  w-[23%] flex justify-around items-center absolute pr-[5%] pl-3 p-2 left-0 text-gray-100 bg-[#002A78] rounded-l-full">
+      className="  w-[23%] flex justify-around items-center absolute pr-[5%] pl-3 p-2 left-0 text-gray-100 font-normal leading-5 text-[20px] bg-[#002A78] rounded-l-full">
         <div>{textBtn}</div>
         <div>{addImage}</div>
       </button>
     </div>
   );
 }
+ 
