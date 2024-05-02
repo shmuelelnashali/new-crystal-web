@@ -1,11 +1,12 @@
+'use client'
 import React from "react";
 
-export default function Search({textBtn, addNew, addImage}) {
+export default function Search({textBtn, addNew, addImage ,bg}) {
   return (
     <div className="w-2/4 flex relative rounded-full text  p-1">
-      <div className=" w-4/5 absolute z-10 rounded-full bg-[#EFF3FB] p-2 ">
-        search
-      </div>
+      <input className= {`w-4/5 absolute z-10  rounded-full ${bg? "bg-white border":"bg-[#EFF3FB]"} p-2`} />
+       
+      
 
       <button 
       onClick={()=>addNew()}

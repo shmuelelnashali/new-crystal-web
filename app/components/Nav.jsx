@@ -1,22 +1,32 @@
-import Link from 'next/link'
-import React from 'react'
+"use client"
+import Link from "next/link";
+import React, { useState } from "react";
 
 export default function Nav() {
+ const [foucs ,setFoucs]=useState(0)
+  const navBar = [
+    { text: "נוכחות", link: "/presence" },
+    { text: "עובדים", link: "/employees" },
+    { text: "הרשאות", link: "/permissions" },
+    { text: " ניהול משימות", link: "/mission" },
+    { text: "ניהול העדרויות", link: "/absenceManagement" },
+    { text: "ניהול הסכמים ", link: "/agreementsManagement" },
+    { text: "ניהול עץ אירגוני", link: "/organization" },
+    { text: "ניהול לוחות שנה", link: "calendar" },
+    { text: "דוחות", link: "/reports" },
+  ];
+
   return (
-    <div className=' h-10 rounded-l-full rounded-r-full text-base  bg-[#EFF3FB] px-6'>
-      <ul className='flex gap-x-6 justify-around items-center h-full text-[#002A78]/30 '>
-        <Link href={"/presence"}><li className=''>נוכחות</li></Link>
-        <Link href={"/employees"}> <li className=''>עובדים</li></Link>
-        <Link href={"/permissions"}> <li className=''>הרשאות</li></Link>
-        <Link href={"/mission"}><li className=''>ניהול משימות</li></Link>
-        <Link href={"/absenceManagement"}><li className=''>ניהול היעדרויות</li></Link>
-        <Link href={"/agreementsManagement"}><li className=''>ניהול הסכמים</li></Link>
-        <Link href={"/organization"}><li className=''>ניהול עץ אירגוני</li></Link>
-        <Link href={"/calendar"}><li className=''>ניהול לוחות שנה</li></Link>
-        <Link href={"/reports"}><li className=''>דוחות</li></Link>
+    <div className=" h-10 rounded-l-full rounded-r-full text-base  bg-[#EFF3FB] px-6">
+      <ul className="flex gap-x-6 justify-around items-center h-full text-[#002A78]/30  ">
+        {navBar.map((nav, index) => (
+          <Link key={index} href={nav.link}>
+            <li onClick={()=> setFoucs(index)} className={` ${foucs==index ?"nav":""} `}>{nav.text}</li>
+          </Link>
+        ))}
+
       </ul>
-
-
     </div>
-  )
+  );
 }
+

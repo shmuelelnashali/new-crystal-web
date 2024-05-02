@@ -3,8 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import UpdateDelete from "../components/EmployeeFilter";
 import Image from "next/image";
-import UpdateEmployee from "../components/UpdateEmployee";
-import ReadEmployees from "../components/ReadEmployees";
+import ReadObject from "../components/ReadObject";
+import UpdateObject from "../components/UpdateObject";
 import EmployeeFilter from "../components/EmployeeFilter";
 import PopupDelete from "../components/PopupDelete";
 import Search from "../components/Search";
@@ -502,7 +502,7 @@ export default function Employees() {
       {/* THE TABLE */}
       <div
         dir="ltr"
-        className="p-1 h-full   border overflow-y-auto  border-[#F7F9FD]"
+        className=" h-full   border overflow-y-auto  border-[#F7F9FD]"
       >
         {/* ראש הטבלה */}
         <div dir="rtl" className="w-full  ">
@@ -534,7 +534,7 @@ export default function Employees() {
                 <div
                   onClick={() => setUpdateMode(index)}
                   key={index}
-                  className={`flex w-full gap-2 border-b py-2 border-t border-[#eceef1]
+                  className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t
                 ${
                   updateMode === index
                     ? "bg-[#e8eef7]"
@@ -546,9 +546,10 @@ export default function Employees() {
                   {/* DELETE BUTTON */}
                   <div
                     onClick={() => deleteEmployee(employee)}
-                    className={` flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
+                    className={`pr-2  flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
                   >
                     <Image
+                    
                       src={"/trash.svg"}
                       height="30"
                       width="30"
@@ -556,13 +557,12 @@ export default function Employees() {
                     />
                   </div>
                   <div className="w-full  ">
-                    <div
-                      className={`grid grid-cols-10  w-full justify-between gap-3 py-3 
-                    font-normal text-[20px] leading-5 text-[#002A78]`}
+                    <div className={`grid grid-cols-10  w-full justify-between gap-3 py-3 font-normal text-[20px] leading-5 text-[#002A78]`}
                     >
                       {updateMode === index ? (
                         //RENDER TO UPDATE MOOD
-                        <UpdateEmployee
+                        <UpdateObject 
+                         
                           data={employee}
                           updateMode={updateMode}
                           setUpdateMode={setUpdateMode}
@@ -573,7 +573,7 @@ export default function Employees() {
                         />
                       ) : (
                         //RENDER TO READ MOOD
-                        <ReadEmployees
+                        <ReadObject
                           data={employee}
                           updateMode={updateMode}
                           setUpdateMode={setUpdateMode}

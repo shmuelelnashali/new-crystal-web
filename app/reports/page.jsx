@@ -1,9 +1,11 @@
+'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import ReportSelection from '../components/ReportSelection'
 import ReportGenerator from '../components/ReportGenerator'
 
 export default function report() {
+  const [createRepo, setCreateRepo]=useState(false)
     const oldRepo=[
       "  דו”ח נוכחות  - מותאם לישראל ישראלי",
 "דו”ח נוכחות  - מותאם לישראל ישראלי",
@@ -75,8 +77,12 @@ export default function report() {
   ]
   return (
   <div className='h-[95%] overflow-hidden  flex justify-center ' >
-     {/* <ReportSelection oldRepo={oldRepo} newRepo={newRepo} />  */}
-     <ReportGenerator/>
+    {createRepo ?
+    <ReportGenerator/>:
+     <ReportSelection oldRepo={oldRepo} newRepo={newRepo}  setCreateRepo={setCreateRepo}/>
+     } 
+
+     
   </div>
   )
 }

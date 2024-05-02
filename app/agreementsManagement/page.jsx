@@ -3,8 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import UpdateDelete from "../components/EmployeeFilter";
 import Image from "next/image";
-import UpdateEmployee from "../components/UpdateEmployee";
-import ReadEmployees from "../components/ReadEmployees";
+import ReadObject from "../components/ReadObject";
+import UpdateObject from "../components/UpdateObject";
 import EmployeeFilter from "../components/EmployeeFilter";
 import PopupDelete from "../components/PopupDelete";
 import Search from "../components/Search";
@@ -451,7 +451,7 @@ export default function agreementsManagement() {
               className="flex w-full bg-[#002A78] rounded "
             >
               <div className="w-[30px]"></div>
-              <div className="text-[24px] grid grid-cols-7 gap-3 w-full font-semibold leading-6 py-3  text-center items-center text-[#FFFFFF] ">
+              <div className="text-[24px] grid grid-cols-7 gap-3 w-full font-semibold leading-6 py-1 text-center items-center text-[#FFFFFF] ">
                 {headTable.map((head, index) => (
                   <div
                     key={head}
@@ -471,7 +471,7 @@ export default function agreementsManagement() {
                 <div
                   onClick={() => setUpdateMode(index)}
                   key={index}
-                  className={`flex w-full gap-2 border-b py-2 border-t border-[#eceef1]
+                  className={`flex w-full gap-2 p-2 border-b  border-t bg-[#EFF3FB] border-[#eceef1]
                 ${
                   updateMode === index
                     ? "bg-[#e8eef7]"
@@ -483,7 +483,7 @@ export default function agreementsManagement() {
                   {/* DELETE BUTTON */}
                   <div
                     onClick={() => deleteEmployee(employee)}
-                    className={` flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
+                    className={`pr-2 flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
                   >
                     <Image
                       src={"/trash.svg"}
@@ -494,12 +494,12 @@ export default function agreementsManagement() {
                   </div>
                   <div className="w-full  ">
                     <div
-                      className={`grid grid-cols-7  w-full justify-between gap-3 py-3 
+                      className={`grid grid-cols-7  w-full justify-between gap-3  
                     font-normal text-[20px] leading-5 text-[#002A78]`}
                     >
                       {updateMode === index ? (
                         //RENDER TO UPDATE MOOD
-                        <UpdateEmployee
+                        <UpdateObject
                           data={employee}
                           updateMode={updateMode}
                           setUpdateMode={setUpdateMode}
@@ -510,7 +510,7 @@ export default function agreementsManagement() {
                         />
                       ) : (
                         //RENDER TO READ MOOD
-                        <ReadEmployees
+                        <ReadObject
                           data={employee}
                           updateMode={updateMode}
                           setUpdateMode={setUpdateMode}

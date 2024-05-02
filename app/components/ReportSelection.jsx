@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export default function ReportSelection({ oldRepo, newRepo }) {
+export default function ReportSelection({ oldRepo, newRepo, setCreateRepo}) {
   return (
     // <div className='h-[95%] overflow-hidden  flex justify-center ' >
     <div className="h-[95%] w-3/4 p-6  bg-[#F2F6FC] flex gap-4 justify-center">
@@ -48,7 +48,9 @@ export default function ReportSelection({ oldRepo, newRepo }) {
           </div>
         </div>
         <div className="flex justify-center items-center h-1/4">
-          <button className="bg-[#002A78] w-1/3 p-2 rounded-3xl font-normal text-lg text-white">
+          <button 
+          onClick={()=>setCreateRepo(true)}
+          className="bg-[#002A78] w-1/3 p-2 rounded-3xl font-normal text-lg text-white">
             המשך ליצירת הדו"ח
           </button>
         </div>

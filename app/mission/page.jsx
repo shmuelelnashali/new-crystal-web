@@ -3,9 +3,8 @@
 
 import Search from "../components/Search";
 
-import ReadEmployees from "../components/ReadEmployees";
-
-import UpdateEmployee from "../components/UpdateEmployee";
+import ReadObject from "../components/ReadObject";
+import UpdateObject from "../components/UpdateObject";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -519,15 +518,15 @@ export default function page() {
               <Image src="/trash.svg" width={30} height={22} />
             </div>
             <div
-              className="grid grid-cols-7 w-full gap-x-3 py-2 text-2xl justify-center font-normal rounded-lg"
+              className="grid grid-cols-7 w-full gap-x-3  text-2xl justify-center font-normal rounded-lg"
               onClick={() => {
                 setUpdateMode(index);
               }}
             >
               {updateNode === index ? (
-                <UpdateEmployee data={data} />
+                <UpdateObject data={data} />
               ) : (
-                <ReadEmployees data={data} />
+                <ReadObject data={data} />
               )}
             </div>{" "}
           </div>
