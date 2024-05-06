@@ -525,7 +525,6 @@ export default function agreementsManagement() {
           </div>
         </div>
       </div>
-
       {/* FEEZE EMPLOYEE */}
       {showConfirmation && (
         <PopupDelete

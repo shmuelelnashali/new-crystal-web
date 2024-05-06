@@ -471,7 +471,7 @@ export default function Employees() {
   );
 
   return (
-    <div className="h-[72%] relative ">
+    <div className="h-[85%] ">
       <div className="h-16 w- full flex justify-center m-2">
         <Search
           addNew={addEmployee}
@@ -502,7 +502,7 @@ export default function Employees() {
       {/* THE TABLE */}
       <div
         dir="ltr"
-        className=" h-full   border overflow-y-auto  border-[#F7F9FD]"
+        className=" h-[8 ,.5%] border overflow-y-auto  border-[#F7F9FD]"
       >
         {/* ראש הטבלה */}
         <div dir="rtl" className="w-full  ">
