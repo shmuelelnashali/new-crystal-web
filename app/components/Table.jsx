@@ -18,7 +18,7 @@ export default function Table({
   return (
     <div
       dir="ltr"
-      className=" h-full   border overflow-y-auto  border-[#F7F9FD]"
+      className=" h-[85%]  border overflow-y-auto   border-[#F7F9FD]"
     >
       {/* ראש הטבלה */}
       <div dir="rtl" className="w-full pr-2 ">
