@@ -8,6 +8,8 @@ import UpdateObject from "../components/UpdateObject";
 import EmployeeFilter from "../components/EmployeeFilter";
 import PopupDelete from "../components/PopupDelete";
 import Search from "../components/Search";
+import TableHead from "../components/TableHead";
+import Table from "../components/Table";
 
 export default function Employees() {
   const user = [
@@ -301,16 +303,22 @@ export default function Employees() {
     },
   ];
 
+  //FOR CONTAIN THE EMPLOYEES
   const [employees, setEmployees] = useState(user);
 
+  //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  //CONTAIN THE EMPLOYEE TO FREEZE
   const [employeeIdToDelete, setEmployeeIdToDelete] = useState(null);
 
+  //ON CLICK FOR UPDATE INPUTS
   const [updateMode, setUpdateMode] = useState(null);
 
+  //ALERT IF FIELD EMPTY
   const [ifEmpty, setIfEmpty] = useState(false);
 
+  //THE TOGGLE FOR SOME OF THE INPUTS
   const [toggleUpdateInput, setToggleUpdateInput] = useState(false);
 
   {
@@ -333,7 +341,6 @@ export default function Employees() {
   // useEffect(() => {
   //   fetchEmployees();
   // }, []);
-
 
   {
     /*MAKING THE UPDATE*/
@@ -375,12 +382,8 @@ export default function Employees() {
     }
   };
 
-
-
-
   const checkIfEmpty = (emptyArray) => {
     let isEmpty = false;
-
 
     for (const empty of emptyArray) {
       for (const [key, value] of Object.entries(empty)) {
@@ -443,7 +446,6 @@ export default function Employees() {
     }
   };
 
-
   {
     /*ARRAY FOR THE HEAD OF THE TABLE*/
   }
@@ -472,14 +474,17 @@ export default function Employees() {
 
   return (
     <div className="h-[72%] relative ">
+      {/* THE SEARCH */}
       <div className="h-16 w- full flex justify-center m-2">
         <Search
           addNew={addEmployee}
           textBtn={" הוסף עובד"}
           updateMode={updateMode}
           addImage={addEmployeeImage}
+          searchText={"חיפוש לפי מספר עובד / שם עובד"}
         />
       </div>
+
       {/* THE FILTER */}
       <div
         onClick={() => {
@@ -500,94 +505,18 @@ export default function Employees() {
       </div>
 
       {/* THE TABLE */}
-      <div
-        dir="ltr"
-        className=" h-full   border overflow-y-auto  border-[#F7F9FD]"
-      >
-        {/* ראש הטבלה */}
-        <div dir="rtl" className="w-full  ">
-          <div className="flex sticky top-0 z-10">
-            <div
-              onClick={() => {
-                checkIfEmpty(employees);
-              }}
-              className="flex w-full bg-[#002A78] rounded "
-            >
-              <div className="w-[30px]"></div>
-              <div className="text-[24px] grid grid-cols-10 gap-3 w-full font-semibold leading-6 py-3  text-center items-center text-[#FFFFFF] ">
-                {headTable.map((head, index) => (
-                  <div
-                    key={head}
-                    className={head === "מספר עובד" ? "pr-7" : ""}
-                  >
-                    {head}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* תוכן הטבלה */}
-          <div className="w-full ">
-            <div className="w-full ">
-              {employees.map((employee, index) => (
-                <div
-                  onClick={() => setUpdateMode(index)}
-                  key={index}
-                  className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t
-                ${
-                  updateMode === index
-                    ? "bg-[#e8eef7]"
-                    : " hover:bg-[#e8eef7] transition-transform duration-200 ease-in-out"
-                }
-
-                `}
-                >
-                  {/* DELETE BUTTON */}
-                  <div
-                    onClick={() => deleteEmployee(employee)}
-                    className={`pr-2  flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
-                  >
-                    <Image
-                    
-                      src={"/trash.svg"}
-                      height="30"
-                      width="30"
-                      alt="trash"
-                    />
-                  </div>
-                  <div className="w-full  ">
-                    <div className={`grid grid-cols-10  w-full justify-between gap-3 py-3 font-normal text-[20px] leading-5 text-[#002A78]`}
-                    >
-                      {updateMode === index ? (
-                        //RENDER TO UPDATE MOOD
-                        <UpdateObject 
-                         
-                          data={employee}
-                          updateMode={updateMode}
-                          setUpdateMode={setUpdateMode}
-                          handleChange={handleChange}
-                          toggleUpdateInput={toggleUpdateInput}
-                          setToggleUpdateInput={setToggleUpdateInput}
-                          ifEmpty={ifEmpty}
-                        />
-                      ) : (
-                        //RENDER TO READ MOOD
-                        <ReadObject
-                          data={employee}
-                          updateMode={updateMode}
-                          setUpdateMode={setUpdateMode}
-                          handleChange={handleChange}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Table
+        data={employees}
+        updateMode={updateMode}
+        setUpdateMode={setUpdateMode}
+        handleChange={handleChange}
+        toggleUpdateInput={toggleUpdateInput}
+        setToggleUpdateInput={setToggleUpdateInput}
+        checkIfEmpty={checkIfEmpty}
+        ifEmpty={ifEmpty}
+        headTable={headTable}
+        deleteEmployee={deleteEmployee}
+      />
 
       {/* FEEZE EMPLOYEE */}
       {showConfirmation && (
