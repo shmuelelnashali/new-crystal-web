@@ -1,33 +1,19 @@
 "use client";
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import Day from "../components/Day";
-const monthsInHebrew = [
-  "ינואר",
-  "פברואר",
-  "מרץ",
-  "אפריל",
-  "מאי",
-  "יוני",
-  "יולי",
-  "אוגוסט",
-  "ספטמבר",
-  "אוקטובר",
-  "נובמבר",
-  "דצמבר",
-];
+import FilterByYear from "./FilterByYear";
+import MonthTable from "./MonthTable";
 
-const daysInHebrew = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
 
-export default function Calendar(props) {
-  const { chck, setChck, setMessinDay2, messinDay2, messinDay, setMessinDay } =
-    props;
+
+
+export default function Month({daysInHebrew ,monthsInHebrew,  setMessinDay2, messinDay2, messinDay, setMessinDay }) {
+ 
   const [selectedDate, setSelectedDate] = useState(new Date());
-  console.log(selectedDate);
+
   // Function to get days in month
-  const getDaysInMonth = (year, month) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
+  const getDaysInMonth = (year, month) =>  new Date(year, month + 1, 0).getDate();
+ 
 
   // Function to generate array of days in month
   const generateDaysArray = (year, month) => {
@@ -44,6 +30,7 @@ export default function Calendar(props) {
 
     return daysArray;
   };
+  
 
   // Generate array of objects for each month containing days
   const monthsAndDays = monthsInHebrew.map((month, index) => {
@@ -53,6 +40,8 @@ export default function Calendar(props) {
       daysArray,
     };
   });
+
+
   const goToPreviousYear = () => {
     const previousYear = new Date(
       selectedDate.getFullYear() - 1,
@@ -70,60 +59,11 @@ export default function Calendar(props) {
   };
   return (
     <div className="text-[#002A78] flex-1 w-full flex flex-col justify-between ">
-      {/* <div className="overflow-y-auto w-full scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"> */}
-      <div className="flex justify-center  ">
-        <div className="border w-min p-[1px] rounded-full  text-white bg-[#002A78] flex justify-center items-center">
-          <button onClick={goToPreviousYear}>
-            <ArrowRight />
-          </button>
-          <p className="border  bg-white font-bold text-[#002A78]  rounded-full px-16">
-            {selectedDate.getFullYear()}
-          </p>
-          <button onClick={goToNextYear}>
-            <ArrowLeft />
-          </button>
-        </div>
-      </div>
-      <div dir="ltr" className="px-5 pb-4 max-h-[85vh] overflow-y-auto">
-        <div dir="rtl" className="grid grid-cols-4">
-          {/* Iterate over each month and display days */}
-          {monthsAndDays.map(({ month, daysArray }, index) => (
-            <div className="border bg-[#F4F7FC] m-4 relative" key={month}>
-              {/* Move month header outside the border */}
-              <h2 className="absolute inset-x-1/3 -top-4 w-1/3 border rounded-full text-center text-white bg-[#002A78]">
-                {month}
-              </h2>
-              <ul className="grid grid-cols-7">
-                {daysInHebrew.map((day) => (
-                  <li
-                    className="text-[#002A78] mt-3 text-opacity-60 flex justify-center items-center"
-                    key={day}
-                  >
-                    {day}
-                  </li>
-                ))}
-              </ul>
-              <ul className="grid grid-cols-7    justify-center items-center w-full  text-center">
-                {daysArray.map((day, dayIndex) => (
-                  <Day
-                    key={day !== null ? day : null - `${dayIndex}`}
-                    day={day}
-                    month={index}
-                    year={selectedDate.getFullYear()}
-                    messinDay={messinDay}
-                    setMessinDay={setMessinDay}
-                    setMessinDay2={setMessinDay2}
-                    messinDay2={messinDay2}
-                    chck={chck}
-                    setChck={setChck}
-                    className=""
-                  />
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
+      
+      <FilterByYear goToPreviousYear={goToPreviousYear} goToNextYear={goToNextYear} selectedDate={selectedDate}/>
+      <MonthTable monthsAndDays={monthsAndDays} daysInHebrew={daysInHebrew} setSelectedDate={setSelectedDate} selectedDate={selectedDate} setMessinDay2={setMessinDay2} messinDay2={messinDay2} messinDay={messinDay} setMessinDay={setMessinDay}/>
+     
+     
     </div>
   );
 }

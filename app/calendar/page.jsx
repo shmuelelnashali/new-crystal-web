@@ -1,28 +1,54 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import Month from "../components/Month";
 import PopupDay from "../components/PopupDay";
 import Exclusions from "../components/Exclusions";
 
 export default function Calendar() {
-  const [messinDay2, setMessinDay2] = useState(false);
-  const [messinDay, setMessinDay] = useState({});
-  const [chck, setChck] = useState(false);
+  const [messinDay2, setMessinDay2] = useState(false); //TO OPEN POPUP
+  const [messinDay, setMessinDay] = useState({}); //selected day
   const [selectedOption, setSelectedOption] = useState("");
-  const [exclusions, setExclusions] = useState(false);
+  const [exclusions, setExclusions] = useState(true);//open popup החרגות 
+  
+const monthsInHebrew = [
+  "ינואר",
+  "פברואר",
+  "מרץ",
+  "אפריל",
+  "מאי",
+  "יוני",
+  "יולי",
+  "אוגוסט",
+  "ספטמבר",
+  "אוקטובר",
+  "נובמבר",
+  "דצמבר",
+];
 
-  console.log(`עכשיו=${chck}`);
+const daysInHebrew = [
+  "ראשון",
+ "שני", 
+ "שלישי", 
+ "רביעי", 
+ "חמישי", 
+ "שישי", 
+ "שבת"
+];
+  // const [chck, setChck] = useState(false); 
+  // console.log(`עכשיו=${chck}`);
 
   return (
     <div className="flex ">
-      <div className={`${messinDay2 ? "w-4/5" : "w-full"} `}>
+      <div className={` ${messinDay2 ? "w-4/5" : "w-full px-[5%]"} `}>
         <Month
           setMessinDay2={setMessinDay2}
           messinDay2={messinDay2}
           messinDay={messinDay}
           setMessinDay={setMessinDay}
-          chck={chck}
-          setChck={setChck}
+          monthsInHebrew={monthsInHebrew}
+          daysInHebrew ={daysInHebrew }
+          // chck={chck}
+          // setChck={setChck}
         />
       </div>
       {messinDay2 && (
@@ -35,8 +61,8 @@ export default function Calendar() {
           messinDay2={messinDay2}
           messinDay={messinDay}
           setMessinDay={setMessinDay}
-          chck={chck}
-          setChck={setChck}
+          // chck={chck}
+          // setChck={setChck}
         />
       )}
       {exclusions && (
