@@ -1,7 +1,22 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import React from 'react'
 
-export default function FilterByYear({selectedDate,goToNextYear ,goToPreviousYear}) {
+export default function FilterByYear({selectedDate,setSelectedDate}) {
+  const goToPreviousYear = () => {
+    const previousYear = new Date(
+      selectedDate.getFullYear() - 1,
+      selectedDate.getMonth()
+    );
+    setSelectedDate(previousYear);
+  };
+
+  const goToNextYear = () => {
+    const nextYear = new Date(
+      selectedDate.getFullYear() + 1,
+      selectedDate.getMonth()
+    );
+    setSelectedDate(nextYear);
+  };
   return (
     <div className="flex justify-center  ">
     <div className="border w-min p-[1px] rounded-full  text-white bg-[#002A78] flex justify-center items-center">
