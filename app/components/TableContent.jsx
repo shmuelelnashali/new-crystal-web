@@ -12,18 +12,18 @@ export default function TableContent(
   setToggleUpdateInput,
   ifEmpty,
   deleteEmployee,
-  headTable
+  headTable,
+  changeTheRowToEdit
 }
 ) {
-  
  const theLength = headTable.length
- 
   return (
     <div className="w-full ">
+
       <div className="w-full ">
         {data.map((employee, index) => (
           <div
-            onClick={() => setUpdateMode(index)}
+            onClick={(e) => {e.stopPropagation(), !changeTheRowToEdit() && setUpdateMode(index)}}
             key={index}
             className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t
           ${

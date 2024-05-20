@@ -9,12 +9,11 @@ export default function Table({
   handleChange,
   toggleUpdateInput,
   setToggleUpdateInput,
-  checkIfEmpty,
   ifEmpty,
   headTable,
   deleteEmployee,
+  changeTheRowToEdit
 }) {
-  console.log(data, "data");
   return (
     <div
       dir="ltr"
@@ -24,7 +23,6 @@ export default function Table({
       <div dir="rtl" className="w-full pr-2 ">
         <TableHead
           headTable={headTable}
-          checkIfEmpty={checkIfEmpty}
           data={data}
         />
 
@@ -38,6 +36,7 @@ export default function Table({
           toggleUpdateInput={toggleUpdateInput}
           setToggleUpdateInput={setToggleUpdateInput}
           ifEmpty={ifEmpty}
+          changeTheRowToEdit={changeTheRowToEdit}
           deleteEmployee={deleteEmployee}
         />
       </div>

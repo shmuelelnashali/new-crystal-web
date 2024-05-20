@@ -350,7 +350,6 @@ export default function Employees() {
       if (employee.id === id) {
         return { ...employee, [field]: e.target.value };
       }
-
       return employee;
     });
 
@@ -382,24 +381,21 @@ export default function Employees() {
     }
   };
 
-  const checkIfEmpty = (emptyArray) => {
-    let isEmpty = false;
+  const checkIfValueIsEmpty = () => {
+    if (updateMode !== null) {
+      const selectedItem = updateMode;
 
-    for (const empty of emptyArray) {
-      for (const [key, value] of Object.entries(empty)) {
+      for (const [key, value] of Object.entries(employees[selectedItem])) {
         if (value === "") {
-          isEmpty = true;
+          setIfEmpty(true);
+          return true;
         }
       }
-      if (isEmpty) {
-        break;
-      }
     }
-    if (isEmpty) {
-      setIfEmpty(true);
-    } else {
-      setUpdateMode(null);
-    }
+  };
+
+  const handleAddingNewRow = () => {
+    !checkIfValueIsEmpty() && addEmployee();
   };
 
   //ADD EMPLOYEE OBJECT
@@ -413,11 +409,6 @@ export default function Employees() {
 
   //ADD NEW ROW TO ADD EMPLOYEE
   const addEmployee = () => {
-    // IF THE ROW OPEN THE BUTTON NOT WORK
-    if (updateMode !== null) {
-      return;
-    }
-
     const newEmployee = {
       id: "0000000",
       firstName: "",
@@ -430,8 +421,12 @@ export default function Employees() {
       start: "",
       end: "",
     };
-    setEmployees([newEmployee, ...employees]);
+    setEmployees((prev) => {
+      const addNew = [newEmployee, ...prev];
+      return addNew;
+    });
     setUpdateMode(0);
+    setIfEmpty(false);
   };
 
   {
@@ -453,8 +448,8 @@ export default function Employees() {
     "מספר עובד",
     "שם פרטי",
     "שם משפחה",
-    "חייל/ אזרח",
-    "מחלקה/ יחידה",
+    "חייל / אזרח",
+    "מחלקה / יחידה",
     "ענף",
     "מדור",
     "סוג הסכם",
@@ -473,11 +468,15 @@ export default function Employees() {
   );
 
   return (
-    <div className="h-[72%] relative ">
-      {/* THE SEARCH */}
+    <div
+      className="h-[75%] "
+      onClick={() => {
+        !checkIfValueIsEmpty() && setUpdateMode(null);
+      }}
+    >
       <div className="h-16 w- full flex justify-center m-2">
         <Search
-          addNew={addEmployee}
+          addNew={handleAddingNewRow}
           textBtn={" הוסף עובד"}
           updateMode={updateMode}
           addImage={addEmployeeImage}
@@ -486,12 +485,7 @@ export default function Employees() {
       </div>
 
       {/* THE FILTER */}
-      <div
-        onClick={() => {
-          setUpdateMode(null);
-        }}
-        className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2"
-      >
+      <div className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2">
         סנן לפי:
         {filterArray.map((filterObject) =>
           Object.entries(filterObject).map(([labelKey, dataArray]) => (
@@ -512,8 +506,8 @@ export default function Employees() {
         handleChange={handleChange}
         toggleUpdateInput={toggleUpdateInput}
         setToggleUpdateInput={setToggleUpdateInput}
-        checkIfEmpty={checkIfEmpty}
         ifEmpty={ifEmpty}
+        changeTheRowToEdit={checkIfValueIsEmpty}
         headTable={headTable}
         deleteEmployee={deleteEmployee}
       />

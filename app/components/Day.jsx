@@ -21,6 +21,8 @@ export default function Day (props)   {
 
   const objectDay={day:day, month:month+1, year:year,dayOfWeek:dayOfWeek}
   console.log(day);
+
+  
   console.log(month);
   console.log(year);
   console.log(`data=${date}`);
