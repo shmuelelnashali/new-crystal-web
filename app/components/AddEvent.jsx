@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
+import Option from "./option";
 
 export default function AddEvent({ missionDay, setMissionDay }) {
  
@@ -15,13 +16,17 @@ export default function AddEvent({ missionDay, setMissionDay }) {
 
   const handelDate = (e, type) => {
     const newDate = e.target.value;
-    console.log(e);
+    const [year, month, day  ] = newDate.split("-")
+    const CurrentMonth = (Number(month) - 1)
+    console.log(CurrentMonth);
+    const CurrenNewDate = `${year}-${String(CurrentMonth).padStart(2, "0")}-${day}`
+    console.log(newDate );
     if (type == "from") {
      
-      setFromDate(newDate)
-     ;
-      setMissionDay(newDate) ;
-      console.log(typeof missionDay);
+      setFromDate( CurrenNewDate)
+     
+      setMissionDay(CurrenNewDate) ;
+    
     }
     if (type == "to") {
    
@@ -30,25 +35,26 @@ export default function AddEvent({ missionDay, setMissionDay }) {
   };
 
   return (
-    <div className=" ">
+    <div className="w-full ">
       <div className="w-full ">
         <div className="font-bold">סוג פעילות</div>
-        <div className="relative">
-          <input className="p-1  pr-2 w-full border rounded-full border-[#002A78]" />
+       
+          <Option/>
+          {/* <input className="p-1  pr-2 w-full border rounded-full border-[#002A78]" />
           <Image
             className="absolute top-[40%] left-3"
             src="options.svg"
             alt="o"
             width={10}
             height={10}
-          />
+          /> */}
           {/* <div className="absolute bg-slate-500 mt-[2px] w-full rounded-md ">
           <div>ddd</div>
           <div>ddd</div>
           <div>ddd</div>
           
           </div>  */}
-        </div>
+       
 
         <div className="flex items-center">
           <div className=" py-2">
@@ -65,7 +71,7 @@ export default function AddEvent({ missionDay, setMissionDay }) {
               <input
                 className="  border rounded-full border-[#002A78] px-2"
                 type="date"
-                value={date}
+                value={toDate}
                 onChange={(e) => handelDate(e, "to")}
               />
             </div>

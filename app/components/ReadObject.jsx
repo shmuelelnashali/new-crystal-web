@@ -27,7 +27,7 @@ export default function ({ data, index, setUpdateMode,  }) {
           } text-center`}
         >
           {key === "entry" || key === "exit" ?
-        value.map((v)=><div>{v}</div>)
+        value.map((v,i)=><div key={i}>{v}</div>)
          :key === "start" || key === "end" ? formatDateForRead(value): value}
           
 

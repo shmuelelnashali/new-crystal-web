@@ -1,5 +1,4 @@
-'use client'
-import React, { useState } from "react";
+
 
 export default function Day ({setMissionDay ,missionDay ,day, month, year  })  {
  
@@ -17,14 +16,14 @@ const dateComparisonResult = ()=>{
 };
 const selectedDate = ()=>{ 
   if(missionDay){
-    console.log(missionDay);
+    
   const {year, month, day } = missionDay
   const selectedDay = new Date(year, month, day) 
   selectedDay.setHours(0, 0, 0, 0 ,0);
   date.setHours(0, 0, 0, 0 ,0);
   return date.getTime() === selectedDay.getTime() }
 };
-console.log(dateComparisonResult())
+
 
   
 
@@ -48,7 +47,7 @@ console.log(dateComparisonResult())
   return (
     
       <div
-        onClick={()=>{setMissionDay(`${year}-${month }-${day}`)}}
+        onClick={()=>{  setMissionDay(`${year}-${month}-${day}`)}}
           className={`h-full w-full rounded-xl flex items-center flex-col justify-center
           ${
             dateComparisonResult() || selectedDate()  ?  "bg-[#cccccc]/50 w-9 h-9" :" "

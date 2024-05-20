@@ -1,8 +1,7 @@
-'use client'
-import React, { useState } from 'react'
+
 import Day from './Day'
-import Year from './Year';
-import { checkIsOnDemandRevalidate } from 'next/dist/server/api-utils';
+
+
 
 export default function MonthTable({month, daysInMonth,indexMonth, selectedDate, missionDay ,setMissionDay}) {
     
@@ -34,8 +33,9 @@ export default function MonthTable({month, daysInMonth,indexMonth, selectedDate,
           </ul>
           <div className="grid grid-cols-7 gap-1 pt-3 pb-5 h-full  font-medium text-xl text-[#002A78]/68 justify-center items-center w-full text-center">
             {daysInMonth.map((day, dayIndex) => (
-              <div key={dayIndex}>
+              
               <Day
+               key={dayIndex}
               day={day}
               month={indexMonth}
               year={selectedDate}
@@ -43,7 +43,7 @@ export default function MonthTable({month, daysInMonth,indexMonth, selectedDate,
               missionDay={missionDay}
 
             />
-          </div>
+        
             ))}
           </div>
         </div>

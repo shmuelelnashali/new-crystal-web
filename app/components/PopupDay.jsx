@@ -24,36 +24,10 @@ export default function PopupDay({missionDay, setMissionDay}){
   
   ];
   const {year, month, day ,dayOfWeek} = missionDay
-  // const selectedDay = new Date(year, month, day) 
-  
-  
-  
-
-
-  // const formatDate = (dateString) => {
-
-  //   if (dateString.includes("-")) {
-  //     console.log(dateString);
-  //     const [day, month, year] = dateString.split("-");
-  //     return `${year}/${month}/${day}`;
-  //   }
-   
-  //   const [day, month, year] = dateString.split("/");
-  //   // console.log(`${year}/${month}/${day}`);
-  //   return `${year}-${month}-${day}`;
-  // };
-
-  // const zero = (month) => {
-  //   if (month < 10) {
-  //     return "0";
-  //   }
-  //   return "";
-  // };
- 
- 
   const dayOfWeek2 = daysInHebrew[dayOfWeek];
   const CurrentMonth = Number(month) + 1
   console.log("month", CurrentMonth)
+  const date = {year:year, month:String(CurrentMonth).padStart(2, "0"),day:day.padStart(2, "0") }
   return (
     <div className="border  flex  border-r-[#002A78] w-1/5  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full p-2 z-40">
       <div className="flex flex-col h-[90vh] ">
@@ -81,15 +55,16 @@ export default function PopupDay({missionDay, setMissionDay}){
           </div>
         </div>
 
-        <div className=" h-full ">
+        <div className=" h-full w-full">
          
-          {addEvent && (
+          {addEvent ? (
             <AddEvent
            
               // formatDate={formatDate}
-              missionDay={missionDay}
+              missionDay={date}
               setMissionDay={setMissionDay}
-            />)}
+            />):(
+
             <div className="  h-full flex justify-center items-center">
               <Image
                 onClick={() => setAddEvent(true)}
@@ -98,7 +73,7 @@ export default function PopupDay({missionDay, setMissionDay}){
                 height={155}
                 alt="e"
               />
-            </div>
+            </div>)}
           {/* <Event exclusions={exclusions} setExclusions={setExclusions} setSelectedOption={setSelectedOption} selectedOption={selectedOption} dayOfWeek2={dayOfWeek2} missionDay={missionDay}/> */}
           {/* {chck ? (
           <Event
@@ -127,7 +102,7 @@ export default function PopupDay({missionDay, setMissionDay}){
         </div>
       </div>
 
-      {/* <div className="flex justify-center gap-2">
+       <div className="flex justify-center gap-2">
         <div className="  flex justify-center items-center px-4 py-2   border border-[#002A78]  rounded-full  text-center ">
           <div className="px-2 ">
             <svg
@@ -174,8 +149,8 @@ export default function PopupDay({missionDay, setMissionDay}){
             </div>
             <div className=""> הוסף אירוע </div>
           </div>
-        </div> */}
-      {/* </div> */}
+        </div>
+      </div>
     </div>
   );
 }

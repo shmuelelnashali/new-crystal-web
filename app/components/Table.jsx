@@ -14,6 +14,7 @@ export default function Table({
   headTable,
   deleteEmployee,
 }) {
+  const headLength = headTable.length;
   console.log(data, "data");
   return (
     <div
@@ -23,6 +24,7 @@ export default function Table({
       {/* ראש הטבלה */}
       <div dir="rtl" className="w-full pr-2 ">
         <TableHead
+        headLength={headLength}
           headTable={headTable}
           checkIfEmpty={checkIfEmpty}
           data={data}
@@ -30,6 +32,7 @@ export default function Table({
 
         {/* תוכן הטבלה */}
         <TableContent
+        headLength={headLength}
           data={data}
           headTable={headTable}
           updateMode={updateMode}

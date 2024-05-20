@@ -12,11 +12,12 @@ export default function TableContent(
   setToggleUpdateInput,
   ifEmpty,
   deleteEmployee,
-  headTable
+  
+  headLength
 }
 ) {
   
- const theLength = headTable.length
+ 
  
   return (
     <div className="w-full ">
@@ -44,7 +45,7 @@ export default function TableContent(
             </div>
             <div className="w-full py-4 ">
               <div
-                className={`grid grid-cols-${theLength}  w-full justify-between gap-3  font-normal text-[20px] leading-5 text-[#002A78]`}
+                className={`grid grid-cols-${headLength}  w-full justify-between gap-3  font-normal text-[20px] leading-5 text-[#002A78]`}
               >
                 {updateMode === index ? (
                   //RENDER TO UPDATE MOOD

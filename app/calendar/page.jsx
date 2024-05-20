@@ -10,22 +10,17 @@ export default function Calendar() {
   const [exclusions, setExclusions] = useState(false);//open popup החרגות 
 
   const dateToObject =(string)=>{
-    if(string===null){
+    if(string===null || string.includes("null")){
       setMissionDay(null)
    return
     } 
-//  console.log(string);
+
     const  [year, month, day ] = string.split("-")
     const date = new Date(year, month, day)
-    // console.log(date);
     const dayOfWeek = date.getDay()
-    console.log(dayOfWeek)
      const objectDate = {year:year, month:month.padStart(2, "0"),day:day.padStart(2, "0") ,dayOfWeek:dayOfWeek}
-    //  console.log(objectDate)
      setMissionDay(objectDate)
      
-
-
   }
   // console.log(dateToObject("2024-5-16"))
 

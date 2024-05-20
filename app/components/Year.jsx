@@ -22,15 +22,15 @@ export default function Year({missionDay ,setMissionDay}) {
         "דצמבר",
       ];
       
-      const daysInHebrew = [
-        "ראשון",
-       "שני", 
-       "שלישי", 
-       "רביעי", 
-       "חמישי", 
-       "שישי", 
-       "שבת"
-      ];
+      // const daysInHebrew = [
+      //   "ראשון",
+      //  "שני", 
+      //  "שלישי", 
+      //  "רביעי", 
+      //  "חמישי", 
+      //  "שישי", 
+      //  "שבת"
+      // ];
 
         // Function to get days in month
   const getDaysInMonth = (year, month) =>  new Date(year, month + 1, 0).getDate();

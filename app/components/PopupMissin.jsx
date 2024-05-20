@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import But from './But'
+import But from './Btn'
 
 export default function PopupMissin() {
   return (

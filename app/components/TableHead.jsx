@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function TableHead({ headTable, checkIfEmpty, data }) {
-  const headLength = headTable.length;
+export default function TableHead({ headTable, checkIfEmpty, data ,headLength}) {
+  
   console.log(headLength);
 
   return (
