@@ -12,11 +12,12 @@ export default function TableContent(
   setToggleUpdateInput,
   ifEmpty,
   deleteEmployee,
-  headTable
+  
+  headLength
 }
 ) {
   
- const theLength = headTable.length
+ 
  
   return (
     <div className="w-full ">
@@ -25,7 +26,8 @@ export default function TableContent(
           <div
             onClick={() => setUpdateMode(index)}
             key={index}
-            className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t
+            className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t-[#A7BFE8]/30
+
           ${
             updateMode === index
               ? "bg-[#e8eef7]"
@@ -41,9 +43,9 @@ export default function TableContent(
             >
               <Image src={"/trash.svg"} height="30" width="30" alt="trash" />
             </div>
-            <div className="w-full  ">
+            <div className="w-full py-4 ">
               <div
-                className={`grid grid-cols-${theLength}  w-full justify-between gap-3 py-3 font-normal text-[20px] leading-5 text-[#002A78]`}
+                className={`grid grid-cols-${headLength}  w-full justify-between gap-3  font-normal text-[20px] leading-5 text-[#002A78]`}
               >
                 {updateMode === index ? (
                   //RENDER TO UPDATE MOOD

@@ -22,12 +22,12 @@ export default function ({ data, index, setUpdateMode,  }) {
       {Object.entries(data).map(([key, value], i) => (
         <div
           key={key}
-          className={`h-full py-3 group flex flex-col items-center justify-center   relative  ${
+          className={`h-full  group flex flex-col items-center justify-center overflow-hidden  relative  ${
             key === "entry" || key === "exit" ? "bg-[#EFF3FB]" : ""
           } text-center`}
         >
           {key === "entry" || key === "exit" ?
-        value.map((v)=><div>{v}</div>)
+        value.map((v,i)=><div key={i}>{v}</div>)
          :key === "start" || key === "end" ? formatDateForRead(value): value}
           
 

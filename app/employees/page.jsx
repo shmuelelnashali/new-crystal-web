@@ -474,7 +474,7 @@ export default function Employees() {
 
   return (
     <div className="h-[85%] ">
-      <div className="h-16 w- full flex justify-center m-2">
+      <div className="h-16 w- full flex justify-center ">
         <Search
           addNew={addEmployee}
           textBtn={" הוסף עובד"}
@@ -489,7 +489,7 @@ export default function Employees() {
         onClick={() => {
           setUpdateMode(null);
         }}
-        className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2"
+        className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
       >
         סנן לפי:
         {filterArray.map((filterObject) =>
