@@ -1,29 +1,27 @@
-import React from "react";
 import ReadObject from "./ReadObject";
 import UpdateObject from "./UpdateObject";
 import Image from "next/image";
 
-export default function TableContent(
-  {data,
+export default function TableContent({
+  data,
   updateMode,
   setUpdateMode,
   handleChange,
   toggleUpdateInput,
   setToggleUpdateInput,
   ifEmpty,
+  changeTheRowToEdit,
   deleteEmployee,
-  headTable
-}
-) {
-  
- const theLength = headTable.length
- 
+  headTable,
+}) {
+  const theLength = headTable.length;
+
   return (
     <div className="w-full ">
       <div className="w-full ">
         {data.map((employee, index) => (
           <div
-            onClick={() => setUpdateMode(index)}
+            onClick={(e) => {e.stopPropagation(), !changeTheRowToEdit() && setUpdateMode(index)}}
             key={index}
             className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t
           ${
@@ -36,7 +34,7 @@ export default function TableContent(
           >
             {/* DELETE BUTTON */}
             <div
-              onClick={() => deleteEmployee(employee)}
+              onClick={(e) => {e.stopPropagation(), deleteEmployee(employee)}}
               className={`pr-2  flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
             >
               <Image src={"/trash.svg"} height="30" width="30" alt="trash" />
@@ -63,6 +61,7 @@ export default function TableContent(
                     updateMode={updateMode}
                     setUpdateMode={setUpdateMode}
                     handleChange={handleChange}
+                    changeTheRowToEdit={changeTheRowToEdit}
                   />
                 )}
               </div>

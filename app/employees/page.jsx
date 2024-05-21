@@ -349,8 +349,8 @@ export default function Employees() {
     const updatedEmployees = employees.map((employee) => {
       if (employee.id === id) {
         return { ...employee, [field]: e.target.value };
+        
       }
-
       return employee;
     });
 
@@ -402,6 +402,28 @@ export default function Employees() {
     }
   };
 
+  
+  const changeTheRowToEdit = (index) => {
+    let isEmpty = false;
+
+    for (const absence of employees) {
+      for (const [key, value] of Object.entries(absence)) {
+        if (value === "") {
+          isEmpty = true;
+          break;
+        }
+      }
+      if (isEmpty) {
+        break;
+      }
+    }
+    if (!isEmpty) {
+      setUpdateMode(index);
+    } else {
+      setIfEmpty(true);
+    }
+  };
+
   //ADD EMPLOYEE OBJECT
   const optionsEmployee = {
     solder: ["אזרח", "חייל"],
@@ -433,7 +455,7 @@ export default function Employees() {
     setEmployees([newEmployee, ...employees]);
     setUpdateMode(0);
   };
-
+                       
   {
     /*DELETE THE EMPLOYEES*/
   }
@@ -513,6 +535,7 @@ export default function Employees() {
         setToggleUpdateInput={setToggleUpdateInput}
         checkIfEmpty={checkIfEmpty}
         ifEmpty={ifEmpty}
+        changeTheRowToEdit={changeTheRowToEdit}
         headTable={headTable}
         deleteEmployee={deleteEmployee}
       />

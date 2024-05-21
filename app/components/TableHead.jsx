@@ -1,14 +1,12 @@
 import React from "react";
 
-export default function TableHead({ headTable, checkIfEmpty, data }) {
+export default function TableHead({ headTable }) {
   const headLength = headTable.length;
 
   return (
     <div className="flex sticky top-0 z-10">
       <div
-        onClick={() => { 
-          checkIfEmpty(data);
-        }}
+        
         className="flex w-full bg-[#002A78] rounded "
       >
         <div className="w-[30px]"></div>
