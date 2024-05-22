@@ -11,7 +11,7 @@ export default function Nav() {
     { text: " ניהול משימות", link: "/mission" },
     { text: "ניהול העדרויות", link: "/absenceManagement" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },
-    { text: "ניהול עץ אירגוני", link: "/organization" },
+    { text: "ניהול עץ אירגוני", link: "/organizationTree" },
     { text: "ניהול לוחות שנה", link: "calendar" },
     { text: "דוחות", link: "/reports" },
   ];
