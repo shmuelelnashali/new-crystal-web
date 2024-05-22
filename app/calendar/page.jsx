@@ -9,16 +9,18 @@ export default function Calendar() {
   const [missionDay, setMissionDay] = useState(); //selected day
   const [exclusions, setExclusions] = useState(false);//open popup החרגות 
 
+
   const dateToObject =(string)=>{
     if(string===null || string.includes("null")){
       setMissionDay(null)
    return
     } 
-
     const  [year, month, day ] = string.split("-")
     const date = new Date(year, month, day)
+    const mission = Number(day)<=10
     const dayOfWeek = date.getDay()
-     const objectDate = {year:year, month:month.padStart(2, "0"),day:day.padStart(2, "0") ,dayOfWeek:dayOfWeek}
+    console.log (mission)
+     const objectDate = {year:year, month:month.padStart(2, "0"),day:day.padStart(2, "0") ,dayOfWeek:dayOfWeek ,activity:mission}
      setMissionDay(objectDate)
      
   }
@@ -36,6 +38,7 @@ export default function Calendar() {
       <PopupDay
         missionDay={missionDay}
         setMissionDay={dateToObject}
+        setExclusions={setExclusions}
      />} 
       </div>
     

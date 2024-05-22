@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import NotEvent from "./NotEvent";
 import Event from "./Event";
 import AddEvent from "./AddEvent";
+import Events from "./Events";
 
 
-export default function PopupDay({missionDay, setMissionDay}){ 
-  const [addEvent, setAddEvent] = useState(false);
+export default function PopupDay({missionDay, setMissionDay ,setExclusions}){ 
+  const [events, setEvents] = useState(false);
   console.log(missionDay); 
   const mission = () => {
     // setOpenPopUpDay(false);
@@ -23,7 +24,8 @@ export default function PopupDay({missionDay, setMissionDay}){
     "שבת",
   
   ];
-  const {year, month, day ,dayOfWeek} = missionDay
+  const {year, month, day ,dayOfWeek,activity} = missionDay
+
   const dayOfWeek2 = daysInHebrew[dayOfWeek];
   const CurrentMonth = Number(month) + 1
   console.log("month", CurrentMonth)
@@ -56,24 +58,26 @@ export default function PopupDay({missionDay, setMissionDay}){
         </div>
 
         <div className=" h-full w-full">
-         
-          {addEvent ? (
-            <AddEvent
-           
-              // formatDate={formatDate}
-              missionDay={date}
-              setMissionDay={setMissionDay}
-            />):(
+       
+        
+
+          {activity ? (
+               <Events
+              //  activity={activity}
+               missionDay={missionDay}
+               setMissionDay={setMissionDay}/>
+            ):(
 
             <div className="  h-full flex justify-center items-center">
               <Image
-                onClick={() => setAddEvent(true)}
+                onClick={() => setEvents(true)}
                 src="addEvent.svg"
                 width={200}
                 height={155}
                 alt="e"
               />
             </div>)}
+
           {/* <Event exclusions={exclusions} setExclusions={setExclusions} setSelectedOption={setSelectedOption} selectedOption={selectedOption} dayOfWeek2={dayOfWeek2} missionDay={missionDay}/> */}
           {/* {chck ? (
           <Event

@@ -5,7 +5,7 @@ export default function Day ({setMissionDay ,missionDay ,day, month, year  })  {
   const today = new Date();
   const date = new Date(year, month, day);
   
-//  const [bgOnClick,setBgOnClick]=useState(Array.from({ length: new Date(year, month + 1, 0).getDate() }, () => false))
+
 
 
 

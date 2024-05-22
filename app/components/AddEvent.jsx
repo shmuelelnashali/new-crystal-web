@@ -2,15 +2,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Option from "./option";
 
-export default function AddEvent({ missionDay, setMissionDay }) {
+export default function AddEvent({ missionDay, setMissionDay,fromDate, setFromDate ,toDate, setToDate }) {
  
   const {year, month, day  } = missionDay
 
  const date = `${year}-${month}-${day}`
 
-  const [fromDate, setFromDate] = useState(date)
-  console.log(fromDate);
-  const [toDate, setToDate] = useState(date)
+  
   console.log(toDate);
 
 
@@ -21,41 +19,21 @@ export default function AddEvent({ missionDay, setMissionDay }) {
     console.log(CurrentMonth);
     const CurrenNewDate = `${year}-${String(CurrentMonth).padStart(2, "0")}-${day}`
     console.log(newDate );
+
     if (type == "from") {
-     
       setFromDate( CurrenNewDate)
-     
       setMissionDay(CurrenNewDate) ;
-    
     }
+
     if (type == "to") {
-   
       setToDate(newDate);
     }
   };
-
   return (
     <div className="w-full ">
       <div className="w-full ">
         <div className="font-bold">סוג פעילות</div>
-       
           <Option/>
-          {/* <input className="p-1  pr-2 w-full border rounded-full border-[#002A78]" />
-          <Image
-            className="absolute top-[40%] left-3"
-            src="options.svg"
-            alt="o"
-            width={10}
-            height={10}
-          /> */}
-          {/* <div className="absolute bg-slate-500 mt-[2px] w-full rounded-md ">
-          <div>ddd</div>
-          <div>ddd</div>
-          <div>ddd</div>
-          
-          </div>  */}
-       
-
         <div className="flex items-center">
           <div className=" py-2">
             <div className="font-bold py-1"> תאריך </div>

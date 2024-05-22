@@ -7,7 +7,7 @@ export default function Option() {
     <input
       type="text"
       className="w-full h-full p-2 bg-[#EFF3FB] border rounded-full "
-      placeholder="חפש עובד"
+      placeholder=""
     /></div>
     <Image
       className="absolute top-30 "
