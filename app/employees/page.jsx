@@ -430,7 +430,7 @@ export default function Employees() {
   };
 
   {
-    /*DELETE THE EMPLOYEES*/
+    /*DELETE  EMPLOYEES*/
   }
   const deleteEmployee = async (employee) => {
     try {
