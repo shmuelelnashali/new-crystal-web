@@ -22,6 +22,7 @@ export default function Table({
       {/* ראש הטבלה */}
       <div dir="rtl" className="w-full pr-2 ">
         <TableHead
+        
           headTable={headTable}
           data={data}
         />

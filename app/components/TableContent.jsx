@@ -46,7 +46,7 @@ export default function TableContent(
                 className={`grid grid-cols-${theLength}  w-full justify-between gap-3 py-3 font-normal text-[20px] leading-5 text-[#002A78]`}
               >
                 {updateMode === index ? (
-                  //RENDER TO UPDATE MOOD
+                  //RENDER TO UPDATE MOODS
                   <UpdateObject
                     data={employee}
                     updateMode={updateMode}
