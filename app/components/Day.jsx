@@ -6,9 +6,6 @@ export default function Day ({setMissionDay ,missionDay ,day, month, year  })  {
   const date = new Date(year, month, day);
   
 
-
-
-
 const dateComparisonResult = ()=>{ 
   today.setHours(0, 0, 0, 0 ,0);
   date.setHours(0, 0, 0, 0 ,0);
