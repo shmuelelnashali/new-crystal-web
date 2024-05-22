@@ -1,5 +1,4 @@
 'use client'
-import React from "react";
 
 export default function Search({textBtn, addNew, addImage, bg, searchText}) {
   return (
@@ -11,8 +10,11 @@ export default function Search({textBtn, addNew, addImage, bg, searchText}) {
       
 
       <button 
-      onClick={()=>addNew()}
-      className=" flex justify-center  items-center absolute gap-2 pr-[5%]  p-2 left-2 w-4/12 text-gray-100 font-normal leading-5 text-[20px] bg-[#002A78] rounded-l-full">
+
+      onClick={(e)=>{e.stopPropagation(),addNew()}}
+
+      className="  w-[23%] flex justify-around items-center absolute pr-[5%] pl-3 p-2 left-0 text-gray-100 font-normal leading-5 text-[20px] bg-[#002A78] rounded-l-full">
+
         <div>{textBtn}</div>
         <div>{addImage}</div>
       </button>

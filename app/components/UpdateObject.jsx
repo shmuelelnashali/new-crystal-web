@@ -3,7 +3,6 @@ import Image from "next/image";
 
 export default function UpdateEmployee({
   data,
-  index,
   setUpdateMode,
   handleChange,
   toggleUpdateInput,
@@ -67,15 +66,24 @@ export default function UpdateEmployee({
           <div
           className="flex item-center text-center"
             onClick={(e) => {
-              setUpdateMode(null);
+
+              // setUpdateMode(null);
+
               handleOpen(key);
             }}
           > 
             <input
+
+            onClick={(e)=>{
+              e.stopPropagation(); // Stop event propagation
+              handleOpen(key);
+            
+             }}
+
               onChange={(e) => {
                 handleDateChange(e, data.id, key);
               }}
-              className={` border w-full rounded-full   pr-2 pl-4 border-[#002A78] 
+              className={` border w-full rounded-full md:truncate  pr-2 pl-4 border-[#002A78] 
 
               ${"FOR EMPLOYEES PAGE"}
               ${key === "start" || key === "end" ? "pl-1 pr-3 " : ""}
@@ -84,9 +92,8 @@ export default function UpdateEmployee({
               ${"FOR AGREEMENTS PAGE"}
               ${key === "id" || key=== "enterTime" || key=== "exitTime" || key=== "overTimeLimit" || key=== "hoursAmount" || key=== "breakType" 
               ? "w-[66.666667%] m-auto text-center" : "text-right"}
-             
-
               `}
+              
               type={key === "start" || key === "end" ? "date" : "text"}
               value={
                 key === "start" || key === "end" ?  formatDate(value) : value
@@ -136,56 +143,4 @@ export default function UpdateEmployee({
   );
 }
 
-// export default function UpdateEmployee({setUpdate}) {
-//   const [employeesToUpdate, setEmployeesToUpdate] = useState([]);
-//   const [showConfirmation, setShowConfirmation] = useState(false);
-//   const [employeeIdToDelete, setEmployeeIdToDelete] = useState(null);
 
-//   const fetchEmployeesToUpdate = async () => {
-//     try {
-//       const response = await axios.get(`https://dummyjson.com/users`);
-//       const data = response.data.users;
-//       setEmployeesToUpdate(data);
-//     } catch (error) {
-//       console.error("error fetching employees: ", error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchEmployeesToUpdate();
-//   }, []);
-
-//   const handleChange = (e, id, field) => {
-//     const updatedEmployees = employeesToUpdate.map((employee) => {
-//       if (employee.id === id) {
-//         return { ...employee, [field]: e.target.value };
-//       }
-//       return employee;
-//     });
-//     setEmployeesToUpdate(updatedEmployees);
-//   };
-
-//   const updateEmployee = async (id) => {
-//     try {
-//       const employeeToUpdate = employeesToUpdate.find(
-//         (employee) => employee.id === id
-//       );
-//       console.log(employeeToUpdate, "ff");
-//       if (!employeeToUpdate) {
-//         console.error("Employee not found.");
-//         return;
-//       }
-//       await axios.put(`https://dummyjson.com/users/${id}`, employeeToUpdate);
-//       setEmployeesToUpdate((prevEmployees) => {
-//         const updatedEmployees = prevEmployees.map((employee) => {
-//           if (employee.id === id) {
-//             return employeeToUpdate;
-//           }
-//           return employee;
-//         });
-//         return updatedEmployees;
-//       });
-//     } catch (error) {
-//       console.error("error updating employee: ", error);
-//     }
-//   };

@@ -377,6 +377,26 @@ export default function agreementsManagement() {
       setUpdateMode(null);
     }
   };
+  const changeTheRowToEdit = (index) => {
+    let isEmpty = false;
+
+    for (const absence of employees) {
+      for (const [key, value] of Object.entries(absence)) {
+        if (value === "") {
+          isEmpty = true;
+          break;
+        }
+      }
+      if (isEmpty) {
+        break;
+      }
+    }
+    if (!isEmpty) {
+      setUpdateMode(index);
+    } else {
+      setIfEmpty(true);
+    }
+  };
 
   //ADD NEW ROW TO ADD EMPLOYEE
   const addEmployee = () => {
@@ -447,7 +467,9 @@ export default function agreementsManagement() {
         ifEmpty={ifEmpty}
         headTable={headTable}
         deleteEmployee={deleteEmployee}
+        changeTheRowToEdit={changeTheRowToEdit}
       />
+      
      
 
       {/* FEEZE EMPLOYEE */}
