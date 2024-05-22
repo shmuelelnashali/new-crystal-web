@@ -20,7 +20,12 @@ li.nav{
   grid-template-columns: repeat(14 ,1fr);
 }
 
- 
+.dirLtr{
+  direction: ltr;
+} 
+.dirRtl{
+  direction: rtl;
+} 
 
 /* width */
 ::-webkit-scrollbar {

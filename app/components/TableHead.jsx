@@ -1,7 +1,13 @@
 import React from "react";
 
-export default function TableHead({ headTable }) {
-  const headLength = headTable.length;
+// <<<<<<< eli1
+// export default function TableHead({ headTable }) {
+//   const headLength = headTable.length;
+// =======
+export default function TableHead({ headTable, checkIfEmpty, data ,headLength}) {
+  
+  console.log(headLength);
+
 
   return (
     <div className="flex sticky top-0 z-10">
@@ -14,7 +20,7 @@ export default function TableHead({ headTable }) {
           className={`text-[24px] grid grid-cols-${headLength} gap-3 w-full font-semibold leading-6 py-3  text-center items-center text-[#FFFFFF]`}
         >
           {headTable.map((head, index) => (
-            <div key={head} className={head === "מספר עובד" ? "pr-7" : ""}>
+            <div key={head} className={`${head === "מספר עובד" ? "pr-7" : ""}`}>
               {head}
             </div>
           ))}
@@ -23,3 +29,5 @@ export default function TableHead({ headTable }) {
     </div>
   );
 }
+
+// className={head === "מספר עובד" ? "pr-7" : ""}

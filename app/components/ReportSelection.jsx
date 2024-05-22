@@ -29,8 +29,8 @@ export default function ReportSelection({ oldRepo, newRepo, setCreateRepo}) {
           dir="ltr"
           className="mt-3 relative  h-[90%] pr-3 overflow-y-auto "
         >
-          {oldRepo.map((repo) => (
-            <div dir="rtl" className=" border-b-[1px] p-3">
+          {oldRepo.map((repo,i) => (
+            <div key={i} dir="rtl" className=" border-b-[1px] p-3">
               {repo}
             </div>
           ))}
@@ -40,8 +40,8 @@ export default function ReportSelection({ oldRepo, newRepo, setCreateRepo}) {
         <div className="max-h-3/4 h-3/4 bg-white p-4 overflow-hidden">
           <h2 className="text-center p-2 text-xl font-semibold">דוח חדש</h2>
           <div>
-            {newRepo.map((repo) => (
-              <div dir="rtl" className=" border-b-[1px] p-3">
+            {newRepo.map((repo, i) => (
+              <div  key={i} dir="rtl" className=" border-b-[1px] p-3">
                 {repo}
               </div>
             ))}

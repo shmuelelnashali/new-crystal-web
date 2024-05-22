@@ -4,7 +4,7 @@ import Image from "next/image";
 import ReadObject from "../components/ReadObject";
 import UpdateObject from "../components/UpdateObject";
 import Search from "../components/Search";
-import But from "../components/but";
+import Btn from "../components/Btn";
 import PopupMissin from "../components/PopupMissin";
 
 const arr = [
@@ -107,7 +107,7 @@ export default function Page() {
             <div className=" presentTable items-center">
               {updateMode === rowIndex ? (
                 Object.entries(rowData).map(([key, value], i) => (
-                  <div className={`py-3 flex justify-center ${key==="entry"|| key=== "exit" ?"bg-[#EFF3FB]":""}`}>
+                  <div  key={key} className={`py-3 flex justify-center ${key==="entry"|| key=== "exit" ?"bg-[#EFF3FB]":""}`}>
                     {key==="entry"|| key=== "exit" || key=== "waitingHours"?
                     <input type="text" placeholder={value} className="w-4/5 rounded-full  text-right pr-2 border  border-[#002A78]" />: 
                     <span>{value}</span>}
@@ -118,7 +118,7 @@ export default function Page() {
                 <ReadObject data={rowData} />
               )}
               <div className="flex justify-center items-center">
-                <But text={"צפה במשימות"}/>
+                <Btn text={"צפה במשימות"}/>
               </div>
             </div>
           </div>
