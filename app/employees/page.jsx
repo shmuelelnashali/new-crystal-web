@@ -349,6 +349,7 @@ export default function Employees() {
     const updatedEmployees = employees.map((employee) => {
       if (employee.id === id) {
         return { ...employee, [field]: e.target.value };
+        
       }
       return employee;
     });
@@ -394,8 +395,31 @@ export default function Employees() {
     }
   };
 
+
   const handleAddingNewRow = () => {
     !checkIfValueIsEmpty() && addEmployee();
+
+  
+//   const changeTheRowToEdit = (index) => {
+//     let isEmpty = false;
+
+//     for (const absence of employees) {
+//       for (const [key, value] of Object.entries(absence)) {
+//         if (value === "") {
+//           isEmpty = true;
+//           break;
+//         }
+//       }
+//       if (isEmpty) {
+//         break;
+//       }
+//     }
+//     if (!isEmpty) {
+//       setUpdateMode(index);
+//     } else {
+//       setIfEmpty(true);
+//     }
+// >>>>>>> main
   };
 
   //ADD EMPLOYEE OBJECT
@@ -428,7 +452,7 @@ export default function Employees() {
     setUpdateMode(0);
     setIfEmpty(false);
   };
-
+                       
   {
     /*DELETE  EMPLOYEES*/
   }
@@ -468,13 +492,15 @@ export default function Employees() {
   );
 
   return (
+
     <div
-      className="h-[75%] "
+      className="h-[85%] "
       onClick={() => {
         !checkIfValueIsEmpty() && setUpdateMode(null);
       }}
     >
       <div className="h-16 w- full flex justify-center m-2">
+
         <Search
           addNew={handleAddingNewRow}
           textBtn={" הוסף עובד"}
@@ -485,7 +511,16 @@ export default function Employees() {
       </div>
 
       {/* THE FILTER */}
-      <div className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2">
+// <<<<<<< raziel
+//       <div className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2">
+// =======
+      <div
+//         onClick={() => {
+//           setUpdateMode(null);
+        }}
+        className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
+      >
+
         סנן לפי:
         {filterArray.map((filterObject) =>
           Object.entries(filterObject).map(([labelKey, dataArray]) => (
@@ -507,7 +542,11 @@ export default function Employees() {
         toggleUpdateInput={toggleUpdateInput}
         setToggleUpdateInput={setToggleUpdateInput}
         ifEmpty={ifEmpty}
+// <<<<<<< raziel
         changeTheRowToEdit={checkIfValueIsEmpty}
+// =======
+//         changeTheRowToEdit={changeTheRowToEdit}
+// >>>>>>> main
         headTable={headTable}
         deleteEmployee={deleteEmployee}
       />

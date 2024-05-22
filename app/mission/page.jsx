@@ -7,6 +7,8 @@ import ReadObject from "../components/ReadObject";
 import UpdateObject from "../components/UpdateObject";
 import Image from "next/image";
 import { useState } from "react";
+import Table from "../components/Table";
+import EmployeeFilter from "../components/EmployeeFilter";
 
 const data = [
   {
@@ -481,7 +483,7 @@ const data = [
   },
 ];
 export default function page() {
-  const [updateNode, setUpdateMode] = useState(null);
+  const [updateMode, setUpdateMode] = useState(null);
   const headers = [
     " מספר משימה",
     " שם משימה",
@@ -491,53 +493,59 @@ export default function page() {
     "תאריך התחלה",
     " תאריך סיום ",
   ];
+  const filterArray = [
+    { מחלקה: ["משקים והמטות", "נסא"] },
+    { ענף: ["רכבים", "טנקים"] },
+    { מדור: ["אמת", "נמה"] },
+    { פעיל: ["פעיל", "לא פעיל"] },
+  ];
 
   return (
 
     <div className="h-[90%] w-full ">
-      <div className="h-14 w-full flex justify-center item">
+      <div className="h-20 w-full flex justify-center item">
         <Search className="" />
       </div>
-      <div className="w-full flex justify-center items-center gap-x-3 mt-2 p-3 ">
-        <span>סנן לפי :</span>
-        <input className="border p-1 rounded-full" placeholder={"מחלקה"} />
-        <input className="border p-1 rounded-full" placeholder={"ענף"} />
-        <input className="border p-1 rounded-full" placeholder={"מדור"} />
+      <div
+        onClick={() => {
+          setUpdateMode(null);
+        }}
+        className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
+      >
+        סנן לפי:
+        {filterArray.map((filterObject) =>
+          Object.entries(filterObject).map(([labelKey, dataArray]) => (
+            <EmployeeFilter
+              key={labelKey}
+              dataArray={dataArray}
+              label={labelKey}
+            />
+          ))
+        )}
       </div>
-      <div dir="ltr" className="h-[95%] rounded-2xl px-2 overflow-y-auto">
-        <div dir="rtl" className=" bg-[#F7F9FD] ">
-        <div className="bg-[#002A78] grid grid-cols-7 p-2 text-2xl font-semibold rounded-lg fixed w-[96.5%] ">
-          {headers.map((header) => (
-            <div className="text-white text-center">{header}</div>
-          ))}
-        </div>
-      <div className="h-[90%] pt-12">
-        {data.map((data, index) => (
-          <div className=" w-full items-center gap-x-2 flex p-2  border-b-[1px] ">
-            <div>
-              <Image src="/trash.svg" width={30} height={22} />
-            </div>
-            <div
-              className="grid grid-cols-7 w-full gap-x-3  text-2xl justify-center font-normal rounded-lg"
-              onClick={() => {
-                setUpdateMode(index);
-              }}
-            >
-              {updateNode === index ? (
-                <UpdateObject data={data} />
-              ) : (
-                <ReadObject data={data} />
-              )}
-            </div>{" "}
-          </div>
-        ))}</div></div>
-      </div>
+     
+      
+      <Table
+        data={data}
+        updateMode={updateMode}
+        setUpdateMode={setUpdateMode}
+        headTable={headers}
+        // handleChange={handleChange}
+        // toggleUpdateInput={toggleUpdateInput}
+        // setToggleUpdateInput={setToggleUpdateInput}
+        // checkIfEmpty={checkIfEmpty}
+        // ifEmpty={ifEmpty}
+        // deleteEmployee={deleteEmployee}
+      />  </div>
 
-      {/* <PopupMissin/> */}
-    </div>
   );
 
 }
+   
+       
+
+      {/* <PopupMissin/> */}
+  
 
 
 

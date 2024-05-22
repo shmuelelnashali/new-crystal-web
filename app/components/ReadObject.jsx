@@ -1,7 +1,8 @@
 import Image from "next/image";
-import React from "react";
+
 
 export default function ({ data, index, setUpdateMode }) {
+
   //GIVE THE UPDATE FORMAT DATE FOR READ MOOD
   const formatDateForRead = (dateString) => {
     if (dateString.includes("-")) {
@@ -14,6 +15,7 @@ export default function ({ data, index, setUpdateMode }) {
 
   return (
     <>
+
       {Object.entries(data).map(([key, value], i) => (
         <div
           key={key}
@@ -26,6 +28,7 @@ export default function ({ data, index, setUpdateMode }) {
             : key === "start" || key === "end"
             ? formatDateForRead(value)
             : value}
+
 
           {key === "entry" || key === "exit" ? (
             <div className="">

@@ -3,7 +3,6 @@ import Image from "next/image";
 
 export default function UpdateEmployee({
   data,
-  index,
   setUpdateMode,
   handleChange,
   toggleUpdateInput,
@@ -67,16 +66,20 @@ export default function UpdateEmployee({
           <div
           className="flex item-center text-center"
             onClick={(e) => {
+
               // setUpdateMode(null);
+
               handleOpen(key);
             }}
           > 
             <input
+
             onClick={(e)=>{
               e.stopPropagation(); // Stop event propagation
               handleOpen(key);
             
              }}
+
               onChange={(e) => {
                 handleDateChange(e, data.id, key);
               }}

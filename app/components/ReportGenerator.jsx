@@ -65,8 +65,8 @@ export default function ReportGenerator() {
               alt="search"
             />
           </div>
-          {fields.map((field) => (
-            <div key={field} className="border-b-[1px] py-4 px-4 flex ">
+          {fields.map((field ,i) => (
+            <div key={i} className="border-b-[1px] py-4 px-4 flex ">
               {field}
             </div>
           ))}
@@ -106,8 +106,8 @@ export default function ReportGenerator() {
 
             <div className="max-h-[90%] pb-2 overflow-auto ">
               <div className="   justify-items-center grid grid-cols-3 gap-x-10 gap-5 mt-5 ">
-                {fields.map((field) => (
-                  <div className="w-full px-5">
+                {fields.map((field,i) => (
+                  <div key={i} className="w-full px-5">
                     <label htmlFor="" className="block">
                       {" "}
                       {field}

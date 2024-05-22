@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Search from "../components/Search";
-import But from "../components/But";
+import But from "../components/Btn";
 
 export default function page() {
   const inputs=[
@@ -45,50 +45,7 @@ export default function page() {
         </div>)
         }
 
-{/* 
-        <div className="flex flex-col w-full">
-          <label className="font-semibold  text-[#002A78]">מספר עובד</label>
-          <input
-            type="tel"
-            dir="rtl"
-            placeholder="מספר עובד"
-            className="border border-[#002A7842] rounded-full shadow-md bg-white  px-3"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="font-semibold  text-[#002A78]">שם מלא </label>
-          <input
-            placeholder="שם מלא"
-            type="text"
-            className="border border-[#002A7842] rounded-full shadow-md  bg-white w-80 px-3"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="font-semibold  text-[#002A78]">הרשאות</label>
-          <select className="border border-[#002A7842] rounded-full text-[#002A7887] shadow-md bg-white w-80 px-3">
-            <option value="" disabled selected>
-              בחר הרשאות
-            </option>
 
-            <option value="d">d</option>
-            <option value="c">c</option>
-            <option value="b">b</option>
-            <option value="a">a</option>
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label className="font-semibold  text-[#002A78]">מחלקות</label>
-          <select className="border border-[#002A7842] rounded-full text-[#002A7887] shadow-md bg-white w-80 px-3">
-            <option value="" disabled selected>
-              מחלקות
-            </option>
-
-            <option value="d">d</option>
-            <option value="c">c</option>
-            <option value="b">b</option>
-            <option value="a">a</option>
-          </select>
-        </div> */}
         <But text={"שמור"}/>
 
         

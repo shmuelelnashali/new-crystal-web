@@ -10,24 +10,43 @@ export default function Table({
   toggleUpdateInput,
   setToggleUpdateInput,
   ifEmpty,
+  changeTheRowToEdit,
   headTable,
   deleteEmployee,
+
   changeTheRowToEdit
 }) {
+
+  tableWidth
+}) {
+  
+// <<<<<<< eli1
+  
+//   return (
+//     <div
+//       dir="ltr"
+//       className={` h-full w-${tableWidth}  border overflow-y-auto mx-auto border-[#F7F9FD]`}
+// =======
+  const headLength = headTable.length;
+  console.log(data, "data");
+
   return (
     <div
       dir="ltr"
-      className=" h-full   border overflow-y-auto  border-[#F7F9FD]"
+      className=" h-[85%]  border overflow-y-auto   border-[#F7F9FD]"
+
     >
       {/* ראש הטבלה */}
       <div dir="rtl" className="w-full pr-2 ">
         <TableHead
+        headLength={headLength}
           headTable={headTable}
           data={data}
         />
 
         {/* תוכן הטבלה */}
         <TableContent
+        headLength={headLength}
           data={data}
           headTable={headTable}
           updateMode={updateMode}
