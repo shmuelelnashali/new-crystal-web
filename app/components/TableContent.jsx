@@ -12,6 +12,13 @@ export default function TableContent({
   ifEmpty,
   changeTheRowToEdit,
   deleteEmployee,
+
+  headTable,
+  changeTheRowToEdit
+}
+) {
+ const theLength = headTable.length
+
 // <<<<<<< eli1
   headTable,
 }) {
@@ -26,8 +33,10 @@ export default function TableContent({
  
  
 
+
   return (
     <div className="w-full ">
+
       <div className="w-full ">
         {data.map((employee, index) => (
           <div

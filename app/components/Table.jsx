@@ -13,6 +13,10 @@ export default function Table({
   changeTheRowToEdit,
   headTable,
   deleteEmployee,
+
+  changeTheRowToEdit
+}) {
+
   tableWidth
 }) {
   
@@ -25,6 +29,7 @@ export default function Table({
 // =======
   const headLength = headTable.length;
   console.log(data, "data");
+
   return (
     <div
       dir="ltr"
