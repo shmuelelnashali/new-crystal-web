@@ -1,7 +1,6 @@
 import Image from "next/image";
-import React from "react";
 
-export default function ({ data, index, setUpdateMode,  }) {
+export default function ({ data }) {
   
   //GIVE THE UPDATE FORMAT DATE FOR READ MOOD
   const formatDateForRead = (dateString) => {
@@ -19,8 +18,8 @@ export default function ({ data, index, setUpdateMode,  }) {
     <>
       
     
-      {Object.entries(data).map(([key, value], i) => (
-        <div
+      {Object.entries(data).map(([key, value]) => (
+        <div 
           key={key}
           className={`h-full  group flex flex-col items-center justify-center overflow-hidden  relative  ${
             key === "entry" || key === "exit" ? "bg-[#EFF3FB]" : ""
