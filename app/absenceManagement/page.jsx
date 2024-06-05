@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import PopupDelete from "../components/PopupDelete";
 import Search from "../components/Search";
 import Table from "../components/Table";
+import Image from "next/image";
 
 const absenceData = [
   {
@@ -198,7 +199,6 @@ export default function ManageAbsence() {
   const [toggleUpdateInput, setToggleUpdateInput] = useState(false);
   const [ifEmpty, setIfEmpty] = useState(false);
 
-  const tableWidth = "3/5";
 
   const addAbsence = () => {
     const newAbsence = {
@@ -228,7 +228,7 @@ export default function ManageAbsence() {
       setselectedAbsence(absence);
       setShowConfirmation(true);
     } catch (error) {
-      console.error("error delete absence: ", error);
+      // console.error("error delete absence: ", error);
     }
   };
 
@@ -259,14 +259,18 @@ export default function ManageAbsence() {
       }
     }
   };
+  const imageAdd = (
+    <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
+  );
 
   return (
     <div
       onClick={() => !checkIfValueIsEmpty() && setSelectedItemIndex(null)}
-      className="h-[80%]"
+      className="h-[93vh] px-4"
     >
       <div className="h-16 w- full flex justify-center m-2">
         <Search
+        addImage={imageAdd }
           addNew={handleNewAbsence}
           textBtn={"הוסף היעדרות"}
           updateMode={selectedItemIndex}
@@ -276,7 +280,7 @@ export default function ManageAbsence() {
 
       {/* THE TABLE */}
       <Table
-        tableWidth={tableWidth}
+        tableWidth={"60"}
         data={absenceArray}
         updateMode={selectedItemIndex}
         setUpdateMode={setSelectedItemIndex}

@@ -29,40 +29,15 @@ const structure = {
         },
       ],
     },
-    {
-      name: "מחלקה 3",
-      branches: [
-        {
-          name: "ענף 1",
-          sections: ["מדור 1", "מדור 2"],
-        },
-        {
-          name: "ענף 2",
-          sections: ["מדור 3", "מדור 4"],
-        },
-      ],
-    },
-    {
-      name: "מחלקה 4",
-      branches: [
-        {
-          name: "ענף 1",
-          sections: ["מדור 1"],
-        },
-        {
-          name: "ענף 2",
-          sections: ["מדור 2", "מדור 3"],
-        },
-      ],
-    },
+    { name: "מחלקה 3" },
+    { name: "מחלקה 4" },
   ],
 };
-
 
 export default function OrganizationTree() {
   return (
       <div>
-        <div className="flex justify-center">
+        <div>
           <BoxField name={structure.name} />
         </div>
         <div className="flex">

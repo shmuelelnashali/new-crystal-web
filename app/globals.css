@@ -14,7 +14,10 @@ li.nav{
   color: #002A78 ;
   list-style-type:initial ;
 }
-
+.grid-cols-10{
+  
+  grid-template-columns:repeat(10,1fr);
+}
 .presentTable {
   display:grid;
   grid-template-columns: repeat(14 ,1fr);
@@ -60,6 +63,13 @@ li.nav{
 
 .white-image {
   filter: grayscale(100%) brightness(1000%);
+}
+
+.w-60{
+  width: 60%;
+}
+.w-80{
+  width: 80%;
 }
 
 

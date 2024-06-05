@@ -16,10 +16,10 @@ export default function RootLayout({  children }) {
   return (
     <html lang="he" dir="rtl">
 
-      <body className={`h-screen  flex-col px-5 text-[#002A78]  overflow-hidden ${open_sans.className}`}>
+      <body className={`h-screen max-h-[99vh] max-w-[99vw] flex-col   text-[#002A78]  overflow-hidden ${open_sans.className}`}>
         <Header />
         {children}
-        <div>פותח ע"י מסגרת אמת </div>
+        <div className="absolute  bottom-1 w-full text-center text-[#A5A5A5]">פותח ע"י מסגרת אמת </div>
         </body>
     </html>
   );

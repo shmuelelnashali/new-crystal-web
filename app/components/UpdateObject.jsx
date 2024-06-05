@@ -61,7 +61,7 @@ export default function UpdateEmployee({
         <div
           dir="rtl"
           key={key}
-          className={`relative ${optionsMap[key] ? "flex " : ""}`}
+          className={`relative py-3 ${optionsMap[key] ? "flex " : ""}`}
         >
           <div
           className="flex item-center text-center"

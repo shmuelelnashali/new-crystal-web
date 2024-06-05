@@ -13,18 +13,21 @@ export default function page() {
   " מדורים",
 
   ]
+  const imageAdd = (
+    <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
+  );
   return (
-    <div className=" h-[70%]">
+    <div className=" h-[78%] ">
       <div className="text-center text-3xl font-semibold">הרשאות</div>
-        <div className="h-24 w-full flex justify-center m-2">
+        <div className=" w-full flex justify-center m-2">
         <Search
         textBtn={"הוסף משתמש"}
         bg={1}  
-        // addImage={"/plus.svg"}
+        addImage={imageAdd}
         
         />
       </div>
-      <div className="bg-[#F4F7FC] h-full flex flex-col text-sm justify-around items-center text-center  rounded-2xl w-2/5  mx-auto px-20 ">
+      <div className="bg-[#F4F7FC] h-full flex flex-col text-sm justify-around items-center text-center  rounded-2xl w-2/5  mx-auto px-20 mt-5">
         <div>
           <Image
             src={"./profilePicture.svg"}

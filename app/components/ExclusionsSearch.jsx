@@ -29,7 +29,7 @@ export default function ExclusionsSearch(props) {
       const response = await axios.get("https://dummyjson.com/users");
       setUser(response.data.users);
       //   console.log(`יוזר${response.data.users}`);
-      console.log(`יוזר${JSON.stringify(response.data.users)}`);
+      // console.log(`יוזר${JSON.stringify(response.data.users)}`);
     } catch (error) {
       console.error("Error fetching users:", error);
     }

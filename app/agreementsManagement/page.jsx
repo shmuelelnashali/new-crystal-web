@@ -340,7 +340,7 @@ export default function agreementsManagement() {
     try {
       const employee = employees.find((employee) => employee.id === id);
       if (!employee) {
-        console.error("Employee not found.");
+         console.error("Employee not found.");
         return;
       }
       await axios.put(`https://dummyjson.com/users/${id}`, employee);
@@ -354,7 +354,7 @@ export default function agreementsManagement() {
         return updatedEmployees;
       });
     } catch (error) {
-      console.error("error updating employee: ", error);
+       console.error("error updating employee: ", error);
     }
   };
 
@@ -439,24 +439,25 @@ export default function agreementsManagement() {
     "סוג הפסקה",
   ];
 
-  const addEmployeeImage = (
+  const imageAdd = (
     <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
   );
 
   return (
-    <div className="h-[80%]  w-full">
+    <div className="h-[93vh]  px-4">
       <div className="h-16   flex justify-center m-2">
         <Search
           addNew={addEmployee}
-          textBtn={" הוסף הסכם חדש"}
+          textBtn={" הוסף הסכם "}
           updateMode={updateMode}
-          addImage={addEmployeeImage}
+          addImage={imageAdd}
           searchText={"חיפוש"}
         />
       </div>
 
       {/* THE TABLE */}
       <Table
+      tableWidth={"80"}
         data={employees}
         updateMode={updateMode}
         setUpdateMode={setUpdateMode}

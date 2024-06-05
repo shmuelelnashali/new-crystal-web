@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Event({missionDay, setMissinDay, type ,fromDate ,toDate}) {
     // const {chck, setChck,exclusions, setExclusions,dayOfWeek2,messinDay,setAddEvent,addEvent,setSelectedOption,selectedOption} = props
-    const {year, month, day ,dayOfWeek} = missionDay
+    const {year, month, day ,dayOfWeek,ac} = missionDay
 
     // const handleExclusions=()=>{
     //     setExclusions(true)

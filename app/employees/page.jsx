@@ -399,27 +399,6 @@ export default function Employees() {
   const handleAddingNewRow = () => {
     !checkIfValueIsEmpty() && addEmployee();
 
-  
-//   const changeTheRowToEdit = (index) => {
-//     let isEmpty = false;
-
-//     for (const absence of employees) {
-//       for (const [key, value] of Object.entries(absence)) {
-//         if (value === "") {
-//           isEmpty = true;
-//           break;
-//         }
-//       }
-//       if (isEmpty) {
-//         break;
-//       }
-//     }
-//     if (!isEmpty) {
-//       setUpdateMode(index);
-//     } else {
-//       setIfEmpty(true);
-//     }
-// >>>>>>> main
   };
 
   //ADD EMPLOYEE OBJECT
@@ -478,7 +457,7 @@ export default function Employees() {
     "מדור",
     "סוג הסכם",
     "תחילת פעילות",
-    "סיום פעילות",
+    "סיום פעילות"
   ];
   const filterArray = [
     { מחלקה: ["משקים והמטות", "נסא"] },
@@ -487,40 +466,32 @@ export default function Employees() {
     { פעיל: ["פעיל", "לא פעיל"] },
   ];
 
-  const addEmployeeImage = (
+  const imageAdd = (
     <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
   );
 
   return (
-
     <div
-      className="h-[85%] "
+      className="h-[90vh] px-5 "
       onClick={() => {
         !checkIfValueIsEmpty() && setUpdateMode(null);
       }}
     >
-      <div className="h-16 w- full flex justify-center m-2">
-
+      
+      <div className="h-11  flex justify-center ">
         <Search
           addNew={handleAddingNewRow}
           textBtn={" הוסף עובד"}
           updateMode={updateMode}
-          addImage={addEmployeeImage}
+          addImage={imageAdd}
           searchText={"חיפוש לפי מספר עובד / שם עובד"}
         />
       </div>
 
-      {/* THE FILTER */}
-// <<<<<<< raziel
-//       <div className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2">
-// =======
-      <div
-//         onClick={() => {
-//           setUpdateMode(null);
-        }}
-        className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
-      >
 
+      {/* THE FILTER */}
+      
+      <div  className="flex p-4  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] ">
         סנן לפי:
         {filterArray.map((filterObject) =>
           Object.entries(filterObject).map(([labelKey, dataArray]) => (
@@ -533,7 +504,9 @@ export default function Employees() {
         )}
       </div>
 
+
       {/* THE TABLE */}
+
       <Table
         data={employees}
         updateMode={updateMode}
@@ -542,16 +515,14 @@ export default function Employees() {
         toggleUpdateInput={toggleUpdateInput}
         setToggleUpdateInput={setToggleUpdateInput}
         ifEmpty={ifEmpty}
-// <<<<<<< raziel
         changeTheRowToEdit={checkIfValueIsEmpty}
-// =======
 //         changeTheRowToEdit={changeTheRowToEdit}
-// >>>>>>> main
         headTable={headTable}
         deleteEmployee={deleteEmployee}
       />
 
       {/* FEEZE EMPLOYEE */}
+      
       {showConfirmation && (
         <PopupDelete
           popUpState={showConfirmation}

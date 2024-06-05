@@ -19,7 +19,7 @@ export default function ({ data, index, setUpdateMode }) {
       {Object.entries(data).map(([key, value], i) => (
         <div
           key={key}
-          className={`h-full md:truncate py-3 group flex flex-col items-center justify-center   relative  ${
+          className={`h-full md:truncate  group flex flex-col items-center justify-center  py-4 relative  ${
             key === "entry" || key === "exit" ? "bg-[#EFF3FB]" : ""
           } text-center`}
         >

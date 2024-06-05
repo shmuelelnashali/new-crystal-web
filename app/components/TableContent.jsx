@@ -12,37 +12,24 @@ export default function TableContent({
   ifEmpty,
   changeTheRowToEdit,
   deleteEmployee,
-
-  headTable,
-  changeTheRowToEdit
-}
-) {
- const theLength = headTable.length
-
-// <<<<<<< eli1
-  headTable,
-}) {
-  const theLength = headTable.length;
-
-// =======
-  
   headLength
-}
-) {
-  
+ 
+}) {
+ 
+
  
  
 
-
+// console.log(headLength)
   return (
-    <div className="w-full ">
+    <div className="w-full bg-[#EFF3FB] ">
 
       <div className="w-full ">
         {data.map((employee, index) => (
           <div
             onClick={(e) => {e.stopPropagation(), !changeTheRowToEdit() && setUpdateMode(index)}}
             key={index}
-            className={`flex w-full gap-2 border-b bg-[#EFF3FB] border-t-[#A7BFE8]/30
+            className={`flex w-full gap-2 border-b  border-t-[#A7BFE8]/30
 
           ${
             updateMode === index
@@ -59,10 +46,9 @@ export default function TableContent({
             >
               <Image src={"/trash.svg"} height="30" width="30" alt="trash" />
             </div>
-            <div className="w-full py-4 ">
-              <div
-                className={`grid grid-cols-${headLength}  w-full justify-between gap-3  font-normal text-[20px] leading-5 text-[#002A78]`}
-              >
+            <div className="w-full  ">
+              <div className={`grid ${headLength}  w-full justify-between gap-3  font-normal text-[20px] leading-5 text-[#002A78]`} >
+             
                 {updateMode === index ? (
                   //RENDER TO UPDATE MOOD
                   <UpdateObject

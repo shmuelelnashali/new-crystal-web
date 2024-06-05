@@ -1,34 +1,25 @@
 import Image from "next/image";
-import React, { useState } from "react";
 import Option from "./option";
 
 export default function AddEvent({ missionDay, setMissionDay,fromDate, setFromDate ,toDate, setToDate }) {
  
-  const {year, month, day  } = missionDay
-
+  const {year, month, day} = missionDay
  const date = `${year}-${month}-${day}`
-
-  
-  console.log(toDate);
 
 
   const handelDate = (e, type) => {
     const newDate = e.target.value;
     const [year, month, day  ] = newDate.split("-")
-    const CurrentMonth = (Number(month) - 1)
-    console.log(CurrentMonth);
-    const CurrenNewDate = `${year}-${String(CurrentMonth).padStart(2, "0")}-${day}`
-    console.log(newDate );
-
     if (type == "from") {
-      setFromDate( CurrenNewDate)
-      setMissionDay(CurrenNewDate) ;
+      setFromDate( `${year}-${month}-${day}`)
+      setMissionDay(`${year}-${month}-${day}`) ;
     }
 
     if (type == "to") {
       setToDate(newDate);
     }
   };
+
   return (
     <div className="w-full ">
       <div className="w-full ">

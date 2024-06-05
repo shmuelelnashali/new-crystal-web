@@ -22,16 +22,7 @@ export default function Year({missionDay ,setMissionDay}) {
         "דצמבר",
       ];
       
-      // const daysInHebrew = [
-      //   "ראשון",
-      //  "שני", 
-      //  "שלישי", 
-      //  "רביעי", 
-      //  "חמישי", 
-      //  "שישי", 
-      //  "שבת"
-      // ];
-
+   
         // Function to get days in month
   const getDaysInMonth = (year, month) =>  new Date(year, month + 1, 0).getDate();
 
@@ -59,15 +50,15 @@ export default function Year({missionDay ,setMissionDay}) {
       });
      
   return (
-    <div className="text-[#002A78] flex-1 w-full flex flex-col justify-between ">
-      
+    <div className="  text-[#002A78] flex-1 w-full flex flex-col justify-between ">
+      <div className="h-11 p-2">
         <FilterByYear 
         setSelectedDate={setSelectedDate}
         selectedDate={selectedDate}/>
+        </div>
 
-<div className="dirLtr px-5 pb-4 max-h-[85vh] ">
-
-    <div className=" dirRtl grid grid-cols-4">
+<div className="dirLtr px-5 pb-4 max-h-[85vh] overflow-y-auto">
+    <div className="dirRtl grid grid-cols-4 ">
       {/* Iterate over each month and display days */}
       {monthsAndDays.map(({ month, daysInMonth }, index) => (
 

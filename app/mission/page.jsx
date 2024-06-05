@@ -1,10 +1,6 @@
 
 "use client"
-
 import Search from "../components/Search";
-
-import ReadObject from "../components/ReadObject";
-import UpdateObject from "../components/UpdateObject";
 import Image from "next/image";
 import { useState } from "react";
 import Table from "../components/Table";
@@ -499,18 +495,24 @@ export default function page() {
     { מדור: ["אמת", "נמה"] },
     { פעיל: ["פעיל", "לא פעיל"] },
   ];
-
+  const add = (
+    <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
+  );
   return (
 
-    <div className="h-[90%] w-full ">
-      <div className="h-20 w-full flex justify-center item">
-        <Search className="" />
+    <div className="h-[90vh] px-3 ">
+      <div className=" w-full flex justify-center item">
+        <Search className="" 
+        textBtn={"הוסף משימה"}
+      
+          addImage={add}
+          />
       </div>
       <div
         onClick={() => {
           setUpdateMode(null);
         }}
-        className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
+        className="flex p-4  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
       >
         סנן לפי:
         {filterArray.map((filterObject) =>

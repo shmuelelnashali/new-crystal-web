@@ -15,7 +15,7 @@ const selectedDate = ()=>{
   if(missionDay){
     
   const {year, month, day } = missionDay
-  const selectedDay = new Date(year, month, day) 
+  const selectedDay = new Date(year, month-1, day) 
   selectedDay.setHours(0, 0, 0, 0 ,0);
   date.setHours(0, 0, 0, 0 ,0);
   return date.getTime() === selectedDay.getTime() }
@@ -44,7 +44,7 @@ const selectedDate = ()=>{
   return (
     
       <div
-        onClick={()=>{  setMissionDay(`${year}-${month}-${day}`)}}
+        onClick={()=>{  setMissionDay(`${year}-${month+1}-${day}`)}}
           className={`h-full w-full rounded-xl flex items-center flex-col justify-center
           ${
             dateComparisonResult() || selectedDate()  ?  "bg-[#cccccc]/50 w-9 h-9" :" "
