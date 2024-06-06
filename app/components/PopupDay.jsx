@@ -9,6 +9,12 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
  
   const {year, month, day ,dayOfWeek} = missionDay
   const [events, setEvents] = useState(false);
+  const [eventDate, setEventDate] = useState(
+    {
+      beginning_date :date,
+      end_date:date,
+      activityDay:""
+    })
   const mission = () => {
     setMissionDay(null)
   };
@@ -30,11 +36,11 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
           <div className=" flex justify-center items-center mt-3 font-bold text-2xl">
             {dayOfWeek}
           </div>
-          <div className="flex justify-center items-center text-xl">
 
+          <div className="flex justify-center items-center text-xl">
           {day}/{month}/{year}
           </div>
-
+          
           <div className="flex justify-center items-center p-2">
             <h2 className=" w-4/5 p-2 border rounded-full  text-center text-white bg-[#002A78]">
               סוג פעילות
@@ -47,7 +53,9 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
                events={events}
                 setEvents={setEvents}
                missionDay={missionDay}
-               setMissionDay={setMissionDay}/>
+               setMissionDay={setMissionDay}
+               eventDate={eventDate}
+        setEventDate={setEventDate}/>
         
         </div>
       </div>
@@ -58,7 +66,7 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
 
      </button>
 
-     <button onClick={()=> setEvents(1)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
+     {/* <button onClick={()=> setEvents(1)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
      <Image 
      src="/addEmployee.svg" 
      width={20} 
@@ -66,12 +74,12 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
      alt="" />
       <p>הוסף אירוע</p>
 
-     </button>
-     {/* <button onClick={()=> setEvents(true)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
+     </button> */}
+     <button onClick={()=> setEvents(true)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
 
       <p>שמור</p>
 
-     </button> */}
+     </button>
      {/* <button onClick={()=> setEvents(true)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
      <Image 
      src="/edit.svg" 

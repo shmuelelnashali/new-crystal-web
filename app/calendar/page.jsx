@@ -21,13 +21,13 @@ export default function Calendar() {
        "שבת"
       ];
 
-const mission ={
-  activity:"חג",
-  start:"12-03-2024",
-  end:"16-03-2024"
+const activityDate ={
+  event:"חג",
+  beginning_date:"12-03-2024",
+  end_date:"16-03-2024"
 }
 const chack=(date)=>{
-  const  [day, month, year] = mission.start.split("-")
+  const  [day, month, year] = activityDate.beginning_date.split("-")
   const d = new Date(year, month-1, day)
   console.log(d);
   console.log(date);
@@ -35,7 +35,7 @@ const chack=(date)=>{
   date.setHours(0, 0, 0, 0 ,0);console.log(d.getTime() === date.getTime());
    if(d.getTime() === date.getTime() )
     
-    {return mission}
+    {return activityDate}
 
 };
 
@@ -48,9 +48,9 @@ const chack=(date)=>{
     } 
     const  [year, month, day] = string.split("-")
     const date = new Date(year, month-1, day)
-    const miss=chack(date)
+    
     const dayOfWeek = daysInHebrew [date.getDay()]
-     const objectDate = {year:year, month:month.padStart(2, "0"),day:day.padStart(2, "0") ,dayOfWeek:dayOfWeek ,activity:miss}
+     const objectDate = {year:year, month:month.padStart(2, "0"),day:day.padStart(2, "0") ,dayOfWeek:dayOfWeek ,activity:chack(date)}
      setMissionDay(objectDate)
      console.log (objectDate)
      

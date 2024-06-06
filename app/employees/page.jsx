@@ -491,7 +491,7 @@ export default function Employees() {
 
       {/* THE FILTER */}
       
-      <div  className="flex p-4  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] ">
+      <div  className="flex p-4  w-full gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] ">
         סנן לפי:
         {filterArray.map((filterObject) =>
           Object.entries(filterObject).map(([labelKey, dataArray]) => (

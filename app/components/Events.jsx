@@ -4,15 +4,17 @@ import AddEvent from './AddEvent'
 import Event from './Event'
 import Image from 'next/image'
 
-export default function Events({missionDay,setMissionDay,events, setEvents}) {
+export default function Events({missionDay,setMissionDay,events, setEvents,eventDate, setEventDate}) {
     const {year, month, day ,activity } = missionDay
     const date = `${year}-${month}-${day}`
      
+  
     const [fromDate, setFromDate] = useState(date)
     const [toDate, setToDate] = useState(date)
 
   return (<>
 {activity? 
+
   <Event
     missionDay={missionDay}
     setMissionDay={setMissionDay}
@@ -20,8 +22,12 @@ export default function Events({missionDay,setMissionDay,events, setEvents}) {
     fromDate={fromDate}
     setFromDate={setFromDate}
     toDate={toDate}
-        setToDate={setToDate}/>
-        :  
+        setToDate={setToDate}
+        eventDate={eventDate}
+        setEventDate={setEventDate}
+        />
+        :
+
     events!==1? 
   <div className="  h-full flex justify-center items-center">
   <Image 
@@ -41,6 +47,8 @@ export default function Events({missionDay,setMissionDay,events, setEvents}) {
          setFromDate={setFromDate}
          toDate={toDate}
          setToDate={setToDate}
+         eventDate={eventDate}
+         setEventDate={setEventDate}
          
       />  
     }

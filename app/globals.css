@@ -71,6 +71,8 @@ li.nav{
 .w-80{
   width: 80%;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;}
 
 
 
