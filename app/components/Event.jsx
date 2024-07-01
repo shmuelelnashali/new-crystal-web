@@ -1,29 +1,31 @@
 import Image from 'next/image'
 import React from 'react'
+import ExcludedEvent from './ExcludedEvent'
 
-export default function Event({missionDay, setMissinDay, type  ,eventDate}) {
-    // const {chck, setChck,exclusions, setExclusions,dayOfWeek2,messinDay,setAddEvent,addEvent,setSelectedOption,selectedOption} = props
+export default function Event({missionDay, setMissinDay  ,eventDate}) {
+
     const {year, month, day ,dayOfWeek,activity} = missionDay
     const {beginning_date , end_date ,activityDay}= eventDate
-
-    // const handleExclusions=()=>{
-    //     setExclusions(true)
-    // }
-    // const chcking=()=>{
-    //     setChck(false)
-    //     setAddEvent(true)
-    // }
+    
+    const dateSplit=(dateString)=>{
+      const date=dateString.split("-")
+      const reversedDate = `${date[2]}/${date[1]}/${date[0]}`
+return reversedDate
+    }
+    // const [beginning_year, beginning_month, beginning_day]=beginning_date.split("-")
+    // const [end_year, end_month, end_day]=end_date.split("-")
   return (
   
-       <div className='w-full '>
+  <div className='w-full px-2 '>
 
    <div className='border bg-[#E4EBF8] flex justify-center items-center rounded-md h-8'>{activityDay} </div>
    
    <div className=' text-lg font-normal flex p-3 justify-center gap-3 w-full'>
-   <div className='p-1 px-4  border-[1px] border-[#002A78]/17 rounded-full'>{end_date}</div>
-   <Image src="leftArrow.svg" width={25} height={25} alt="r" />
-   <div className='p-1 px-2 border rounded-full'>{beginning_date}</div>
+      <div className='p-1 px-4  border-[1px] border-[#002A78]/17 rounded-full'>{dateSplit(beginning_date)}</div>
+          <Image src="leftArrow.svg" width={25} height={25} alt="r" />
+        <div className='p-1 px-2 border rounded-full'>{dateSplit(end_date)}</div>
    </div>
+   <ExcludedEvent/>
 </div>
 
   )

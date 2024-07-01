@@ -1,23 +1,29 @@
 'use client'
 
-export default function Search({textBtn, addNew, addImage, bg, searchText}) {
-  return (
-    <div className="w-3/5 h-11 flex relative rounded-full text  items-center">
+import clsx from "clsx";
 
-      <input className= 
-      {`outline-none w-[85%] absolute z-10  rounded-full ${bg? "bg-white border":"bg-[#EFF3FB]"} leading-5 p-2 placeholder:text-[#002A78]`} 
+export default function Search({textBtn, addNew, addImage, bg, searchText,missionDay }) {
+  return (
+    <div className={clsx("w-1/2  flex  h-10 border border-white relative rounded-full items-center ",
+    {" bg-gradient-to-r from-[#002A78] via-[#002A78] to-[#EFF3FB]":!missionDay})}>
+     
+
+      <input className={clsx("rounded-full outline-none h-full placeholder:text-[#002A78] w-full bg-[#EFF3FB]" ,
+      {"bg-white border":bg},
+       {"w-[85%]":!missionDay}  )}
+     
       placeholder={searchText}
       />
 
-      <button 
+      {!missionDay &&<button 
       onClick={(e)=>
         {e.stopPropagation(),
           addNew()
         }}
-      className="w-[20%] flex justify-center gap-2 items-center absolute pr-[4%] py-2 p-1 left-0 text-gray-100 font-normal leading-5 text-[20px] bg-[#002A78] rounded-l-full">
+      className="w-[20%] flex justify-center gap-2 items-center   left-0 text-gray-100 font-normal  text-[20px] ">
         <div>{textBtn}</div>
         <div>{addImage}</div>
-      </button>
+      </button>}
     </div>
   );
 }

@@ -528,6 +528,7 @@ export default function page() {
      
       
       <Table
+      tableWidth={"80"}
         data={data}
         updateMode={updateMode}
         setUpdateMode={setUpdateMode}

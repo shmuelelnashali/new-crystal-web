@@ -20,7 +20,7 @@ li.nav{
 }
 .presentTable {
   display:grid;
-  grid-template-columns: repeat(14 ,1fr);
+  grid-template-columns:repeat(14 ,1fr);
 }
 
 .dirLtr{
@@ -29,21 +29,26 @@ li.nav{
 .dirRtl{
   direction: rtl;
 } 
+.dragndrop{
+  background-color: aqua;
+}
 
 /* width */
 ::-webkit-scrollbar {
-  margin-top:3px; 
+ 
   width: 7px;
   direction:ltr;
 }
 ::-webkit-scrollbar-button{
-  margin: 5px;
+ margin: 3px;
 }
 
 /* Track */
  ::-webkit-scrollbar-track {
+  
     box-shadow: inset 0 0 3px rgb(209, 217, 233);
     border-radius: 23px;
+    background-color: #EFF3FB;
     
 }
 /* Handle */
@@ -74,8 +79,13 @@ li.nav{
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;}
 
-
-
+.transition-width {
+    transition: width 0.5s;
+}
+/* .custom-col-span {
+  grid-column: span 0.5 ;
+  width: 50%;
+} */
 
 
 

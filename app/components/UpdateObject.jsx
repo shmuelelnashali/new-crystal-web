@@ -61,10 +61,11 @@ export default function UpdateEmployee({
         <div
           dir="rtl"
           key={key}
-          className={`relative py-3 ${optionsMap[key] ? "flex " : ""}`}
+          className={`relative py-3 ${optionsMap[key] ? "flex " : ""} `}
         >
+          {console.log(key)}
           <div
-          className="flex item-center text-center"
+          className=" w-full flex item-center text-center"
             onClick={(e) => {
 
               // setUpdateMode(null);
@@ -83,15 +84,15 @@ export default function UpdateEmployee({
               onChange={(e) => {
                 handleDateChange(e, data.id, key);
               }}
-              className={` border w-full rounded-full md:truncate  pr-2 pl-4 border-[#002A78] 
+              className={` border w-full  rounded-full md:truncate  pr-2 pl-4 border-[#002A78] 
 
               ${"FOR EMPLOYEES PAGE"}
-              ${key === "start" || key === "end" ? "pl-1 pr-3 " : ""}
-              ${optionsMap[key] ? "cursor-pointer" : ""} 
+              ${key === "start" || key === "end" ? "pl-1 pr-3 " : "" }
+              ${optionsMap[key] ? "cursor-pointer" : "" } 
 
               ${"FOR AGREEMENTS PAGE"}
               ${key === "id" || key=== "enterTime" || key=== "exitTime" || key=== "overTimeLimit" || key=== "hoursAmount" || key=== "breakType" 
-              ? "w-[66.666667%] m-auto text-center" : "text-right"}
+              ? "w-[66.666667%] m-auto text-center" : "text-center"}
               `}
               
               type={key === "start" || key === "end" ? "date" : "text"}

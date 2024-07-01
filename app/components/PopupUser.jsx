@@ -15,8 +15,8 @@ export default function PopupUser({toggle}) {
     //   </div>
     //   </div>
     //   </div>
-       <div className=' fixed inset-0  z-50 ' >
-       <div className='fixed  inset-0   bg-[#000000]/20 backdrop-blur-[2px] ' onClick={toggle} > </div>
+       <div onClick={toggle} className=' fixed inset-0  z-50  bg-[#000000]/20 backdrop-blur-[2px] ' >
+       {/* <div className='fixed  inset-0  ' > </div> */}
           <div className='
           z-60
           w-[260px]

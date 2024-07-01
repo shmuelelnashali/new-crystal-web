@@ -1,26 +1,28 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import Events from "./Events";
-import Btn from "./Btn";
 
 
-export default function PopupDay({missionDay, setMissionDay ,setExclusions}){ 
+
+export default function PopupDay({missionDay, setMissionDay ,setExclusions, eventDate, setEventDate}){ 
  
  
-  const {year, month, day ,dayOfWeek} = missionDay
-  const [events, setEvents] = useState(false);
-  const [eventDate, setEventDate] = useState(
-    {
-      beginning_date :date,
-      end_date:date,
-      activityDay:""
-    })
+  const { dayOfWeek ,activity } = missionDay
+  const [ year, month, day ] = eventDate.beginning_date.split("-")
+  console.log();
+  const [events, setEvents] = useState(activity??"");
+ 
+  //   {
+  //     beginning_date :`${year}-${month}-${day}`,
+  //     end_date:`${year}-${month}-${day}`,
+  //     activityDay:dayOfWeek
+  //   })
   const mission = () => {
     setMissionDay(null)
   };
 
   return (
-    <div className="border  flex  border-r-[#002A78] w-1/5  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full p-2 z-40">
+    <div className="border w-1/5 flex  border-r-[#002A78]  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full p-2 z-40">
       <div className="flex flex-col h-[90vh] ">
 
         <div className="">
@@ -34,7 +36,7 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
 
         <div className="w-full ">
           <div className=" flex justify-center items-center mt-3 font-bold text-2xl">
-            {dayOfWeek}
+             יום {dayOfWeek} 
           </div>
 
           <div className="flex justify-center items-center text-xl">
@@ -42,45 +44,49 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
           </div>
           
           <div className="flex justify-center items-center p-2">
-            <h2 className=" w-4/5 p-2 border rounded-full  text-center text-white bg-[#002A78]">
+            <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-[#002A78]">
               סוג פעילות
             </h2>
           </div>
         </div>
 
         <div className=" h-full w-full">
-               <Events
-               events={events}
-                setEvents={setEvents}
-               missionDay={missionDay}
-               setMissionDay={setMissionDay}
-               eventDate={eventDate}
-        setEventDate={setEventDate}/>
-        
+              <Events
+              events={events}
+              setEvents={setEvents}
+              missionDay={missionDay}
+              setMissionDay={setMissionDay}
+              eventDate={eventDate}
+              setEventDate={setEventDate}/>
         </div>
       </div>
+
       <div className="flex justify-center gap-4 ">
-     <button className="flex gap-2 items-center px-3 py-2 rounded-full border-[1px]  border-[#002A78]">
+
+     <button onClick={()=>setExclusions(true)}className="flex gap-2 items-center px-3 py-2 rounded-full border-[1px]  border-[#002A78]">
       <Image src="/exclusions.svg" width={20} height={20} alt="" />
       <p>החרגות</p>
 
      </button>
 
-     {/* <button onClick={()=> setEvents(1)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
+    {!activity &&  events!== "new" && events!== "edit" && 
+    <button onClick={()=> setEvents("new")} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
      <Image 
      src="/addEmployee.svg" 
      width={20} 
      height={20} 
      alt="" />
       <p>הוסף אירוע</p>
+     </button>} 
 
-     </button> */}
-     <button onClick={()=> setEvents(true)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
 
+    { (events === "new" || events === "edit")  &&
+    <button  className="bg-[#002A78] flex gap-2 items-center text-white px-5 py-2 rounded-full">
       <p>שמור</p>
-
-     </button>
-     {/* <button onClick={()=> setEvents(true)} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
+     </button> }
+     
+     { activity && events!== "new" && events!== "edit"&&
+     <button onClick={()=> setEvents("edit")} className="bg-[#002A78] flex gap-2 items-center text-white px-3 py-2 rounded-full">
      <Image 
      src="/edit.svg" 
      width={20} 
@@ -88,10 +94,10 @@ export default function PopupDay({missionDay, setMissionDay ,setExclusions}){
      alt="" />
       <p>ערוך</p>
 
-     </button> */}
+     </button> }
           
             </div>
-      
+  
     </div>
   );
 }

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Option from "./Option";
 import { useRef } from "react";
 
-export default function AddEvent({ missionDay, setMissionDay, eventDate, setEventDate }) {
+export default function EditEvent({ missionDay, setMissionDay, eventDate, setEventDate }) {
  
   const {year, month, day} = missionDay
  const date = `${year}-${month}-${day}`
@@ -79,7 +79,7 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
               ref={dateFromRef}
                 className=" w-full  border rounded-full border-[#002A78] px-3 "
                 type="date"
-                value={beginning_date}
+                value={date}
                 onChange={(e) => handelDate(e, "from")}
               />
               <Image

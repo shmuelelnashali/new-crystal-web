@@ -1,14 +1,9 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import UpdateDelete from "../components/EmployeeFilter";
 import Image from "next/image";
-import UpdateObject from "../components/UpdateObject";
-import ReadObject from "../components/ReadObject";
-import EmployeeFilter from "../components/EmployeeFilter";
 import PopupDelete from "../components/PopupDelete";
 import Search from "../components/Search";
-import TableHead from "../components/TableHead";
 import Table from "../components/Table";
 
 export default function agreementsManagement() {
@@ -434,7 +429,7 @@ export default function agreementsManagement() {
     "שם הסכם",
     "שעת כניסה",
     "שעת יציאה",
-    "מגבלת שעות נוספות",
+    "מגבלת ש.נ",
     "כמות שעות",
     "סוג הפסקה",
   ];

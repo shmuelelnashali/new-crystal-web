@@ -1,35 +1,49 @@
 import axios from "axios";
+import { clsx } from "clsx";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-export default function ExclusionsSearch(props) {
-  const { selectedOption, setSelectedOption } = props;
+export default function ExclusionsSearch({openSearch}) {
+  console.log(openSearch);
 
-  const [color, setColor] = useState(false);
+ ;
   const [user, setUser] = useState([]);
-  const [v, setV] = useState(Array.from({ length: user.length }, () => false));
+  const [v, setV] = useState( []);
+  console.log(v);
+
   const handleSearch = () => {
     setColor(!color);
   };
+  const check=(user)=>{
+    const index = v.indexOf(user.id) 
+    if (index !== -1) {
+      return true
+      }
 
-  const handleV = (i) => {
-    // צור עותק של מערך ה־v
-    const updatedV = [...v];
-    // עדכן את הערך באינדקס i
-    updatedV[i] = !updatedV[i];
-    // הגדר את מערך ה־v המעודכן כמצב החדש
+  }
+
+  const handleV = (user) => {
+    const index = v.indexOf(user.id) 
+    const updatedV = [...v]
+    if (index !== -1) {
+      updatedV.splice(index, 1)
+      setV(updatedV)
+    }
+    else {
+     updatedV.push(user.id);
     setV(updatedV);
+
+  }
+
   };
 
-  const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+
 
   const fetchUsers = async () => {
     try {
       const response = await axios.get("https://dummyjson.com/users");
       setUser(response.data.users);
-      //   console.log(`יוזר${response.data.users}`);
-      // console.log(`יוזר${JSON.stringify(response.data.users)}`);
+     
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -39,38 +53,33 @@ export default function ExclusionsSearch(props) {
   }, []);
   return (
    
-      <div dir="ltr" className=" border bg-white p-2  absolute w-full z-50 overflow-auto">
+      <div dir="ltr" 
+      className={clsx("px-1 z-50 overflow-auto bg-white absolute w-[92%] ",{"shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]":openSearch})} >
         <div
      
-          className={`
-           ${
-            color ? "h-[15vh]" : "h-[27vh] "
-          } `}
+          className={clsx({" h-[30vh] overflow-auto ":openSearch},
+      {"h-[15vh] overflow-auto ":openSearch===false}
+)} 
+  
         >
           {user.map((user, i) => (
             <div key={i}>
               <div dir="rtl" className="flex ">
                 <div className="flex justify-center items-center">
                   <div
-                    onClick={() => handleV(i)}
+                    onClick={() => handleV(user)}
                     className={`flex justify-center items-center mr-2 border border-[#002A78] w-4 h-4 ${
-                      v[i] ? "bg-[#002A78] " : ""
+                      check(user) ? "bg-[#002A78] " : ""
                     }`}
                   >
-                    {v[i] && (
-                      <svg
-                        width="10"
-                        height="9"
-                        viewBox="0 0 10 9"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 4.5L4 8L9 1"
-                          stroke="white"
-                          stroke-linecap="round"
-                        />
-                      </svg>
+                    {check(user) && (
+                    <Image
+                    src={"v.svg"}
+                    width={10}
+                    height={9}
+                    alt="v"
+                    />
+                   
                     )}
                   </div>
                 </div>
@@ -79,7 +88,7 @@ export default function ExclusionsSearch(props) {
                   <div>{user.id}</div>
                 </div>
               </div>
-              <div className=" mx-4 border border-b-[#002A78]"></div>
+              <div className=" mx-4 border border-b-[#EFF3FB]"></div>
             </div>
           ))}
         </div>

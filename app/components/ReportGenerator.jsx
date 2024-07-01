@@ -1,9 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 export default function ReportGenerator() {
+  const [filidsTo, setFilidsTo]=useState([])
+ const user=[{
+
+
+ }]
   const buttons = [
     { text: "בטל", icon: "censel.svg" },
     { text: "חדש", icon: "new.svg" },
@@ -22,13 +27,49 @@ export default function ReportGenerator() {
     " שעת יציאה 1",
     " שעת יציאה 2",
     "תאריך",
+    "שם עובד",
+    " מספר עובד",
+    " שעת כניסה 1",
+    " שעת כניסה 2",
+    " שעת יציאה 1",
+    " שעת יציאה 2",
+    "תאריך",
     "ענף",
     "מחלקה",
     "מדור",
   ]
+  
+  const [draggedItem, setDraggedItem] = useState(null);
+    
+      const handleDragStart = (e, item) => {
+        setDraggedItem(item);
+        e.dataTransfer.effectAllowed = 'move';
+      };
+    
+      const handleDragEnd = () => {
+        setDraggedItem(null);
+      };
+    
+      const handleDragOver = (e) => {
+        e.preventDefault();
+        console.log(e);
+        e.target.classList.add("dragndrop");
+        e.dataTransfer.dropEffect = 'move';
+      };
+    
+      const handleDrop = (e) => {
+        e.preventDefault();
+        if(!filidsTo.includes(draggedItem)){
+          const a=[...filidsTo]
+
+          a.push(draggedItem)
+          setFilidsTo(a);
+      }
+        handleDragEnd();
+      };
 
   return (
-    <div className="h-[95%] flex flex-col w-full rounded-xl p-3 bg-[#EFF3FB]">
+    <div className="h-[93%] flex flex-col w-full  rounded-xl p-3 bg-[#EFF3FB]">
       <div className=" flex gap-4  ">
         {buttons.map((button, index) => (
           <button
@@ -46,15 +87,18 @@ export default function ReportGenerator() {
         ))}
       </div>
 
-      <div className="py-4 flex h-full gap-4">
-        <div className="w-1/5  h-full p-4 rounded-xl flex-col  bg-white font-normal text-xl">
-          <div className="text-center font-semibold text-2xl pb-2">
+      <div className="py-4 flex gap-4 h-[98%]"> 
+      <div className=" bg-white w-1/5 p-2 rounded-xl ">
+        <div className="dirLtr  h-[98%] p-4   flex-col overflow-y-scroll font-normal text-xl">
+         
+          <div className=" text-center font-semibold text-2xl pb-2">
             שדות אפשריים
           </div>
+          <div className=" dirRtl"> 
           <div className="relative">
             <input
               type="text"
-              className="w-full p-2 rounded-3xl bg-[#EFF3FB] "
+              className="dirRtl w-full p-2 rounded-3xl bg-[#EFF3FB] "
               placeholder=" חיפוש"
             />
             <Image
@@ -65,15 +109,21 @@ export default function ReportGenerator() {
               alt="search"
             />
           </div>
-          {fields.map((field ,i) => (
-            <div key={i} className="border-b-[1px] py-4 px-4 flex ">
-              {field}
+       
+         {fields.map((field ,i) => (
+            <div draggable  
+             onDragStart={(e)=> handleDragStart(e, field)}
+            onDragEnd={handleDragEnd} key={i}  className="border-b-[1px] py-4 px-4 flex  ">
+             <p  
+             
+            >{field}</p>
             </div>
-          ))}
+          ))}</div>
         </div>
-        <div className="flex flex-col w-4/5 rounded-lg h-full gap-1 ">
-          <div className="bg-white rounded-lg p-2 max-h-[35%] overflow-hidden">
-            <div className="flex justify-between">
+        </div>
+        <div className="flex flex-col  w-4/5 rounded-lg h-full gap-1 ">
+          <div  className="bg-white rounded-lg p-2 h-1/2  flex flex-col overflow-hidden">
+            <div className="flex justify-between ">
               <div className="inline bg-[#002A78] rounded-[4px] px-8 py-1 text- text-white ">
                 מסננים
               </div>
@@ -97,16 +147,11 @@ export default function ReportGenerator() {
 
      
 
- 
-         
-           
-           
-         
-            
-
-            <div className="max-h-[90%] pb-2 overflow-auto ">
-              <div className="   justify-items-center grid grid-cols-3 gap-x-10 gap-5 mt-5 ">
-                {fields.map((field,i) => (
+            <div onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e)} className="hov h-[100%] pb-2  overflow-auto">
+              <div 
+              className="  justify-items-center grid grid-cols-3 gap-x-10 gap-5 mt-5 ">
+                {filidsTo.map((field,i) => (
                   <div key={i} className="w-full px-5">
                     <label htmlFor="" className="block">
                       {" "}
@@ -115,7 +160,7 @@ export default function ReportGenerator() {
                     <div className=" flex gap-2 ">
                       <input
                         type="text"
-                        className="border  rounded-full w-full"
+                        className=" outline-none pr-3 border border-[#002A78] rounded-full w-full"
                       />
                       <Image
                         className=""
@@ -146,11 +191,23 @@ export default function ReportGenerator() {
           </div>
 
           <div className="bg-white h-4/5 p-2 flex gap-1 rounded-lg">
-            <div className=" bg-white w-1/3 flex flex-col">
-              <div className="bg-[#002A78] p-2 rounded-lg h-10 text-white"></div>
-            </div>
+            {/* <div className=" bg-white w-1/3 flex flex-col">
+              <div className="bg-[#002A78] p-2 rounded-lg h-10 text-white">
+              </div>
+            </div> */}
 
-            <div className="bg-[#EFF3FB] w-2/3 border-dashed border-2 border-[#002A78] rounded-lg p-2"></div>
+            <div className="bg-[#EFF3FB] w-full border-dashed border-2 border-[#002A78] rounded-lg p-2">
+              <div className="w-full h-full flex justify-center items-center">
+                <Image
+                 
+                src={"addFilid.svg"}
+                width={422}
+                height={200}
+                />
+
+              </div>
+              
+            </div>
           </div>
         </div>
       </div>

@@ -76,11 +76,17 @@ export default function report() {
 "דו”ח עובדים"
   ]
   return (
-  <div className='h-[95%] overflow-hidden  flex justify-center ' >
+  <div className='h-[95%] overflow-hidden p-3 flex justify-center ' >
     {createRepo ?
-    <ReportGenerator/>:
-     <ReportSelection oldRepo={oldRepo} newRepo={newRepo}  setCreateRepo={setCreateRepo}/>
+    <ReportGenerator
+    createRepo={createRepo}
+    setCreateRepo={setCreateRepo}/>:
+    <ReportSelection 
+        oldRepo={oldRepo} 
+        newRepo={newRepo}  
+        setCreateRepo={setCreateRepo}/>
      } 
+
 
      
   </div>

@@ -16,7 +16,7 @@ export default function RootLayout({  children }) {
   return (
     <html lang="he" dir="rtl">
 
-      <body className={`h-screen max-h-[99vh] max-w-[99vw] flex-col   text-[#002A78]  overflow-hidden ${open_sans.className}`}>
+      <body className={`h-screen max-h-[99vh] max-w-[99vw] flex-col   text-[#002A78] m-auto overflow-hidden ${open_sans.className}`}>
         <Header />
         {children}
         <div className="absolute  bottom-1 w-full text-center text-[#A5A5A5]">פותח ע"י מסגרת אמת </div>

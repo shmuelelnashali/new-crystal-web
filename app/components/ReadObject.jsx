@@ -21,7 +21,7 @@ export default function ({ data, index, setUpdateMode }) {
           key={key}
           className={`h-full md:truncate  group flex flex-col items-center justify-center  py-4 relative  ${
             key === "entry" || key === "exit" ? "bg-[#EFF3FB]" : ""
-          } text-center`}
+          } text-center ${key==="overTimeLimit" ?"custom-col-span":""}`}
         >
           {key === "entry" || key === "exit"
             ? value.map((v) => <div>{v}</div>)
