@@ -35,7 +35,7 @@ export default function EmployeeFilter({ dataArray, label }) {
     ${label=== 'מחלקה'?' w-[11%] ' : ''}
     `}>
       <div
-        className={`flex p-[1.9px] border  pr-2 hover:cursor-pointer rounded-full bg-white border-[#002A78]
+        className={`flex p-[1.9px] border  pr-2 hover:cursor-pointer rounded-full bg-white border-blue_color
         
         `}
         onClick={toggleOptionMenu}
@@ -55,7 +55,7 @@ export default function EmployeeFilter({ dataArray, label }) {
           <ul className="flex flex-col  bg-white p-1 rounded shadowForDrop">
             {dataArray.map((option, index) => (
               <li
-                className="cursor-pointer px-4 w-full md:truncate  py-1  text-[#002A78] rounded hover:bg-[#002A78] hover:text-white"
+                className="cursor-pointer px-4 w-full md:truncate  py-1  text-blue_color rounded hover:bg-blue_color hover:text-white"
                 onClick={() => handleOption(option)}
                 key={index}
               >

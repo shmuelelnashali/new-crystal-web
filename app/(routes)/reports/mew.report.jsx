@@ -36,7 +36,7 @@ export default function reports() {
 
   return (
     <div className="flex flex-col h-5/6 p-6  bg-[#EFF3FB]">
-      <div className="flex justify-between pb-6 border-b-[1px] border-[#002A78]/30">
+      <div className="flex justify-between pb-6 border-b-[1px] border-blue_color/30">
         <div className="flex justify-between w-3/4 ">
           <div className="flex w-full flex-nowrap items-center ml-6">
             <label htmlFor="" className="text-sm font-semibold ">
@@ -44,7 +44,7 @@ export default function reports() {
             </label>
             <input
               type="text"
-              className="border  border-[#002A78] rounded-3xl mx-2 px-2 py-1 flex-grow placeholder:text-sm placeholder:text-[#002A78] "
+              className="border  border-blue_color rounded-3xl mx-2 px-2 py-1 flex-grow placeholder:text-sm placeholder:text-blue_color "
               placeholder=" תן שם לדו”ח"
             />
           </div>
@@ -55,7 +55,7 @@ export default function reports() {
             </label>
             <input
               type="text"
-              className="border border-[#002A78] rounded-3xl  mx-2 px-2 py-1 flex-grow placeholder:text-[#002A78] placeholder:text-sm "
+              className="border border-blue_color rounded-3xl  mx-2 px-2 py-1 flex-grow placeholder:text-blue_color placeholder:text-sm "
               placeholder="בחר דו”ח"
             />
             <Image
@@ -67,7 +67,7 @@ export default function reports() {
             />
           </div>
         </div>
-        <div className="flex rounded-3xl bg-[#002A78] p-[0.9px]">
+        <div className="flex rounded-3xl bg-blue_color p-[0.9px]">
           <button className="px-4  bg-white rounded-3xl items-stretch">
             שמור
           </button>
@@ -123,7 +123,7 @@ export default function reports() {
         </div>
 
         <div className="w-3/5 rounded-xl bg-white flex-col p-2">
-                <div className="w-full text-white p-2 text-center rounded-xl text-xl font-semibold flex bg-[#002A78]  ">
+                <div className="w-full text-white p-2 text-center rounded-xl text-xl font-semibold flex bg-blue_color  ">
                 <div className="w-1/4 ">שם השדה</div>
                 <div  className="w-1/4">שם לתצוגה </div>
                 <div className="w-1/4">מיון</div>
@@ -133,11 +133,11 @@ export default function reports() {
             <div className="w-full p-4 text-center rounded-xl text-xl font-normal flex gap-4 items-center  ">
                 <div className="w-1/4 ">{field}</div>
                 <div  className="w-1/4" >
-                  <input type="text" name="" id="" placeholder="" className="border w-full border-[#002A78] rounded-2xl pr-2"/>
+                  <input type="text" name="" id="" placeholder="" className="border w-full border-blue_color rounded-2xl pr-2"/>
           
                   </div>
                 <div className="w-1/4 relative">
-                <input type="" name="" id="" placeholder="בחרו דרך למילוי" className="border w-full border-[#002A78] rounded-2xl pr-2 placeholder:text-xl placeholder:text-[#002A78]"/>
+                <input type="" name="" id="" placeholder="בחרו דרך למילוי" className="border w-full border-blue_color rounded-2xl pr-2 placeholder:text-xl placeholder:text-blue_color"/>
             
                      <Image
               className="absolute top-3 left-[5%]"
@@ -149,7 +149,7 @@ export default function reports() {
           
                 </div>
                 <div  className="w-1/4 relative">
-                <input type="text" name="" id="" placeholder="בחרו דרך לסינון" className="border  w-full border-[#002A78] rounded-2xl pr-2 placeholder:text-xl placeholder:text-[#002A78]" />
+                <input type="text" name="" id="" placeholder="בחרו דרך לסינון" className="border  w-full border-blue_color rounded-2xl pr-2 placeholder:text-xl placeholder:text-blue_color" />
                     
                      <Image
                      onClick={ ()=> openOption()}
@@ -159,7 +159,7 @@ export default function reports() {
               height={6}
               alt="o"
             />
-          {/* <div className="w-full z-10 absolute bg-slate-700 border border-[#002A78] border-t-0">
+          {/* <div className="w-full z-10 absolute bg-slate-700 border border-blue_color border-t-0">
        
           
           </div> */}
@@ -171,17 +171,17 @@ export default function reports() {
       
       </div>
       <div className="flex justify-between ">
-        <button className=" rounded-2xl p-[1px] bg-[#002A78] ">
+        <button className=" rounded-2xl p-[1px] bg-blue_color ">
           <div className="bg-white px-4 rounded-2xl" onClick={() => setReportFields([])}>איפוס</div>
         </button>
         <div className="flex gap-4">
-          <button className="px-4 rounded-xl bg-[#002A78] text-white">
+          <button className="px-4 rounded-xl bg-blue_color text-white">
             ייצור דוח
           </button>
-          <button className="px-4 rounded-xl  bg-[#002A78] text-white">
+          <button className="px-4 rounded-xl  bg-blue_color text-white">
             ייצא PDF
           </button>
-          <button className="px-4 rounded-xl bg-[#002A78] text-white">
+          <button className="px-4 rounded-xl bg-blue_color text-white">
             הפק לאקסל
           </button>
         </div>

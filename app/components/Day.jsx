@@ -47,7 +47,7 @@ const selectedDate = ()=>{
       <div
         onClick={()=>{ setMissionDay(null)
            setMissionDay(`${year}-${month+1}-${day}`)}}
-          className={`h-full w-full rounded-xl flex items-center flex-col justify-center
+          className={`h-full w-full rounded-xl flex items-center cursor-pointer flex-col justify-center
           ${
             dateComparisonResult() ||( day!== null && isActivReport )?  "bg-[#cccccc]/50 w-9 h-9" :" "
         } ${day !== null ? "hover:bg-[#bbbbbb]/20" : ""}`}  

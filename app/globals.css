@@ -2,11 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.dirLtr {
+  direction: ltr;
+}
+
+.max-h-full {
+  max-height: 100%;
+}
+
+.min-h-full {
+  min-height: 100%;
+}
 
  
 .button-reports 
 {
-  @apply border border-[#002A78] px-4  py-[2px] bg-white rounded-3xl
+  @apply border border-blue_color px-4  py-[2px] bg-white rounded-3xl
 }
 
 
@@ -30,12 +55,12 @@ li.nav{
   direction: rtl;
 } 
 .dragndrop{
-  background-color: aqua;
+  background-color:gray ;
 }
 
 /* width */
 ::-webkit-scrollbar {
- 
+ height: 7px;
   width: 7px;
   direction:ltr;
 }

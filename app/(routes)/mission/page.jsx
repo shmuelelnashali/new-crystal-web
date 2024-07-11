@@ -1,10 +1,9 @@
-
-"use client"
-import Search from "../components/Search";
+"use client";
+import Search from "../../components/Search";
 import Image from "next/image";
 import { useState } from "react";
-import Table from "../components/Table";
-import EmployeeFilter from "../components/EmployeeFilter";
+import Table from "../../components/Table";
+import EmployeeFilter from "../../components/EmployeeFilter";
 
 const data = [
   {
@@ -499,20 +498,15 @@ export default function page() {
     <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
   );
   return (
-
     <div className="h-[90vh] px-3 ">
       <div className=" w-full flex justify-center item">
-        <Search className="" 
-        textBtn={"הוסף משימה"}
-      
-          addImage={add}
-          />
+        <Search className="" textBtn={"הוסף משימה"} addImage={add} />
       </div>
       <div
         onClick={() => {
           setUpdateMode(null);
         }}
-        className="flex p-4  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
+        className="flex p-4  w-full  gap-3 justify-center items-center top-[263px] text-blue_color font-normal text-[20px] "
       >
         סנן לפי:
         {filterArray.map((filterObject) =>
@@ -525,10 +519,8 @@ export default function page() {
           ))
         )}
       </div>
-     
-      
       <Table
-      tableWidth={"80"}
+        tableWidth={"80"}
         data={data}
         updateMode={updateMode}
         setUpdateMode={setUpdateMode}
@@ -539,17 +531,11 @@ export default function page() {
         // checkIfEmpty={checkIfEmpty}
         // ifEmpty={ifEmpty}
         // deleteEmployee={deleteEmployee}
-      />  </div>
-
+      />{" "}
+    </div>
   );
-
 }
-   
-       
 
-      {/* <PopupMissin/> */}
-  
-
-
-
-
+{
+  /* <PopupMissin/> */
+}

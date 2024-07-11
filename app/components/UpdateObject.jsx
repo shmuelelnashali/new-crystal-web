@@ -84,7 +84,7 @@ export default function UpdateEmployee({
               onChange={(e) => {
                 handleDateChange(e, data.id, key);
               }}
-              className={` border w-full  rounded-full md:truncate  pr-2 pl-4 border-[#002A78] 
+              className={` border w-full  rounded-full md:truncate  pr-2 pl-4 border-blue_color 
 
               ${"FOR EMPLOYEES PAGE"}
               ${key === "start" || key === "end" ? "pl-1 pr-3 " : "" }
@@ -124,7 +124,7 @@ export default function UpdateEmployee({
               <ul className="flex flex-col  p-1  bg-white rounded shadowForDrop">
                 {optionsMap[key].map((option, index) => (
                   <li
-                    className="  w-full cursor-pointer py-2 px-4  rounded  text-[#002A78]  hover:bg-[#002A78] hover:text-white"
+                    className="  w-full cursor-pointer py-2 px-4  rounded  text-blue_color  hover:bg-blue_color hover:text-white"
                     onClick={(e) => {
                       handleOpen(key);
                       setSelectOption(null);

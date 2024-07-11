@@ -85,7 +85,7 @@ export default function Exclusions({openExclusion ,eventDate, setEventDate }) {
             <input 
             onClick={()=>{setOpenSearch(!openSearch),console.log(openSearch);}}
               type="text"
-              className=" outline-none w-full h-full p-2 bg-[#EFF3FB] rounded-full placeholder:text-[#002A78]"
+              className=" outline-none w-full h-full p-2 bg-[#EFF3FB] rounded-full placeholder:text-blue_color"
               placeholder="חפש עובד"
             />
             <Image
@@ -126,7 +126,7 @@ export default function Exclusions({openExclusion ,eventDate, setEventDate }) {
              <div className="w-1/2 relative ">
               <input
                 ref={dateFromRef}
-                className=" w-full h-full border rounded-full border-[#002A78] px-3 "
+                className=" w-full h-full border rounded-full border-blue_color px-3 "
                 type="date"
                 value={beginning_date}
                 onChange={(e) => handelDate(e, "from")}
@@ -136,7 +136,7 @@ export default function Exclusions({openExclusion ,eventDate, setEventDate }) {
               alt="calendar icon"
               width={19}
               height={19}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#002A78]"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
               onClick={handleIconClickFrom}/>
               </div>
               
@@ -147,7 +147,7 @@ export default function Exclusions({openExclusion ,eventDate, setEventDate }) {
 
               <input
                 ref={dateToRef}
-                className="h-full  w-full border rounded-full border-[#002A78] px-2 "
+                className="h-full  w-full border rounded-full border-blue_color px-2 "
                 type="date"
                 value={end_date}
                 
@@ -159,7 +159,7 @@ export default function Exclusions({openExclusion ,eventDate, setEventDate }) {
               alt="calendar icon"
               width={19}
               height={19}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#002A78]"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
               onClick={handleIconClickTo}
             /></div>
               </div> 
@@ -170,7 +170,7 @@ export default function Exclusions({openExclusion ,eventDate, setEventDate }) {
            </div>
         </div>{" "}
         <div className="flex justify-center py-2">
-          <button className="text-lg   py-1 px-5 rounded-full text-white bg-[#002A78]">
+          <button className="text-lg   py-1 px-5 rounded-full text-white bg-blue_color">
             החל
           </button>
         </div>

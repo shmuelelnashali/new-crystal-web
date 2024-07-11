@@ -1,13 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import ReadObject from "../components/ReadObject";
-import UpdateObject from "../components/UpdateObject";
-import Search from "../components/Search";
-import Btn from "../components/Btn";
-import PopupMissin from "../components/PopupMissin";
+import ReadObject from "../../components/ReadObject";
+import UpdateObject from "../../components/UpdateObject";
+import Search from "../../components/Search";
+import Btn from "../../components/Btn";
+import PopupMissin from "../../components/PopupMissin";
 import clsx from "clsx";
-
 
 const arr = {
   date_time: "1978-07-28 ",
@@ -111,13 +110,13 @@ export default function Page() {
     <>
       {/* <PopupMissin/> */}
 
-      <div className="w-full   ">
-        <div className="h-20 w-full flex justify-center m-2">
+      <div className="w-full">
+        <div className="h-20 w-full flex justify-center">
           <Search textBtn={"4.6.24"} />
         </div>
 
         <div className="bg-[#F7F9FD] rounded-lg ">
-          <div className="presentTable items-center justify-around text-white bg-[#002A78] py-2 rounded-md">
+          <div className="presentTable items-center justify-around text-white bg-blue_color py-2 rounded-md">
             {headers.map((header, index) => (
               <div
                 className={clsx("flex justify-center items-center", {
@@ -146,8 +145,7 @@ export default function Page() {
                 <div
                   key={i}
                   className={clsx("flex justify-center items-center ", {
-                    "col-span-3 grid grid-cols-3   ":
-                      Array.isArray(value),
+                    "col-span-3 grid grid-cols-3   ": Array.isArray(value),
                   })}
                 >
                   {/* OBJECT ENTRY & EXIT & activity_code */}
@@ -157,21 +155,26 @@ export default function Page() {
                       <div className="col-span-3 grid grid-cols-3 divide-y-2  relative">
                         {Object.entries(entriesValue).map(([k, v], i) =>
                           updateMode && value.length - 1 === entriesindex ? (
-                            <div className={clsx("h-10  flex justify-center items-center ",{
-                              "max-w-fit bg-[#A7BFE8]/15":
-                                  k == "entrance" || k == "exit",
-                              })}>
+                            <div
+                              className={clsx(
+                                "h-10  flex justify-center items-center ",
+                                {
+                                  "max-w-fit bg-[#A7BFE8]/15":
+                                    k == "entrance" || k == "exit",
+                                }
+                              )}
+                            >
                               <input
-                              key={k}
-                              className= {clsx("w-4/6 text-center border border-[#002A78] outline-none rounded-full",
-                              {
-                                "w-[95%]":
-                                    k == "activity_code",
-                                })}
-                              value={v}
-                              
-                            />
-                           
+                                key={k}
+                                className={clsx(
+                                  "w-4/6 text-center border border-blue_color outline-none rounded-full",
+                                  {
+                                    "w-[95%]": k == "activity_code",
+                                  }
+                                )}
+                                value={v}
+                              />
+
                               <Image
                                 src="/plus.svg"
                                 width={22}
@@ -180,8 +183,7 @@ export default function Page() {
                                 className="absolute top-2 z-30 left-2 hidden group-hover:block"
                                 onClick={() => entrances_exits()}
                               />
-                          </div>
-                            
+                            </div>
                           ) : (
                             <div
                               className={clsx(
@@ -219,9 +221,9 @@ export default function Page() {
             <div className="flex justify-center items-center">
               <Btn text={"צפה במשימות"} />
             </div>
-          </div> 
-          </div></div></>)}
-
-
-
-
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

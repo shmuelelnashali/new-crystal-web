@@ -10,8 +10,8 @@ export default function PopupUser({toggle}) {
     //   <div>מחיקת </div> 
     //   <div>הודעת מחיקה </div>
     //   <div className='text-end '>
-    //   <button className='border w-1/12 rounded-full border-[#002A78] m-2'>ביטול</button>
-    //   <button className='border w-1/12 rounded-full text-white bg-[#002A78]'>מחק</button>
+    //   <button className='border w-1/12 rounded-full border-blue_color m-2'>ביטול</button>
+    //   <button className='border w-1/12 rounded-full text-white bg-blue_color'>מחק</button>
     //   </div>
     //   </div>
     //   </div>
@@ -44,11 +44,11 @@ export default function PopupUser({toggle}) {
             alt=" hatal logo"
            /> 
            </div>
-           <div className=' pb-3 text-center border-b-[2px] font-semibold text-[24px] border-[#002A78]'>
+           <div className=' pb-3 text-center border-b-[2px] font-semibold text-[24px] border-blue_color'>
             ישראל ישראלי
             <p className='leading-[16px] font-normal text-[24px] mt-1'>123456</p>
            </div>
-           <div className='py-1 text-center font-normal border-b-[2px] text-[18px] border-[#002A78]'>
+           <div className='py-1 text-center font-normal border-b-[2px] text-[18px] border-blue_color'>
             מנהל מערכת
            </div>
            </div>

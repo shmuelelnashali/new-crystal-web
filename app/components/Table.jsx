@@ -23,13 +23,11 @@ const headLength=headTable.length
   console.log(headLength )
 
   return (
-    <div
-      dir="ltr"
-      className={` h-[86.5%]  w-${tableWidth} m-auto overflow-y-auto pr-2  rounded-lg`}
+    <div className={`w-${tableWidth} m-auto dirRtl  pr-2 h-full rounded-lg`}
 
     >
       {/* ראש הטבלה */}
-      <div dir="rtl" className="w-full  ">
+      <div className="w-full   ">
         <TableHead
           headLength={` grid-cols-${headLength}`}
           headTable={headTable}

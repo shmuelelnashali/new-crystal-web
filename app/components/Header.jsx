@@ -6,11 +6,9 @@ import Search from './Search'
 export default function Header() {
 
   return (
-  <><div className='flex flex-col max-h-[15vh] px-5'>
-    <div className='flex  h-24 justify-between items-center px-4'>
+    <div className='flex justify-between items-center px-4 py-5'>
         <Nav/>
         <Logo/>
     </div>
- </div></>
   )
 }

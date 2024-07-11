@@ -1,11 +1,12 @@
+"use client"
 import Image from "next/image";
 import Option from "./Option";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function AddEvent({ missionDay, setMissionDay, eventDate, setEventDate }) {
- 
+  const [toogle, setTogele]=useState(false)
   const {year, month, day} = missionDay
- const date = `${year}-${month}-${day}`
+//  const date = `${year}-${month}-${day}`
  const {beginning_date , end_date, activityDay}= eventDate
  
 
@@ -63,10 +64,10 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
 
   //  setState((prevState) => ({...prevState, objkey: objvalue}))
   return (
-    <div className="w-full px-2 font-normal text-lg ">
+    <div onClick={()=>toogle==true && setTogele(false)} className="w-full  h-full px-2 font-normal text-lg ">
       <div className="w-full ">
         <div className="font-bold">סוג פעילות</div>
-          <Option data={activity_type} handel={handelDate} activityDay={activityDay}/>
+          <Option data={activity_type} handel={handelDate} activityDay={activityDay} toogle={toogle} setTogele={setTogele}/>
         <div className="flex flex-col w-full ">
           <div className="py-2">
           <div className="font-bold py-1"> תאריך </div>
@@ -77,7 +78,7 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
               <div className="w-1/2 relative">
               <input
               ref={dateFromRef}
-                className=" w-full  border rounded-full border-[#002A78] px-3 "
+                className=" w-full  border rounded-full border-blue_color px-3 "
                 type="date"
                 value={beginning_date}
                 onChange={(e) => handelDate(e, "from")}
@@ -87,7 +88,7 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
               alt="calendar icon"
               width={19}
               height={19}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#002A78]"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
               onClick={handleIconClickFrom}/>
               </div>
               
@@ -96,7 +97,7 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
               <div className=" w-1/2 relative">
               <input
               ref={dateToRef}
-                className=" w-full border rounded-full border-[#002A78] px-2 "
+                className=" w-full border rounded-full border-blue_color px-2 "
                 type="date"
                 value={end_date}
                 
@@ -109,7 +110,7 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
               alt="calendar icon"
               width={19}
               height={19}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#002A78]"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
               onClick={handleIconClickTo}
             />
               </div>

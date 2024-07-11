@@ -22,11 +22,11 @@ export default function Nav() {
   ];
 
   return (
-    <div className=" h-10 rounded-l-full rounded-r-full text-base  bg-[#EFF3FB] px-6">
-      <ul className="flex gap-x-8 justify-around items-center h-full text-[#002A78]/30  ">
+    <div className="rounded-l-full rounded-r-full text-base  bg-[#EFF3FB] px-6 py-2.5">
+      <ul className="flex gap-x-8 justify-around items-center h-full text-blue_color/30  ">
         {navBar.map((nav, index) => (
           <Link key={index} href={nav.link}>
-            <li  className={` ${nav.link==pathName ?"nav":""} `}>{nav.text}</li>
+            <li  className={`whitespace-nowrap ${nav.link==pathName ?"nav":""} `}>{nav.text}</li>
           </Link>
         ))}
 

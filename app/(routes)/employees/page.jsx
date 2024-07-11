@@ -1,15 +1,13 @@
 "use client";
-import axios from "axios";
+
 import React, { useEffect, useState } from "react";
-import UpdateDelete from "../components/EmployeeFilter";
 import Image from "next/image";
-import ReadObject from "../components/ReadObject";
-import UpdateObject from "../components/UpdateObject";
-import EmployeeFilter from "../components/EmployeeFilter";
-import PopupDelete from "../components/PopupDelete";
-import Search from "../components/Search";
-import TableHead from "../components/TableHead";
-import Table from "../components/Table";
+import EmployeeFilter from "../../components/EmployeeFilter";
+import PopupDelete from "../../components/PopupDelete";
+import Search from "../../components/Search";
+
+import Table from "../../components/Table";
+import axios from "@/app/lib/Axios";
 
 export default function Employees() {
   const user = [
@@ -304,7 +302,7 @@ export default function Employees() {
   ];
 
   //FOR CONTAIN THE EMPLOYEES
-  const [employees, setEmployees] = useState(user);
+  const [employees, setEmployees] = useState([]);
 
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -324,24 +322,7 @@ export default function Employees() {
   {
     /*FETCH THE DATA */
   }
-  const fetchEmployees = async () => {
-    try {
-      const response = await axios.get(`https://dummyjson.com/users`);
-      let data = response.data.users;
-      setEmployees(data);
-
-      // const hairOptions = Array.from(
-      //   new Set(data.map((employee) => employee.hair))
-      // );
-      // setOptions(hairOptions);
-    } catch (error) {
-      console.error("error fetching employees: ", error);
-    }
-  };
-  // useEffect(() => {
-  //   fetchEmployees();
-  // }, []);
-
+ 
   {
     /*MAKING THE UPDATE*/
   }
@@ -349,39 +330,87 @@ export default function Employees() {
     const updatedEmployees = employees.map((employee) => {
       if (employee.id === id) {
         return { ...employee, [field]: e.target.value };
-        
       }
       return employee;
     });
 
     setEmployees(updatedEmployees);
   };
-
+// 
   {
     /*UPDATE IN DB*/
   }
-  const updateEmployee = async (id) => {
-    try {
-      const employee = employees.find((employee) => employee.id === id);
-      if (!employee) {
-        console.error("Employee not found.");
-        return;
-      }
-      await axios.put(`https://dummyjson.com/users/${id}`, employee);
-      setEmployees((prevEmployees) => {
-        const updatedEmployees = prevEmployees.map((employee) => {
-          if (employee.id === id) {
-            return employee;
-          }
-          return employee;
-        });
-        return updatedEmployees;
-      });
-    } catch (error) {
-      console.error("error updating employee: ", error);
-    }
-  };
+  const formtData=(data)=>{
+    const employeeArray =[]
+    data.map((employee,index)=>{
+      employeeArray.push({
+          employee_number:employee.employee_number,
+          firstName: employee.first_name,
+          lastName:employee.surname,
+          solder:"חייל",
+          department:employee.department.name,
+          branch:employee.branch.name,
+          mador:employee.section.name,
+          contract:employee.contract.code,
+          start:employee.activity_start,
+          end:employee.activity_end ,  
+      })
 
+    })
+    setEmployees(employeeArray)
+
+  }
+
+  useEffect(() => {
+    async function fetchDropdownData() {
+      try {
+        const response = await axios.get("/employees");
+        console.log(response.data[1].department.name);
+        formtData(response.data ?? []);
+        // console.log(employees);
+      } catch (error) {
+        console.error("error fetching employees: ", error);
+        throw error;
+      } finally {
+        // setLoading(false);
+      }
+    }
+    fetchDropdownData();
+  }, []); 
+  let departmentArray = []
+  const formtDepartmentData=(data)=>{
+   
+    data.map((department,index)=>{
+      departmentArray.push(
+       { 
+        id:department.id,
+        name:department.name
+       }
+      )
+
+    })
+    console.log(departmentArray);
+
+  }
+
+  useEffect(() => {
+    async function fetchDropdownData() {
+      try {
+        const response = await axios.get("/departments?appendSections=true");
+        console.log(response.data);
+        formtDepartmentData(response.data ?? []);
+        // console.log(employees);
+      } catch (error) {
+        console.error("error fetching employees: ", error);
+        throw error;
+      } finally {
+        // setLoading(false);
+      }
+    }
+    fetchDropdownData();
+  }, []);
+
+  
   const checkIfValueIsEmpty = () => {
     if (updateMode !== null) {
       const selectedItem = updateMode;
@@ -395,10 +424,8 @@ export default function Employees() {
     }
   };
 
-
   const handleAddingNewRow = () => {
     !checkIfValueIsEmpty() && addEmployee();
-
   };
 
   //ADD EMPLOYEE OBJECT
@@ -431,7 +458,7 @@ export default function Employees() {
     setUpdateMode(0);
     setIfEmpty(false);
   };
-                       
+
   {
     /*DELETE  EMPLOYEES*/
   }
@@ -457,7 +484,7 @@ export default function Employees() {
     "מדור",
     "סוג הסכם",
     "תחילת פעילות",
-    "סיום פעילות"
+    "סיום פעילות",
   ];
   const filterArray = [
     { מחלקה: ["משקים והמטות", "נסא"] },
@@ -471,14 +498,8 @@ export default function Employees() {
   );
 
   return (
-    <div
-      className="h-[90vh] px-5 "
-      onClick={() => {
-        !checkIfValueIsEmpty() && setUpdateMode(null);
-      }}
-    >
-      
-      <div className="h-11  flex justify-center ">
+    <div className="flex flex-col gap-y-4 h-full">
+      <div className="flex justify-center">
         <Search
           addNew={handleAddingNewRow}
           textBtn={" הוסף עובד"}
@@ -487,11 +508,7 @@ export default function Employees() {
           searchText={"חיפוש לפי מספר עובד / שם עובד"}
         />
       </div>
-
-
-      {/* THE FILTER */}
-      
-      <div  className="flex p-4  w-full gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] ">
+      <div className="flex p-4  w-full gap-3 justify-center items-center text-blue_color font-normal text-[20px]">
         סנן לפי:
         {filterArray.map((filterObject) =>
           Object.entries(filterObject).map(([labelKey, dataArray]) => (
@@ -503,26 +520,23 @@ export default function Employees() {
           ))
         )}
       </div>
-
-
-      {/* THE TABLE */}
-
-      <Table
-        data={employees}
-        updateMode={updateMode}
-        setUpdateMode={setUpdateMode}
-        handleChange={handleChange}
-        toggleUpdateInput={toggleUpdateInput}
-        setToggleUpdateInput={setToggleUpdateInput}
-        ifEmpty={ifEmpty}
-        changeTheRowToEdit={checkIfValueIsEmpty}
-//         changeTheRowToEdit={changeTheRowToEdit}
-        headTable={headTable}
-        deleteEmployee={deleteEmployee}
-      />
-
-      {/* FEEZE EMPLOYEE */}
-      
+      <div className=" dirLtr overflow-y-auto rounded-xl">
+        <div className=" h-full ">
+          <Table
+            data={employees}
+            updateMode={updateMode}
+            setUpdateMode={setUpdateMode}
+            handleChange={handleChange}
+            toggleUpdateInput={toggleUpdateInput}
+            setToggleUpdateInput={setToggleUpdateInput}
+            ifEmpty={ifEmpty}
+            changeTheRowToEdit={checkIfValueIsEmpty}
+            //         changeTheRowToEdit={changeTheRowToEdit}
+            headTable={headTable}
+            deleteEmployee={deleteEmployee}
+          />
+        </div>
+      </div>
       {showConfirmation && (
         <PopupDelete
           popUpState={showConfirmation}

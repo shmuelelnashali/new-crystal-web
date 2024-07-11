@@ -36,33 +36,33 @@ const structure = {
 
 export default function OrganizationTree() {
   return (
+    <div>
       <div>
-        <div>
-          <BoxField name={structure.name} />
-        </div>
-        <div className="flex">
-          {structure.departments.map((department) => (
-            <div>
-              <BoxField name={department.name} />
-              <div className="flex">
-                {department.branches &&
-                  department.branches.map((branch) => (
-                    <div>
-                      <BoxField name={branch.name} />
-                      <div className="flex">
+        <BoxField name={structure.name} />
+      </div>
+      <div className="flex">
+        {structure.departments.map((department) => (
+          <div>
+            <BoxField name={department.name} />
+            <div className="flex">
+              {department.branches &&
+                department.branches.map((branch) => (
+                  <div>
+                    <BoxField name={branch.name} />
+                    <div className="flex">
                       {branch.sections &&
                         branch.sections.map((section) => (
                           <div>
                             <BoxField name={section} />
                           </div>
                         ))}
-                        </div>
                     </div>
-                  ))}
-              </div>
+                  </div>
+                ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
+    </div>
   );
 }

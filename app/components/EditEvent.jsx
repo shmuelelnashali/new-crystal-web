@@ -77,7 +77,7 @@ export default function EditEvent({ missionDay, setMissionDay, eventDate, setEve
               <div className="w-1/2 relative">
               <input
               ref={dateFromRef}
-                className=" w-full  border rounded-full border-[#002A78] px-3 "
+                className=" w-full  border rounded-full border-blue_color px-3 "
                 type="date"
                 value={date}
                 onChange={(e) => handelDate(e, "from")}
@@ -87,7 +87,7 @@ export default function EditEvent({ missionDay, setMissionDay, eventDate, setEve
               alt="calendar icon"
               width={19}
               height={19}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#002A78]"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
               onClick={handleIconClickFrom}/>
               </div>
               
@@ -96,7 +96,7 @@ export default function EditEvent({ missionDay, setMissionDay, eventDate, setEve
               <div className=" w-1/2 relative">
               <input
               ref={dateToRef}
-                className=" w-full border rounded-full border-[#002A78] px-2 "
+                className=" w-full border rounded-full border-blue_color px-2 "
                 type="date"
                 value={end_date}
                 
@@ -109,7 +109,7 @@ export default function EditEvent({ missionDay, setMissionDay, eventDate, setEve
               alt="calendar icon"
               width={19}
               height={19}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#002A78]"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
               onClick={handleIconClickTo}
             />
               </div>

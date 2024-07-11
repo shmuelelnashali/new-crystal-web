@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import PopupDelete from "../components/PopupDelete";
-import Search from "../components/Search";
-import Table from "../components/Table";
+import PopupDelete from "../../components/PopupDelete";
+import Search from "../../components/Search";
+import Table from "../../components/Table";
 import Image from "next/image";
 
 const absenceData = [
@@ -199,7 +199,6 @@ export default function ManageAbsence() {
   const [toggleUpdateInput, setToggleUpdateInput] = useState(false);
   const [ifEmpty, setIfEmpty] = useState(false);
 
-
   const addAbsence = () => {
     const newAbsence = {
       id: "",
@@ -216,12 +215,9 @@ export default function ManageAbsence() {
     setIfEmpty(false);
   };
 
-  
   const handleNewAbsence = () => {
     !checkIfValueIsEmpty() && addAbsence();
   };
-
-
 
   const deleteAbsence = async (absence) => {
     try {
@@ -231,8 +227,6 @@ export default function ManageAbsence() {
       // console.error("error delete absence: ", error);
     }
   };
-
-
 
   const handleChange = (e, id, field) => {
     const updatedAbsence = absenceArray.map((absence) => {
@@ -244,8 +238,6 @@ export default function ManageAbsence() {
 
     setabsenceArray(updatedAbsence);
   };
-
-
 
   const checkIfValueIsEmpty = () => {
     if (selectedItemIndex !== null) {
@@ -270,7 +262,7 @@ export default function ManageAbsence() {
     >
       <div className="h-16 w- full flex justify-center m-2">
         <Search
-        addImage={imageAdd }
+          addImage={imageAdd}
           addNew={handleNewAbsence}
           textBtn={"הוסף היעדרות"}
           updateMode={selectedItemIndex}

@@ -4,7 +4,7 @@ import But from './Btn'
 
 export default function PopupMissin() {
   return (
-    <div className='w-96 flex flex-col pb-2 absolute top-0 left-0 bg-white border-r-[1px] border-[#002A78] h-full p-2 z-40'>
+    <div className='w-96 flex flex-col pb-2 absolute top-0 left-0 bg-white border-r-[1px] border-blue_color h-full p-2 z-40'>
     <div className='w-full '>
         <Image
           src={"/x.svg"}

@@ -2,9 +2,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import PopupDelete from "../components/PopupDelete";
-import Search from "../components/Search";
-import Table from "../components/Table";
+import PopupDelete from "../../components/PopupDelete";
+import Search from "../../components/Search";
+import Table from "../../components/Table";
 
 export default function agreementsManagement() {
   const user = [
@@ -297,7 +297,6 @@ export default function agreementsManagement() {
   //THE TOGGLE FOR SOME OF THE INPUTS
   const [toggleUpdateInput, setToggleUpdateInput] = useState(false);
 
-
   //FETCH THE DATA
   const fetchEmployees = async () => {
     try {
@@ -335,7 +334,7 @@ export default function agreementsManagement() {
     try {
       const employee = employees.find((employee) => employee.id === id);
       if (!employee) {
-         console.error("Employee not found.");
+        console.error("Employee not found.");
         return;
       }
       await axios.put(`https://dummyjson.com/users/${id}`, employee);
@@ -349,7 +348,7 @@ export default function agreementsManagement() {
         return updatedEmployees;
       });
     } catch (error) {
-       console.error("error updating employee: ", error);
+      console.error("error updating employee: ", error);
     }
   };
 
@@ -452,7 +451,7 @@ export default function agreementsManagement() {
 
       {/* THE TABLE */}
       <Table
-      tableWidth={"80"}
+        tableWidth={"80"}
         data={employees}
         updateMode={updateMode}
         setUpdateMode={setUpdateMode}
@@ -465,8 +464,6 @@ export default function agreementsManagement() {
         deleteEmployee={deleteEmployee}
         changeTheRowToEdit={changeTheRowToEdit}
       />
-      
-     
 
       {/* FEEZE EMPLOYEE */}
       {showConfirmation && (

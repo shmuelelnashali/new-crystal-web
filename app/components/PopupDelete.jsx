@@ -37,13 +37,13 @@ export default function PopupDelete({
         <div className="flex w-full  justify-end mt-4">
           <button
             onClick={() => showPopup(false)}
-            className="bg-white text-[#002A78] px-4  rounded-full border border-[#002A78]"
+            className="bg-white text-blue_color px-4  rounded-full border border-blue_color"
           >
             ביטול
           </button>
           <button
             onClick={axiosDelete}
-            className="bg-[#002A78] text-white rounded-full px-4  mr-1 "
+            className="bg-blue_color text-white rounded-full px-4  mr-1 "
           >
             {btnText ?? "מחק"}
           </button>

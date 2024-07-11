@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import Image from "next/image";
-export default function Option({data, handel,activityDay}) {
-  const [toogle, setTogele]=useState(false)
+export default function Option({data, handel,activityDay,toogle, setTogele}) {
+  
 
   return (
     <div className=" w-full   ">
-        <div onClick={()=>{setTogele(!toogle)}}  
-        className="w-full  flex items-center text-lg font-normal border-[1px] min-h-[32px] border-[#002A78]  rounded-full relative">
+        <div onClick={(e)=>{e.preventDefault()
+        setTogele(!toogle)
+        
+      console.log(toogle);}}  
+        className="w-full  flex items-center text-lg font-normal border-[1px] min-h-[32px] border-blue_color  rounded-full relative">
     <p className='pr-3'> {activityDay} </p>
 
     <Image
@@ -14,7 +17,6 @@ export default function Option({data, handel,activityDay}) {
       src="downArrow.svg"
       width={10}
       height={6}
-      
     />
    
    
@@ -24,7 +26,7 @@ export default function Option({data, handel,activityDay}) {
     <div 
         key={i}
         onClick={()=>handel(v,"day")}
-         className='cursor-pointer px-4 w-full md:truncate  py-1 rounded hover:bg-[#002A78] hover:text-white text-[#002A78]' >
+         className='cursor-pointer px-4 w-full md:truncate  py-1 rounded hover:bg-blue_color hover:text-white text-blue_color' >
         {v}
         </div>
     )}

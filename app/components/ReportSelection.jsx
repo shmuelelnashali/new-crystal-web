@@ -3,9 +3,9 @@ import React from "react";
 
 export default function ReportSelection({ oldRepo, newRepo, setCreateRepo}) {
   return (
-    // <div className='h-[95%] overflow-hidden  flex justify-center ' >
-    <div className="h-[95%] w-3/4 p-6  bg-[#F2F6FC] flex gap-4 justify-center">
-      <div className="bg-white  h-[100%] w-1/2 p-4 overflow-hidden">
+   
+    <div className=" w-3/4 p-6 rounded-lg bg-[#F2F6FC] flex gap-4 justify-center">
+      <div className="bg-white rounded-lg h-[100%] w-1/2 p-4 overflow-hidden">
         <h2 className="text-center p-2 text-xl font-semibold">
           בחר דו”ח מהדו”חות הקיימים
         </h2>
@@ -17,7 +17,7 @@ export default function ReportSelection({ oldRepo, newRepo, setCreateRepo}) {
             placeholder=" חיפוש"
           />
           <Image
-            className="absolute left-[5%] top-[26%] z-10"
+            className="absolute left-[2%] top-[26%] z-10"
             src="/MagnifyingGlass.svg"
             width={20}
             height={20}
@@ -50,7 +50,7 @@ export default function ReportSelection({ oldRepo, newRepo, setCreateRepo}) {
         <div className="flex justify-center items-center h-1/4">
           <button 
           onClick={()=>setCreateRepo(true)}
-          className="bg-[#002A78] w-1/3 p-2 rounded-3xl font-normal text-lg text-white">
+          className="bg-blue_color w-1/3 p-2 rounded-3xl font-normal text-lg text-white">
             המשך ליצירת הדו"ח
           </button>
         </div>

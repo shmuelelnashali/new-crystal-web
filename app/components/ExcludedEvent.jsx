@@ -8,7 +8,7 @@ export default function ExcludedEvent() {
    
     <div className=' '>
          <div className="flex justify-center items-center p-2 pt-5">
-            <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-[#002A78]">
+            <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
              החרגות 
             </h2>
           </div>
@@ -24,7 +24,7 @@ export default function ExcludedEvent() {
             </div>
           </div>
             <div className=' text-lg font-normal flex p-3 justify-center gap-3 w-full'>
-      <div className='p-1 px-4  border-[1px] border-[#002A78]/17 rounded-full'>kkkk</div>
+      <div className='p-1 px-4  border-[1px] border-blue_color/17 rounded-full'>kkkk</div>
           <Image src="leftArrow.svg" width={25} height={25} alt="r"/>
         <div className='p-1 px-2 border rounded-full'>kkkk</div>
    </div>

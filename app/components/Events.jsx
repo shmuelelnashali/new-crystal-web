@@ -43,13 +43,16 @@ export default function Events({missionDay,setMissionDay,events, setEvents,event
       alt="e"
     /> 
    </div>}
+
+
   {events=="new"&&
        <AddEvent
          missionDay={missionDay}
          setMissionDay={setMissionDay}
          eventDate={eventDate}
          setEventDate={setEventDate}
-      />  }
+      />  
+      }
     
   {events=="edit"&&
        <EditEvent
@@ -57,7 +60,8 @@ export default function Events({missionDay,setMissionDay,events, setEvents,event
          setMissionDay={setMissionDay}
          eventDate={eventDate}
          setEventDate={setEventDate}
-      />  }
+      /> 
+       }
     {activity&&  events!== "edit" && 
 <Event missionDay={missionDay} setMissionDay={setMissionDay}  eventDate={eventDate}/>}
        </>

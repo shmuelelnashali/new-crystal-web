@@ -68,8 +68,8 @@ export default function ExclusionsSearch({openSearch}) {
                 <div className="flex justify-center items-center">
                   <div
                     onClick={() => handleV(user)}
-                    className={`flex justify-center items-center mr-2 border border-[#002A78] w-4 h-4 ${
-                      check(user) ? "bg-[#002A78] " : ""
+                    className={`flex justify-center items-center mr-2 border border-blue_color w-4 h-4 ${
+                      check(user) ? "bg-blue_color " : ""
                     }`}
                   >
                     {check(user) && (

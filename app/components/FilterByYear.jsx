@@ -19,11 +19,11 @@ export default function FilterByYear({selectedDate,setSelectedDate}) {
   };
   return (
     <div className="flex justify-center">
-    <div className="border w-min p-[1px] rounded-full  text-white bg-[#002A78] flex justify-center items-center">
+    <div className="border w-min p-[1px] rounded-full  text-white bg-blue_color flex justify-center items-center">
       <button onClick={goToPreviousYear}>
         <ArrowRight />
       </button>
-      <p className="border  bg-white font-bold text-[#002A78]  rounded-full px-16">
+      <p className="border  bg-white font-bold text-blue_color  rounded-full px-16">
         {selectedDate.getFullYear()}
       </p>
       <button onClick={goToNextYear}>
