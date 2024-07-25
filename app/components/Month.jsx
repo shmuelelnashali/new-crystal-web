@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import Day from "./Day";
-import FilterByYear from "./FilterByYear";
-import MonthTable from "./MonthTable";
+import Day from "./calender/Day";
+import FilterByYear from "./calender/FilterByYear";
+import MonthTable from "./calender/MonthTable";
 
 export default function Month({
   daysInHebrew,

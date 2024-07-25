@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import PopupDelete from "../../components/PopupDelete";
-import Search from "../../components/Search";
+import Search from "../../components/ui/Search";
 import Table from "../../components/Table";
 
 export default function agreementsManagement() {

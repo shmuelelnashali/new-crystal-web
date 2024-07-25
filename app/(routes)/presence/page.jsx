@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ReadObject from "../../components/ReadObject";
 import UpdateObject from "../../components/UpdateObject";
-import Search from "../../components/Search";
+import Search from "../../components/ui/Search";
 import Btn from "../../components/Btn";
 import PopupMissin from "../../components/PopupMissin";
 import clsx from "clsx";

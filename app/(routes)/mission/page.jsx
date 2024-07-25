@@ -1,5 +1,5 @@
 "use client";
-import Search from "../../components/Search";
+import Search from "../../components/ui/Search";
 import Image from "next/image";
 import { useState } from "react";
 import Table from "../../components/Table";

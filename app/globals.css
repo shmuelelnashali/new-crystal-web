@@ -102,10 +102,11 @@ li.nav{
   width: 80%;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;}
+  display: none;
+}
 
 .transition-width {
-    transition: width 0.5s;
+    transition: width 0.9s;
 }
 /* .custom-col-span {
   grid-column: span 0.5 ;

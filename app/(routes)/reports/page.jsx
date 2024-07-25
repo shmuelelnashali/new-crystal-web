@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import ReportSelection from "../../components/ReportSelection";
-import ReportGenerator from "../../components/ReportGenerator";
+import ReportSelection from "../../components/reports/ReportSelection";
+import ReportGenerator from "../../components/reports/ReportGenerator";
 
 export default function report() {
   const [createRepo, setCreateRepo] = useState(false);

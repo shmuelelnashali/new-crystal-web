@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import EmployeeFilter from "../../components/EmployeeFilter";
 import PopupDelete from "../../components/PopupDelete";
-import Search from "../../components/Search";
-
+import Search from "../../components/ui/Search";
 import Table from "../../components/Table";
 import axios from "@/app/lib/Axios";
 
@@ -20,284 +19,308 @@ export default function Employees() {
       branch: "טנקים",
       mador: "מדור ציוד נייד",
       hescem: 40,
-      start: "15/03/2023",
-      end: "20/04/2023",
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 2345678,
-      firstName: "Jane",
-      lastName: "Smith",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף הפצת רכבים",
+      department: "משאבים אנושיים",
       branch: "טנקים",
-      mador: "טנקים משופצים",
-      hescem: 60,
-      start: "10/04/2023",
-      end: "20/05/2023",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 3456789,
-      firstName: "David",
-      lastName: "Johnson",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף כלכלי",
-      branch: "אגף כללי",
-      mador: "חשמל ותקשורת",
-      hescem: 55,
-      start: "05/05/2023",
-      end: "25/06/2023",
-    },
-    {
-      id: 4567890,
-      firstName: "Emily",
-      lastName: "Brown",
-      solder: "אזרח",
-      department: "אגף טיפול",
-      branch: "אגף טיפול",
-      mador: "אגף טיפול",
-      hescem: 45,
-      start: "01/06/2023",
-      end: "30/06/2023",
-    },
-    {
-      id: 5678901,
-      firstName: "Michael",
-      lastName: "Wilson",
-      solder: "חייל",
-      department: "אגף רכבים",
+      department: "משאבים אנושיים",
       branch: "טנקים",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 6789012,
-      firstName: "Sarah",
-      lastName: "Martinez",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 7890123,
-      firstName: "Matthew",
-      lastName: "Taylor",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 8901234,
-      firstName: "Emma",
-      lastName: "Anderson",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 9012345,
-      firstName: "Daniel",
-      lastName: "Thomas",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1239567,
-      firstName: "Olivia",
-      lastName: "Jackson",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1206567,
-      firstName: "Noah",
-      lastName: "White",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1291567,
-      firstName: "Ava",
-      lastName: "Harris",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1200567,
-      firstName: "William",
-      lastName: "King",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 9934567,
-      firstName: "Sophia",
-      lastName: "Evans",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1234997,
-      firstName: "James",
-      lastName: "Baker",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1237767,
-      firstName: "Isabella",
-      lastName: "Green",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1211567,
-      firstName: "Alexander",
-      lastName: "Lee",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1209567,
-      firstName: "Mia",
-      lastName: "Clark",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1230267,
-      firstName: "Benjamin",
-      lastName: "Hall",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1234500,
-      firstName: "Charlotte",
-      lastName: "Young",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1234599,
-      firstName: "Jacob",
-      lastName: "Lopez",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1234598,
-      firstName: "Amelia",
-      lastName: "Wright",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
-    },
-    {
-      id: 1234578,
-      firstName: "Ethan",
-      lastName: "Perez",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
       solder: "חייל",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
     {
-      id: 1239277,
-      firstName: "Evelyn",
-      lastName: "Lewis",
-      solder: "אזרח",
-      department: "אגף רכבים",
-      branch: "טנk",
-      mador: "אחסנה",
-      hescem: 70,
-      start: "01/07/2023",
-      end: "30/07/2023",
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
+    },
+    {
+      id: 1238367,
+      firstName: "John",
+      lastName: "Doe",
+      solder: "חייל",
+      department: "משאבים אנושיים",
+      branch: "טנקים",
+      mador: "מדור ציוד נייד",
+      hescem: 40,
+      activity_start: "2024-07-14",
+      activity_end: "2024-07-14",
     },
   ];
 
@@ -322,7 +345,7 @@ export default function Employees() {
   {
     /*FETCH THE DATA */
   }
- 
+
   {
     /*MAKING THE UPDATE*/
   }
@@ -336,36 +359,42 @@ export default function Employees() {
 
     setEmployees(updatedEmployees);
   };
-// 
+  //
   {
     /*UPDATE IN DB*/
   }
-  const formtData=(data)=>{
-    const employeeArray =[]
-    data.map((employee,index)=>{
+  const formatDate = (dateString) => {
+    console.log(dateString);
+    const [day, month, year] = dateString.split("-");
+    return `${year}/${month}/${day}`;
+  };
+  const formtData = (data) => {
+    const employeeArray = [];
+    data.map((employee, index) => {
       employeeArray.push({
-          employee_number:employee.employee_number,
-          firstName: employee.first_name,
-          lastName:employee.surname,
-          solder:"חייל",
-          department:employee.department.name,
-          branch:employee.branch.name,
-          mador:employee.section.name,
-          contract:employee.contract.code,
-          start:employee.activity_start,
-          end:employee.activity_end ,  
-      })
-
-    })
-    setEmployees(employeeArray)
-
-  }
+        employee_number: employee.employee_number,
+        firstName: employee.first_name,
+        lastName: employee.surname,
+        solider_civilian:
+          employee.solider_civilian == "0"
+            ? "אזרח"
+            : employee.solider_civilian == "1" && "חייל",
+        department: employee.department_name,
+        branch: employee.branch_name,
+        mador: employee.section_name,
+        contract: employee.contract.code,
+        activity_start: formatDate(employee.activity_start),
+        activity_end: formatDate(employee.activity_end),
+      });
+    });
+    setEmployees(employeeArray);
+  };
 
   useEffect(() => {
-    async function fetchDropdownData() {
+    async function fetchData() {
       try {
         const response = await axios.get("/employees");
-        console.log(response.data[1].department.name);
+        console.log(response.data);
         formtData(response.data ?? []);
         // console.log(employees);
       } catch (error) {
@@ -375,42 +404,36 @@ export default function Employees() {
         // setLoading(false);
       }
     }
-    fetchDropdownData();
-  }, []); 
-  let departmentArray = []
-  const formtDepartmentData=(data)=>{
-   
-    data.map((department,index)=>{
-      departmentArray.push(
-       { 
-        id:department.id,
-        name:department.name
-       }
-      )
+    fetchData();
+  }, []);
 
-    })
-    console.log(departmentArray);
+  const formtDepartmentData = (data) => {
+    const formatted = data.reduce((acc, company) => {
+      acc[company.name] = company.branches.map((branch) => {
+        return { [branch.name]: branch.sections || [] };
+      });
+      return acc;
+    }, {});
 
-  }
+    console.log(formatted);
+  };
 
   useEffect(() => {
     async function fetchDropdownData() {
       try {
-        const response = await axios.get("/departments?appendSections=true");
-        console.log(response.data);
+        const response = await axios.get(
+          "departments?appendBranches=true&appendSections=true"
+        );
         formtDepartmentData(response.data ?? []);
-        // console.log(employees);
       } catch (error) {
         console.error("error fetching employees: ", error);
         throw error;
       } finally {
-        // setLoading(false);
       }
     }
     fetchDropdownData();
   }, []);
 
-  
   const checkIfValueIsEmpty = () => {
     if (updateMode !== null) {
       const selectedItem = updateMode;

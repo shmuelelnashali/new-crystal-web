@@ -1,7 +1,7 @@
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Search from "./components/Search";
+import Header from "./components/ui/Header";
+import Search from "./components/ui/Search";
 
 const open_sans = Open_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],

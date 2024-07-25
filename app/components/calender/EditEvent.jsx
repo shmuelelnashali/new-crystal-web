@@ -1,13 +1,12 @@
-"use client"
 import Image from "next/image";
-import Option from "./Option";
-import { useRef, useState } from "react";
+import Option from "../ui/Option";
+import { useRef } from "react";
 
-export default function AddEvent({ missionDay, setMissionDay, eventDate, setEventDate }) {
-  const [toogle, setTogele]=useState(false)
+export default function EditEvent({ missionDay, setMissionDay, eventDate, setEventDate }) {
+ 
   const {year, month, day} = missionDay
-//  const date = `${year}-${month}-${day}`
- const {beginning_date , end_date, activityDay}= eventDate
+ const date = `${year}-${month}-${day}`
+ const {beginning_date , end_date, activityDay, id}= eventDate
  
 
 
@@ -64,10 +63,10 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
 
   //  setState((prevState) => ({...prevState, objkey: objvalue}))
   return (
-    <div onClick={()=>toogle==true && setTogele(false)} className="w-full  h-full px-2 font-normal text-lg ">
+    <div className="w-full px-2 font-normal text-lg ">
       <div className="w-full ">
         <div className="font-bold">סוג פעילות</div>
-          <Option data={activity_type} handel={handelDate} activityDay={activityDay} toogle={toogle} setTogele={setTogele}/>
+          <Option data={activity_type} handel={handelDate} activityDay={activityDay}/>
         <div className="flex flex-col w-full ">
           <div className="py-2">
           <div className="font-bold py-1"> תאריך </div>
@@ -80,7 +79,7 @@ export default function AddEvent({ missionDay, setMissionDay, eventDate, setEven
               ref={dateFromRef}
                 className=" w-full  border rounded-full border-blue_color px-3 "
                 type="date"
-                value={beginning_date}
+                value={date}
                 onChange={(e) => handelDate(e, "from")}
               />
               <Image

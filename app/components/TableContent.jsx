@@ -19,8 +19,7 @@ export default function TableContent({
   return (
     <div className="w-full bg-[#EFF3FB] ">
       <div className="w-full ">
-        {data &&
-          data?.map((employee, index) => (
+        {data && data?.map((employee, index) => (
             <div
               onClick={(e) => {
                 e.stopPropagation(),
@@ -48,7 +47,7 @@ export default function TableContent({
               </div>
               <div className="w-full  ">
                 <div
-                  className={`grid ${headLength}  w-full justify-between gap-3  font-normal text-[20px] leading-5 text-blue_color`}
+                  className={`grid ${headLength}  w-full justify-around gap-3 font-normal text-[20px] leading-5 text-blue_color`}
                 >
                   {updateMode === index ? (
                     //RENDER TO UPDATE MOOD
