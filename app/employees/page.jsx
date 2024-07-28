@@ -511,15 +511,14 @@ export default function Employees() {
       </div>
 
       {/* THE FILTER */}
-// <<<<<<< raziel
-//       <div className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2">
-// =======
-      <div
-//         onClick={() => {
-//           setUpdateMode(null);
-        }}
-        className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "
-      >
+{/* 
+    <div className="flex  w-full mb-5 gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] m-2">
+
+      
+           setUpdateMode(null); }} */}
+       
+      <div  className="flex p-3  w-full  gap-3 justify-center items-center top-[263px] text-[#002A78] font-normal text-[20px] "  >
+    
 
         סנן לפי:
         {filterArray.map((filterObject) =>

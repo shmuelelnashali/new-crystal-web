@@ -14,8 +14,7 @@ export default function Table({
   headTable,
   deleteEmployee,
 
-  changeTheRowToEdit
-}) {
+
 
   tableWidth
 }) {

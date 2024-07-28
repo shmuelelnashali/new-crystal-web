@@ -14,17 +14,10 @@ export default function TableContent({
   deleteEmployee,
 
   headTable,
-  changeTheRowToEdit
-}
-) {
- const theLength = headTable.length
+  
 
-// <<<<<<< eli1
-  headTable,
-}) {
-  const theLength = headTable.length;
 
-// =======
+
   
   headLength
 }
