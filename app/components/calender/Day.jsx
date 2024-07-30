@@ -13,6 +13,7 @@ export default function Day({
   const today = new Date();
   const date = new Date(year, month, day);
 
+  // השוואת תאריכים
   const dateComparisonResult = (chackDate) => {
     chackDate.setHours(0, 0, 0, 0, 0);
     date.setHours(0, 0, 0, 0, 0);
@@ -28,14 +29,12 @@ export default function Day({
   };
 
   const isEventDey = () => {
-    const eventArray=evensInYear.map((value, index) =>{
-      return dateComparisonResult(new Date(value))}
-   
-    );
+    const eventArray = evensInYear.map((value, index) => {
+      return dateComparisonResult(new Date(value));
+    });
 
-return eventArray.includes(true)
+    return eventArray.includes(true);
   };
-
 
   const handleColor = () => {
     const colors = [
@@ -54,22 +53,28 @@ return eventArray.includes(true)
   return (
     <div
       onClick={() => {
-        setMissionDay(null);
         setMissionDay(`${year}-${month + 1}-${day}`);
       }}
-      className={clsx("h-full w-full rounded-xl flex items-center cursor-pointer flex-col justify-center",
-        {"bg-blue_color  text-white font-bold":dateComparisonResult(today)===true},
-        {"bg-[#002A78]/20": isActivReport===true},
-        {"hover:bg-[#bbbbbb]/20":!isActivReport===true&& !dateComparisonResult(today)===true && day !== null })
-          }
+      className={clsx(
+        "h-full w-full rounded-xl flex items-center cursor-pointer flex-col justify-center",
+        {
+          "bg-blue_color  text-white font-bold":
+            dateComparisonResult(today) === true,
+        },
+        { "bg-[#002A78]/20": isActivReport === true },
+        {
+          "hover:bg-[#bbbbbb]/20":
+            !isActivReport === true &&
+            !dateComparisonResult(today) === true &&
+            day !== null,
+        }
+      )}
     >
       {day}
-      {/*  אם קיים משימה ביום הזה אז הדיב יפעל ואיז אקטיב רפורט יהיה טרו*/}
+      {/* נקודת צבע כאשר יש פעילות \ אירוע ביום מסוים*/}
       <div
         className={` w-1 h-1 rounded-full  flex  ${
-          day !== null && isEventDey()  
-            ? handleColor()
-            : ""
+          day !== null && isEventDey() ? handleColor() : ""
         } `}
       ></div>
     </div>

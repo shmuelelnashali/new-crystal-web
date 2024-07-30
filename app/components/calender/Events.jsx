@@ -5,15 +5,6 @@ import Event from "./Event";
 import Image from "next/image";
 import EditEvent from "./EditEvent";
 
-{
-  /* <Acitivty
-</Acitivty>
-<Edit ><new></new></Edit>
-
-events === add && <New></New>
-event === edit && <Edit></Edit>
-acivity && event!== add && !== edit & <Acitivty></Acitivty> */
-}
 
 export default function Events({
   missionDay,
@@ -24,6 +15,7 @@ export default function Events({
   setEventDate,
 }) {
   const { year, month, day, activity } = missionDay;
+  console.log(activity);
 
   useEffect(() => {
     if (events === "new" || events === "edit") {

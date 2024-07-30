@@ -15,6 +15,7 @@ export default function AddEvent({
   const { year, month, day } = missionDay;
   //  const date = `${year}-${month}-${day}`
   const { beginning_date, end_date, activityDay } = eventDate;
+  console.log(beginning_date, end_date, activityDay);
 
   const dateFromRef = useRef(null);
   const dateToRef = useRef(null);

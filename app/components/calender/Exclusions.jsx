@@ -9,7 +9,7 @@ export default function Exclusions({
   setEventDate,
   missionDay,
 }) {
-  const { beginning_date, end_date, activityDay } = missionDay.activity;
+  const { beginning_date, end_date, activityDay } =eventDate;
   const [openSearch, setOpenSearch] = useState(false);
 
   const handelDate = (e, type) => {

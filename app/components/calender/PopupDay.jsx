@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { memo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Events from "./Events";
 import axios from "../../lib/Axios";
 
@@ -9,16 +9,39 @@ export default function PopupDay({
   setExclusions,
   eventDate,
   setEventDate,
+  events,
+  setEvents
 }) {
+  
+  // useEffect(()=>{
+  //   async function fetchData() {
+  //   try {
+  //     const { day,month, year } = missionDay;
+  //     const response = await axios.get(`/events/${year}-${month}-${day}`);
+  //     console.log(response.data);
+  //     if (response.data.lenth===0){
+  //       return
+  //     }
+  //     setEventDate(response.data)
+   
+  //   } catch (error) {
+  //     console.error("error fetching : ", error);
+  //     throw error;
+  //   }}
+  //   fetchData()
+  // },[])
+console.log(missionDay); 
   const { dayOfWeek, activity } = missionDay;
-  const [year, month, day] = eventDate.beginning_date?.split("-");
-  const [events, setEvents] = useState("add");
+  console.log(eventDate.beginning_date.split("-"));
+  const [year, month, day] = eventDate?.beginning_date.split("-");
+  console.log(year, month, day);
+  
   const mission = () => {
     setMissionDay(null);
   };
   console.log(events);
-
-  const eddNewEvent = async () => {
+//add
+  const addNewEvent = async () => {
     const event = {
       beginning_date: eventDate.beginning_date,
       end_date: eventDate.end_date,
@@ -100,8 +123,6 @@ export default function PopupDay({
         {!activity && events !== "new" && events !== "edit" && (
           <button
             onClick={() => setEvents("new")}
-
-            
             className="bg-blue_color flex gap-2 items-center text-white px-3 py-2 rounded-full"
           >
             <Image src="/addEmployee.svg" width={20} height={20} alt="" />
@@ -111,13 +132,8 @@ export default function PopupDay({
 
         {(events === "new" || events === "edit") && (
           <button
-            onClick={() => eddNewEvent()}
+            onClick={() => addNewEvent()}
             className="bg-blue_color flex gap-2 items-center text-white px-5 py-2 rounded-full"
-
-
-
-
-
           >
             <p>שמור</p>
           </button>
