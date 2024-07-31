@@ -96,7 +96,7 @@ export default function UpdateEmployee({
             <span>
               <input
               ref={ref(key)}
-                className="h-full  w-full  text-center border rounded-full border-blue_color  "
+                className="h-full truncate w-full  text-center border rounded-full border-blue_color  "
                 type={"date"}
                 value={formatDate(value)} 
                 

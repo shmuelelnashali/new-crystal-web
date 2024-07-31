@@ -13,9 +13,10 @@ export default function Events({
   setEvents,
   eventDate,
   setEventDate,
+  activity
 }) {
-  const { year, month, day, activity } = missionDay;
-  console.log(activity);
+  const { year, month, day} = missionDay;
+  // console.log(activity);
 
   useEffect(() => {
     if (events === "new" || events === "edit") {
@@ -38,6 +39,7 @@ export default function Events({
 
       {events == "new" && (
         <AddEvent
+        setEvents={setEvents}
           missionDay={missionDay}
           setMissionDay={setMissionDay}
           eventDate={eventDate}

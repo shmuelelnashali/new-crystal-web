@@ -6,8 +6,10 @@ export default function Event({ missionDay, setMissinDay, eventDate }) {
   console.log(eventDate);
   const { year, month, day, dayOfWeek, activity } = missionDay;
   const { beginning_date, end_date, event } = eventDate;
+ console.log ( beginning_date, end_date, event )
 
   const dateSplit = (dateString) => {
+    console.log(dateString);
     const date = dateString.split("-");
     const reversedDate = `${date[2]}/${date[1]}/${date[0]}`;
 

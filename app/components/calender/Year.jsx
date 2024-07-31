@@ -36,7 +36,7 @@ export default function Year({ missionDay, setMissionDay }) {
       }
     }
     fetchData();
-  }, [selectedDate]);
+  }, [selectedDate,missionDay]);
 
   // Function to get days in month
   const getDaysInMonth = (year, month) =>
@@ -74,8 +74,8 @@ export default function Year({ missionDay, setMissionDay }) {
         />
       </div>
 
-      <div className="dirLtr px-5  max-h-[80vh] overflow-y-auto">
-        <div className="dirRtl grid grid-cols-4 ">
+      <div className="h-full dirLtr px-5 overflow-y-auto">
+        <div className="dirRtl grid grid-cols-4  ">
           {/* Iterate over each month and display days */}
           {monthsAndDays.map(({ month, daysInMonth }, index) => (
             <MonthTable

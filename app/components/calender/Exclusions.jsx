@@ -5,14 +5,20 @@ import Option from "../ui/Option";
 
 export default function Exclusions({
   openExclusion,
-  eventDate,
-  setEventDate,
+  // eventDate,
+  // setEventDate,
   missionDay,
 }) {
-  const { beginning_date, end_date, activityDay } =eventDate;
+  const { year, month, day, dayOfWeek} = missionDay;
+  const [eventDate, setEventDate] = useState({
+    beginning_date: `${year}-${month}-${day}`,
+    end_date: `${year}-${month}-${day}`,
+    activityDay: dayOfWeek,
+  });
+const {beginning_date,end_date,activityDay}=eventDate
   const [openSearch, setOpenSearch] = useState(false);
 
-  const handelDate = (e, type) => {
+  const handelDate = (e, type) => { 
     console.log(type);
     if (type == "day") {
       console.log(e);

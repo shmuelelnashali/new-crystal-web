@@ -8,6 +8,7 @@ export default function AddEvent({
   setMissionDay,
   eventDate,
   setEventDate,
+  setEvents
 }) {
 
   
@@ -48,7 +49,8 @@ export default function AddEvent({
         beginning_date: `${year}-${month}-${day}`,
       }));
 
-      // setMissionDay(`${year}-${month}-${day}`) ;
+      setMissionDay(`${year}-${month}-${day}`)
+      setEvents("new") ;
     }
     if (type == "to") {
       const [year, month, day] = newDate.split("-");
