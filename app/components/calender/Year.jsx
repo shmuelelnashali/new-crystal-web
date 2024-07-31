@@ -66,7 +66,7 @@ export default function Year({ missionDay, setMissionDay }) {
   });
 
   return (
-    <div className="  text-blue_color flex-1 w-full flex flex-col justify-between ">
+    < >
       <div className="h-11 p-2">
         <FilterByYear
           setSelectedDate={setSelectedDate}
@@ -91,6 +91,6 @@ export default function Year({ missionDay, setMissionDay }) {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

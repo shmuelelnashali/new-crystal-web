@@ -8,7 +8,8 @@ export default function Login() {
   const [errors, setErrors] = useState(null);
   useEffect(() => {
     if (user) {
-      router.push("/presence");
+      router.push("/calender");
+      // console.log(user);
     } else {
       login(setErrors, { employee_number: "1111111" });
     }
