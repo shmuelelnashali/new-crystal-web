@@ -6,6 +6,7 @@ import React, { useState } from "react";
 export default function Nav() {
  
  const pathName= usePathname()
+ console.log(pathName); 
 
   const navBar = [
     { text: "נוכחות", link: "/presence" },
@@ -14,11 +15,11 @@ export default function Nav() {
     { text: " ניהול משימות", link: "/mission" },
     { text: "ניהול העדרויות", link: "/absenceManagement" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },
-    { text: "קודי פעילות ", link: "/activity_code" },
+    // { text: "קודי פעילות ", link: "/activity_code" },
     { text: "ניהול עץ אירגוני", link: "/organization" },
     { text: "ניהול לוחות שנה", link: "/calender" },
-
     { text: "דוחות", link: "/reports" },
+     { text: "הגדרות", link: "/settings" },
   ];
 
   return (
@@ -26,7 +27,7 @@ export default function Nav() {
       <ul className="flex gap-x-8 justify-around items-center h-full text-blue_color/30  ">
         {navBar.map((nav, index) => (
           <Link key={index} href={nav.link}>
-            <li  className={`whitespace-nowrap ${nav.link==pathName ?"nav":""} `}>{nav.text}</li>
+            <li  className={`whitespace-nowrap ${pathName.includes(nav.link) ?"nav":""} `}>{nav.text}</li>
           </Link>
         ))}
 
