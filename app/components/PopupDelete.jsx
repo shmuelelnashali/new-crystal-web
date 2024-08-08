@@ -31,7 +31,7 @@ export default function PopupDelete({
         </div>
         <h1 className="font-bold leading-6	"> {headerText} </h1>
         <p>
-          {messageText} "{objectToDelete.firstName} {objectToDelete.lastName}{objectToDelete.agreementName}{objectToDelete.id}"?
+          {messageText} "{objectToDelete?.firstName} {objectToDelete?.lastName}{objectToDelete?.agreementName}{objectToDelete?.id}"?
           
         </p>
         <div className="flex w-full  justify-end mt-4">

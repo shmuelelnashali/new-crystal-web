@@ -7,13 +7,14 @@ import Year from "../../components/calender/Year";
 import Search from "../../components/ui/Search";
 import Image from "next/image";
 import { clsx } from "clsx";
-import axios from "@/app/lib/Axios";
+
 import { format } from "date-fns";
 
 export default function Calendar() {
   const [missionDay, setMissionDay] = useState(); //selected day
   const [exclusions, setExclusions] = useState(false); //open popup החרגות
   const [openPopUp, setOpenPopUp] = useState(false);
+  const [events, setEvents] = useState("add");
   const daysInHebrew = [
     "ראשון",
     "שני",
@@ -38,7 +39,6 @@ export default function Calendar() {
       month: month.padStart(2, "0"),
       day: day.padStart(2, "0"),
       dayOfWeek: dayOfWeek,
-    
     };
     setMissionDay(objectDate);
     setOpenPopUp(true);
@@ -53,7 +53,7 @@ export default function Calendar() {
 
   return (
     <>
-    <div className="flex flex-col h-full p-2 ">
+      <div className="flex flex-col h-full p-2 ">
         <div className="h-11  flex justify-center ">
           <Search
             searchText={""}
@@ -63,40 +63,32 @@ export default function Calendar() {
             missionDay={missionDay}
           />
         </div>
-      <div
-        className={`h-full overflow-hidden p-2 ${
-       openPopUp? "w-4/5 pr-3 transition-width" : " w-full px-[5%]"
-        } `}
-      >
-        <div className="h-full  flex flex-col">
-         
-          
-
-        <Year missionDay={missionDay} setMissionDay={dateToObject} />
-
- </div>
-        </div>
-        </div>
-        {openPopUp && (
-          <div className="border w-1/5 transition-width  flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full p-2 z-40">
-            <PopupDay
-              missionDay={missionDay}
-              setMissionDay={dateToObject}
-              setExclusions={setExclusions}
-              setOpenPopUp={setOpenPopUp}
-              openPopUp={openPopUp}
-            />
+        <div
+          className={`h-full overflow-hidden p-2 ${
+            openPopUp ? "w-4/5 pr-3 transition-width" : " w-full px-[5%]"
+          } `}
+        >
+          <div className="h-full  flex flex-col">
+            <Year missionDay={missionDay} setMissionDay={dateToObject} events={events}setEvents={setEvents}/>
           </div>
-        )}
-      
+        </div>
+      </div>
+      {openPopUp && (
+        <div className="border w-1/5 transition-width  flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full p-2 z-40">
+          <PopupDay
+            missionDay={missionDay}
+            setMissionDay={dateToObject}
+            setExclusions={setExclusions}
+            setOpenPopUp={setOpenPopUp}
+            openPopUp={openPopUp}
+            events={events}setEvents={setEvents}
+          />
+        </div>
+      )}
 
       {exclusions && (
-        <Exclusions
-          missionDay={missionDay}
-          openExclusion={openExclusion}
-        />
+        <Exclusions missionDay={missionDay} openExclusion={openExclusion} />
       )}
-   
     </>
   );
 }

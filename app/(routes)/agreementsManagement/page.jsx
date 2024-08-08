@@ -6,7 +6,7 @@ import PopupDelete from "../../components/PopupDelete";
 import Search from "../../components/ui/Search";
 import Table from "../../components/Table";
 
-export default function agreementsManagement() {
+export default function AgreementsManagement() {
   const user = [
     {
       id: 12,

@@ -477,7 +477,7 @@ const data = [
     end: "12/04/24",
   },
 ];
-export default function page() {
+export default function Mission() {
   const [updateMode, setUpdateMode] = useState(null);
   const headers = [
     " מספר משימה",

@@ -8,6 +8,7 @@ export default function MonthTable({
   missionDay,
   evensInYear,
   setMissionDay,
+  events, setEvents
 }) {
   const daysInHebrew = [
     "ראשון",
@@ -50,6 +51,7 @@ export default function MonthTable({
             setMissionDay={setMissionDay}
             missionDay={missionDay}
             evensInYear={evensInYear}
+            events={events}setEvents={setEvents}
           />
         ))}
       </div>

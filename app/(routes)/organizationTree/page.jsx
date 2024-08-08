@@ -1,4 +1,4 @@
-import BoxField from "../components/BoxField";
+import BoxField from "@/app/components/BoxField";
 
 const structure = {
   name: "יחידת על",
@@ -42,17 +42,17 @@ export default function OrganizationTree() {
       </div>
       <div className="flex">
         {structure.departments.map((department) => (
-          <div>
+          <div key={department.id}>
             <BoxField name={department.name} />
             <div className="flex">
               {department.branches &&
                 department.branches.map((branch) => (
-                  <div>
+                  <div key={branch.id}>
                     <BoxField name={branch.name} />
                     <div className="flex">
                       {branch.sections &&
                         branch.sections.map((section) => (
-                          <div>
+                          <div key={section.id}>
                             <BoxField name={section} />
                           </div>
                         ))}

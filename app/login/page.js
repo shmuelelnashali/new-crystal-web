@@ -1,7 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/UseAuth";
+import useAuth from "../hooks/useAuth";
+
 export default function Login() {
   const router = useRouter();
   const { user, login } = useAuth({ middleware: "guest" });
@@ -9,9 +10,9 @@ export default function Login() {
   useEffect(() => {
     if (user) {
       router.push("/calender");
-      // console.log(user);
+      console.log(user);
     } else {
-      login(setErrors, { employee_number: "1111111" });
+      login(setErrors, { employee_number: "2222222" });
     }
   }, [user, login]);
   return (

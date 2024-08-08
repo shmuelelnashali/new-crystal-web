@@ -1,6 +1,4 @@
-
-
-export default function BoxField({name}) {
+export default function BoxField({ name }) {
   return (
     <div className="w-[9vw] h-[8vh] rounded-lg bg-[#E4EBF8] text-xl font-normal flex items-center justify-center relative">
       <span>{name}</span>

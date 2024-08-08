@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import ReportSelection from "../../components/reports/ReportSelection";
 import ReportGenerator from "../../components/reports/ReportGenerator";
 
-export default function report() {
+export default function Report() {
   const [createRepo, setCreateRepo] = useState(false);
   const oldRepo = [
     "  דו”ח נוכחות  - מותאם לישראל ישראלי",

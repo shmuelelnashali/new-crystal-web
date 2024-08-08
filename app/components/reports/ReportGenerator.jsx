@@ -267,7 +267,7 @@ export default function ReportGenerator() {
             } flex gap-2 justify-center items-center px-4 py-[2px] bg-white rounded-3xl`}
             onClick={() => console.log(button.text)}
           >
-            <Image src={button.icon} width={15} height={15} />
+            <Image src={button.icon} width={15} height={15} alt={button.icon} />
             <div>{button.text}</div>
           </button>
         ))}
@@ -295,7 +295,7 @@ export default function ReportGenerator() {
               </div>
 
               {Object.entries(fields).map(([key, field], i) => (
-                <div
+                <div 
                   draggable
                   onDragStart={(e) => handleDragStart(e, { key, field })}
                   onDragEnd={handleDragEnd}
@@ -407,7 +407,7 @@ export default function ReportGenerator() {
             <div className="w-fit dirLtr h-full overflow-auto ">
               <div className="flex dirRtl px-2">
                 {fieldsTo.map((field, index) => (
-                  <div className="flex flex-col justify-center text-center  ">
+                  <div key={field} className="flex flex-col justify-center text-center  ">
                     <div
                       key={index}
                       className={clsx(
@@ -437,7 +437,7 @@ export default function ReportGenerator() {
            
               {fieldsTo.length <= 10 && (
                 <div className="bg-[#EFF3FB] w-full flex-1 border-dashed border-2 border-blue_color rounded-lg p-2  flex justify-center items-center">
-                  <Image src={"addFilid.svg"} width={422} height={200} />
+                  <Image src={"addFilid.svg"} width={422} height={200} alt="addFilid.svg"/>
                 </div>
               )}{" "}
             

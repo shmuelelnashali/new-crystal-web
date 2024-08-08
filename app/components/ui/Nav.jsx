@@ -15,9 +15,8 @@ export default function Nav() {
     { text: "ניהול העדרויות", link: "/absenceManagement" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },
     { text: "קודי פעילות ", link: "/activity_code" },
-
     { text: "ניהול עץ אירגוני", link: "/organization" },
-    { text: "ניהול לוחות שנה", link: "/calendar" },
+    { text: "ניהול לוחות שנה", link: "/calender" },
 
     { text: "דוחות", link: "/reports" },
   ];
