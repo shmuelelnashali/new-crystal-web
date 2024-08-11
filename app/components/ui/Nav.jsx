@@ -8,7 +8,7 @@ export default function Nav() {
  const pathName= usePathname()
 
   const navBar = [
-    { text: "נוכחות", link: "/presence" },
+    { text: "נוכחות", link: "/presenceNew" },
     { text: "עובדים", link: "/employees" },
     { text: "הרשאות", link: "/permissions" },
     { text: " ניהול משימות", link: "/mission" },

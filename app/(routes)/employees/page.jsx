@@ -387,6 +387,7 @@ export default function Employees() {
         activity_end: formatDate(employee.activity_end),
       });
     });
+    
     setEmployees(employeeArray);
   };
 

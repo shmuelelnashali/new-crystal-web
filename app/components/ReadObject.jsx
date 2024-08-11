@@ -10,7 +10,7 @@ export default function ({ data, index, setUpdateMode }) {
     const [day, month, year] = dateString.split("/");
     return `${day}/${month}/${year}`;
   };
-
+  console.log(data);
   return (
     <>
       {Object.entries(data).map(([key, value], i) => (
