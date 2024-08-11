@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+
 
 export default function Nav() {
  
@@ -11,11 +11,10 @@ export default function Nav() {
   const navBar = [
     { text: "נוכחות", link: "/presence" },
     { text: "עובדים", link: "/employees" },
-    { text: "הרשאות", link: "/permissions" },
+    // { text: "הרשאות", link: "/permissions" },
     { text: " ניהול משימות", link: "/mission" },
-    { text: "ניהול העדרויות", link: "/absenceManagement" },
+    // { text: "ניהול העדרויות", link: "/absenceManagement" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },
-    // { text: "קודי פעילות ", link: "/activity_code" },
     { text: "ניהול עץ אירגוני", link: "/organization" },
     { text: "ניהול לוחות שנה", link: "/calender" },
     { text: "דוחות", link: "/reports" },
