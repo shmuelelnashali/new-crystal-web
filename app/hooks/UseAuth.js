@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import axios from "../lib/axios";
+import axios from "../lib/Axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 export default function useAuth({ middleware } = {}) {
