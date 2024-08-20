@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import {useState, useRef} from "react";
 import Select from "react-select";
 import SelectBox from "./SelectBox";
 
@@ -12,6 +12,7 @@ export default function EntrancesExits({
   handelAddEntry,
   shouldRenderImage,
 }) {
+  const inputRef = useRef(null);
   const initialEntryExitObj = { entrance: "", exit: "", activity_code: "" };
 
   const [isTimeAdding, setIsTimeAdding] = useState(false);
@@ -22,30 +23,37 @@ export default function EntrancesExits({
   const [selectMode, setSelectMode] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [newEntryExitObj, setNewEntryExitObj] = useState(initialEntryExitObj);
+  const [ignoreBlur, setIgnoreBlur] = useState(false);
 
   const handleFocus = () => {
     setIsFocused(true);
+    setIgnoreBlur(false);
   };
 
-  const handleBlur = (event) => {
-    console.log(event.currentTarget);
+ 
+const handleBlur = (event) => {
+  if (!ignoreBlur ) {
     if (
       event.relatedTarget === null ||
-      !event.currentTarget.contains(event.relatedTarget) 
-
-    )
-     {
+      !event.currentTarget.contains(event.relatedTarget)
+    ) {
       setIsFocused(false);
       handelAddEntry(rowIndex, newEntryExitObj);
       setIsTimeAdding(false);
     }
-  };
+  }
+};
 
   const handleSelect = (option) => {
-    setSelectedOption(option);
+    setSelectedOption(option)
     updateNewEntry("activity_code", option);
     setSelectMode(false);
-    console.log(option);
+    setIgnoreBlur(false);
+  };
+  
+  const handleDropdownClick = (e) => {
+    e.stopPropagation(); // Prevent the event from bubbling
+    setIgnoreBlur(true); // Set flag to ignore blur while interacting with dropdown
   };
 
   const handleTimeChange = (e, setter, type) => {
@@ -80,17 +88,7 @@ export default function EntrancesExits({
       updateNewEntry(type, value);
     }
   };
-
-  // const handleBlur = () => {
-  //   if (newEntryExitObj.entrance || newEntryExitObj.exit || newEntryExitObj.activity_code) {
-  //     setNewEntryExitObj(initialEntryExitObj);
-  //   }
-  //   setSelectMode(false);
-
-  //   setEntrance("");
-  //   setExit("");
-  //   console.log(initialEntryExitObj);
-  // };
+ 
 
   const updateNewEntry = (key, value) => {
   console.log(key, value);
@@ -108,9 +106,9 @@ export default function EntrancesExits({
         <div
           className={`${
             entryExitIndex >= 1 ? "border-t  " : ""
-          } col-span-2 relative  bg-[#A7BFE8]/15 flex  items-center`}
+          } col-span-2 relative  bg-[#A7BFE8]/15 flex items-center`}
         >
-          <div className="py-2 h-full flex-1 ">{entrancesExits.entrance}</div>
+          <div className=" h-full flex-1 items-center justify-center flex ">{entrancesExits.entrance}</div>
 
           <div className="relative group flex-1">
             <div className="py-2 ">
@@ -136,29 +134,30 @@ export default function EntrancesExits({
       </div>
       {isTimeAdding && (
         <div
-          className={`grid grid-cols-3 ${isFocused ? "bg-purple-400" : ""}`}
+          className={`grid grid-cols-3 ${isFocused ? " " : ""}`}
           onFocus={handleFocus}
           onBlur={(e) => handleBlur(e)}
         >
           <div className="py-2 relative  inline-block">
             <input
-              className="h-[26px] w-[84px] text-center rounded-3xl border border-[#002A7B]"
+              className="h-[26px] max-w-[80px] sm:max-w-[80px] md:max-w-[80px] lg:max-w-[80px]  text-center rounded-3xl border border-[#002A7B]  hover:border-[#004A9B] focus:outline-none focus:border-[#004A9B]"
               value={selectedOption}
               onClick={() => setSelectMode(true)}
               readOnly
-              // onBlur={handleBlur}
+              ref={inputRef}
+              onBlur={handleBlur}
             />
-            {selectMode && <SelectBox onSelect={handleSelect} />}
+            {selectMode && <SelectBox onSelect={handleSelect}    onDropdownClick={handleDropdownClick} />}
           </div>
 
-          <div className="  bg-[#A7BFE8]/15  flex  py-2 col-span-2 ">
+          <div className="  bg-[#A7BFE8]/15  flex py-2 col-span-2 ">
             <div className="flex-1  ">
               <input
                 type="text"
                 maxLength={5}
                 value={entrance}
                 onChange={(e) => handleTimeChange(e, setEntrance, "entrance")}
-                className="h-[26px] w-[84px] text-center rounded-3xl border  border-[#002A7B]  "
+                className="h-[26px] w-[84px] text-center rounded-3xl border    border-[#002A7B]  "
                 placeholder="00:00"
                 // onBlur={(e) => {console.log(e)}}
               />
