@@ -329,10 +329,8 @@ export default function Employees() {
 
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
-
-  //CONTAIN THE EMPLOYEE TO FREEZE
-  const [employeeIdToDelete, setEmployeeIdToDelete] = useState(null);
-
+ 
+ c
   //ON CLICK FOR UPDATE INPUTS
   const [updateMode, setUpdateMode] = useState(null);
 
@@ -368,6 +366,8 @@ export default function Employees() {
     const [day, month, year] = dateString.split("-");
     return `${year}/${month}/${day}`;
   };
+
+
   const formtData = (data) => {
     const employeeArray = [];
     data.map((employee, index) => {
@@ -531,7 +531,7 @@ export default function Employees() {
           searchText={"חיפוש לפי מספר עובד / שם עובד"}
         />
       </div>
-      <div className="flex p-4  w-full gap-3 justify-center items-center text-blue_color font-normal text-[20px]">
+      <div className="flex p-4   w-full gap-3 justify-center items-center text-blue_color font-normal text-[20px]">
         סנן לפי:
         {filterArray.map((filterObject) =>
           Object.entries(filterObject).map(([labelKey, dataArray]) => (
@@ -540,7 +540,7 @@ export default function Employees() {
               dataArray={dataArray}
               label={labelKey}
             />
-          ))
+          ))  
         )}
       </div>
       <div className=" dirLtr overflow-y-auto rounded-xl">

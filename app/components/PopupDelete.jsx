@@ -10,6 +10,8 @@ export default function PopupDelete({
   btnText,
   urlPage,
 }) {
+  console.log(objectToDelete);
+  
   const axiosDelete = async () => {
     try {
       await axios
@@ -19,6 +21,17 @@ export default function PopupDelete({
       console.error("error with delete", error);
     }
   };
+
+  const stringForEmployee = objectToDelete
+  ? `${objectToDelete.firstName || ""} ${objectToDelete.lastName || ""}`.trim()
+  : "";
+
+  const stringForAgreement = objectToDelete
+  ? `${objectToDelete.agreement || ""}`.trim()
+  : "";
+  const objectId = objectToDelete
+  ? `${objectToDelete.id || ""}`.trim()
+  : "";
 
   return (
     <div className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50">
@@ -31,7 +44,10 @@ export default function PopupDelete({
         </div>
         <h1 className="font-bold leading-6	"> {headerText} </h1>
         <p>
-          {messageText} "{objectToDelete.firstName} {objectToDelete.lastName}{objectToDelete.agreementName}{objectToDelete.id}"?
+          {messageText} 
+          "{stringForEmployee && ` "${stringForEmployee}"`} 
+          {stringForAgreement && ` "${stringForAgreement}"`}
+          {objectId}"?
           
         </p>
         <div className="flex w-full  justify-end mt-4">
