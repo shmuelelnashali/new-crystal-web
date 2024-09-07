@@ -10,10 +10,12 @@ export default function Exclusions({
   missionDay,
 }) {
   const { year, month, day, dayOfWeek} = missionDay;
-  const [eventDate, setEventDate] = useState({
+  const [eventDate, setEventDate] = useState(missionDay?{
     beginning_date: `${year}-${month}-${day}`,
     end_date: `${year}-${month}-${day}`,
     activityDay: dayOfWeek,
+  }:{
+    
   });
 const {beginning_date,end_date,activityDay}=eventDate
   const [openSearch, setOpenSearch] = useState(false);

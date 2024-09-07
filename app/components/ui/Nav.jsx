@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 
 
 export default function Nav() {
- 
  const pathName= usePathname()
  console.log(pathName); 
 
@@ -15,7 +14,7 @@ export default function Nav() {
     { text: " ניהול משימות", link: "/mission" },
     // { text: "ניהול העדרויות", link: "/absenceManagement" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },
-    { text: "ניהול עץ אירגוני", link: "/organization" },
+    { text: "ניהול עץ אירגוני", link: "/organizationTree" },
     { text: "ניהול לוחות שנה", link: "/calender" },
     { text: "דוחות", link: "/reports" },
      { text: "הגדרות", link: "/settings" },

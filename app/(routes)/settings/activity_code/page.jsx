@@ -1,5 +1,7 @@
+
 import SettingsSearch from "@/app/components/settings/SettingsSearch";
-import SettingsTable from "@/app/components/settings/settingsTable";
+
+import TabieSettings from "@/app/components/settings/TableSettings";
 import Image from "next/image";
 import React from "react";
 
@@ -11,6 +13,8 @@ export default function activity() {
     "תאריך סיום",
     "קוד לביא",
   ];
+  
+  
 
  
   const activity_code = [
@@ -22,93 +26,27 @@ export default function activity() {
       activity: "חג",
     },
     {
-      code_namber: 2,
-      activity_type: "חג",
+      activity_type: "axcvג",
+      code_namber: 1,
+      type: "חג",
+      namber: 1,
+      activity: "חג",
     },
     {
+      activity_type: "axcvג",
       code_namber: 1,
-      activity_type: "חג",
+      type: "חג",
+      namber: 1,
+      activity: "חג",
     },
     {
+      activity_type: "axcvג",
       code_namber: 1,
-      activity_type: "חג",
+      type: "חג",
+      namber: 1,
+      activity: "חג",
     },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
-    {
-      code_namber: 1,
-      activity_type: "חג",
-    },
+    
   ];
   return (
     <>
@@ -118,7 +56,7 @@ export default function activity() {
         <SettingsSearch/>
          </div>
         
-    <SettingsTable
+    <TabieSettings
     data={activity_code}
     headers={headers}/>
     
