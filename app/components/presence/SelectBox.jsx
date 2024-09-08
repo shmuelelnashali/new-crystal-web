@@ -11,7 +11,7 @@ export default function SelectBox({ onSelect, onDropdownClick}) {
       {options.map((option, index) => (
         <div
           key={index}
-          className="p-2 z-10  cursor-pointer  rounded hover:bg-[#002A78] hover:text-white "
+          className="p-2 z-10  cursor-pointer  rounded hover:bg-[#002A78] hover:text-white  "
           onClick={() =>  onSelect(option)}
         >
           {option}
