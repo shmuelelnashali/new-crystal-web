@@ -12,7 +12,7 @@ export default function Nav() {
     { text: "עובדים", link: "/employees" },
     // { text: "הרשאות", link: "/permissions" },
     { text: " ניהול משימות", link: "/mission" },
-    // { text: "ניהול העדרויות", link: "/absenceManagement" },
+    { text: "דרישות אמצעים", link: "/fff" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },
     { text: "ניהול עץ אירגוני", link: "/organizationTree" },
     { text: "ניהול לוחות שנה", link: "/calender" },
