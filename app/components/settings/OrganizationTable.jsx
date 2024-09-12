@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Pencil } from "lucide-react";
+import Organization from "./Organization";
 
 export default function OrganizationTable({ data, headers }) {
   const [openDepartment, setOpenDepartment] = useState(null);
@@ -13,7 +14,7 @@ export default function OrganizationTable({ data, headers }) {
     if (selectedOrganization !== index) {
       setSelectedOrganization(index);
         setOpenDepartment(null); // Reset department when selecting a new organization
-    //   setOpenBranch(null); // Reset mador when selecting a new organization
+        setOpenBranch(null); // Reset mador when selecting a new organization
     } else {
       setSelectedOrganization(null); // Close all if clicked again
     }
@@ -21,9 +22,11 @@ export default function OrganizationTable({ data, headers }) {
 
   // Toggle departments within an organization
   const handleDepartmentToggle = (index) => {
+    setOpenDepartment(openDepartment === index ? null : index);
+
     if (openDepartment !== index) {
       setOpenDepartment(index);
-      setOpenBranch(null); // Reset mador when selecting a new department
+        setOpenBranch(null); // Reset mador when selecting a new department
     } else {
       setOpenDepartment(null); // Close all if clicked again
     }
@@ -59,155 +62,15 @@ export default function OrganizationTable({ data, headers }) {
               </div>
             </div>
             <div className="flex flex-col  text-base">
-              {data.map((organization, orgIndex) => (
-                <div key={orgIndex} className=" ">
-                  {/* Organization row */}
-                  <div className="grid grid-cols-9 whitespace-nowrap justify-center border-b-[2px] py-2.5">
-                    {Object.entries(organization).map(
-                      ([key, value]) =>
-                        key !== "departments" && (
-                          <div key={key} className="col-span-1 text-center ">
-                            {value}
-                          </div>
-                        )
-                    )}
-
-                    <div className="col-end-9 flex justify-end pl-3 cursor-pointer">
-                      <Image
-                        onClick={() => handleAccordion(orgIndex)}
-                        src={"/downArrow.svg"}
-                        width={12}
-                        height={15}
-                        alt={"downArrow"}
-                      />
-                    </div>
-                    <div className="flex justify-around col-end-10">
-                      <div className="bg-blue_color border items-center border-blue_color gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer">
-                        <Pencil strokeWidth={1.5} size={15} />
-                        <p>עריכת שורה</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Display Departments if organization is selected */}
-                  {selectedOrganization === orgIndex && (
-                    <div className="bg-[#002A78]/10 ">
-                      {organization.departments.map((department, depIndex) => (
-                        <div key={depIndex}>
-                          {/* Department row */}
-                          <div
-                            // onClick={() => handleDepartmentToggle(depIndex)}
-                            className="grid grid-cols-9 whitespace-nowrap justify-center mr-10  border-b-[1px] py-2.5 cursor-pointer"
-                          >
-                            {Object.entries(department).map(
-                              ([key, value]) =>
-                                key !== "branchs" && (
-                                  <div
-                                    key={key}
-                                    className="col-span-1 text-center"
-                                  >
-                                    {value}
-                                  </div>
-                                )
-                            )}
-                            <div className="col-end-9 flex justify-end pl-3 cursor-pointer">
-                              <Image
-                                onClick={() => handleDepartmentToggle(depIndex)}
-                                src={"/downArrow.svg"}
-                                width={12}
-                                height={15}
-                                alt={"downArrow"}
-                              />
-                            </div>
-                            <div className="flex justify-around col-end-10">
-                              <div className="bg-blue_color border items-center border-blue_color gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer">
-                                <Pencil strokeWidth={1.5} size={15} />
-                                <p>עריכת שורה</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Display Madors if department is selected */}
-                          {openDepartment === depIndex && (
-                            <div className="bg-[#002A78]/25 ">
-                              {department.branchs.map((branch, branchIndex) => (
-                                <div key={branchIndex}>
-                                  <div className="grid grid-cols-9 whitespace-nowrap justify-center  pr-20 border-b-[1px] py-2.5">
-                                    {Object.entries(branch).map(
-                                      ([key, value]) =>
-                                        key !== "madors" && (
-                                          <div
-                                            key={key}
-                                            className="col-span-1 text-center"
-                                          >
-                                            {value}
-                                          </div>
-                                        )
-                                    )}
-                                    <div
-                                      onClick={() =>
-                                        handleBranchToggle(branchIndex)
-                                      }
-                                      className="col-end-9 flex justify-end pl-3 cursor-pointer"
-                                    >
-                                      <Image
-                                        src={"/downArrow.svg"}
-                                        width={12}
-                                        height={15}
-                                        alt={"downArrow"}
-                                      />
-                                    </div>
-
-                                    <div className="flex justify-around col-end-10">
-                                      <div className="bg-blue_color border items-center border-blue_color gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer">
-                                        <Pencil strokeWidth={1.5} size={15} />
-                                        <p>עריכת שורה</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  {openBranch === branchIndex && (
-                                    <div className="bg-[#002A78]/25 ">
-                                      {branch.madors?.map(
-                                        (mador, madorIndex) => (
-                                          <div
-                                            key={madorIndex}
-                                            className="grid grid-cols-9 whitespace-nowrap justify-center  pr-32 border-b-[1px] py-2.5"
-                                          >
-                                            {Object.entries(mador).map(
-                                              ([key, value]) => (
-                                                <div
-                                                  key={key}
-                                                  className="col-span-1 text-center"
-                                                >
-                                                  {value}
-                                                </div>
-                                              )
-                                            )}
-
-                                            <div className="flex justify-around col-end-10">
-                                              <div className="bg-blue_color border items-center border-blue_color gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer">
-                                                <Pencil
-                                                  strokeWidth={1.5}
-                                                  size={15}
-                                                />
-                                                <p>עריכת שורה</p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+              <Organization
+                data={data}
+                selectedOrganization={selectedOrganization}
+                handleAccordion={handleAccordion}
+                openDepartment={openDepartment}
+                handleDepartmentToggle={handleDepartmentToggle}
+                openBranch={openBranch}
+                handleBranchToggle={handleBranchToggle}
+              />
             </div>
           </div>
         </div>
@@ -215,8 +78,6 @@ export default function OrganizationTable({ data, headers }) {
     </div>
   );
 }
-
-
 
 // "use client";
 // import Image from "next/image";
@@ -328,3 +189,22 @@ export default function OrganizationTable({ data, headers }) {
 //     </div>
 //   );
 // }
+
+// const Parent = () => {
+//     isEditing;
+
+//     if (isEditing) {
+//         EditTest aa
+//     } else {
+//         Test aa
+//     }
+// }
+// const Test = () => {}
+
+// const EditTest = () => {}
+
+    // const list = () => { 
+    //     isEditing;
+    //     if (isEditing) <div></div>
+    //     else <input></input>
+    // }

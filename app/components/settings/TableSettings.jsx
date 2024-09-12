@@ -7,7 +7,7 @@ export default function TabieSettings({ data, headers, page }) {
   return (
     <div>
       <div className="flex-1 flex flex-col overflow-hidden  rounded-lg">
-        <div className=" px-2  dirLtr h-full rounded-2xl overflow-y-scroll">
+        <div className=" px-2  dirLtr h-full rounded-2xl overflow-auto">
           <div className=" dirRtl bg-[#EFF3FB] rounded-lg ">
             <div className="p-2 pb-0 text-white rounded-lg sticky top-0 bg-[#EFF3FB] w-full">
               <div className="grid grid-cols-9  sticky top-0 rounded-lg p-2 bg-blue_color justify-center ">
