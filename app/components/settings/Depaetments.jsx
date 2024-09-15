@@ -20,14 +20,14 @@ export default function Departments({
           {/* Department row */}
           <div
             // onClick={() => handleDepartmentToggle(depIndex)}
-            className="grid grid-cols-9 whitespace-nowrap content-center gap-2 pr-10 text-center border-b-[1px] py-2.5 cursor-pointer"
+            className="grid grid-cols-9 whitespace-nowrap content-center gap-2  text-center border-b-[1px] py-2.5 cursor-pointer"
           >
             {Object.entries(department).map(
               ([key, value]) =>
                 key !== "branchs" &&
                 (updateRow.row === "departments" &&
                 updateRow.index === depIndex ? (
-                  <input type="text" value={value} className="text-center rounded-full border  border-blue_color" />
+                  <input type="text" value={value} className="text-center  bg-red-700" />
                 ) : (
                   <div key={key} className="col-span-1 text-center ">
                     {value}
@@ -51,11 +51,7 @@ export default function Departments({
                 onClick={() =>
                   setUpdateRow({ row: "departments", index: depIndex })
                 }
-                className={`${
-                  updateRow.row === "departments" && updateRow.index === depIndex
-                    ? " border border-blue_color/5 bg-blue_color/50"
-                    : "bg-blue_color border border-blue_color "
-                }"   items-center gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
+                className="bg-blue_color border items-center border-blue_color gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer"
               >
                 <Pencil strokeWidth={1.5} size={15} />
                 <p>עריכת שורה</p>

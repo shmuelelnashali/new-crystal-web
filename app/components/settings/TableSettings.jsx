@@ -49,7 +49,6 @@ export default function TabieSettings({ data, headers, page }) {
                                index === Object.entries(code).length - 1 &&
                                "  bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]"
                              }`}
-                           
                           >
                             <input
                               className={`" text-center w-full rounded-full outline-none border border-blue_color "
@@ -58,7 +57,9 @@ export default function TabieSettings({ data, headers, page }) {
                               value={code_value}
                             />
                             {index === Object.entries(code).length - 1 && (
-                              <div className="w-full flex justify-center  text-white">שמור שינויים</div>
+                              <div className="w-full flex justify-center  text-white">
+                                שמור שינויים
+                              </div>
                             )}
                           </div>
                         </div>
@@ -69,10 +70,13 @@ export default function TabieSettings({ data, headers, page }) {
                       )}
                     </div>
                   ))}
-                  <div className="flex  carsor justify-around col-end-10 ">
+                  <div className="flex cursor-pointer justify-around col-end-10 ">
                     <div
-                      className={`bg-blue_color border border-blue_color gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
-
+                      className={`${
+                        updateRow === rowIndex
+                          ? "bg-blue_color/20 border border-blue_color/5"
+                          : "bg-blue_color border border-blue_color"
+                      }  gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
                       onClick={() => {
                         setUpdateRow(rowIndex);
                         console.log(updateRow);

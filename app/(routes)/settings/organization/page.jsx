@@ -5311,7 +5311,7 @@ export default function organization() {
         </div>
 
         <OrganizationTable
-          page={"organization"}
+         
           data={organizationData}
           headers={headers}
         />
