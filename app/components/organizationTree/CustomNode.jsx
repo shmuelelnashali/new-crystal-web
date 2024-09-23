@@ -14,79 +14,47 @@ export default function CustomNode({ id, data }) {
   filteredEdgs.forEach((edge) => filteredIds.push(edge.id));
 
   return (
-    <div style={{ display: "flex", position: "relative" }}>
-      <div
-        onContextMenu={(e) => {
-          e.preventDefault();
-          setShowPopUp(true);
-        }}
-        onClick={() => setShowPopUp(false)}
+    <div
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setShowPopUp(true);
+      }}
+      onClick={() => setShowPopUp(false)}
+      className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow"
+    >
+      <Handle
+        type="target"
+        position={Position.Top}
         style={{
-          width: "180px",
-          height: "90px",
-          backgroundColor: "#E4EBF8",
-          borderRadius: "10px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "22px",
-          fontWeight: "400",
-          color: "#002A78",
+          backgroundColor: "transparent",
+          border: "none",
+          top: "0.5px",
+          width: "20px",
+          height: "20px",
         }}
-      >
-        <Handle
-          type="target"
-          position={Position.Top}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            top: "0.5px",
-            width: "20px",
-            height: "20px",
-          }}
-        />
-        <div>{data.label}</div>
-        <div
-          style={{
-            width: "20px",
-            height: "20px",
-            backgroundColor: "white",
-            borderRadius: "9999px",
-            borderColor: "#002A78",
-            borderStyle: "solid",
-            borderWidth: "1px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            bottom: "-10px",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "23px",
-              lineHeight: "32px",
-              color: "#002A78",
-              fontWeight: "900",
-            }}
-          >
-            +
-          </div>
-        </div>
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            width: "20px",
-            height: "20px",
-            bottom: "-10px",
-          }}
-        />
+      />
+      <div>{data.label}</div>
+      <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex justify-center items-center absolute -bottom-[10px] text-2xl text-[#002A78] pb-[6px]">
+        +
       </div>
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{
+          backgroundColor: "transparent",
+          border: "none",
+          width: "20px",
+          height: "20px",
+          bottom: "-10px",
+        }}
+      />
       {showPopUp && (
-        <PopUpForDeleteDisconnectInTree setShowPopUp={setShowPopUp} filteredIds={filteredIds}/>
+        <PopUpForDeleteDisconnectInTree
+          setShowPopUp={setShowPopUp}
+          filteredIds={filteredIds}
+          setShowPopUpDelete={data.delete}
+          setShowPopUpDisconnect={data.disconnect}
+        />
       )}
     </div>
   );

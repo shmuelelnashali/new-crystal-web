@@ -41,7 +41,7 @@ export default function PopUpForTree({addNewNodeInClient}) {
     <Container>
       {arrayText.map((text, index) => (
         <Item key={index} onClick={() => addNewNodeInClient(text)}>
-          <span style={{ paddingRight: "12px" }}>הוסף {text}</span>
+          <span className="pr-3">הוסף {text}</span>
         </Item>
       ))}
     </Container>

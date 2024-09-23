@@ -7,7 +7,7 @@ export default function BtnWithSelectPopUp({
   addNewNodeInClient,
 }) {
   return (
-    <div style={{ display: "inline-block", position: "relative"}}>
+    <div>
       <BtnForOrganizationTree setShowPopUp={setShowPopUp} />
       {showPopUp && <PopUpForTree addNewNodeInClient={addNewNodeInClient} />}
     </div>

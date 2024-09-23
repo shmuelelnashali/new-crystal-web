@@ -1,7 +1,6 @@
 "use client";
 import styled from "styled-components";
 import { useReactFlow } from "reactflow";
-import { useState } from "react";
 
 const Container = styled.div`
   width: 225px;
@@ -40,8 +39,10 @@ const Item = styled.div`
 export default function PopUpForDeleteDisconnectInTree({
   setShowPopUp,
   filteredIds,
+  setShowPopUpDelete,
+  setShowPopUpDisconnect
 }) {
-  const [shoePopUpDelete, setShoePopUpDelete] = useState(false);
+  
   const { setEdges } = useReactFlow();
 
   const disconnectEdge = () => {
@@ -50,11 +51,12 @@ export default function PopUpForDeleteDisconnectInTree({
     );
   };
 
-  const deleteNode = () => {setShoePopUpDelete(true)};
+  const deleteNodePopUp = () => {setShowPopUpDelete(true)};
+  const disconnectNodePopUp = () => {setShowPopUpDisconnect(true)};
 
   const options = [
-    { name: "מחק", func: deleteNode },
-    { name: "נתק מחלקה", func: disconnectEdge },
+    { name: "מחק", func: deleteNodePopUp },
+    { name: "נתק מחלקה", func: disconnectNodePopUp },
   ];
 
   return (
@@ -67,7 +69,7 @@ export default function PopUpForDeleteDisconnectInTree({
             setShowPopUp(false);
           }}
         >
-          <span style={{ paddingRight: "12px" }}>{option.name}</span>
+          <span className="pr-3">{option.name}</span>
         </Item>
       ))}
     </Container>

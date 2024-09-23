@@ -1,4 +1,6 @@
 "use client";
+
+import "./dd.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   Controls,
@@ -6,7 +8,6 @@ import ReactFlow, {
   useEdgesState,
   updateEdge,
   addEdge,
-  getConnectedEdges,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import dagre from "dagre";
@@ -14,6 +15,8 @@ import CustomNode from "@/app/components/organizationTree/CustomNode";
 import CustomEdge from "@/app/components/organizationTree/CustomEdge";
 import BtnWithSelectPopUp from "@/app/components/organizationTree/BtnWithSelectPopUp";
 import axios from "@/app/lib/Axios";
+import PopupDisconnect from "@/app/components/organizationTree/PopupDisconnect";
+import PopupDelete from "@/app/components/organizationTree/PopupDelete";
 
 const structure = {
   name: "יחידת על",
@@ -117,6 +120,8 @@ export default function OrganizationTree() {
   const [error, setError] = useState(null);
   const [idCounter, setIdCounter] = useState(0);
   const [newUnitName, setNewUnitName] = useState(null);
+  const [showPopUpDelete, setShowPopUpDelete] = useState(true);
+  const [showPopUpDisconnect, setShowPopUpDisconnect] = useState(false);
 
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
   const edgeTypes = useMemo(() => ({ CustomEdge }), []);
@@ -173,8 +178,6 @@ export default function OrganizationTree() {
 
   const changingUnitAffiliation = (parentId, name) => {};
 
-  const deleteUnit = () => {};
-
   const disconnection = () => {};
 
   const addNewNodeInClient = (type) => {
@@ -184,7 +187,11 @@ export default function OrganizationTree() {
 
     const newUnit = {
       id: `FAKE_ID_${idCounter}`,
-      data: { label: type },
+      data: {
+        label: type,
+        delete: setShowPopUpDelete,
+        disconnect: setShowPopUpDisconnect,
+      },
       position: { x: x, y: y },
       type: "CustomNode",
     };
@@ -217,7 +224,11 @@ export default function OrganizationTree() {
 
     const createNode = (name, id) => ({
       id: id.toString(),
-      data: { label: name },
+      data: {
+        label: name,
+        delete: setShowPopUpDelete,
+        disconnect: setShowPopUpDisconnect,
+      },
       position: { x: 0, y: 0 },
       type: "CustomNode",
     });
@@ -268,28 +279,42 @@ export default function OrganizationTree() {
   }, [data]);
 
   return (
-    <div
-      onClick={() => setShowPopUp(false)}
-      style={{ height: "100vh", backgroundColor: "#F7F9FD" }}
-    >
-      <BtnWithSelectPopUp
-        showPopUp={showPopUp}
-        setShowPopUp={setShowPopUp}
-        addNewNodeInClient={addNewNodeInClient}
-      />
-
-      <ReactFlow
-        nodes={nodes}
-        onNodesChange={onNodesChange}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        edges={edges}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onEdgeUpdate={onEdgeUpdate}
+    <>
+      <div
+        onClick={() => setShowPopUp(false)}
+        className="h-screen bg-[#F7F9FD]"
       >
-        <Controls />
-      </ReactFlow>
-    </div>
+        <BtnWithSelectPopUp
+          showPopUp={showPopUp}
+          setShowPopUp={setShowPopUp}
+          addNewNodeInClient={addNewNodeInClient}
+        />
+
+        <ReactFlow
+          nodes={nodes}
+          onNodesChange={onNodesChange}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          edges={edges}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onEdgeUpdate={onEdgeUpdate}
+        >
+          <Controls />
+        </ReactFlow>
+        {showPopUpDisconnect && (
+          <PopupDisconnect
+            objectToDelete={"ttt"}
+            setShowPopUpDisconnect={setShowPopUpDisconnect}
+          />
+        )}
+        {showPopUpDelete && (
+          <PopupDelete
+            objectToDelete={"ttt"}
+            setShowPopUpDelete={setShowPopUpDelete}
+          />
+        )}
+      </div>
+    </>
   );
 }
