@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import vector90 from "@/public/vector90.svg";
 import axios from "axios";
 
 export default function PopupDelete({
@@ -26,7 +27,7 @@ export default function PopupDelete({
       dir="rtl"
       className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50"
     >
-      <div className="bg-white py-2 px-2 w-[844px] h-[307px] rounded-xl text-right pr-7 pl-3">
+      <div className="bg-white py-2 px-2 w-[844px] h-[307px] rounded-xl text-right pr-7 pl-4">
         <div className="mb-3">
           <div className="flex justify-between pt-2">
             <h1 className="font-bold text-2xl leading-6	text-blue_color mb-4 mt-2">
@@ -50,34 +51,32 @@ export default function PopupDelete({
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             לאיזה מדור תרצה לשייך את העובדים?
           </h3>
-          <select className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] shadow-[0_2.4px_6px_-5.68px] mb-2 appearance-none">
-            <option disabled selected hidden value="no">
-              בחר מדור
-            </option>
-            {obj.map((mador) => (
-              <option className="w-[534px] h-[48px]" value={mador}>{mador}</option>
-            ))}
-          </select>
+          <div className="w-[579px] h-[41px] px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] mb-2 text-[16.8px] font-light text-[#002A7887] flex items-center justify-between relative">
+            <span>בחר מדור</span>
+            <Image src={vector90} alt="vector90" width={9} height={5} />
+          </div>
+          <div className="w-[579px] h-[271px] bg-white absolute"
+          style={{ boxShadow: '0px 4px 4px 1px rgba(0, 0, 0, 0.25)' }}></div>
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             מאיזה תאריך העובדים יעברו למדור החדש?
           </h3>
           <input
             type="date"
-            className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] shadow-[0_2.4px_6px_-5.68px]"
+            className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] pr-6 pl-5 text-[#002A7887]"
           />
         </div>
-        <div className="flex w-full  justify-end mt-4">
+        <div className="flex w-full  justify-end pt-2">
           <button
             onClick={() => setShowPopUpDelete(false)}
-            className="bg-white text-blue_color px-4  rounded-full border border-blue_color"
+            className="bg-white text-blue_color px-6 py-[2px] rounded-full border border-blue_color text-xl font-normal"
           >
             ביטול
           </button>
           <button
             onClick={"axiosDelete"}
-            className="bg-blue_color text-white rounded-full px-4  mr-1 "
+            className="bg-blue_color text-white rounded-full px-6  mr-1 text-xl font-normal"
           >
-            {"btnText" ?? "נתק"}
+            נתק
           </button>
         </div>
       </div>

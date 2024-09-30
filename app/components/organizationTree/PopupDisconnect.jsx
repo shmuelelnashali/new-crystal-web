@@ -53,7 +53,7 @@ export default function PopupDisconnect({
             onClick={"axiosDelete"}
             className="bg-blue_color text-white rounded-full px-6  mr-1 text-xl font-normal"
           >
-            {"נתק" ?? "נתק"}
+            נתק
           </button>
         </div>
       </div>
