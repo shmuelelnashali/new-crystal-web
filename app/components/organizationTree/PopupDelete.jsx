@@ -19,23 +19,28 @@ export default function PopupDelete({
   //   }
   // };
 
+  const obj = [1, 2, 3, 4, 5, 6];
+
   return (
     <div
       dir="rtl"
       className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50"
     >
       <div className="bg-white py-2 px-2 w-[844px] h-[307px] rounded-xl text-right pr-7 pl-3">
-        <div
-          onClick={() => setShowPopUpDelete(false)}
-          className=" flex justify-end mt-0 hover:cursor-pointer "
-        >
-          <Image src={"/x.svg"} width={15} height={15} alt="x" />
-        </div>
         <div className="mb-3">
-          <h1 className="font-bold text-2xl leading-6	text-blue_color mb-4">
-            {" "}
-            האם אתה בטוח שאתה רוצה למחוק את{" "}
-          </h1>
+          <div className="flex justify-between pt-2">
+            <h1 className="font-bold text-2xl leading-6	text-blue_color mb-4 mt-2">
+              האם אתה בטוח שאתה רוצה למחוק את
+            </h1>
+            <Image
+              onClick={() => setShowPopUpDelete(false)}
+              className="hover:cursor-pointer w-[15px] h-[15px]"
+              src={"/x.svg"}
+              width={15}
+              height={15}
+              alt="x"
+            />
+          </div>
           <p className="text-xl font-normal text-blue_color">
             במדור אאא ישנם 23 עובדים, עליך לשייך אותם למדור אחר על מנת למחוק
             מדור זה.
@@ -45,11 +50,21 @@ export default function PopupDelete({
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             לאיזה מדור תרצה לשייך את העובדים?
           </h3>
-          <div className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] shadow-[0_2.4px_6px_-4.68px] mb-2"></div>
+          <select className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] shadow-[0_2.4px_6px_-5.68px] mb-2 appearance-none">
+            <option disabled selected hidden value="no">
+              בחר מדור
+            </option>
+            {obj.map((mador) => (
+              <option className="w-[534px] h-[48px]" value={mador}>{mador}</option>
+            ))}
+          </select>
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             מאיזה תאריך העובדים יעברו למדור החדש?
           </h3>
-          <div className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] shadow-[0_2.4px_6px_-4.68px]"></div>
+          <input
+            type="date"
+            className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] shadow-[0_2.4px_6px_-5.68px]"
+          />
         </div>
         <div className="flex w-full  justify-end mt-4">
           <button
