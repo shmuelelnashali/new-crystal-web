@@ -120,8 +120,8 @@ export default function OrganizationTree() {
   const [error, setError] = useState(null);
   const [idCounter, setIdCounter] = useState(0);
   const [newUnitName, setNewUnitName] = useState(null);
-  const [showPopUpDelete, setShowPopUpDelete] = useState(true);
-  const [showPopUpDisconnect, setShowPopUpDisconnect] = useState(false);
+  const [showPopUpDelete, setShowPopUpDelete] = useState(false);
+  const [showPopUpDisconnect, setShowPopUpDisconnect] = useState(true);
 
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
   const edgeTypes = useMemo(() => ({ CustomEdge }), []);
