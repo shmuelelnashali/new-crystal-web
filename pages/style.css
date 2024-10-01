@@ -2,3 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+  direction: ltr;
+}
+::-webkit-scrollbar-button {
+  margin: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px rgb(209, 217, 233);
+  border-radius: 23px;
+  background-color: #eff3fb;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #002a78;
+  border-radius: 10px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #002a78;
+}

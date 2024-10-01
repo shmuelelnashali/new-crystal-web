@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import vector90 from "@/public/vector90.svg";
 import axios from "axios";
@@ -10,6 +10,7 @@ export default function PopupDelete({
   btnText,
   urlPage,
 }) {
+  const [showOptions, setShowOptions] = useState(true);
   // const axiosDelete = async () => {
   //   try {
   //     await axios
@@ -51,12 +52,25 @@ export default function PopupDelete({
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             לאיזה מדור תרצה לשייך את העובדים?
           </h3>
-          <div className="w-[579px] h-[41px] px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] mb-2 text-[16.8px] font-light text-[#002A7887] flex items-center justify-between relative">
-            <span>בחר מדור</span>
-            <Image src={vector90} alt="vector90" width={9} height={5} />
+          <div className="h-[41px] mb-2 flex relative">
+            <div
+              onClick={() => setShowOptions(true)}
+              className="w-[579px] h-[41px] px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light text-[#002A7887] flex items-center justify-between absolute z-10"
+            >
+              <span>בחר מדור</span>
+              <Image src={vector90} alt="vector90" width={9} height={5} />
+            </div>
+            {showOptions && (
+              <div dir="ltr"
+                className="w-[579px] max-h-[271px] bg-white absolute z-0 top-6 py-4 pl-16 overflow-y-auto"
+                style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
+              >
+                {obj.map((mador, index) => (
+                  <div className="w-[450px] h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[1.5px] border-[#002A7842] border-opacity-70">{mador}</div>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="w-[579px] h-[271px] bg-white absolute"
-          style={{ boxShadow: '0px 4px 4px 1px rgba(0, 0, 0, 0.25)' }}></div>
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             מאיזה תאריך העובדים יעברו למדור החדש?
           </h3>
