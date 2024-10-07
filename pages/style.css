@@ -8,10 +8,10 @@
 
 /* width */
 ::-webkit-scrollbar {
-  height: 7px;
-  width: 7px;
-  direction: ltr;
+  height: 72.06px;
+  width: 6.11px;
 }
+
 ::-webkit-scrollbar-button {
   margin: 3px;
 }
@@ -21,6 +21,8 @@
   box-shadow: inset 0 0 3px rgb(209, 217, 233);
   border-radius: 23px;
   background-color: #eff3fb;
+  width: 8.55px;
+  height: 232px;
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
@@ -31,3 +33,4 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #002a78;
 }
+

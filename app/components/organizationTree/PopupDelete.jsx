@@ -62,11 +62,11 @@ export default function PopupDelete({
             </div>
             {showOptions && (
               <div dir="ltr"
-                className="w-[579px] max-h-[271px] bg-white absolute z-0 top-6 py-4 pl-16 overflow-y-auto"
+                className="w-[579px] max-h-[271px] bg-white absolute z-0 top-6 py-4 pl-[80px]  overflow-y-auto"
                 style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
               >
                 {obj.map((mador, index) => (
-                  <div className="w-[450px] h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[1.5px] border-[#002A7842] border-opacity-70">{mador}</div>
+                  <div className="w-[450px] h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0]">{mador}</div>
                 ))}
               </div>
             )}
