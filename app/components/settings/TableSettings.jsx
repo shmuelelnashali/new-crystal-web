@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 export default function TabieSettings({ data, headers, page }) {
+  const pathName = usePathname();
   const [updateRow, setUpdateRow] = useState();
   return (
     <div>
@@ -37,17 +39,22 @@ export default function TabieSettings({ data, headers, page }) {
                     <div
                       className={`${
                         index === Object.entries(code).length - 1 &&
+                          updateRow === rowIndex &&
+                          " col-span-2 "
+                      
+                        
+                      }${ pathName.includes("stages") &&
+                        index === Object.entries(code).length - 1 &&
                         updateRow === rowIndex &&
-                        "col-span-2 "
-                      }`}
+                        " w-full col-span-5"}`}
                     >
                       {updateRow === rowIndex && index !== 0 ? (
                         <div className="flex w-full  px-2">
                           <div
-                            className={`" rounded-full flex -w-full"
+                            className={`" rounded-full flex w-full"
                              ${
                                index === Object.entries(code).length - 1 &&
-                               "  bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]"
+                               "  bg-gradient-to-r  from-blue_color via-blue_color to-[#EFF3FB] w-full"
                              }`}
                           >
                             <input
@@ -57,7 +64,7 @@ export default function TabieSettings({ data, headers, page }) {
                               value={code_value}
                             />
                             {index === Object.entries(code).length - 1 && (
-                              <div className="w-full flex justify-center  text-white">
+                              <div className={`${pathName.includes("stages")?" px-4 ":" w-full "}  flex justify-center  text-white`}>
                                 שמור שינויים
                               </div>
                             )}

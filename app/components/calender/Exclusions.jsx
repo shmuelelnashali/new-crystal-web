@@ -9,8 +9,14 @@ export default function Exclusions({
   // setEventDate,
   missionDay,
 }) {
-  const { year, month, day, dayOfWeek} = missionDay;
-  const [eventDate, setEventDate] = useState(missionDay?{
+  const today = [year, month , day]
+  console.log(today);
+  console.log(missionDay);
+  
+  
+  const { year, month, day, dayOfWeek} = missionDay ? missionDay: today;
+
+  const [eventDate, setEventDate] = useState(missionDay ? {
     beginning_date: `${year}-${month}-${day}`,
     end_date: `${year}-${month}-${day}`,
     activityDay: dayOfWeek,

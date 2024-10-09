@@ -1,4 +1,5 @@
 import { Pencil } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 export default function Section({ madors, updateRow, setUpdateRow }) {
@@ -17,7 +18,7 @@ export default function Section({ madors, updateRow, setUpdateRow }) {
                 } `}
               >
                 <div
-                  className={`" rounded-full flex -w-full"
+                  className={`" rounded-full flex w-full"
                  ${
                    index === Object.entries(mador).length - 1 &&
                    "  bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]"
@@ -58,6 +59,7 @@ export default function Section({ madors, updateRow, setUpdateRow }) {
               <Pencil strokeWidth={1.5} size={15} />
               <p>עריכת שורה</p>
             </div>
+            {/* <Image className="mx-2" src={"/bit.svg"} width={15} height={16} alt={"uu"} /> */}
           </div>
         </div>
       ))}

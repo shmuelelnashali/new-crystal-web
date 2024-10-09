@@ -19,6 +19,7 @@ export default function useAuth({ middleware } = {}) {
       router.push("/login");
     }
   }, [user, error, middleware, router]);
+
   const login = async (setErrors, credentials) => {
     try {
       await axios.post("/login", credentials);
@@ -27,6 +28,7 @@ export default function useAuth({ middleware } = {}) {
       setErrors(error.response.data);
     }
   };
+  
   return {
     user,
     login,

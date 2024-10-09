@@ -12,9 +12,9 @@ export default function Login() {
       router.push("/calender");
       console.log(user);
     } else {
-      login(setErrors, { employee_number: "2222222" });
+      login(setErrors, { employee_number: "1111111" });
     }
-  }, [user, login]);
+  }, [user]);
   return (
     <div className="login_page h-full w-full flex justify-center items-center z-50 ">
       {" "}

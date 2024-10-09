@@ -405,7 +405,7 @@ export default function Employees() {
       }
     }
     fetchData();
-  },);
+  },[]);
 
   const formtDepartmentData = (data) => {
     const formatted = data.reduce((acc, company) => {
@@ -424,6 +424,8 @@ export default function Employees() {
         const response = await axios.get(
           "departments?appendBranches=true&appendSections=true"
         );
+        console.log(response.data);
+        
         formtDepartmentData(response.data ?? []);
       } catch (error) {
         console.error("error fetching employees: ", error);

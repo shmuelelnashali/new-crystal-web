@@ -18,15 +18,41 @@ export default function Branch({
         <div key={branchIndex}>
           <div className="grid grid-cols-9 whitespace-nowrap gap-2 content-center text-center pr-20 ga border-b-[1px] py-2.5">
             {Object.entries(branch).map(
-              ([key, value]) =>
+              ([key, value],index) =>
                 key !== "madors" &&
                 (updateRow.row === "branchs" &&
-                updateRow.index === branchIndex ? (
-                  <input
-                    className="text-center rounded-full border  border-blue_color"
-                    type="text"
-                    value={value}
-                  />
+                updateRow.index === branchIndex ? ( 
+                 
+                <div 
+                
+                  className={` flex w-full px-2 ${
+                    index === Object.entries(branch).length - 2 && " col-span-2"
+                  } `}
+                > {console.log(key, value ,"=" ,index)}
+                  <div
+                    className={`" rounded-full flex w-full"
+                   ${
+                     index === Object.entries(branch).length - 2 &&
+                     "  bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]"
+                   }`}
+                  >
+                    <input
+                      className={`" text-center w-full rounded-full outline-none border border-blue_color "
+                    `}
+                      value={value}
+                    />
+                    {index === Object.entries(branch).length - 2 && (
+                      <div className="w-full flex justify-center  text-white">
+                        שמור שינויים
+                      </div>
+                    )}
+                  </div>
+                </div>
+                  // <input
+                  //   className="text-center rounded-full border  border-blue_color"
+                  //   type="text"
+                  //   value={value}
+                  // />
                 ) : (
                   <div key={key} className="col-span-1 text-center ">
                     {value}
