@@ -34,6 +34,7 @@ export default function PopupDelete({
             <h1 className="font-bold text-2xl leading-6	text-blue_color mb-4 mt-2">
               האם אתה בטוח שאתה רוצה למחוק את
             </h1>
+
             <Image
               onClick={() => setShowPopUpDelete(false)}
               className="hover:cursor-pointer w-[15px] h-[15px]"
@@ -55,19 +56,24 @@ export default function PopupDelete({
           <div className="h-[41px] mb-2 flex relative">
             <div
               onClick={() => setShowOptions(true)}
-              className="w-[579px] h-[41px] px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light text-[#002A7887] flex items-center justify-between absolute z-10"
+              className="w-[579px] h-[41px] bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light text-[#002A7887] flex items-center justify-between z-10"
             >
               <span>בחר מדור</span>
               <Image src={vector90} alt="vector90" width={9} height={5} />
             </div>
             {showOptions && (
-              <div dir="ltr"
-                className="w-[579px] max-h-[271px] bg-white absolute z-0 top-6 py-4 pl-[80px] scroll-container "
+              <div
+                dir="ltr"
+                className="w-[579px] max-h-[271px] bg-white absolute top-6"
                 style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
               >
-                {obj.map((mador, index) => (
-                  <div className="w-[450px] h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0]">{mador}</div>
-                ))}
+                <div className="w-full max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto">
+                  {obj.map((mador, index) => (
+                    <div className="w-[450px] h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0]">
+                      {mador}
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
