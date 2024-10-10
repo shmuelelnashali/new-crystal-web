@@ -45,9 +45,9 @@ export default function OrganizationTable({ data, headers }) {
 
   return (
     <div>
-      <div className="flex-1 flex flex-col overflow-hidden rounded-lg">
-        <div className="px-2 dirLtr h-full rounded-2xl overflow-auto">
-          <div className="dirRtl bg-[#F7F9FD] rounded-lg">
+      <div className="flex-1 flex h-full flex-col overflow-hidden rounded-lg">
+        <div className="px-2 dirLtr  rounded-2xl  overflow-y-auto ">
+          <div className="dirRtl  bg-[#F7F9FD]  rounded-lg">
             <div className="p-2 pb-0 text-white rounded-lg sticky top-0 bg-[#F7F9FD] w-full">
               <div className="grid grid-cols-9 sticky top-0 rounded-lg p-2 bg-blue_color justify-center">
                 {headers.map((header) => (

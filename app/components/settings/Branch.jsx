@@ -16,7 +16,7 @@ export default function Branch({
     <div className="bg-[#002A78]/25 ">
       {branchs.map((branch, branchIndex) => (
         <div key={branchIndex}>
-          <div className="grid grid-cols-9 whitespace-nowrap gap-2 content-center text-center pr-20 ga border-b-[1px] py-2.5">
+          <div className="grid grid-cols-8 whitespace-nowrap gap-2 content-center text-center  border-b-[1px] py-2.5">
             {Object.entries(branch).map(
               ([key, value],index) =>
                 key !== "madors" &&
@@ -24,11 +24,11 @@ export default function Branch({
                 updateRow.index === branchIndex ? ( 
                  
                 <div 
-                
+
                   className={` flex w-full px-2 ${
                     index === Object.entries(branch).length - 2 && " col-span-2"
                   } `}
-                > {console.log(key, value ,"=" ,index)}
+                >
                   <div
                     className={`" rounded-full flex w-full"
                    ${
@@ -60,8 +60,11 @@ export default function Branch({
                 ))
             )}
             <div
-              onClick={() => handleBranchToggle(branchIndex)}
-              className="col-end-9 flex justify-end pl-3 cursor-pointer"
+              onClick={() => {handleBranchToggle(branchIndex),setUpdateRow({
+                index: "",
+                row: "",
+              })}}
+              className="col-end-8 flex justify-end pl-2 cursor-pointer"
             >
               <Image
                 className={`${
@@ -74,7 +77,7 @@ export default function Branch({
               />
             </div>
 
-            <div className="flex justify-around col-end-10">
+            <div className="pl-2 flex justify-around col-end-9">
               <div
                 onClick={() =>
                   setUpdateRow({ row: "branchs", index: branchIndex })
@@ -88,6 +91,7 @@ export default function Branch({
                 <Pencil strokeWidth={1.5} size={15} />
                 <p>עריכת שורה</p>
               </div>
+              <Image src={"/bit.svg"} width={15} height={16} alt={"uu"} />
             </div>
           </div>
           {openBranch === branchIndex && (

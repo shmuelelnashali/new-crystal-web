@@ -5305,7 +5305,7 @@ export default function organization() {
   return (
     <>
       <div className="h-full w-full flex flex-col ">
-        <div className="flex justify-between items-center w-full pb-2">
+        <div className="flex h-full justify-between items-center w-full pb-2">
           <div className="w-full font-bold text-4xl">ניהול קודי פעילות</div>
           <SettingsSearch />
         </div>

@@ -19,17 +19,37 @@ export default function Organizations({
       {data.map((organization, orgIndex) => (
         <div key={orgIndex} className=" ">
           {/* Organization row */}
-          <div className="grid grid-cols-9 whitespace-nowrap gap-2 content-center pr-5 text-center border-b-[2px] py-2.5">
+          <div className="grid grid-cols-8 whitespace-nowrap gap-2 content-center  text-center border-b-[2px] py-2.5">
             {Object.entries(organization).map(
-              ([key, value]) =>
+              ([key, value],index) =>
                 key !== "departments" &&
                 (updateRow.row === "organization" &&
                 updateRow.index === orgIndex ? (
-                  <input
-                    type="text"
-                    value={value}
-                    className="text-center rounded-full border  border-blue_color"
-                  />
+                  <div 
+
+                  className={` flex w-full px-2 ${
+                    index === Object.entries(organization).length - 2 && " col-span-2"
+                  } `}
+                >
+                  <div
+                    className={`" rounded-full flex w-full"
+                   ${
+                     index === Object.entries(organization).length - 2 &&
+                     "  bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]"
+                   }`}
+                  >
+                    <input
+                      className={`" text-center w-full rounded-full outline-none border border-blue_color "
+                    `}
+                      value={value}
+                    />
+                    {index === Object.entries(organization).length - 2 && (
+                      <div className="w-full flex justify-center  text-white">
+                        שמור שינויים
+                      </div>
+                    )}
+                  </div>
+                </div>
                 ) : (
                   <div key={key} className="col-span-1 ">
                     {value}
@@ -38,20 +58,23 @@ export default function Organizations({
             )}
 
             <div
-              className={`" col-end-9 flex justify-end pl-3 cursor-pointer "`}
+              className={`" col-end-8 flex justify-end pl-2 cursor-pointer "`}
             >
               <Image
                 className={`${
                   selectedOrganization === orgIndex && " outline rotate-180"
                 }`}
-                onClick={() => handleAccordion(orgIndex)}
+                onClick={() =>{ handleAccordion(orgIndex),setUpdateRow({
+                  index: "",
+                  row: "",
+                })}}
                 src={"/downArrow.svg"}
                 width={12}
                 height={15}
                 alt={"downArrow"}
               />
             </div>
-            <div className="flex justify-around col-end-10">
+            <div className=" pl-2 flex justify-around col-end-9">
               <div
                 onClick={() =>
                   setUpdateRow({ row: "organization", index: orgIndex })
@@ -66,6 +89,8 @@ export default function Organizations({
                 <Pencil strokeWidth={1.5} size={15} />
                 <p>עריכת שורה</p>
               </div>
+              <Image c src={"/bit.svg"} width={15} height={16} alt={"uu"} />
+              
             </div>
           </div>
 
