@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef, forwardRef } from "react";
 import Image from "next/image";
 import vector90 from "@/public/vector90.svg";
+import calendar from "@/public/calendar.svg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+
+const CustomDatePicker = forwardRef((props, ref) => (
+  <DatePicker {...props} ref={ref} />
+));
+CustomDatePicker.displayName = "CustomDatePicker";
 
 export default function PopupDelete({
   objectToDelete,
@@ -10,7 +18,20 @@ export default function PopupDelete({
   btnText,
   urlPage,
 }) {
-  const [showOptions, setShowOptions] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const dateInputRef = useRef(null);
+
+  const handleIconClick = () => {
+    setIsOpen(false);
+    if (dateInputRef.current) {
+      dateInputRef.current.setOpen(true);
+    }
+  };
+  const handleCalendarClose = () => {
+    setIsOpen(true);
+  };
+
   // const axiosDelete = async () => {
   //   try {
   //     await axios
@@ -64,12 +85,15 @@ export default function PopupDelete({
             {showOptions && (
               <div
                 dir="ltr"
-                className="w-[579px] max-h-[271px] bg-white absolute top-6"
+                className="w-[579px] max-h-[271px] bg-white absolute top-6 pr-[9px]"
                 style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
               >
-                <div className="w-full max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto">
+                <div className="max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto pr-4">
                   {obj.map((mador, index) => (
-                    <div className="w-[450px] h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0]">
+                    <div
+                      key={index}
+                      className="h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0]"
+                    >
                       {mador}
                     </div>
                   ))}
@@ -80,10 +104,23 @@ export default function PopupDelete({
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             מאיזה תאריך העובדים יעברו למדור החדש?
           </h3>
-          <input
-            type="date"
-            className="w-[579px] h-[41px] rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] pr-6 pl-5 text-[#002A7887]"
-          />
+          <div className="inline-flex relative ">
+            <CustomDatePicker
+              type="date"
+              className="w-[579px] h-[41px] bg-white rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] pr-6 pl-5 text-[#002A7887]"
+              ref={dateInputRef}
+              disabled={isOpen}
+              onCalendarClose={handleCalendarClose}
+            />
+            <div onClick={handleIconClick} className="absolute left-5 top-3">
+              <Image
+                src={calendar}
+                alt="calendar icon"
+                width={16.5}
+                height={16.5}
+              />
+            </div>
+          </div>
         </div>
         <div className="flex w-full  justify-end pt-2">
           <button

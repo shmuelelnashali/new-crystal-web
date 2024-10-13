@@ -3,7 +3,7 @@ import plusForTree from "@/public/plusForTree.svg";
 
 export default function BtnForOrganizationTree({ setShowPopUp }) {
   return (
-    <div className="p-5">
+    <div className="p-5 absolute">
       <button
         onClick={(e) => {
           e.stopPropagation(), setShowPopUp(true);

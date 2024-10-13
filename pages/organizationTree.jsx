@@ -302,12 +302,14 @@ export default function OrganizationTree() {
         >
           <Controls />
         </ReactFlow>
+
         {showPopUpDisconnect && (
           <PopupDisconnect
             objectToDelete={"ttt"}
             setShowPopUpDisconnect={setShowPopUpDisconnect}
           />
         )}
+
         {showPopUpDelete && (
           <PopupDelete
             objectToDelete={"ttt"}
