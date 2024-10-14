@@ -2,7 +2,7 @@ import React, { useState, useRef, forwardRef } from "react";
 import Image from "next/image";
 import vector90 from "@/public/vector90.svg";
 import calendar from "@/public/calendar.svg";
-import DatePicker from "react-datepicker";
+import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
@@ -19,17 +19,19 @@ export default function PopupDelete({
   urlPage,
 }) {
   const [showOptions, setShowOptions] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
   const dateInputRef = useRef(null);
+  const [startDate, setStartDate] = useState(new Date());
+
+  const MyContainer = ({ children }) => {
+    return (
+        <div>{children}</div>
+    );
+  };
 
   const handleIconClick = () => {
-    setIsOpen(false);
     if (dateInputRef.current) {
       dateInputRef.current.setOpen(true);
     }
-  };
-  const handleCalendarClose = () => {
-    setIsOpen(true);
   };
 
   // const axiosDelete = async () => {
@@ -77,7 +79,7 @@ export default function PopupDelete({
           <div className="h-[41px] mb-2 flex relative">
             <div
               onClick={() => setShowOptions(true)}
-              className="w-[579px] h-[41px] bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light text-[#002A7887] flex items-center justify-between z-10"
+              className="w-[579px] h-[41px] bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light text-[#002A7887] flex items-center justify-between z-50"
             >
               <span>בחר מדור</span>
               <Image src={vector90} alt="vector90" width={9} height={5} />
@@ -85,7 +87,7 @@ export default function PopupDelete({
             {showOptions && (
               <div
                 dir="ltr"
-                className="w-[579px] max-h-[271px] bg-white absolute top-6 pr-[9px]"
+                className="w-[579px] max-h-[271px] bg-white absolute top-6 pr-[9px] z-10"
                 style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
               >
                 <div className="max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto pr-4">
@@ -104,13 +106,14 @@ export default function PopupDelete({
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
             מאיזה תאריך העובדים יעברו למדור החדש?
           </h3>
-          <div className="inline-flex relative ">
+          <div className="inline-flex relative z-0">
             <CustomDatePicker
               type="date"
-              className="w-[579px] h-[41px] bg-white rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] pr-6 pl-5 text-[#002A7887]"
+              className="w-[579px] h-[41px]  bg-white rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] pr-6 pl-5 text-[#002A7887]"
               ref={dateInputRef}
-              disabled={isOpen}
-              onCalendarClose={handleCalendarClose}
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              calendarContainer={MyContainer}
             />
             <div onClick={handleIconClick} className="absolute left-5 top-3">
               <Image

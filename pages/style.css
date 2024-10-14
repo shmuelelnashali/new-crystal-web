@@ -26,5 +26,16 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #002a78;
 }
+.react-datepicker__header{
+  background-color: white;
+}
+.react-datepicker__month-container {
+  height: 308px;
+  width: 343px;
+  background: white;
+  border-radius: 10px;
+}
 
+.react-datepicker__week {
 
+}
