@@ -17,7 +17,7 @@ export default function SettingsSideBar() {
     { text: "ארכיון", link: "archive" },
     { text: "ניהול עץ אירגוני", link: "organization" },
     { text: "ניהול הסכמים", link: "agreements" },
-  
+   
   ];
   return (
     <div className=" bg-[#EFF3FB]  whitespace-nowrap rounded-2xl p-4 pt-0 ">

@@ -4,11 +4,10 @@ import React from "react";
 
 export default function SettingsLayout({ children }) {
   return (
-    <div className="h-full w-full px-4 py-1  ">
-      <div className="w-full h-full  gap-6 flex overflow-hidden">
+    <div className="h-full flex w-full px-4 py-1  ">
+      <div className="w-full gap-6 flex ">
         <SettingsSideBar />
-
-        {children}
+        <div className="w-full">{children}</div>
       </div>
     </div>
   );

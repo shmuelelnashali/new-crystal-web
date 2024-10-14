@@ -44,26 +44,24 @@ export default function OrganizationTable({ data, headers }) {
   };
 
   return (
-    <div>
-      <div className="flex-1 flex h-full flex-col overflow-hidden rounded-lg">
-        <div className="px-2 dirLtr  rounded-2xl  overflow-y-auto ">
-          <div className="dirRtl  bg-[#F7F9FD]  rounded-lg">
-            <div className="p-2 pb-0 text-white rounded-lg sticky top-0 bg-[#F7F9FD] w-full">
-              <div className="grid grid-cols-9 sticky top-0 rounded-lg p-2 bg-blue_color justify-center">
+        
+          <>
+            <div className="p-2 pb-0 dirRtl text-white rounded-lg sticky top-0 bg-[#F7F9FD] w-full">
+              <div className="grid grid-cols-8 sticky top-0 rounded-lg p-2 bg-blue_color justify-center">
                 {headers.map((header) => (
                   <div
                     key={header}
-                    className="text-center truncate font-semibold text-xl"
+                    className=" text-center truncate font-semibold text-xl"
                   >
                     {header}
                   </div>
                 ))}
-                <div className="text-center text-xl font-semibold col-end-10">
+                <div className="text-center text-xl font-semibold col-end-9">
                   פעולות
                 </div>
               </div> 
             </div>
-            <div className="flex flex-col  text-base">
+            <div className="flex flex-col px-2 bg-[#F7F9FD] dirRtl text-base">
               <Organizations
                 data={data}
                 updateRow={updateRow}
@@ -76,10 +74,10 @@ export default function OrganizationTable({ data, headers }) {
                 handleBranchToggle={handleBranchToggle}
               />
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </>
+   
+      
+   
   );
 }
 
