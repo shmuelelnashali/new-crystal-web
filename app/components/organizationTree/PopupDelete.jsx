@@ -24,7 +24,9 @@ export default function PopupDelete({
 
   const MyContainer = ({ children }) => {
     return (
+      <CalendarContainer className="h-[308px] w-[343px] rounded-[10px] bg-white pl-[12.5px]">
         <div>{children}</div>
+      </CalendarContainer>
     );
   };
 

@@ -26,16 +26,31 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #002a78;
 }
-.react-datepicker__header{
-  background-color: white;
-}
 .react-datepicker__month-container {
-  height: 308px;
-  width: 343px;
-  background: white;
+  height: 273px;
+  width: 318px;
   border-radius: 10px;
+  
 }
 
-.react-datepicker__week {
+.react-datepicker__header {
+  background-color: white !important;
+  width: 319px;
+  height: 48px;
+  padding: 0px !important;
+}
 
+.react-datepicker__day-names {
+  width: 318px;
+}
+
+.react-datepicker__month {
+  width: 318px;
+  height: 220px;
+}
+
+.react-datepicker__day {
+  height: 40px;
+  width: 40px !important;
+  border-radius: 4px;
 }
