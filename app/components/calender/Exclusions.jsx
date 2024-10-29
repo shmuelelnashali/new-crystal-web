@@ -9,24 +9,33 @@ export default function Exclusions({
   // setEventDate,
   missionDay,
 }) {
-  const today = [year, month , day]
+  const today = new Date();
   console.log(today);
-  console.log(missionDay);
   
-  
-  const { year, month, day, dayOfWeek} = missionDay ? missionDay: today;
 
-  const [eventDate, setEventDate] = useState(missionDay ? {
-    beginning_date: `${year}-${month}-${day}`,
-    end_date: `${year}-${month}-${day}`,
-    activityDay: dayOfWeek,
-  }:{
-    
-  });
-const {beginning_date,end_date,activityDay}=eventDate
+  const day = missionDay?.day
+    ? missionDay.day
+    : String(today.getDate()).padStart(2, "0");
+  const month = missionDay?.month
+    ? missionDay.month
+    : String(today.getMonth()+1);
+  const year = missionDay?.year ? missionDay.year : String(today.getFullYear());
+  // const { year, month, day, dayOfWeek} =
+   console.log(year, month, day);
+   
+
+  const [eventDate, setEventDate] = useState(
+ 
+      {
+          beginning_date: `${year}-${month}-${day}`,
+          end_date: `${year}-${month}-${day}`,
+      }
+   
+  );
+  const { beginning_date, end_date, activityDay } = eventDate;
   const [openSearch, setOpenSearch] = useState(false);
 
-  const handelDate = (e, type) => { 
+  const handelDate = (e, type) => {
     console.log(type);
     if (type == "day") {
       console.log(e);
@@ -86,7 +95,7 @@ const {beginning_date,end_date,activityDay}=eventDate
 
       <div className="z-50 h-[50%] max-h-[50%] w-[50%] fixed bg-white  rounded-md flex flex-col gap-y-3 p-3 px-6">
         <div onClick={openExclusion} className="absolute left-4 top-4 ">
-          <Image src={"/x.svg"} width={22} height={22} alt="x"/>
+          <Image src={"/x.svg"} width={22} height={22} alt="x" />
         </div>
         <div className="flex flex-col  py-2">
           <div className="font-bold text-2xl">החרגות </div>

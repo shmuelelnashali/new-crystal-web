@@ -53,7 +53,7 @@ export default function Calendar() {
 
   return (
     <>
-      <div className="flex flex-col h-full p-2 ">
+      <div className="flex flex-col h-full p-2 pb-0">
         <div className="h-11  flex justify-center ">
           <Search
             searchText={""}
@@ -69,7 +69,12 @@ export default function Calendar() {
           } `}
         >
           <div className="h-full  flex flex-col">
-            <Year missionDay={missionDay} setMissionDay={dateToObject} events={events}setEvents={setEvents}/>
+            <Year
+              missionDay={missionDay}
+              setMissionDay={dateToObject}
+              events={events}
+              setEvents={setEvents}
+            />
           </div>
         </div>
       </div>
@@ -81,7 +86,8 @@ export default function Calendar() {
             setExclusions={setExclusions}
             setOpenPopUp={setOpenPopUp}
             openPopUp={openPopUp}
-            events={events}setEvents={setEvents}
+            events={events}
+            setEvents={setEvents}
           />
         </div>
       )}
@@ -92,6 +98,3 @@ export default function Calendar() {
     </>
   );
 }
-
-//   );
-// }
