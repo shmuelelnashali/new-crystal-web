@@ -6,7 +6,7 @@ import ReactFlow, {
   Controls,
   useNodesState,
   useEdgesState,
-  updateEdge,
+  reconnectEdge ,
   addEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
@@ -120,7 +120,7 @@ export default function OrganizationTree() {
   const [error, setError] = useState(null);
   const [idCounter, setIdCounter] = useState(0);
   const [newUnitName, setNewUnitName] = useState(null);
-  const [showPopUpDelete, setShowPopUpDelete] = useState(true);
+  const [showPopUpDelete, setShowPopUpDelete] = useState(false);
   const [showPopUpDisconnect, setShowPopUpDisconnect] = useState(false);
 
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
@@ -214,7 +214,7 @@ export default function OrganizationTree() {
 
   const onEdgeUpdate = useCallback(
     (oldEdge, newConnection) =>
-      setEdges((els) => updateEdge(oldEdge, newConnection, els)),
+      setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
     []
   );
 

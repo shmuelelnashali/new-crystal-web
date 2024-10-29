@@ -5,6 +5,8 @@ import calendar from "@/public/calendar.svg";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import { he } from "date-fns/locale";
+import { subMonths, addMonths } from "date-fns";
 
 const CustomDatePicker = forwardRef((props, ref) => (
   <DatePicker {...props} ref={ref} />
@@ -24,7 +26,7 @@ export default function PopupDelete({
 
   const MyContainer = ({ children }) => {
     return (
-      <CalendarContainer className="h-[308px] w-[343px] rounded-[10px] bg-white pl-[12.5px]">
+      <CalendarContainer className="h-[308px] w-[343px] rounded-[10px] bg-white pl-[12.5px] custom-calendar-container">
         <div>{children}</div>
       </CalendarContainer>
     );
@@ -116,13 +118,17 @@ export default function PopupDelete({
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               calendarContainer={MyContainer}
+              locale={he}
             />
-            <div onClick={handleIconClick} className="absolute left-5 top-3">
+            <div
+              onClick={handleIconClick}
+              className="absolute left-5 top-[10px]"
+            >
               <Image
                 src={calendar}
                 alt="calendar icon"
-                width={16.5}
-                height={16.5}
+                width={20}
+                height={20}
               />
             </div>
           </div>
