@@ -6,7 +6,7 @@ import ReactFlow, {
   Controls,
   useNodesState,
   useEdgesState,
-  reconnectEdge ,
+  reconnectEdge,
   addEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
@@ -17,6 +17,7 @@ import BtnWithSelectPopUp from "@/app/components/organizationTree/BtnWithSelectP
 import axios from "@/app/lib/Axios";
 import PopupDisconnect from "@/app/components/organizationTree/PopupDisconnect";
 import PopupDelete from "@/app/components/organizationTree/PopupDelete";
+import Header from "@/app/components/ui/Header";
 
 const structure = {
   name: "יחידת על",
@@ -112,7 +113,7 @@ const getLayoutedElements = (nodes, edges) => {
   return { nodes, edges };
 };
 
-export default function OrganizationTree() {
+export default function OrganizationTreeComponent() {
   const [data, setData] = useState(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -126,21 +127,23 @@ export default function OrganizationTree() {
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
   const edgeTypes = useMemo(() => ({ CustomEdge }), []);
 
-  const fetchAlltheTree = async () => {
-    try {
-      const respons = await axios.get(
-        "departments?appendBranches=true&appendSections=true"
-      );
-      setData(respons.data);
-    } catch (error) {
-      setError("Failed to fetch organization data. Please try again later.");
-      console.error("Error fetching data:", error);
-    }
-  };
+  const proOptions = { hideAttribution: true };
 
-  useEffect(() => {
-    fetchAlltheTree();
-  }, []);
+  // const fetchAlltheTree = async () => {
+  //   try {
+  //     const respons = await axios.get(
+  //       "departments?appendBranches=true&appendSections=true"
+  //     );
+  //     setData(respons.data);
+  //   } catch (error) {
+  //     setError("Failed to fetch organization data. Please try again later.");
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchAlltheTree();
+  // }, []);
 
   const addNewUnitInServer = async (name, parentId) => {
     let urlVar;
@@ -279,17 +282,20 @@ export default function OrganizationTree() {
   }, [data]);
 
   return (
-    <>
-      <div
-        onClick={() => setShowPopUp(false)}
-        className="h-screen bg-[#F7F9FD]"
-      >
-        <BtnWithSelectPopUp
-          showPopUp={showPopUp}
-          setShowPopUp={setShowPopUp}
-          addNewNodeInClient={addNewNodeInClient}
-        />
+    <div
+      onClick={() => setShowPopUp(false)}
+      className="bg-white px-5 flex flex-col h-screen"
+    >
+      <div dir="rtl">
+        <Header />
+      </div>
 
+      <BtnWithSelectPopUp
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUp}
+        addNewNodeInClient={addNewNodeInClient}
+      />
+      <div className="bg-[#F7F9FD] flex-1 rounded-lg">
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
@@ -299,24 +305,31 @@ export default function OrganizationTree() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onEdgeUpdate={onEdgeUpdate}
+          proOptions={proOptions}
         >
-          <Controls />
+          <Controls
+            showFitView={false}
+            showInteractive={false}
+            position={"top-right"}
+          />
         </ReactFlow>
-
-        {showPopUpDisconnect && (
-          <PopupDisconnect
-            objectToDelete={"ttt"}
-            setShowPopUpDisconnect={setShowPopUpDisconnect}
-          />
-        )}
-
-        {showPopUpDelete && (
-          <PopupDelete
-            objectToDelete={"ttt"}
-            setShowPopUpDelete={setShowPopUpDelete}
-          />
-        )}
       </div>
-    </>
+      <div className="text-center pt-1 text-[#A5A5A5]">
+        פותח ע"י מסגרת אמ"ת{" "}
+      </div>
+      {showPopUpDisconnect && (
+        <PopupDisconnect
+          objectToDelete={"ttt"}
+          setShowPopUpDisconnect={setShowPopUpDisconnect}
+        />
+      )}
+
+      {showPopUpDelete && (
+        <PopupDelete
+          objectToDelete={"ttt"}
+          setShowPopUpDelete={setShowPopUpDelete}
+        />
+      )}
+    </div>
   );
 }

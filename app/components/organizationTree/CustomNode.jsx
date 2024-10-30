@@ -34,7 +34,7 @@ export default function CustomNode({ id, data }) {
         }}
       />
       <div>{data.label}</div>
-      <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex justify-center items-center absolute -bottom-[10px] text-2xl text-[#002A78] pb-[6px]">
+      <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex items-center justify-center absolute -bottom-[10px] text-2xl text-[#002A78] ">
         +
       </div>
       <Handle
