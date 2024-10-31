@@ -23,6 +23,7 @@ export default function PopupDelete({
   const [showOptions, setShowOptions] = useState(false);
   const dateInputRef = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
+  const [madorName, setMadorName] = useState(null);
 
   const MyContainer = ({ children }) => {
     return (
@@ -54,12 +55,13 @@ export default function PopupDelete({
     <div
       dir="rtl"
       className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50"
+      onClick={() => setShowOptions(false)}
     >
       <div className="bg-white py-2 px-2 w-[844px] h-[307px] rounded-xl text-right pr-7 pl-4">
         <div className="mb-3">
           <div className="flex justify-between pt-2">
             <h1 className="font-bold text-2xl leading-6	text-blue_color mb-4 mt-2">
-              האם אתה בטוח שאתה רוצה למחוק את
+              האם אתה בטוח שאתה רוצה למחוק המדור “מדור אאא”?{" "}
             </h1>
 
             <Image
@@ -82,10 +84,14 @@ export default function PopupDelete({
           </h3>
           <div className="h-[41px] mb-2 flex relative">
             <div
-              onClick={() => setShowOptions(true)}
-              className="w-[579px] h-[41px] bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light text-[#002A7887] flex items-center justify-between z-50"
+              onClick={(e) => {
+                e.stopPropagation(), setShowOptions(true);
+              }}
+              className={`w-[579px] h-[41px] bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light ${
+                madorName ? "text-[#002A78]" : "text-[#002A7887]"
+              }  flex items-center justify-between z-50`}
             >
-              <span>בחר מדור</span>
+              <span>{madorName || "בחר מדור"}</span>
               <Image src={vector90} alt="vector90" width={9} height={5} />
             </div>
             {showOptions && (
@@ -95,12 +101,15 @@ export default function PopupDelete({
                 style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
               >
                 <div className="max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto pr-4">
-                  {obj.map((mador, index) => (
+                  {obj.map((name, index) => (
                     <div
+                      onClick={() => {
+                        setMadorName(name), setShowOptions(false);
+                      }}
                       key={index}
-                      className="h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0]"
+                      className="h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0] madorHover"
                     >
-                      {mador}
+                      {name}
                     </div>
                   ))}
                 </div>

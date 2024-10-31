@@ -20,7 +20,7 @@ export default function CustomNode({ id, data }) {
         setShowPopUp(true);
       }}
       onClick={() => setShowPopUp(false)}
-      className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow"
+      className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow cursor-pointer"
     >
       <Handle
         type="target"

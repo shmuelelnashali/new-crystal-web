@@ -11,6 +11,11 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+/* Custom React-Flow */
+.react-flow__renderer .react-flow__pane {
+  cursor: pointer;
+}
+
 /* Custom React-Flow Controls */
 /* .react-flow__controls-button{
   color: #002A78 !important;
@@ -32,9 +37,16 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #002a78;
   border-radius: 10px;
+  border: 1.22px solid #eff3fb;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #002a78;
+}
+
+/* PopUp Delete Mador Options */
+.madorHover:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
 
 /* Custom Calendar Styling */
