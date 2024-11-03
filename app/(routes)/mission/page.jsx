@@ -3,7 +3,7 @@ import Search from "../../components/ui/Search";
 import Image from "next/image";
 import { useState } from "react";
 import Table from "../../components/Table";
-import EmployeeFilter from "../../components/EmployeeFilter";
+import EmployeeFilter from "../../components/employees/EmployeeFilter";
 
 const data = [
   {

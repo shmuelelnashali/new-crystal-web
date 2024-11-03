@@ -5309,7 +5309,7 @@ export default function organization() {
     <>
       <div className="flex flex-col w-full h-full  ">
         <div className="flex   justify-between items-center w-full p-2">
-          <div className="w-full  font-bold text-4xl">ניהול קודי פעילות</div>
+          <div className="w-full  font-bold text-4xl">ניהול עץ ארגוני</div>
           <SettingsSearch />
         </div>
        

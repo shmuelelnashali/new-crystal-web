@@ -235,6 +235,7 @@ export default function ReportGenerator() {
     setFieldsTo(newFieldsTo);
     handleDragEnd();
   };
+  
 
   const removeItem = (item) => {
     const newArr = [...fieldsTo];
@@ -436,7 +437,7 @@ export default function ReportGenerator() {
             </div>
            
               {fieldsTo.length <= 10 && (
-                <div className="bg-[#EFF3FB] w-full flex-1 border-dashed border-2 border-blue_color rounded-lg p-2  flex justify-center items-center">
+                <div className="bg-[#EFF3FB]  flex-1 border-dashed border-2 border-blue_color rounded-lg p-2  flex justify-center items-center">
                   <Image src={"addFilid.svg"} width={422} height={200} alt="addFilid.svg"/>
                 </div>
               )}{" "}

@@ -2,6 +2,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "./components/ui/Header";
 import Search from "./components/ui/Search";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const open_sans = Open_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -20,6 +21,19 @@ export default function RootLayout({ children }) {
         className={`h-screen p-2 flex  flex-col text-blue_color  ${open_sans.className}`}
       >
         <Header />
+        {/* <ToastContainer
+      position="bottom-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+      transition={Bounce} 
+      /> */}
         <div className="flex-1 px-4 py-1 overflow-hidden ">{children}</div>
         <div className="text-center pt-1 text-[#A5A5A5]">
           פותח ע"י מסגרת אמ"ת{" "}

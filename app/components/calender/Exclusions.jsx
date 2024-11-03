@@ -11,27 +11,21 @@ export default function Exclusions({
 }) {
   const today = new Date();
   console.log(today);
-  
 
   const day = missionDay?.day
     ? missionDay.day
     : String(today.getDate()).padStart(2, "0");
   const month = missionDay?.month
     ? missionDay.month
-    : String(today.getMonth()+1);
+    : String(today.getMonth() + 1);
   const year = missionDay?.year ? missionDay.year : String(today.getFullYear());
   // const { year, month, day, dayOfWeek} =
-   console.log(year, month, day);
-   
+  console.log(year, month, day);
 
-  const [eventDate, setEventDate] = useState(
- 
-      {
-          beginning_date: `${year}-${month}-${day}`,
-          end_date: `${year}-${month}-${day}`,
-      }
-   
-  );
+  const [eventDate, setEventDate] = useState({
+    beginning_date: `${year}-${month}-${day}`,
+    end_date: `${year}-${month}-${day}`,
+  });
   const { beginning_date, end_date, activityDay } = eventDate;
   const [openSearch, setOpenSearch] = useState(false);
 

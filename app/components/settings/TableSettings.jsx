@@ -2,10 +2,17 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import DeleteRow from "./DeleteRow";
 
 export default function TabieSettings({ data, headers, page }) {
   const pathName = usePathname();
-  const [updateRow, setUpdateRow] = useState();
+  const [updateIndex, setUpdateIndex] = useState();
+  const [updateRow, setUpdateRow] = useState({});
+  const [deleteRow, setDeleteRow] = useState();
+  const handeeCanghe = (key, value) => {
+    setUpdateRow((prve) => ({ ...prve, [key]: value }));
+    console.log(updateRow);
+  };
   return (
     <div>
       <div className="flex-1 flex flex-col overflow-hidden  rounded-lg">
@@ -30,41 +37,50 @@ export default function TabieSettings({ data, headers, page }) {
               </div>
             </div>
             <div className="flex flex-col px-2  text-base ">
-              {data.map((code, rowIndex) => (
+              {data.map((row, rowIndex) => (
                 <div
                   key={rowIndex}
                   className="grid grid-cols-9 whitespace-nowrap justify-center border-b-[2px] py-2.5"
                 >
-                  {Object.entries(code).map(([code_key, code_value], index) => (
+                  {Object.entries(row).map(([code_key, code_value], index) => (
                     <div
                       className={`${
-                        index === Object.entries(code).length - 1 &&
-                          updateRow === rowIndex &&
-                          " col-span-2 "
-                      
-                        
-                      }${ pathName.includes("stages") &&
-                        index === Object.entries(code).length - 1 &&
-                        updateRow === rowIndex &&
-                        " w-full col-span-5"}`}
+                        index === Object.entries(row).length - 1 &&
+                        updateIndex === rowIndex &&
+                        " col-span-2 "
+                      }${
+                        pathName.includes("stages") &&
+                        index === Object.entries(row).length - 1 &&
+                        updateIndex === rowIndex &&
+                        " w-full col-span-5"
+                      }`}
                     >
-                      {updateRow === rowIndex && index !== 0 ? (
+                      {updateIndex === rowIndex && index !== 0 ? (
                         <div className="flex w-full  px-2">
                           <div
                             className={`" rounded-full flex w-full"
                              ${
-                               index === Object.entries(code).length - 1 &&
+                               index === Object.entries(row).length - 1 &&
                                "  bg-gradient-to-r  from-blue_color via-blue_color to-[#EFF3FB] w-full"
                              }`}
                           >
                             <input
                               className={`" text-center w-full rounded-full outline-none border border-blue_color "
                               `}
-                              // onChange={}
-                              value={code_value}
+                              onFocus={() => handeeCanghe(code_key, "")}
+                              onChange={(e) =>
+                                handeeCanghe(code_key, e.target.value)
+                              }
+                              value={updateRow[code_key] || ""}
                             />
-                            {index === Object.entries(code).length - 1 && (
-                              <div className={`${pathName.includes("stages")?" px-4 ":" w-full "}  flex justify-center  text-white`}>
+                            {index === Object.entries(row).length - 1 && (
+                              <div
+                                className={`${
+                                  pathName.includes("stages")
+                                    ? " px-4 "
+                                    : " w-full "
+                                }  flex justify-center  text-white`}
+                              >
                                 שמור שינויים
                               </div>
                             )}
@@ -73,6 +89,7 @@ export default function TabieSettings({ data, headers, page }) {
                       ) : (
                         <div key={index} className="text-center ">
                           {code_value}
+                          {/* <span className="text-xs">{code_key.includes("price")&&' ש"ח'}</span>  */}
                         </div>
                       )}
                     </div>
@@ -80,13 +97,13 @@ export default function TabieSettings({ data, headers, page }) {
                   <div className="flex cursor-pointer justify-around col-end-10 ">
                     <div
                       className={`${
-                        updateRow === rowIndex
+                        updateIndex === rowIndex
                           ? "bg-blue_color/20 border border-blue_color/5"
                           : "bg-blue_color border border-blue_color"
                       }  gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
                       onClick={() => {
-                        setUpdateRow(rowIndex);
-                        console.log(updateRow);
+                        setUpdateIndex(rowIndex);
+                        setUpdateRow(row);
                       }}
                     >
                       <Image
@@ -98,7 +115,16 @@ export default function TabieSettings({ data, headers, page }) {
 
                       <p>עריכת שורה</p>
                     </div>
-                    <Image src={"/bit.svg"} width={15} height={16} alt={"uu"} />
+
+                    <Image
+                      onClick={() => {
+                        setDeleteRow(row), console.log(row);
+                      }}
+                      src={"/bit.svg"}
+                      width={15}
+                      height={16}
+                      alt={"uu"}
+                    />
                   </div>
                 </div>
               ))}
@@ -107,6 +133,7 @@ export default function TabieSettings({ data, headers, page }) {
           </div>
         </div>
       </div>
+      {deleteRow && <DeleteRow row={deleteRow} />}
     </div>
   );
 }

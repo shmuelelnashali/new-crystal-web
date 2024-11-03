@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/app/lib/axios";
 import { clsx } from "clsx";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -36,21 +36,36 @@ export default function ExclusionsSearch({openSearch}) {
   }
 
   };
-
-
-
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("https://dummyjson.com/users");
-      setUser(response.data.users);
-     
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
   useEffect(() => {
-    fetchUsers();
+    async function fetchData() {
+      try {
+        const response = await axios.get("/employees");
+        console.log(response.data);
+        setUser(response.data ?? []);
+        // console.log(employees);
+      } catch (error) {
+        console.error("error fetching employees: ", error);
+        throw error;
+      } finally {
+        // setLoading(false);
+      }
+    }
+    fetchData();
   }, []);
+
+
+  // const fetchUsers = async () => {
+  //   try {
+  //     const response = await axios.get("https://dummyjson.com/users");
+  //     setUser(response.data.users);
+     
+  //   } catch (error) {
+  //     console.error("Error fetching users:", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []);
   return (
    
       <div dir="ltr" 
@@ -84,8 +99,8 @@ export default function ExclusionsSearch({openSearch}) {
                   </div>
                 </div>
                 <div onClick={handleSearch} className="p-2">
-                  <div>{user.firstName}</div>
-                  <div>{user.id}</div>
+                  <div>{user.first_name}</div>
+                  <div>{user.employee_number}</div>
                 </div>
               </div>
               <div className=" mx-4 border border-b-[#EFF3FB]"></div>

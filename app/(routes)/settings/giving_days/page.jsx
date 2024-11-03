@@ -4,39 +4,17 @@ import Image from "next/image";
 import React from "react";
 
 export default function activity() {
-  const headers = ["#", "שם מלא", "מספר אישי", "הרשאות", ,];
+  const headers = ["#", "שם ", "מחיר צבאי",'מחיר משהב"ט','מחיר סיב"ט' ,];
 
   const activity_code = [
     {
-      user_number: "1",
-      full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
+      number: "1",
+      name: "ימי מסלול",
+      armyPrice: "S1234",
+      price1: 12345,
+      price2: 12345,
     },
-    {
-      user_number: "1",
-      full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
-    },
-    {
-      user_number: "1",
-      full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
-    },
-    {
-      user_number: "1",
-      full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
-    },
-    {
-      user_number: "1",
-      full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
-    },
+
   ];
   return (
     <>

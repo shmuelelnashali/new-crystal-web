@@ -2,29 +2,32 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Events from "./Events";
 import axios from "../../lib/axios";
+import { Bounce, toast } from "react-toastify";
 
 export default function PopupDay({
   missionDay,
   setMissionDay,
   setExclusions,
- 
+
   openPopUp,
   setOpenPopUp,
-  events, setEvents
+  events,
+  setEvents,
 }) {
-  const { year, month, day,  dayOfWeek } = missionDay;
+  const { year, month, day, dayOfWeek } = missionDay;
   console.log();
   const [eventDate, setEventDate] = useState({
     // beginning_date: `${year}-${month}-${day}`,
     // end_date: `${year}-${month}-${day}`,
     // activityDay: dayOfWeek,
   });
-  useEffect(()=>{
-  setEventDate({
-    beginning_date: `${year}-${month}-${day}`,
-    end_date: `${year}-${month}-${day}`,
-    activityDay: dayOfWeek,
-  })},[missionDay])
+  useEffect(() => {
+    setEventDate({
+      beginning_date: `${year}-${month}-${day}`,
+      end_date: `${year}-${month}-${day}`,
+      activityDay: dayOfWeek,
+    });
+  }, [missionDay]);
   const [activity, setActivity] = useState(false);
 
   // const [events, setEvents] = useState("add");
@@ -45,6 +48,7 @@ export default function PopupDay({
       }
     }
     fetchData();
+    toast.success("hello");
   }, [missionDay]);
 
   // console.log(eventDate, activity);
@@ -53,7 +57,7 @@ export default function PopupDay({
     setMissionDay(null);
   };
   // console.log(events);
- 
+
   const addNewEvent = async () => {
     const event = {
       beginning_date: eventDate.beginning_date,
@@ -68,8 +72,7 @@ export default function PopupDay({
         setMissionDay(null);
         return response.status;
       } catch (error) {
-        console.error("error fetching : ", error);
-        throw error;
+        console.error("error fetching : ", error?.response?.data?.message);
       }
     }
     if (events === "edit") {
@@ -80,8 +83,7 @@ export default function PopupDay({
           setMissionDay(null);
           return response.status;
         } catch (error) {
-          console.error("error fetching : ", error);
-          throw error;
+          console.error("error fetching : ", error?.response?.data?.message);
         }
       }
     }

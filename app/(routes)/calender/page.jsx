@@ -54,7 +54,7 @@ export default function Calendar() {
   return (
     <>
       <div className="flex flex-col h-full p-2 pb-0">
-        <div className="h-11  flex justify-center ">
+        {/* <div className="h-11  flex justify-center ">
           <Search
             searchText={""}
             textBtn={"החרגות"}
@@ -62,7 +62,7 @@ export default function Calendar() {
             addImage={imageAdd}
             missionDay={missionDay}
           />
-        </div>
+        </div> */}
         <div
           className={`h-full overflow-hidden p-2 ${
             openPopUp ? "w-4/5 pr-3 transition-width" : " w-full px-[5%]"

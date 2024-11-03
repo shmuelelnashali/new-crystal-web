@@ -8,15 +8,15 @@ export default function ReportSelection({ oldRepo, newRepo, setCreateRepo }) {
         <h2 className="text-center p-2 text-xl font-semibold">
           בחר דו”ח מהדו”חות הקיימים
         </h2>
-        <div className="relative  ">
+        <div className="relative px-3 ">
           <input
             type="text"
-            className="w-full p-2 pr-4 rounded-3xl 
+            className="w-full  p-2 pr-4 rounded-3xl 
              focus:outline-0 bg-[#EFF3FB] "
             placeholder=" חיפוש"
           />
           <Image
-            className="absolute left-[2%] top-[26%] z-10"
+            className="absolute left-[4%] top-[26%] z-10"
             src="/MagnifyingGlass.svg"
             width={20}
             height={20}
