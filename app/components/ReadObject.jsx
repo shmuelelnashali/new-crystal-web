@@ -19,6 +19,8 @@ export default function ({ data, index, setUpdateMode }) {
           className={`h-full px-4 md:truncate  group flex flex-col  items-center justify-center  py-4 relative  
         
            text-center ${key === "overTimeLimit" ? "custom-col-span" : ""}`}
+
+           title={value}
         >
            { value}
 

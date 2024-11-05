@@ -33,7 +33,7 @@ export default function CustomNode({ id, data }) {
           height: "20px",
         }}
       />
-      <div>{data.label}</div>
+      <div className="text-xl">{data.label}</div>
       <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex items-center justify-center absolute -bottom-[10px] text-2xl text-[#002A78] ">
         +
       </div>

@@ -117,6 +117,7 @@ export default function OrganizationTreeComponent() {
   const [data, setData] = useState(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [mapNodes, setMapNodes] = useState(null);
   const [showPopUp, setShowPopUp] = useState(false);
   const [error, setError] = useState(null);
   const [idCounter, setIdCounter] = useState(0);
@@ -129,21 +130,27 @@ export default function OrganizationTreeComponent() {
 
   const proOptions = { hideAttribution: true };
 
-  // const fetchAlltheTree = async () => {
-  //   try {
-  //     const respons = await axios.get(
-  //       "departments?appendBranches=true&appendSections=true"
-  //     );
-  //     setData(respons.data);
-  //   } catch (error) {
-  //     setError("Failed to fetch organization data. Please try again later.");
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+  const fetchAlltheTree = async () => {
+    try {
+      const respons = await axios.get(
+        "departments?appendBranches=true&appendSections=true"
+      );
+      setData(respons.data);
+    } catch (error) {
+      setError("Failed to fetch organization data. Please try again later.");
+      console.error("Error fetching data:", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchAlltheTree();
-  // }, []);
+  useEffect(() => {
+    fetchAlltheTree();
+  }, []);
+
+  useEffect(() => {
+    const map = new Map();
+    nodes.forEach((node) => map.set(node.id, node));
+    setMapNodes(map);
+  }, [nodes]);
 
   const addNewUnitInServer = async (name, parentId) => {
     let urlVar;
@@ -168,8 +175,9 @@ export default function OrganizationTreeComponent() {
     try {
       const payloud = { name: name };
       if (parentName) {
-        payloud[parentName] = parentId.toString();
+        payloud[parentName] = parentId;
       }
+
       const respons = await axios.post(urlVar, payloud);
 
       return respons.data;
@@ -179,9 +187,9 @@ export default function OrganizationTreeComponent() {
     }
   };
 
-  const changingUnitAffiliation = (parentId, name) => {};
+  // const changingUnitAffiliation = (parentId, name) => {};
 
-  const disconnection = () => {};
+  // const disconnection = () => {};
 
   const addNewNodeInClient = (type) => {
     const x = window.innerWidth - 250;
@@ -207,7 +215,11 @@ export default function OrganizationTreeComponent() {
     async (params) => {
       setEdges((eds) => addEdge({ ...params, type: "CustomEdge" }, eds));
 
-      const parentId = params.source;
+      const parentNode = mapNodes.get(params.source);
+      let parentId;
+      if (parentNode && parentNode.data) {
+        parentId = parentNode.data.dbId;
+      }
 
       await addNewUnitInServer(newUnitName, parentId);
       fetchAlltheTree();
@@ -225,10 +237,11 @@ export default function OrganizationTreeComponent() {
     const initialNodes = [];
     const initialEdges = [];
 
-    const createNode = (name, id) => ({
-      id: id.toString(),
+    const createNode = (name, level, dbId) => ({
+      id: [level + dbId].toString(),
       data: {
         label: name,
+        dbId: dbId,
         delete: setShowPopUpDelete,
         disconnect: setShowPopUpDisconnect,
       },
@@ -247,18 +260,18 @@ export default function OrganizationTreeComponent() {
     initialNodes.push(rootNode);
 
     data.forEach((dep) => {
-      initialNodes.push(createNode(dep.name, "dep-" + dep.id));
+      initialNodes.push(createNode(dep.name, "dep-", dep.id));
       initialEdges.push(createEdge(rootNode.id, "dep-" + dep.id));
 
       if (dep.branches) {
         dep.branches.forEach((branch) => {
-          initialNodes.push(createNode(branch.name, "branch-" + branch.id));
+          initialNodes.push(createNode(branch.name, "branch-", branch.id));
           initialEdges.push(createEdge("dep-" + dep.id, "branch-" + branch.id));
 
           if (branch.sections) {
             branch.sections.forEach((section) => {
               initialNodes.push(
-                createNode(section.name, "section-" + section.id)
+                createNode(section.name, "section-", section.id)
               );
               initialEdges.push(
                 createEdge("branch-" + branch.id, "section-" + section.id)
