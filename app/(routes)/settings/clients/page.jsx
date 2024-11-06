@@ -4,64 +4,79 @@ import Image from "next/image";
 import React from "react";
 
 export default function activity() {
-  const headers = [
-    "#",
-    'מייל גמ"ש',
-    "שם לקוח",
-    'קוד גמ"ש',
-    'סוג גמ"ש',
-    ,
+  const headers = ["#", 'מייל גמ"ש', "שם לקוח", 'קוד גמ"ש', 'סוג גמ"ש', ,];
+  const AddFormFields = [
+    {
+      name: "email",
+      label: `מייל גמ"ש`,
+      placeholder: `מייל גמ"ש`,
+    },
+    {
+      name: "client_name",
+      label: `שם לקוח`,
+      placeholder: `שם לקוח`,
+    },
+    {
+      name: "code",
+      label: `קוד גמ"ש`,
+      placeholder: `קוד גמ"ש`,
+      type: "option",
+    },
+    {
+      name: "type",
+      label: `סוג גמ"ש`,
+      placeholder: `סוג גמ"ש`,
+      type: "option",
+    },
   ];
-  
-  
 
- 
-  const activity_code = [
+  const clients = [
     {
-      user_number:"1",
+      number: "1",
+      namber: "123@idf",
       full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
+      code: "1234",
+      type: "אחר",
     },
     {
-      user_number:"1",
+      number: "1",
+      namber: "123@idf",
       full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
+      code: "1234",
+      type: "אחר",
     },
     {
-      user_number:"1",
+      number: "1",
+      namber: "123@idf",
       full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
+      code: "1234",
+      type: "אחר",
     },
     {
-      user_number:"1",
+      number: "1",
+      namber: "123@idf",
       full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
+      code: "1234",
+      type: "אחר",
     },
     {
-      user_number:"1",
+      number: "1",
+      namber: "123@idf",
       full_name: "דוד אלקיים",
-      namber: "S1234",
-      permissions: "מנהל",
+      code: "1234",
+      type: "אחר",
     },
-    
-    
   ];
   return (
     <>
-    <div className="h-full w-full flex flex-col ">
-       <div className="flex justify-between items-center w-full pb-2">
-        <div className="w-full font-bold text-4xl">ניהול קודי פעילות</div>
-        <SettingsSearch/>
-         </div>
-        
-    <TabieSettings
-    data={activity_code}
-    headers={headers}/>
-    
-    </div>
+      <div className="h-full w-full flex flex-col ">
+        <div className="flex justify-between items-center w-full pb-2">
+          <div className="w-full font-bold text-4xl">לקוחות במערכת</div>
+          <SettingsSearch fields={AddFormFields} />
+        </div>
+
+        <TabieSettings data={clients} headers={headers} />
+      </div>
     </>
-      )}
+  );
+}

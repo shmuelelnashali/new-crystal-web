@@ -136,7 +136,7 @@ export default function Exclusions({
             <Option
               data={activity_type}
               handel={handelDate}
-              activityDay={activityDay}
+              value={activityDay}
             />
           </div>
 

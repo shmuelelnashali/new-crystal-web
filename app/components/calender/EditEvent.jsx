@@ -66,7 +66,7 @@ export default function EditEvent({ missionDay, setMissionDay, eventDate, setEve
     <div className="w-full px-2 font-normal text-lg ">
       <div className="w-full ">
         <div className="font-bold">סוג פעילות</div>
-          <Option data={activity_type} handel={handelDate} activityDay={activityDay}/>
+          <Option data={activity_type} handel={handelDate} value={activityDay}/>
         <div className="flex flex-col w-full ">
           <div className="py-2">
           <div className="font-bold py-1"> תאריך </div>

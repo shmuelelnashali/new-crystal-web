@@ -4,13 +4,10 @@ import TabieSettings from "@/app/components/settings/TableSettings";
 import Image from "next/image";
 
 import OrganizationTree from "../../organizationTree/page";
-import OrganizationTable from "@/app/components/settings/OrganizationTable";
+import OrganizationTable from "@/app/components/settings/organization/OrganizationTable";
 
 export default function organization() {
   const headers = ["שם יחידה", "ראש יחידה", "מייל ראש יחידה", "קוד לביא"];
-
-
-
 
   const organizationData = [
     {
@@ -5312,11 +5309,11 @@ export default function organization() {
           <div className="w-full  font-bold text-4xl">ניהול עץ ארגוני</div>
           <SettingsSearch />
         </div>
-       
+
         <div className="flex-1  overflow-hidden ">
-        <div  className="h-full   dirLtr  px-2 overflow-auto ">
-        <OrganizationTable data={organizationData} headers={headers} />
-        </div>
+          <div className="h-full   dirLtr  px-2 overflow-auto ">
+            <OrganizationTable data={organizationData} headers={headers} />
+          </div>
         </div>
         {/* <div className=" flex h-full  flex-col  rounded-lg">
           

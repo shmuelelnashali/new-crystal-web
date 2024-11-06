@@ -83,7 +83,7 @@ export default function AddEvent({
         <Option
           data={activity_type}
           handel={handelDate}
-          activityDay={activityDay}
+          value={activityDay}
           toggle={toggle}
           setToggle={setToggle}
         />
