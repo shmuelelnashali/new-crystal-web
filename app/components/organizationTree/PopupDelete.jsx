@@ -4,7 +4,6 @@ import vector90 from "@/public/vector90.svg";
 import calendar from "@/public/calendar.svg";
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
 import { he } from "date-fns/locale";
 import { subMonths, addMonths } from "date-fns";
 
@@ -128,6 +127,9 @@ export default function PopupDelete({
               onChange={(date) => setStartDate(date)}
               calendarContainer={MyContainer}
               locale={he}
+              // nDate={subMonths(new Date(), 6)}
+              // maxDate={addMonths(new Date(), 6)}
+              // showMonthYearDropdown
             />
             <div
               onClick={handleIconClick}

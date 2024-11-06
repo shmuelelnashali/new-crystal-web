@@ -117,7 +117,7 @@ export default function OrganizationTreeComponent() {
   const [data, setData] = useState(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [mapNodes, setMapNodes] = useState(null);
+  const [nodesObj, setNodesObj] = useState();
   const [showPopUp, setShowPopUp] = useState(false);
   const [error, setError] = useState(null);
   const [idCounter, setIdCounter] = useState(0);
@@ -147,9 +147,11 @@ export default function OrganizationTreeComponent() {
   }, []);
 
   useEffect(() => {
-    const map = new Map();
-    nodes.forEach((node) => map.set(node.id, node));
-    setMapNodes(map);
+    const nodeObj = {};
+    nodes.forEach((node) => {
+      nodeObj[node.id] = node;
+      setNodesObj(nodeObj);
+    });
   }, [nodes]);
 
   const addNewUnitInServer = async (name, parentId) => {
@@ -215,7 +217,7 @@ export default function OrganizationTreeComponent() {
     async (params) => {
       setEdges((eds) => addEdge({ ...params, type: "CustomEdge" }, eds));
 
-      const parentNode = mapNodes.get(params.source);
+      const parentNode = nodesObj[params.source];
       let parentId;
       if (parentNode && parentNode.data) {
         parentId = parentNode.data.dbId;
@@ -237,11 +239,12 @@ export default function OrganizationTreeComponent() {
     const initialNodes = [];
     const initialEdges = [];
 
-    const createNode = (name, level, dbId) => ({
-      id: [level + dbId].toString(),
+    const createNode = (name, nodeId, dbId, level) => ({
+      id: [nodeId + dbId].toString(),
       data: {
         label: name,
         dbId: dbId,
+        level: level,
         delete: setShowPopUpDelete,
         disconnect: setShowPopUpDisconnect,
       },
@@ -260,18 +263,18 @@ export default function OrganizationTreeComponent() {
     initialNodes.push(rootNode);
 
     data.forEach((dep) => {
-      initialNodes.push(createNode(dep.name, "dep-", dep.id));
+      initialNodes.push(createNode(dep.name, "dep-", dep.id, "מחלקה"));
       initialEdges.push(createEdge(rootNode.id, "dep-" + dep.id));
 
       if (dep.branches) {
         dep.branches.forEach((branch) => {
-          initialNodes.push(createNode(branch.name, "branch-", branch.id));
+          initialNodes.push(createNode(branch.name, "branch-", branch.id, "ענף"));
           initialEdges.push(createEdge("dep-" + dep.id, "branch-" + branch.id));
 
           if (branch.sections) {
             branch.sections.forEach((section) => {
               initialNodes.push(
-                createNode(section.name, "section-", section.id)
+                createNode(section.name, "section-", section.id, "מדור")
               );
               initialEdges.push(
                 createEdge("branch-" + branch.id, "section-" + section.id)
@@ -319,12 +322,14 @@ export default function OrganizationTreeComponent() {
           onConnect={onConnect}
           onEdgeUpdate={onEdgeUpdate}
           proOptions={proOptions}
+          
         >
           <Controls
             showFitView={false}
             showInteractive={false}
             position={"top-right"}
           />
+        
         </ReactFlow>
       </div>
       <div className="text-center pt-1 text-[#A5A5A5]">

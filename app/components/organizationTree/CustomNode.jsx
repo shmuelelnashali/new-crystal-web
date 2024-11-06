@@ -20,7 +20,7 @@ export default function CustomNode({ id, data }) {
         setShowPopUp(true);
       }}
       onClick={() => setShowPopUp(false)}
-      className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow cursor-pointer"
+      className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow cursor-pointer relative"
     >
       <Handle
         type="target"
@@ -33,7 +33,8 @@ export default function CustomNode({ id, data }) {
           height: "20px",
         }}
       />
-      <div className="text-xl">{data.label}</div>
+        <div className="text-xs font-normal text-[#002A784A] w-fit absolute right-2 top-1">{data.level}</div>
+        <div className="text-xl">{data.label}</div>
       <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex items-center justify-center absolute -bottom-[10px] text-2xl text-[#002A78] ">
         +
       </div>
