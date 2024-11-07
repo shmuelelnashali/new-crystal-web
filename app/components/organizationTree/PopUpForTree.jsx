@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -34,16 +37,26 @@ const Item = styled.div`
   }
 `;
 
-export default function PopUpForTree({addNewNodeInClient}) {
-  const arrayText = ["מחלקה", "ענף", "מדור"];
+export default function PopUpForTree({
+  setShowPopUpCreateUnit,
+  setSelectedLevel,
+}) {
+  const arrayLevel = ["מחלקה", "ענף", "מדור"];
 
   return (
-    <Container>
-      {arrayText.map((text, index) => (
-        <Item key={index} onClick={() => addNewNodeInClient(text)}>
-          <span className="pr-3">הוסף {text}</span>
-        </Item>
-      ))}
-    </Container>
+    <>
+      <Container>
+        {arrayLevel.map((level, index) => (
+          <Item
+            key={index}
+            onClick={() => {
+              setShowPopUpCreateUnit(true), setSelectedLevel(level);
+            }}
+          >
+            <span className="pr-3">הוסף {level}</span>
+          </Item>
+        ))}
+      </Container>
+    </>
   );
 }

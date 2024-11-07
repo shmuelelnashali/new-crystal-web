@@ -34,7 +34,7 @@ export default function CustomNode({ id, data }) {
         }}
       />
         <div className="text-xs font-normal text-[#002A784A] w-fit absolute right-2 top-1">{data.level}</div>
-        <div className="text-xl">{data.label}</div>
+        <div className="text-[18px]">{data.label}</div>
       <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex items-center justify-center absolute -bottom-[10px] text-2xl text-[#002A78] ">
         +
       </div>

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import plusForTree from "@/public/plusForTree.svg";
 
-export default function BtnForOrganizationTree({ setShowPopUp }) {
+export default function BtnForOrganizationTree({ setShowPopUpSelectUnit }) {
   return (
     <div className="p-5 absolute z-10">
       <button
         onClick={(e) => {
-          e.stopPropagation(), setShowPopUp(true);
+          e.stopPropagation(), setShowPopUpSelectUnit(true);
         }}
         className="bg-[#002A78] w-[128px] h-[42px] border-none rounded-[35px] flex items-center justify-center cursor-pointer"
       >

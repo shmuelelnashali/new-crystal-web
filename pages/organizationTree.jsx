@@ -118,7 +118,7 @@ export default function OrganizationTreeComponent() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodesObj, setNodesObj] = useState();
-  const [showPopUp, setShowPopUp] = useState(false);
+  const [showPopUpSelectUnit, setShowPopUpSelectUnit] = useState(false);
   const [error, setError] = useState(null);
   const [idCounter, setIdCounter] = useState(0);
   const [newUnitName, setNewUnitName] = useState(null);
@@ -299,7 +299,7 @@ export default function OrganizationTreeComponent() {
 
   return (
     <div
-      onClick={() => setShowPopUp(false)}
+      onClick={() => setShowPopUpSelectUnit(false)}
       className="bg-white px-5 flex flex-col h-screen"
     >
       <div dir="rtl">
@@ -307,8 +307,8 @@ export default function OrganizationTreeComponent() {
       </div>
 
       <BtnWithSelectPopUp
-        showPopUp={showPopUp}
-        setShowPopUp={setShowPopUp}
+        showPopUpSelectUnit={showPopUpSelectUnit}
+        setShowPopUpSelectUnit={setShowPopUpSelectUnit}
         addNewNodeInClient={addNewNodeInClient}
       />
       <div className="bg-[#F7F9FD] flex-1 rounded-lg">
