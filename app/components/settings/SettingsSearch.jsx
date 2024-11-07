@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import AddUser from "./AddUser";
 
-export default function SettingsSearch( {fields}) {
+export default function SettingsSearch( {fields, addRow}) {
   const [openPopup, setOpenPopup] = useState();
   return (
     <>
@@ -24,7 +24,7 @@ export default function SettingsSearch( {fields}) {
           />
         </div>
         <button
-          onClick={() => setOpenPopup(true)}
+          onClick={() =>{fields ? setOpenPopup(true) : addRow()}}
           className="w-2/6 flex justify-center gap-1.5 items-center text-white py-1 bg-blue_color rounded-2xl"
         >
           <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />

@@ -4,24 +4,47 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import DeleteRow from "./DeleteRow";
 import Select, { components } from "react-select";
+import { clsx } from "clsx";
 
 // import { getDisplayName } from "next/dist/shared/lib/utils";
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "vana" },
-
+  { value: "מנהל", label: "מנהל" },
+  { value: "מנהל מערכת", label: "מנהל מערכת " },
+  { value: "מנהל משימות", label: "מנהל משימות" },
 ];
 
-export default function TabieSettings({ data, headers, page }) {
+export default function TabieSettings({ data, headers, page, add }) {
   const pathName = usePathname();
   const [updateIndex, setUpdateIndex] = useState();
-  const [updateRow, setUpdateRow] = useState({});
+  const [updateRow, setUpdateRow] = useState(add ? null : {});
   const [deleteRow, setDeleteRow] = useState();
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  // console.log(selectedOptions);
 
-  const handeeCanghe = (key, value) => {
+  const handleSelectChange = (selected) => {
+    const hesSystemAdministrator = selected?.some(
+      (option) => option.value === "מנהל מערכת"
+    );
+
+    if (hesSystemAdministrator) {
+      const systemAdministrator = options.find(
+        (option) => option.value === "מנהל מערכת"
+      );
+      setSelectedOptions([systemAdministrator]);
+      setUpdateRow((prve) => ({
+        ...prve,
+        permissions: systemAdministrator.value,
+      }));
+    } else {
+      setSelectedOptions(selected);
+      setUpdateRow((prve) => ({
+        ...prve,
+        permissions: selected.map((option) => option.value),
+      }));
+    }
+  };
+  const handelCanghe = (key, value) => {
     setUpdateRow((prve) => ({ ...prve, [key]: value }));
-    console.log(updateRow);
   };
   const customSelectStyles = {
     control: () => ({
@@ -31,35 +54,17 @@ export default function TabieSettings({ data, headers, page }) {
       height: "26px",
       backgroundColor: "#ffffff ",
       borderRadius: 100,
-      // width: "100%",
+      width: "100%",
       marginLeft: 4,
     }),
     container: () => ({
       display: "flex",
       alignItems: "center",
-      // height: "",
-      // backgroundColor: "#F0F10F1",
-      // paddingLeft: 8,
-      // borderWidth: 2,
-      // borderRadius: 8,
-      // width: "100%",
-      // marginLeft: 4,
-      // zIndex: 9999,
     }),
-    // option: (provided, state) => ({
-    //   ...provided,
-    //   marginBottom: 0,
-    //   borderRadius: 6,
-    //   borderBottom: 1,
-    //   paddingRight: 4,
-    //   paddingLeft: 4,
-    //   backgroundColor: state.isSelected ? "#ffffff " : "white",
-    //   color: "black",
-    //   ":hover": { background: "#ffffff ", color: "black" },
-    //   zIndex: 9999,
-    // }),
+
     placeholder: (provided) => ({
       ...provided,
+      width: "100%",
       textAlign: "center",
       color: "#002a78 ",
     }),
@@ -74,9 +79,9 @@ export default function TabieSettings({ data, headers, page }) {
       color: state.isSelected ? "black" : "inherit",
       direction: "rtl",
       // padding: '10px 15px',
-      position: "ab",
-      overflow: "hidden", // Ensure overflow is hidden for the gradient effect
-
+      position: "a",
+      overflow: "absolute", // Ensure overflow is hidden for the gradient effect
+      zIndex: 9999,
       ":hover": {
         backgroundColor: "#002A78",
         color: "#ffffff",
@@ -99,38 +104,38 @@ export default function TabieSettings({ data, headers, page }) {
     menu: (base) => ({
       ...base,
       borderRadius: "10px", // Matching the rounded border for the dropdown menu
-      // marginTop: "0px",
-      position: "absolute",
+      marginTop: "0px",
+      // position: "absolute",
       zIndex: "9999",
       paddingRight: "2px",
       // overflow: "scroll",
+      ":hover": {
+        cursor: "pointer",
+      },
     }),
     menuList: (base) => ({
       ...base,
       direction: "ltr", // Change direction to right-to-left
-      padding: "5px",
+      // padding: "5px",
       // maxHeight: '200px', // Adjust this value to fit approximately 5 items
       overflowY: "auto",
-      // ':hover': {
-      //   cursor:'pointer'
-      // },
+      position: "absolute",
     }),
     multiValue: (base) => ({
       ...base,
       backgroundColor: "#002A78", // Background color for selected items
       color: "white",
       borderRadius: "20px",
-      height:"22px"
+      height: "18px",
       // paddingRight:'5px',
       // padding: '0.3px 5px 0.3px 0px '
     }),
     multiValueLabel: (base) => ({
-      
       ...base,
       display: "flex",
       padding: "0px",
       textAlign: "center",
-       alignItems:"center",
+      alignItems: "center",
       paddingLeft: "15px",
       paddingRight: "15px",
       color: "white", // Text color for selected items
@@ -138,14 +143,18 @@ export default function TabieSettings({ data, headers, page }) {
     multiValueContainer: (base) => ({
       ...base,
       textAlign: "center",
-     
+
       padding: "0px",
       paddingRight: "5px",
       color: "white", // Text color for selected items
     }),
     indicatorsContainer: (base) => ({
       ...base,
-        padding: "2px", // Removes the gap between the arrow and selected options
+      padding: "0px", // Removes the gap between the arrow and selected options
+    }),
+    clearIndicator: (base) => ({
+      ...base,
+      display: "none", // Hides the "X" clear button
     }),
   };
 
@@ -191,70 +200,101 @@ export default function TabieSettings({ data, headers, page }) {
               {data.map((row, rowIndex) => (
                 <div
                   key={rowIndex}
-                  className="grid grid-cols-9 whitespace-nowrap justify-center border-b-[2px] py-2.5"
+                  className="grid grid-cols-9 relative whitespace-nowrap justify-center border-b-[2px] py-2.5"
                 >
                   {Object.entries(row).map(([code_key, code_value], index) => (
                     <div
-                      className={`${
-                        index === Object.entries(row).length - 1 &&
-                        updateIndex === rowIndex &&
-                        " col-span-2 "
-                      }${
-                        pathName.includes("stages") &&
-                        index === Object.entries(row).length - 1 &&
-                        updateIndex === rowIndex &&
-                        " w-full col-span-5"
-                      }`}
+                      className={clsx(
+                        {
+                          " col-span-2 ":
+                            index === Object.entries(row).length - 1 &&
+                            updateIndex === rowIndex,
+                        },
+                        {
+                          " w-full col-span-6":
+                            pathName.includes("stages") &&
+                            index === Object.entries(row).length - 1 &&
+                            updateIndex === rowIndex,
+                        },
+                        {
+                          " w-full col-span-5":
+                            pathName.includes("users") &&
+                            index === Object.entries(row).length - 1 &&
+                            updateIndex === rowIndex,
+                        }
+                      )}
                     >
                       {updateIndex === rowIndex && index !== 0 ? (
-                        <div className="flex w-full  px-2">
+                        <div
+                          className={`" flex   ${
+                            code_key === "permissions" ? " w-fit " : " w-full "
+                          }px-2 "`}
+                        >
                           <div
-                            className={`" rounded-full flex w-full"
+                            className={`" rounded-full flex w-fit "
                              ${
                                index === Object.entries(row).length - 1 &&
                                "  bg-gradient-to-r  from-blue_color via-blue_color to-[#EFF3FB] w-full"
                              }`}
                           >
                             {code_key === "permissions" ? (
-                              <div className=" absolute ">
-                                <Select
-                                  isMulti
-                                  options={options}
-                                  components={{
-                                    DropdownIndicator: CustomDropdownIndicator,
-                                  }}
-                                  // className="absolute"
-                                  styles={customSelectStyles}
-                                  placeholder={updateRow[code_key] || ""}
-                                />
-                              </div>
+                              <>
+                                <div className=" relative ">
+                                  <Select
+                                    isMulti
+                                    onChange={handleSelectChange}
+                                    options={options}
+                                    value={selectedOptions}
+                                    components={{
+                                      DropdownIndicator:
+                                        CustomDropdownIndicator,
+                                    }}
+                                    className="min-w-36 "
+                                    styles={customSelectStyles}
+                                    placeholder={updateRow[code_key] || ""}
+                                  />
+                                </div>
+                                <div
+                                  onClick={() => console.log(updateRow)}
+                                  className={`${
+                                    pathName.includes("stages")
+                                      ? " px-4 "
+                                      : " w-fit px-4 "
+                                  }  flex justify-center border border-blue_color rounded-full text-white`}
+                                >
+                                  שמור שינויים
+                                </div>
+                              </>
                             ) : (
-                              <input
-                                className={`" text-center w-full rounded-full outline-none border border-blue_color "
+                              <>
+                                <input
+                                  className={`" text-center w-full rounded-full outline-none border border-blue_color "
                               `}
-                                onFocus={() => handeeCanghe(code_key, "")}
-                                onChange={(e) =>
-                                  handeeCanghe(code_key, e.target.value)
-                                }
-                                value={updateRow[code_key] || ""}
-                              />
-                            )}
+                                  onFocus={() => handelCanghe(code_key, "")}
+                                  onChange={(e) =>
+                                    handelCanghe(code_key, e.target.value)
+                                  }
+                                  value={updateRow[code_key] || ""}
+                                />
 
-                            {index === Object.entries(row).length - 1 && (
-                              <div
-                                className={`${
-                                  pathName.includes("stages")
-                                    ? " px-4 "
-                                    : " w-full "
-                                }  flex justify-center border border-blue_color rounded-full text-white`}
-                              >
-                                שמור שינויים
-                              </div>
+                                {index === Object.entries(row).length - 1 && (
+                                  <div
+                                    onClick={() => console.log(updateRow)}
+                                    className={`${
+                                      pathName.includes("stages")
+                                        ? " px-4 "
+                                        : " w-full "
+                                    }  flex justify-center border border-blue_color rounded-full text-white`}
+                                  >
+                                    שמור שינויים
+                                  </div>
+                                )}
+                              </>
                             )}
                           </div>
                         </div>
                       ) : (
-                        <div key={index} className="text-center ">
+                        <div key={index} className="text-center w-full">
                           {code_value}
                           {/* <span className="text-xs">{code_key.includes("price")&&' ש"ח'}</span>  */}
                         </div>

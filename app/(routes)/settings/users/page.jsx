@@ -103,7 +103,7 @@ export default function activity() {
     <div className="h-full w-full flex flex-col ">
        <div className="flex justify-between items-center w-full pb-2">
         <div className="w-full font-bold text-4xl">ניהול משתמשים במערכת </div>
-        <SettingsSearch fields={AddFormFields}/>
+        <SettingsSearch fields={AddFormFields} />
          </div>
         
     <TabieSettings
