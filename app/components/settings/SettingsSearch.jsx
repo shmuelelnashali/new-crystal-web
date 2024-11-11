@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import AddUser from "./AddUser";
 
-export default function SettingsSearch( {fields, addRow}) {
+export default function SettingsSearch( {fields}) {
   const [openPopup, setOpenPopup] = useState();
   return (
     <>

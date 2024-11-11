@@ -6,11 +6,13 @@ import React from "react";
 
 export default function agreements() {
   const headers = [
-    "קוד פעילות",
-    "שם קוד פעילות",
-    "תאריך התחלה",
-    "תאריך סיום",
-    "קוד לביא",
+    "קוד הסכם",
+    " שם הסכם",
+    "שעת כניסה ",
+    "שעת יציאה",
+    "מגבלת שעות נוספות",
+    "כמות שעות",
+    "הפסקה",
   ];
   
   
@@ -23,6 +25,8 @@ export default function agreements() {
       type: "חג",
       namber: 1,
       activity: "חג",
+      ac: "חג",
+      actty: "חג",
     },
     {
       activity_type: "axcvג",

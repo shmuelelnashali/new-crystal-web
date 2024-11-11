@@ -7,6 +7,8 @@ export default function Login() {
   const router = useRouter();
   const { user, login } = useAuth({ middleware: "guest" });
   const [errors, setErrors] = useState(null);
+  console.log(user);
+  
   useEffect(() => {
     if (user) {
       router.push("/calender");

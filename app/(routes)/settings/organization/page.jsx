@@ -1,3 +1,4 @@
+"use client";
 import SettingsSearch from "@/app/components/settings/SettingsSearch";
 
 import TabieSettings from "@/app/components/settings/TableSettings";
@@ -5,9 +6,52 @@ import Image from "next/image";
 
 import OrganizationTree from "../../organizationTree/page";
 import OrganizationTable from "@/app/components/settings/organization/OrganizationTable";
+import { useEffect, useState } from "react";
+import axios from "@/app/lib/axios";
 
 export default function organization() {
   const headers = ["שם יחידה", "ראש יחידה", "מייל ראש יחידה", "קוד לביא"];
+  const [data, setData] = useState();
+
+  // const formtDepartmentData = (data) => {
+  //   const formatted = data.reduce((acc, company) => {
+  //     acc[company.name] = company.branches.map((branch) => {
+  //       return { [branch.name]: branch.sections || [] };
+  //     });
+  //     return acc;
+  //   }, {});
+
+  //   console.log(formatted);
+  // };
+
+  useEffect(() => {
+    async function fetchDropdownData() {
+      try {
+        const response = await axios.get(
+          "departments?appendBranches=true&appendSections=true"
+        );
+        console.log(response.data);
+        setData(response.data ?? []);
+        formtDepartmentData(response.data ?? []);
+      } catch (error) {
+        console.error("error : ", error);
+        throw error;
+      }
+    }
+    fetchDropdownData();
+   
+  }, []);
+  
+  const formtDepartmentData = (data) => {
+    const formatted = data.reduce((acc, company) => {
+      acc[company.name] = company.branches.map((branch) => {
+        return { [branch.name]: branch.sections || [] };
+      });
+      return acc;
+    }, {});
+
+    console.log(formatted);
+  };
 
   const organizationData = [
     {

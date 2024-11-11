@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
-      rtl={false}
+      rtl={false}l
       pauseOnFocusLoss
       draggable
       pauseOnHover

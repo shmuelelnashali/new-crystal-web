@@ -5,61 +5,85 @@ import Image from "next/image";
 import React from "react";
 
 export default function activity() {
-  const headers = [
-    "קוד פעילות",
-    "שם קוד פעילות",
-    "תאריך התחלה",
-    "תאריך סיום",
-    "קוד לביא",
+  const headers = ["#", "שם מדור ", "מחיר צבאי", 'מחיר משהב"ט', 'מחיר סיב"ט'];
+  const addFormFields = [
+    {
+      name: "name",
+      label: "שם מדור",
+      placeholder: "שם מדור",
+      value: null,
+      require: true,
+    },
+    {
+      name: "army_price",
+      label: "מחיר צבאי",
+      placeholder: "מחיר צבאי",
+      value: null,
+      require: true,
+    },
+    {
+      name: "md_price",
+      label: `מחיר משהב"ט`,
+      placeholder: `מחיר משהב"ט`,
+      value: null,
+      require: true,
+    },
+    {
+      name: "sd_price",
+      label: `מחיר סיב"ט`,
+      placeholder: `מחיר סיב"ט`,
+      value: null,
+      require: true,
+    },
   ];
-  
-  
 
- 
-  const activity_code = [
+  const data = [
     {
-      activity_type: "axcvג",
-      code_namber: 1,
-      type: "חג",
-      namber: 1,
-      activity: "חג",
+      number: "1",
+      mador: "בטיחות",
+      armyPrice: "S1234",
+      price1: 12345,
+      price2: 12345,
     },
     {
-      activity_type: "axcvג",
-      code_namber: 1,
-      type: "חג",
-      namber: 1,
-      activity: "חג",
+      number: "1",
+      mador: "בטיחות",
+      armyPrice: "S1234",
+      price1: 12345,
+      price2: 12345,
     },
     {
-      activity_type: "axcvג",
-      code_namber: 1,
-      type: "חג",
-      namber: 1,
-      activity: "חג",
+      number: "1",
+      mador: "בטיחות",
+      armyPrice: "S1234",
+      price1: 12345,
+      price2: 12345,
     },
     {
-      activity_type: "axcvג",
-      code_namber: 1,
-      type: "חג",
-      namber: 1,
-      activity: "חג",
+      number: "1",
+      mador: "בטיחות",
+      armyPrice: "S1234",
+      price1: 12345,
+      price2: 12345,
     },
-    
+    {
+      number: "1",
+      mador: "בטיחות",
+      armyPrice: "S1234",
+      price1: 12345,
+      price2: 12345,
+    },
   ];
   return (
     <>
-    <div className="h-full w-full flex flex-col ">
-       <div className="flex justify-between items-center w-full pb-2">
-        <div className="w-full font-bold text-4xl">ניהול קודי פעילות</div>
-        <SettingsSearch/>
-         </div>
-        
-    <TabieSettings
-    data={activity_code}
-    headers={headers}/>
-    
-    </div>
+      <div className="h-full w-full flex flex-col ">
+        <div className="flex justify-between items-center w-full pb-2">
+          <div className="w-full font-bold text-4xl">תמחור שעות עבודה</div>
+          <SettingsSearch fields={addFormFields}/>
+        </div>
+
+        <TabieSettings data={data} headers={headers} />
+      </div>
     </>
-      );
+  );
 }

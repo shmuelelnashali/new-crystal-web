@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DeleteRow from "./DeleteRow";
 import Select, { components } from "react-select";
 import { clsx } from "clsx";
@@ -16,10 +16,17 @@ const options = [
 export default function TabieSettings({ data, headers, page, add }) {
   const pathName = usePathname();
   const [updateIndex, setUpdateIndex] = useState();
-  const [updateRow, setUpdateRow] = useState(add ? null : {});
+  const [updateRow, setUpdateRow] = useState("");
   const [deleteRow, setDeleteRow] = useState();
   const [selectedOptions, setSelectedOptions] = useState([]);
   // console.log(selectedOptions);
+
+  // useEffect(() => {
+  //   if (data[0].name == null) {
+  //     setUpdateIndex(0);
+  //     setUpdateRow("");
+  //   }
+  // }, [data]);
 
   const handleSelectChange = (selected) => {
     const hesSystemAdministrator = selected?.some(
@@ -309,8 +316,8 @@ export default function TabieSettings({ data, headers, page, add }) {
                           : "bg-blue_color border border-blue_color"
                       }  gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
                       onClick={() => {
-                        setUpdateIndex(rowIndex);
-                        setUpdateRow(row);
+                        setUpdateIndex(data[0].name !== null ? rowIndex : 0);
+                        setUpdateRow(data[0].name !== null ? row : "");
                       }}
                     >
                       <Image
