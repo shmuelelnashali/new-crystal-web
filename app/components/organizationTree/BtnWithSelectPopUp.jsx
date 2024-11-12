@@ -3,35 +3,42 @@
 import { useState } from "react";
 import BtnForOrganizationTree from "./BtnForOrganizationTree";
 import PopUpForTree from "./PopUpForTree";
-import PopUpCreateUnit from "./PopUpCreateUnit";
+import { PopUpCreateUnit } from "./PopUpCreateUnit";
 
 export default function BtnWithSelectPopUp({
   showPopUpSelectUnit,
   setShowPopUpSelectUnit,
-  addNewNodeInClient,
+  setNodes,
+  unitName,
+  setUnitName,
+  selectedLevel,
+  setSelectedLevel
+
+
+
+
+  
 }) {
   const [showPopUpCreateUnit, setShowPopUpCreateUnit] = useState(false);
-  const [selectedLevel, setSelectedLevel] = useState(null);
-
-
 
   return (
     <div className="relative">
-      <BtnForOrganizationTree
-        setShowPopUpSelectUnit={setShowPopUpSelectUnit}
-      />
-     
-      {showPopUpSelectUnit && <PopUpForTree
-        setShowPopUpCreateUnit={setShowPopUpCreateUnit}
-        setSelectedLevel={setSelectedLevel}
-      />}
-      
+      <BtnForOrganizationTree setShowPopUpSelectUnit={setShowPopUpSelectUnit} />
+
+      {showPopUpSelectUnit && (
+        <PopUpForTree
+          setShowPopUpCreateUnit={setShowPopUpCreateUnit}
+          setSelectedLevel={setSelectedLevel}
+        />
+      )}
 
       {showPopUpCreateUnit && (
         <PopUpCreateUnit
-          selectedLevel={selectedLevel}
-          addNewNodeInClient={addNewNodeInClient}
           setShowPopUpCreateUnit={setShowPopUpCreateUnit}
+          selectedLevel={selectedLevel}
+          setNodes={setNodes}
+          unitName={unitName}
+          setUnitName={setUnitName}
         />
       )}
     </div>

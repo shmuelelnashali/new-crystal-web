@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -41,19 +40,23 @@ export default function PopUpForTree({
   setShowPopUpCreateUnit,
   setSelectedLevel,
 }) {
-  const arrayLevel = ["מחלקה", "ענף", "מדור"];
+  const objLevel = {
+    departments: "מחלקה",
+    branches: "ענף",
+    sections: "מדור",
+  };
 
   return (
     <>
       <Container>
-        {arrayLevel.map((level, index) => (
+        {Object.entries(objLevel).map(([url, type], index) => (
           <Item
             key={index}
             onClick={() => {
-              setShowPopUpCreateUnit(true), setSelectedLevel(level);
+              setShowPopUpCreateUnit(true), setSelectedLevel({ url, type });
             }}
           >
-            <span className="pr-3">הוסף {level}</span>
+            <span className="pr-3">הוסף {type}</span>
           </Item>
         ))}
       </Container>

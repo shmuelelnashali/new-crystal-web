@@ -1,5 +1,4 @@
 "use client";
-
 import "./style.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
@@ -18,6 +17,7 @@ import axios from "@/app/lib/Axios";
 import PopupDisconnect from "@/app/components/organizationTree/PopupDisconnect";
 import PopupDelete from "@/app/components/organizationTree/PopupDelete";
 import Header from "@/app/components/ui/Header";
+import { addNewUnitInServer } from "@/app/components/organizationTree/PopUpCreateUnit";
 
 const structure = {
   name: "יחידת על",
@@ -119,32 +119,15 @@ export default function OrganizationTreeComponent() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nodesObj, setNodesObj] = useState();
   const [showPopUpSelectUnit, setShowPopUpSelectUnit] = useState(false);
-  const [error, setError] = useState(null);
-  const [idCounter, setIdCounter] = useState(0);
-  const [newUnitName, setNewUnitName] = useState(null);
   const [showPopUpDelete, setShowPopUpDelete] = useState(false);
   const [showPopUpDisconnect, setShowPopUpDisconnect] = useState(false);
+  const [unitName, setUnitName] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState(null);
 
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
   const edgeTypes = useMemo(() => ({ CustomEdge }), []);
 
   const proOptions = { hideAttribution: true };
-
-  const fetchAlltheTree = async () => {
-    try {
-      const respons = await axios.get(
-        "departments?appendBranches=true&appendSections=true"
-      );
-      setData(respons.data);
-    } catch (error) {
-      setError("Failed to fetch organization data. Please try again later.");
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAlltheTree();
-  }, []);
 
   useEffect(() => {
     const nodeObj = {};
@@ -153,87 +136,6 @@ export default function OrganizationTreeComponent() {
       setNodesObj(nodeObj);
     });
   }, [nodes]);
-
-  const addNewUnitInServer = async (name, parentId) => {
-    let urlVar;
-    let parentName;
-    switch (name) {
-      case "מחלקה":
-        urlVar = "departments";
-        parentName = null;
-        break;
-      case "ענף":
-        urlVar = "branches";
-        parentName = "department_id";
-        break;
-      case "מדור":
-        urlVar = "sections";
-        parentName = "branch_id";
-        break;
-      default:
-        throw new Error("Unknown type");
-    }
-
-    try {
-      const payloud = { name: name };
-      if (parentName) {
-        payloud[parentName] = parentId;
-      }
-
-      const respons = await axios.post(urlVar, payloud);
-
-      return respons.data;
-    } catch (error) {
-      setError("Failed to craete a new unit. Please try again later.");
-      console.error("Error create data:", error);
-    }
-  };
-
-  // const changingUnitAffiliation = (parentId, name) => {};
-
-  // const disconnection = () => {};
-
-  const addNewNodeInClient = (type) => {
-    const x = window.innerWidth - 250;
-    const y = window.innerHeight / 2 + idCounter * 110;
-    setIdCounter((prevId) => prevId + 1);
-
-    const newUnit = {
-      id: `FAKE_ID_${idCounter}`,
-      data: {
-        label: type,
-        delete: setShowPopUpDelete,
-        disconnect: setShowPopUpDisconnect,
-      },
-      position: { x: x, y: y },
-      type: "CustomNode",
-    };
-
-    setNodes((prevNodes) => [...prevNodes, newUnit]);
-    setNewUnitName(newUnit.data.label);
-  };
-
-  const onConnect = useCallback(
-    async (params) => {
-      setEdges((eds) => addEdge({ ...params, type: "CustomEdge" }, eds));
-
-      const parentNode = nodesObj[params.source];
-      let parentId;
-      if (parentNode && parentNode.data) {
-        parentId = parentNode.data.dbId;
-      }
-
-      await addNewUnitInServer(newUnitName, parentId);
-      fetchAlltheTree();
-    },
-    [newUnitName]
-  );
-
-  const onEdgeUpdate = useCallback(
-    (oldEdge, newConnection) =>
-      setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
-    []
-  );
 
   const createTree = () => {
     const initialNodes = [];
@@ -268,7 +170,9 @@ export default function OrganizationTreeComponent() {
 
       if (dep.branches) {
         dep.branches.forEach((branch) => {
-          initialNodes.push(createNode(branch.name, "branch-", branch.id, "ענף"));
+          initialNodes.push(
+            createNode(branch.name, "branch-", branch.id, "ענף")
+          );
           initialEdges.push(createEdge("dep-" + dep.id, "branch-" + branch.id));
 
           if (branch.sections) {
@@ -291,11 +195,52 @@ export default function OrganizationTreeComponent() {
     setEdges(layoutedElements.edges);
   };
 
+  const fetchAlltheTree = async () => {
+    try {
+      const respons = await axios.get(
+        "departments?appendBranches=true&appendSections=true"
+      );
+      setData(respons.data);
+    } catch (error) {
+      setError("Failed to fetch organization data. Please try again later.");
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAlltheTree();
+  }, []);
+
   useEffect(() => {
     if (data) {
       createTree();
     }
   }, [data]);
+
+  
+  const onConnect = useCallback(
+    async (params) => {
+      setEdges((eds) => addEdge({ ...params, type: "CustomEdge" }, eds));
+
+      const parentNode = nodesObj[params.source];
+      const parentNodeId = parentNode.data.dbId;
+
+      await addNewUnitInServer(selectedLevel.url, unitName, parentNodeId);
+      fetchAlltheTree();
+    },
+    [nodesObj]
+  );
+
+  // const changingUnitAffiliation = (parentId, name) => {};
+
+  // const disconnection = () => {};
+
+  const onEdgeUpdate = useCallback(
+    (oldEdge, newConnection) =>
+      setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
+    []
+  );
+
 
   return (
     <div
@@ -309,7 +254,11 @@ export default function OrganizationTreeComponent() {
       <BtnWithSelectPopUp
         showPopUpSelectUnit={showPopUpSelectUnit}
         setShowPopUpSelectUnit={setShowPopUpSelectUnit}
-        addNewNodeInClient={addNewNodeInClient}
+        setNodes={setNodes}
+        unitName={unitName}
+        setUnitName={setUnitName}
+        selectedLevel={selectedLevel}
+        setSelectedLevel={setSelectedLevel}
       />
       <div className="bg-[#F7F9FD] flex-1 rounded-lg">
         <ReactFlow
@@ -322,14 +271,12 @@ export default function OrganizationTreeComponent() {
           onConnect={onConnect}
           onEdgeUpdate={onEdgeUpdate}
           proOptions={proOptions}
-          
         >
           <Controls
             showFitView={false}
             showInteractive={false}
             position={"top-right"}
           />
-        
         </ReactFlow>
       </div>
       <div className="text-center pt-1 text-[#A5A5A5]">
