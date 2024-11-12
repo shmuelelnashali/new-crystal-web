@@ -19,8 +19,11 @@ export default function TabieSettings({ data, headers, page, add }) {
   const [updateRow, setUpdateRow] = useState("");
   const [deleteRow, setDeleteRow] = useState();
   const [selectedOptions, setSelectedOptions] = useState([]);
-  // console.log(selectedOptions);
 
+  // console.log(selectedOptions);
+  const updateAxios = (row, id) => {
+    console.log(row, id);
+  };
   // useEffect(() => {
   //   if (data[0].name == null) {
   //     setUpdateIndex(0);
@@ -69,8 +72,8 @@ export default function TabieSettings({ data, headers, page, add }) {
       alignItems: "center",
     }),
 
-    placeholder: (provided) => ({
-      ...provided,
+    placeholder: (base) => ({
+      ...base,
       width: "100%",
       textAlign: "center",
       color: "#002a78 ",
@@ -112,7 +115,7 @@ export default function TabieSettings({ data, headers, page, add }) {
       ...base,
       borderRadius: "10px", // Matching the rounded border for the dropdown menu
       marginTop: "0px",
-      // position: "absolute",
+      position: "absolute",
       zIndex: "9999",
       paddingRight: "2px",
       // overflow: "scroll",
@@ -123,6 +126,7 @@ export default function TabieSettings({ data, headers, page, add }) {
     menuList: (base) => ({
       ...base,
       direction: "ltr", // Change direction to right-to-left
+      zIndex: "9999",
       // padding: "5px",
       // maxHeight: '200px', // Adjust this value to fit approximately 5 items
       overflowY: "auto",
@@ -209,105 +213,124 @@ export default function TabieSettings({ data, headers, page, add }) {
                   key={rowIndex}
                   className="grid grid-cols-9 relative whitespace-nowrap justify-center border-b-[2px] py-2.5"
                 >
-                  {Object.entries(row).map(([code_key, code_value], index) => (
-                    <div
-                      className={clsx(
-                        {
-                          " col-span-2 ":
-                            index === Object.entries(row).length - 1 &&
-                            updateIndex === rowIndex,
-                        },
-                        {
-                          " w-full col-span-6":
-                            pathName.includes("stages") &&
-                            index === Object.entries(row).length - 1 &&
-                            updateIndex === rowIndex,
-                        },
-                        {
-                          " w-full col-span-5":
-                            pathName.includes("users") &&
-                            index === Object.entries(row).length - 1 &&
-                            updateIndex === rowIndex,
-                        }
-                      )}
-                    >
-                      {updateIndex === rowIndex && index !== 0 ? (
+                  {Object.entries(row).map(
+                    ([code_key, code_value], index) =>
+                      code_key !== "id" && (
                         <div
-                          className={`" flex   ${
-                            code_key === "permissions" ? " w-fit " : " w-full "
-                          }px-2 "`}
+                          className={clsx(
+                            {
+                              " col-span-2 ":
+                                index === Object.entries(row).length - 1 &&
+                                updateIndex === rowIndex,
+                            },
+                            {
+                              " w-full col-span-6":
+                                pathName.includes("stages") &&
+                                index === Object.entries(row).length - 1 &&
+                                updateIndex === rowIndex,
+                            },
+                            {
+                              " w-full col-span-5":
+                                pathName.includes("users") &&
+                                index === Object.entries(row).length - 1 &&
+                                updateIndex === rowIndex,
+                            }
+                          )}
                         >
-                          <div
-                            className={`" rounded-full flex w-fit "
+                          {updateIndex === rowIndex && index !== 0 ? (
+                            <div
+                              className={`" flex   ${
+                                code_key === "permissions"
+                                  ? " w-fit "
+                                  : " w-full "
+                              }px-2 "`}
+                            >
+                              <div
+                                className={`" rounded-full flex w-fit "
                              ${
                                index === Object.entries(row).length - 1 &&
                                "  bg-gradient-to-r  from-blue_color via-blue_color to-[#EFF3FB] w-full"
                              }`}
-                          >
-                            {code_key === "permissions" ? (
-                              <>
-                                <div className=" relative ">
-                                  <Select
-                                    isMulti
-                                    onChange={handleSelectChange}
-                                    options={options}
-                                    value={selectedOptions}
-                                    components={{
-                                      DropdownIndicator:
-                                        CustomDropdownIndicator,
-                                    }}
-                                    className="min-w-36 "
-                                    styles={customSelectStyles}
-                                    placeholder={updateRow[code_key] || ""}
-                                  />
-                                </div>
-                                <div
-                                  onClick={() => console.log(updateRow)}
-                                  className={`${
-                                    pathName.includes("stages")
-                                      ? " px-4 "
-                                      : " w-fit px-4 "
-                                  }  flex justify-center border border-blue_color rounded-full text-white`}
-                                >
-                                  שמור שינויים
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <input
-                                  className={`" text-center w-full rounded-full outline-none border border-blue_color "
+                              >
+                                {code_key === "permissions" ? (
+                                  <>
+                                    <div className=" relative ">
+                                      <Select
+                                        isMulti
+                                        onChange={handleSelectChange}
+                                        options={options}
+                                        value={selectedOptions}
+                                        components={{
+                                          DropdownIndicator:
+                                            CustomDropdownIndicator,
+                                        }}
+                                        className="min-w-36 "
+                                        styles={customSelectStyles}
+                                        placeholder={updateRow[code_key] || ""}
+                                      />
+                                    </div>
+                                    <button
+                                      onClick={() =>
+                                        updateAxios(updateRow, code_key.id)
+                                      }
+                                      className={`${
+                                        pathName.includes("stages")
+                                          ? " px-4 "
+                                          : " w-fit px-4 "
+                                      }  flex justify-center border border-blue_color rounded-full text-white`}
+                                    >
+                                      שמור שינויים
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <input
+                                      className={`" text-center w-full rounded-full outline-none border border-blue_color "
                               `}
-                                  onFocus={() => handelCanghe(code_key, "")}
-                                  onChange={(e) =>
-                                    handelCanghe(code_key, e.target.value)
-                                  }
-                                  value={updateRow[code_key] || ""}
-                                />
+                                      onFocus={() => handelCanghe(code_key, "")}
+                                      onChange={(e) =>
+                                        handelCanghe(code_key, e.target.value)
+                                      }
+                                      value={updateRow[code_key] || ""}
+                                    />
 
-                                {index === Object.entries(row).length - 1 && (
-                                  <div
-                                    onClick={() => console.log(updateRow)}
-                                    className={`${
-                                      pathName.includes("stages")
-                                        ? " px-4 "
-                                        : " w-full "
-                                    }  flex justify-center border border-blue_color rounded-full text-white`}
-                                  >
-                                    שמור שינויים
-                                  </div>
+                                    {index ===
+                                      Object.entries(row).length - 1 && (
+                                      <button
+                                        onClick={() => console.log(updateRow)}
+                                        className={`${
+                                          pathName.includes("stages")
+                                            ? " px-4 "
+                                            : " w-full "
+                                        }  flex justify-center border border-blue_color rounded-full text-white`}
+                                      >
+                                        שמור שינויים
+                                      </button>
+                                    )}
+                                  </>
                                 )}
-                              </>
-                            )}
-                          </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <div
+                              key={index}
+                              className="flex gap-2 justify-center text-center w-full"
+                            >
+                              {code_key.includes("price") && (
+                                <Image
+                                  className=" right-7 "
+                                  src={"/shekelSine.svg"}
+                                  width={10}
+                                  height={10}
+                                  alt=""
+                                />
+                              )}
+                              <span className="dirLtr  ">{code_value}</span>
+                            </div>
+                          )}
                         </div>
-                      ) : (
-                        <div key={index} className="text-center w-full">
-                          {code_value}
-                          {/* <span className="text-xs">{code_key.includes("price")&&' ש"ח'}</span>  */}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                      )
+                  )}
                   <div className="flex cursor-pointer justify-around col-end-10 ">
                     <div
                       className={`${
@@ -327,7 +350,7 @@ export default function TabieSettings({ data, headers, page, add }) {
                         alt={"uu"}
                       />
 
-                      <p>עריכת שורה</p>
+                      <button>עריכת שורה</button>
                     </div>
 
                     <Image
@@ -347,7 +370,7 @@ export default function TabieSettings({ data, headers, page, add }) {
           </div>
         </div>
       </div>
-      {deleteRow && <DeleteRow row={deleteRow} />}
+      {deleteRow && <DeleteRow row={deleteRow} showPopup={setDeleteRow} />}
     </div>
   );
 }

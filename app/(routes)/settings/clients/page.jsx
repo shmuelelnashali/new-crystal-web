@@ -33,7 +33,7 @@ export default function activity() {
   const clients = [
     {
       number: "1",
-      namber: "123@idf",
+      namber: "12345678@gmail.com",
       full_name: "דוד אלקיים",
       code: "1234",
       type: "אחר",

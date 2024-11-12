@@ -40,7 +40,7 @@ export default function activity() {
     {
       number: "1",
       name: "ימי מסלול",
-      armyPrice: "S1234",
+      army_price: "S1234",
       price1: 12345,
       price2: 12345,
     },

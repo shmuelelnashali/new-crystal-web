@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import PopupDay from "../../components/calender/PopupDay";
 import Exclusions from "../../components/calender/Exclusions";
 import Year from "../../components/calender/Year";
-import Search from "../../components/ui/Search";
 import Image from "next/image";
-import { clsx } from "clsx";
-
-import { format } from "date-fns";
 
 export default function Calendar() {
   const [missionDay, setMissionDay] = useState(); //selected day

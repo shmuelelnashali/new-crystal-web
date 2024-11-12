@@ -66,30 +66,35 @@ export default function activity() {
  
   const users = [
     {
+      id:"1",
       user_number:"1",
       full_name: "דוד אלקיים",
       namber: "S1234",
       permissions: "מנהל",
     },
     {
+      id:"1",
       user_number:"1",
       full_name: "דוד אלקיים",
       namber: "S1234",
       permissions: "מנהל",
     },
     {
+      id:"1",
       user_number:"1",
       full_name: "דוד אלקיים",
       namber: "S1234",
       permissions: "מנהל",
     },
     {
+      id:"1",
       user_number:"1",
       full_name: "דוד אלקיים",
       namber: "S1234",
       permissions: "מנהל",
     },
     {
+      id:"1",
       user_number:"1",
       full_name: "דוד אלקיים",
       namber: "S1234",
