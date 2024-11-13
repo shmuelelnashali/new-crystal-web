@@ -19,64 +19,6 @@ import PopupDelete from "@/app/components/organizationTree/PopupDelete";
 import Header from "@/app/components/ui/Header";
 import { addNewUnitInServer } from "@/app/components/organizationTree/PopUpCreateUnit";
 
-const structure = {
-  name: "יחידת על",
-  departments: [
-    {
-      name: "מחלקה 1",
-      branches: [
-        {
-          name: "ענף 1",
-          sections: ["מדור 1", "מדור 2", "מדור 3", "מדור 4"],
-        },
-        {
-          name: "ענף 2",
-          sections: ["מדור 1", "מדור 2"],
-        },
-      ],
-    },
-    {
-      name: "מחלקה 2",
-      branches: [
-        {
-          name: "ענף 1",
-          sections: [],
-        },
-        {
-          name: "ענף 2",
-          sections: ["מדור 1", "מדור 2"],
-        },
-      ],
-    },
-    {
-      name: "מחלקה 3",
-      branches: [
-        {
-          name: "ענף 1",
-          sections: ["מדור 1", "מדור 2"],
-        },
-        {
-          name: "ענף 2",
-          sections: ["מדור 3", "מדור 4"],
-        },
-      ],
-    },
-    {
-      name: "מחלקה 4",
-      branches: [
-        {
-          name: "ענף 1",
-          sections: ["מדור 1"],
-        },
-        {
-          name: "ענף 2",
-          sections: ["מדור 2", "מדור 3"],
-        },
-      ],
-    },
-  ],
-};
-
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
@@ -123,6 +65,8 @@ export default function OrganizationTreeComponent() {
   const [showPopUpDisconnect, setShowPopUpDisconnect] = useState(false);
   const [unitName, setUnitName] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(null);
+  const [unitToDeleteOrDisconnect, setUnitToDeleteOrDisconnect] =
+    useState(null);
 
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
   const edgeTypes = useMemo(() => ({ CustomEdge }), []);
@@ -144,11 +88,12 @@ export default function OrganizationTreeComponent() {
     const createNode = (name, nodeId, dbId, level) => ({
       id: [nodeId + dbId].toString(),
       data: {
-        label: name,
-        dbId: dbId,
-        level: level,
-        delete: setShowPopUpDelete,
-        disconnect: setShowPopUpDisconnect,
+        name,
+        dbId,
+        level,
+        setShowPopUpDelete,
+        setShowPopUpDisconnect,
+        setUnitToDeleteOrDisconnect,
       },
       position: { x: 0, y: 0 },
       type: "CustomNode",
@@ -161,7 +106,7 @@ export default function OrganizationTreeComponent() {
       type: "CustomEdge",
     });
 
-    const rootNode = createNode(structure.name, 789);
+    const rootNode = createNode(" יחידת על", "highunit-", 789, " יחידת על");
     initialNodes.push(rootNode);
 
     data.forEach((dep) => {
@@ -217,7 +162,6 @@ export default function OrganizationTreeComponent() {
     }
   }, [data]);
 
-  
   const onConnect = useCallback(
     async (params) => {
       setEdges((eds) => addEdge({ ...params, type: "CustomEdge" }, eds));
@@ -227,6 +171,8 @@ export default function OrganizationTreeComponent() {
 
       await addNewUnitInServer(selectedLevel.url, unitName, parentNodeId);
       fetchAlltheTree();
+
+      setUnitName("");
     },
     [nodesObj]
   );
@@ -240,7 +186,6 @@ export default function OrganizationTreeComponent() {
       setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
     []
   );
-
 
   return (
     <div
@@ -282,17 +227,17 @@ export default function OrganizationTreeComponent() {
       <div className="text-center pt-1 text-[#A5A5A5]">
         פותח ע"י מסגרת אמ"ת{" "}
       </div>
-      {showPopUpDisconnect && (
-        <PopupDisconnect
-          objectToDelete={"ttt"}
-          setShowPopUpDisconnect={setShowPopUpDisconnect}
+      {showPopUpDelete && (
+        <PopupDelete
+          unitToDeleteOrDisconnect={unitToDeleteOrDisconnect}
+          setShowPopUpDelete={setShowPopUpDelete}
         />
       )}
 
-      {showPopUpDelete && (
-        <PopupDelete
-          objectToDelete={"ttt"}
-          setShowPopUpDelete={setShowPopUpDelete}
+      {showPopUpDisconnect && (
+        <PopupDisconnect
+          unitToDeleteOrDisconnect={unitToDeleteOrDisconnect}
+          setShowPopUpDisconnect={setShowPopUpDisconnect}
         />
       )}
     </div>

@@ -13,16 +13,13 @@ const CustomDatePicker = forwardRef((props, ref) => (
 CustomDatePicker.displayName = "CustomDatePicker";
 
 export default function PopupDelete({
-  objectToDelete,
+  unitToDeleteOrDisconnect,
   setShowPopUpDelete,
-  messageText,
-  btnText,
-  urlPage,
 }) {
   const [showOptions, setShowOptions] = useState(false);
   const dateInputRef = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
-  const [madorName, setMadorName] = useState(null);
+  const [unitName, setUnitName] = useState(null);
 
   const MyContainer = ({ children }) => {
     return (
@@ -60,7 +57,8 @@ export default function PopupDelete({
         <div className="mb-3">
           <div className="flex justify-between pt-2">
             <h1 className="font-bold text-2xl leading-6	text-blue_color mb-4 mt-2">
-              האם אתה בטוח שאתה רוצה למחוק המדור “מדור אאא”?{" "}
+              האם אתה בטוח שאתה רוצה למחוק את ה{unitToDeleteOrDisconnect.level}{" "}
+              "{unitToDeleteOrDisconnect.name}" ?
             </h1>
 
             <Image
@@ -73,13 +71,14 @@ export default function PopupDelete({
             />
           </div>
           <p className="text-xl font-normal text-blue_color">
-            במדור אאא ישנם 23 עובדים, עליך לשייך אותם למדור אחר על מנת למחוק
-            מדור זה.
+            ב{unitToDeleteOrDisconnect.level} {unitToDeleteOrDisconnect.name} יש
+            23 עובדים, עליך לשייך אותם ל{unitToDeleteOrDisconnect.level} אחר על
+            מנת למחוק {unitToDeleteOrDisconnect.level} זה.
           </p>
         </div>
         <div>
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
-            לאיזה מדור תרצה לשייך את העובדים?
+            לאיזה {unitToDeleteOrDisconnect.level} תרצה לשייך את העובדים?
           </h3>
           <div className="h-[41px] mb-2 flex relative">
             <div
@@ -87,10 +86,10 @@ export default function PopupDelete({
                 e.stopPropagation(), setShowOptions(true);
               }}
               className={`w-[579px] h-[41px] bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light ${
-                madorName ? "text-[#002A78]" : "text-[#002A7887]"
+                unitName ? "text-[#002A78]" : "text-[#002A7887]"
               }  flex items-center justify-between z-50`}
             >
-              <span>{madorName || "בחר מדור"}</span>
+              <span>{unitName || `בחר ${unitToDeleteOrDisconnect.level}` }</span>
               <Image src={vector90} alt="vector90" width={9} height={5} />
             </div>
             {showOptions && (
@@ -103,7 +102,7 @@ export default function PopupDelete({
                   {obj.map((name, index) => (
                     <div
                       onClick={() => {
-                        setMadorName(name), setShowOptions(false);
+                        setUnitName(name), setShowOptions(false);
                       }}
                       key={index}
                       className="h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0] madorHover"
@@ -116,7 +115,7 @@ export default function PopupDelete({
             )}
           </div>
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
-            מאיזה תאריך העובדים יעברו למדור החדש?
+            מאיזה תאריך העובדים יעברו ל{unitToDeleteOrDisconnect.level} החדש?
           </h3>
           <div className="inline-flex relative z-0">
             <CustomDatePicker
