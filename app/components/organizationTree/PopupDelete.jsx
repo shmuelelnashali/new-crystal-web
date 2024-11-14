@@ -15,6 +15,7 @@ CustomDatePicker.displayName = "CustomDatePicker";
 export default function PopupDelete({
   unitToDeleteOrDisconnect,
   setShowPopUpDelete,
+  employeesNumber,
 }) {
   const [showOptions, setShowOptions] = useState(false);
   const dateInputRef = useRef(null);
@@ -35,15 +36,12 @@ export default function PopupDelete({
     }
   };
 
-  // const axiosDelete = async () => {
-  //   try {
-  //     await axios
-  //       .put(`api/${urlPage}/${objectToDelete.id}`)
-  //       .then((res) => res.status);
-  //   } catch (error) {
-  //     console.error("error with delete", error);
-  //   }
-  // };
+  const getCorrectSuffix = (level) => {
+    if (level === "מחלקה") {
+      return { other: "אחרת", this: "זאת", new: "חדשה" };
+    }
+    return { other: "אחר", this: "זה", new: "חדש" };
+  };
 
   const obj = [1, 2, 3, 4, 5, 6];
 
@@ -71,9 +69,12 @@ export default function PopupDelete({
             />
           </div>
           <p className="text-xl font-normal text-blue_color">
-            ב{unitToDeleteOrDisconnect.level} {unitToDeleteOrDisconnect.name} יש
-            23 עובדים, עליך לשייך אותם ל{unitToDeleteOrDisconnect.level} אחר על
-            מנת למחוק {unitToDeleteOrDisconnect.level} זה.
+            ב{unitToDeleteOrDisconnect.level} {unitToDeleteOrDisconnect.name} יש{" "}
+            {employeesNumber} עובדים, עליך לשייך אותם ל
+            {unitToDeleteOrDisconnect.level}{" "}
+            {getCorrectSuffix(unitToDeleteOrDisconnect.level).other} על מנת
+            למחוק {unitToDeleteOrDisconnect.level}{" "}
+            {getCorrectSuffix(unitToDeleteOrDisconnect.level).this}.
           </p>
         </div>
         <div>
@@ -89,7 +90,7 @@ export default function PopupDelete({
                 unitName ? "text-[#002A78]" : "text-[#002A7887]"
               }  flex items-center justify-between z-50`}
             >
-              <span>{unitName || `בחר ${unitToDeleteOrDisconnect.level}` }</span>
+              <span>{unitName || `בחר ${unitToDeleteOrDisconnect.level}`}</span>
               <Image src={vector90} alt="vector90" width={9} height={5} />
             </div>
             {showOptions && (
@@ -115,7 +116,8 @@ export default function PopupDelete({
             )}
           </div>
           <h3 className="text-lg font-semibold text-blue_color mb-[2px]">
-            מאיזה תאריך העובדים יעברו ל{unitToDeleteOrDisconnect.level} החדש?
+            מאיזה תאריך העובדים יעברו ל{unitToDeleteOrDisconnect.level} ה
+            {getCorrectSuffix(unitToDeleteOrDisconnect.level).new}?
           </h3>
           <div className="inline-flex relative z-0">
             <CustomDatePicker

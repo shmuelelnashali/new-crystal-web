@@ -67,6 +67,7 @@ export default function OrganizationTreeComponent() {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [unitToDeleteOrDisconnect, setUnitToDeleteOrDisconnect] =
     useState(null);
+  const [employeesNumber, setEmployeesNumber] = useState(null);
 
   const nodeTypes = useMemo(() => ({ CustomNode }), []);
   const edgeTypes = useMemo(() => ({ CustomEdge }), []);
@@ -93,7 +94,9 @@ export default function OrganizationTreeComponent() {
         level,
         setShowPopUpDelete,
         setShowPopUpDisconnect,
+        unitToDeleteOrDisconnect,
         setUnitToDeleteOrDisconnect,
+        setEmployeesNumber
       },
       position: { x: 0, y: 0 },
       type: "CustomNode",
@@ -231,6 +234,7 @@ export default function OrganizationTreeComponent() {
         <PopupDelete
           unitToDeleteOrDisconnect={unitToDeleteOrDisconnect}
           setShowPopUpDelete={setShowPopUpDelete}
+          employeesNumber={employeesNumber}
         />
       )}
 

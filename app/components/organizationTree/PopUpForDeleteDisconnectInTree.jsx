@@ -1,6 +1,8 @@
 "use client";
 import styled from "styled-components";
 import { useReactFlow } from "reactflow";
+import axios from "@/app/lib/Axios";
+import { useEffect } from "react";
 
 const Container = styled.div`
   width: 225px;
@@ -40,19 +42,56 @@ export default function PopUpForDeleteDisconnectInTree({
   setShowPopUp,
   filteredIds,
   setShowPopUpDelete,
-  setShowPopUpDisconnect
+  setShowPopUpDisconnect,
+  setEmployeesNumber,
+  unitToDeleteOrDisconnect,
 }) {
-  
-  const { setEdges } = useReactFlow();
+  // const { setEdges } = useReactFlow();
 
-  const disconnectEdge = () => {
-    setEdges((prevEdges) =>
-      prevEdges.filter((edge) => !filteredIds.includes(edge.id))
-    );
+  const getAllEmployees = async () => {
+    try {
+      const respons = await axios.get("employees");
+      return respons.data;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const deleteNodePopUp = () => {setShowPopUpDelete(true)};
-  const disconnectNodePopUp = () => {setShowPopUpDisconnect(true)};
+  const getEmployeesNumberByDepartment = async () => {
+    const allEmployees = await getAllEmployees();
+    const employeesByDepartment = allEmployees.filter(
+      (employee) => employee.department_name === unitToDeleteOrDisconnect.name
+    ).length;
+
+    return employeesByDepartment;
+  };
+
+  useEffect(() => {
+    const getEmployeesNumber = async () => {
+      if (unitToDeleteOrDisconnect) {
+        const count = await getEmployeesNumberByDepartment();
+        console.log(count);
+        
+        setEmployeesNumber(count);
+      }
+    };
+
+    getEmployeesNumber();
+  }, [unitToDeleteOrDisconnect]);
+
+
+  // const disconnectEdge = () => {
+  //   setEdges((prevEdges) =>
+  //     prevEdges.filter((edge) => !filteredIds.includes(edge.id))
+  //   );
+  // };
+
+  const deleteNodePopUp = () => {
+    setShowPopUpDelete(true);
+  };
+  const disconnectNodePopUp = () => {
+    setShowPopUpDisconnect(true);
+  };
 
   const options = [
     { name: "מחק", func: deleteNodePopUp },

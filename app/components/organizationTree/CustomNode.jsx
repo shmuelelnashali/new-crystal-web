@@ -5,7 +5,8 @@ import "reactflow/dist/style.css";
 import PopUpForDeleteDisconnectInTree from "./PopUpForDeleteDisconnectInTree";
 
 export default function CustomNode({ id, data }) {
-  const [showPopUpForDeleteAndDisconnect, setShowPopUpForDeleteAndDisconnect] = useState(false);
+  const [showPopUpForDeleteAndDisconnect, setShowPopUpForDeleteAndDisconnect] =
+    useState(false);
 
   const { getEdges } = useReactFlow();
   const edges = getEdges();
@@ -18,7 +19,10 @@ export default function CustomNode({ id, data }) {
       onContextMenu={(e) => {
         e.preventDefault();
         setShowPopUpForDeleteAndDisconnect(true);
-        data.setUnitToDeleteOrDisconnect({name: data.name, level: data.level})
+        data.setUnitToDeleteOrDisconnect({
+          name: data.name,
+          level: data.level,
+        });
       }}
       onClick={() => setShowPopUpForDeleteAndDisconnect(false)}
       className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow cursor-pointer relative"
@@ -34,8 +38,10 @@ export default function CustomNode({ id, data }) {
           height: "20px",
         }}
       />
-        <div className="text-xs font-normal text-[#002A784A] w-fit absolute right-2 top-1">{data.level}</div>
-        <div className="text-[18px]">{data.name}</div>
+      <div className="text-xs font-normal text-[#002A784A] w-fit absolute right-2 top-1">
+        {data.level}
+      </div>
+      <div className="text-[18px]">{data.name}</div>
       <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex items-center justify-center absolute -bottom-[10px] text-2xl text-[#002A78] ">
         +
       </div>
@@ -56,6 +62,8 @@ export default function CustomNode({ id, data }) {
           filteredIds={filteredIds}
           setShowPopUpDelete={data.setShowPopUpDelete}
           setShowPopUpDisconnect={data.setShowPopUpDisconnect}
+          setEmployeesNumber={data.setEmployeesNumber}
+          unitToDeleteOrDisconnect={data.unitToDeleteOrDisconnect}
         />
       )}
     </div>
