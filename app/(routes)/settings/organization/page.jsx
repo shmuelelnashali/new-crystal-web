@@ -4,7 +4,6 @@ import SettingsSearch from "@/app/components/settings/SettingsSearch";
 import TabieSettings from "@/app/components/settings/TableSettings";
 import Image from "next/image";
 
-import OrganizationTree from "../../organizationTree/page";
 import OrganizationTable from "@/app/components/settings/organization/OrganizationTable";
 import { useEffect, useState } from "react";
 import axios from "@/app/lib/axios";
@@ -39,9 +38,8 @@ export default function organization() {
       }
     }
     fetchDropdownData();
-   
   }, []);
-  
+
   const formtDepartmentData = (data) => {
     const formatted = data.reduce((acc, company) => {
       acc[company.name] = company.branches.map((branch) => {

@@ -11,6 +11,10 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+li.nav {
+  color: #002a78;
+  list-style-type: initial;
+}
 /* Custom React-Flow */
 .react-flow__renderer .react-flow__pane {
   cursor: pointer;

@@ -15,12 +15,14 @@ export default function Nav() {
     { text: "דוחות", link: "/reports" },
     { text: "הגדרות", link: "/settings" },
   ];
+  console.log(pathName);
 
   return (
     <div className="rounded-l-full rounded-r-full text-base  bg-[#EFF3FB] px-6 py-2.5">
       <ul className="flex gap-x-8 justify-around items-center h-full text-blue_color/30  ">
         {navBar.map((nav, index) => (
           <Link key={index} href={nav.link}>
+            {console.log(nav.link)}
             <li
               className={`whitespace-nowrap ${
                 pathName.includes(nav.link) ? "nav" : ""

@@ -13,7 +13,7 @@ import dagre from "dagre";
 import CustomNode from "@/app/components/organizationTree/CustomNode";
 import CustomEdge from "@/app/components/organizationTree/CustomEdge";
 import BtnWithSelectPopUp from "@/app/components/organizationTree/BtnWithSelectPopUp";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 import PopupDisconnect from "@/app/components/organizationTree/PopupDisconnect";
 import PopupDelete from "@/app/components/organizationTree/PopupDelete";
 import Header from "@/app/components/ui/Header";
@@ -190,9 +190,9 @@ export default function OrganizationTreeComponent() {
   return (
     <div
       onClick={() => setShowPopUpSelectUnit(false)}
-      className="bg-white px-5 flex flex-col h-screen"
+      className="bg-white p-2  flex flex-col h-screen"
     >
-      <div dir="rtl">
+      <div dir="rtl" className="">
         <Header />
       </div>
 
