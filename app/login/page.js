@@ -14,7 +14,7 @@ export default function Login() {
       router.push("/calender");
       console.log(user);
     } else {
-      login(setErrors, { employee_number: "1111111" });
+      login(setErrors, { employee_number: "2222222" });
     }
   }, [user]);
   return (

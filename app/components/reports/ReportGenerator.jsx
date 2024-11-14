@@ -296,7 +296,7 @@ export default function ReportGenerator() {
               </div>
 
               {Object.entries(fields).map(([key, field], i) => (
-                <div 
+                <div
                   draggable
                   onDragStart={(e) => handleDragStart(e, { key, field })}
                   onDragEnd={handleDragEnd}

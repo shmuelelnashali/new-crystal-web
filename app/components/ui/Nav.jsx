@@ -3,14 +3,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 
+
 export default function Nav() {
  const pathName= usePathname()
- console.log(pathName); 
 
   const navBar = [
     { text: "נוכחות", link: "/presence" },
     { text: "עובדים", link: "/employees" },
-    // { text: "הרשאות", link: "/permissions" },
+    { text: "הרשאות", link: "/permissions" },
     { text: " ניהול משימות", link: "/mission" },
     { text: "דרישות אמצעים", link: "/fff" },
     { text: "ניהול הסכמים ", link: "/agreementsManagement" },

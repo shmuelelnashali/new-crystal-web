@@ -1,5 +1,5 @@
 import React from "react";
-import TableHead from "./TableHead";
+import TableHead from "./missions/TableHead";
 import TableContent from "./TableContent";
 
 export default function Table({

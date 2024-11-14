@@ -10,16 +10,34 @@ export default function PopupDelete({
   btnText,
   urlPage,
 }) {
+  console.log(objectToDelete);
+  
   const axiosDelete = async () => {
     try {
       await axios
         .put(`api/${urlPage}/${objectToDelete.id}`)
-        .then((res) => res.status);
+        .then((res) => res.Status);
     } catch (error) {
       console.error("error with delete", error);
     }
   };
 
+  const stringForEmployee = objectToDelete
+  ? `${objectToDelete.firstName || ""} ${objectToDelete.lastName || ""}`.trim()
+  : "";
+
+  const stringForAgreement = objectToDelete
+  ? `${objectToDelete.agreement || ""}`.trim()
+  : "";
+  const objectId = objectToDelete
+  ? `${objectToDelete.id || ""}`.trim()
+  : "";
+  const objectMission = objectToDelete
+  ? `${objectToDelete.taskName || ""}`.trim()
+  : "";
+  const stringForReportMeasure = objectToDelete
+  ? `${objectToDelete.measure || ""}`.trim()
+  :""
   return (
     <div className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50">
       <div className="bg-white py-2 px-2 w-[50%] rounded-xl text-right">

@@ -31,11 +31,15 @@ export default function PopupDay({
   const [activity, setActivity] = useState(false);
 
   // const [events, setEvents] = useState("add");
+  // const [events, setEvents] = useState("add");
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(`/events/${year}-${month}-${day}`);
+        console.log(response.data);
+        if (response.data.length > 0) {
+          console.log(setEventDate(response.data[0]), setActivity(true));
         console.log(response.data);
         if (response.data.length > 0) {
           console.log(setEventDate(response.data[0]), setActivity(true));
@@ -50,6 +54,8 @@ export default function PopupDay({
     fetchData();
     toast.success("hello");
   }, [missionDay]);
+
+  // console.log(eventDate, activity);
 
   // console.log(eventDate, activity);
   const mission = () => {
@@ -70,7 +76,7 @@ export default function PopupDay({
         const response = await axios.post(`/events`, event);
         setOpenPopUp(false);
         setMissionDay(null);
-        return response.status;
+        return response.Status;
       } catch (error) {
         console.error("error fetching : ", error?.response?.data?.message);
       }
@@ -81,7 +87,7 @@ export default function PopupDay({
           const response = await axios.put(`/events/${eventDate.id}`, event);
           setOpenPopUp(false);
           setMissionDay(null);
-          return response.status;
+          return response.Status;
         } catch (error) {
           console.error("error fetching : ", error?.response?.data?.message);
         }

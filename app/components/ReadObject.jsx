@@ -16,13 +16,10 @@ export default function ({ data, index, setUpdateMode }) {
       {Object.entries(data).map(([key, value], i) => (
         <div
           key={key}
-          className={`h-full px-4 truncate flex flex-col  items-center justify-center  py-4 relative  
-        
-           text-center ${key === "overTimeLimit" ? "custom-col-span" : ""}`}
+          className={`h-full  px-4 truncate flex flex-col  items-center justify-center  py-4 relative text-center `}
         >
            { value}
 
-     
         </div>
       ))}
     </>

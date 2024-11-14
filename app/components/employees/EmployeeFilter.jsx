@@ -31,8 +31,8 @@ export default function EmployeeFilter({ dataArray, label }) {
   };
 
   return (
-    <div className={`relative w-[9%]
-    ${label=== 'מחלקה'?' w-[11%] ' : ''}
+    <div className={`relative w-[9%] 
+    ${label=== 'מחלקה' ? 'w-[11%]' : ''}
     `}>
       <div
         className={`flex p-[1.9px] border  pr-2 hover:cursor-pointer rounded-full bg-white border-blue_color
@@ -41,7 +41,7 @@ export default function EmployeeFilter({ dataArray, label }) {
         onClick={toggleOptionMenu}
       >
         {selectOption || label || 'בחר'}
-        <div className=" absolute left-2 top-1/2 transform -translate-y-1/2">
+        <div className=" absolute left-2  top-1/2 transform -translate-y-1/2">
           <Image src={'/optionArrow.svg'} width={7} height={7} alt="arrow" />
         </div>
       </div>

@@ -118,6 +118,7 @@ export default function Exclusions({
               width={20}
               height={20}
               alt="MagnifyingGlass.svg"
+              alt="MagnifyingGlass.svg"
             />
             <div className=" relative flex justify-center">
               {
