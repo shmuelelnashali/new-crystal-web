@@ -1,23 +1,19 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-
-
 export default function Nav() {
- const pathName= usePathname()
+  const pathName = usePathname();
 
   const navBar = [
     { text: "נוכחות", link: "/presence" },
     { text: "עובדים", link: "/employees" },
-    { text: "הרשאות", link: "/permissions" },
     { text: " ניהול משימות", link: "/mission" },
     { text: "דרישות אמצעים", link: "/fff" },
-    { text: "ניהול הסכמים ", link: "/agreementsManagement" },
     { text: "ניהול עץ אירגוני", link: "/organizationTree" },
     { text: "ניהול לוחות שנה", link: "/calender" },
     { text: "דוחות", link: "/reports" },
-     { text: "הגדרות", link: "/settings" },
+    { text: "הגדרות", link: "/settings" },
   ];
 
   return (
@@ -25,12 +21,16 @@ export default function Nav() {
       <ul className="flex gap-x-8 justify-around items-center h-full text-blue_color/30  ">
         {navBar.map((nav, index) => (
           <Link key={index} href={nav.link}>
-            <li  className={`whitespace-nowrap ${pathName.includes(nav.link) ?"nav":""} `}>{nav.text}</li>
+            <li
+              className={`whitespace-nowrap ${
+                pathName.includes(nav.link) ? "nav" : ""
+              } `}
+            >
+              {nav.text}
+            </li>
           </Link>
         ))}
-
       </ul>
     </div>
   );
 }
-

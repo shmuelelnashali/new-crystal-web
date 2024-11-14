@@ -148,32 +148,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 50%;
 } */
 
-div[title]:hover::after{
-  position:absolute ;
+div[title]:hover::after {
+  position: absolute;
   left: 50%;
   z-index: 1;
-  top:-15%;
+  top: -15%;
 
-
-
-
-
-
-  
   content: attr(title);
   width: fit-content;
   font-size: 14px;
   padding: 2px;
-  color: #002A78;
-  background-color: white;;
-  
+  color: #002a78;
+  background-color: white;
 }
-
-
-
-
-
-
-
-
-

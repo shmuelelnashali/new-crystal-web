@@ -30,34 +30,27 @@ export default function PopupDay({
   }, [missionDay]);
   const [activity, setActivity] = useState(false);
 
-  // const [events, setEvents] = useState("add");
-  // const [events, setEvents] = useState("add");
-
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(`/events/${year}-${month}-${day}`);
         console.log(response.data);
+
         if (response.data.length > 0) {
-          console.log(setEventDate(response.data[0]), setActivity(true));
-        console.log(response.data);
-        if (response.data.length > 0) {
-          console.log(setEventDate(response.data[0]), setActivity(true));
+          setEventDate(response.data[0]);
+          setActivity(true);
         } else {
           setActivity(false);
         }
       } catch (error) {
-        console.error("error fetching : ", error);
+        console.error("Error fetching data: ", error);
         throw error;
       }
     }
+
     fetchData();
     toast.success("hello");
   }, [missionDay]);
-
-  // console.log(eventDate, activity);
-
-  // console.log(eventDate, activity);
   const mission = () => {
     setOpenPopUp(false);
     setMissionDay(null);
