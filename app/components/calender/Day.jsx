@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 import clsx from "clsx";
 import { format } from "date-fns";
 
@@ -9,7 +9,7 @@ export default function Day({
   day,
   month,
   year,
-  evensInYear,
+  evensInYear,events, setEvents
 }) {
   const today = new Date();
   const date = new Date(year, month, day);
@@ -54,6 +54,7 @@ export default function Day({
   return (
     <div
       onClick={() => {
+        setEvents("add")
         setMissionDay(`${year}-${month + 1}-${day}`);
       }}
       className={clsx(

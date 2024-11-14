@@ -6,7 +6,7 @@ import EmployeeFilter from "../../components/EmployeeFilter";
 import PopupDelete from "../../components/PopupDelete";
 import Search from "../../components/ui/Search";
 import Table from "../../components/Table";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 
 export default function Employees() {
   const user = [
@@ -330,7 +330,7 @@ export default function Employees() {
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
  
- c
+ 
   //ON CLICK FOR UPDATE INPUTS
   const [updateMode, setUpdateMode] = useState(null);
 
@@ -405,7 +405,7 @@ export default function Employees() {
       }
     }
     fetchData();
-  }, []);
+  },);
 
   const formtDepartmentData = (data) => {
     const formatted = data.reduce((acc, company) => {

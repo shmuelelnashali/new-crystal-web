@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import React from "react";
 import MonthTable from "./MonthTable";
 import FilterByYear from "./FilterByYear";
-import axios from "../../lib/Axios";
+import axios from "@/app/lib/axios";
 
-export default function Year({ missionDay, setMissionDay }) {
+export default function Year({ missionDay, setMissionDay ,events, setEvents}) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [evensInYear, setEvensInYear] = useState([]);
   const monthsInHebrew = [
@@ -36,7 +36,7 @@ export default function Year({ missionDay, setMissionDay }) {
       }
     }
     fetchData();
-  }, [selectedDate,missionDay]);
+  }, [selectedDate, missionDay]);
 
   // Function to get days in month
   const getDaysInMonth = (year, month) =>
@@ -66,7 +66,7 @@ export default function Year({ missionDay, setMissionDay }) {
   });
 
   return (
-    <div className="  text-blue_color flex-1 w-full flex flex-col justify-between ">
+    <>
       <div className="h-11 p-2">
         <FilterByYear
           setSelectedDate={setSelectedDate}
@@ -87,10 +87,11 @@ export default function Year({ missionDay, setMissionDay }) {
               indexMonth={index}
               selectedDate={selectedDate.getFullYear()}
               evensInYear={evensInYear}
+              events={events}setEvents={setEvents}
             />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,43 +1,41 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Events from "./Events";
-import axios from "../../lib/Axios";
+import axios from "../../lib/axios";
 
 export default function PopupDay({
   missionDay,
   setMissionDay,
   setExclusions,
-  // eventDate,
-  // setEventDate,
+ 
   openPopUp,
   setOpenPopUp,
+  events, setEvents
 }) {
-  const { year, month, day, dayOfWeek } = missionDay;
+  const { year, month, day,  dayOfWeek } = missionDay;
+  console.log();
   const [eventDate, setEventDate] = useState({
+    // beginning_date: `${year}-${month}-${day}`,
+    // end_date: `${year}-${month}-${day}`,
+    // activityDay: dayOfWeek,
+  });
+  useEffect(()=>{
+  setEventDate({
     beginning_date: `${year}-${month}-${day}`,
     end_date: `${year}-${month}-${day}`,
     activityDay: dayOfWeek,
-  });
+  })},[missionDay])
   const [activity, setActivity] = useState(false);
 
-  // console.log(missionDay);
-  // const { dayOfWeek, activity } = missionDay;
-  const [events, setEvents] = useState("add");
-
-  // const [year, month, day] = eventDate?.beginning_date.split("-");
-  //
-  // console.log(year, month, day);
+  // const [events, setEvents] = useState("add");
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(`/events/${year}-${month}-${day}`);
-console.log(response.data);
-        if (response.data.length > 0)  {
-          console.log(
-            setEventDate(response.data[0]),
-            setActivity(true)
-          );
+        console.log(response.data);
+        if (response.data.length > 0) {
+          console.log(setEventDate(response.data[0]), setActivity(true));
         } else {
           setActivity(false);
         }
@@ -48,13 +46,14 @@ console.log(response.data);
     }
     fetchData();
   }, [missionDay]);
-  console.log(eventDate, activity);
+
+  // console.log(eventDate, activity);
   const mission = () => {
     setOpenPopUp(false);
     setMissionDay(null);
   };
-  console.log(events);
-  //add
+  // console.log(events);
+ 
   const addNewEvent = async () => {
     const event = {
       beginning_date: eventDate.beginning_date,
@@ -67,7 +66,7 @@ console.log(response.data);
         const response = await axios.post(`/events`, event);
         setOpenPopUp(false);
         setMissionDay(null);
-        return response.status;
+        return response.Status;
       } catch (error) {
         console.error("error fetching : ", error);
         throw error;
@@ -79,7 +78,7 @@ console.log(response.data);
           const response = await axios.put(`/events/${eventDate.id}`, event);
           setOpenPopUp(false);
           setMissionDay(null);
-          return response.status;
+          return response.Status;
         } catch (error) {
           console.error("error fetching : ", error);
           throw error;

@@ -60,17 +60,18 @@ li.nav{
 
 /* width */
 ::-webkit-scrollbar {
+  
  height: 7px;
   width: 7px;
   direction:ltr;
 }
 ::-webkit-scrollbar-button{
- margin: 3px;
+    margin: 3px;
 }
 
 /* Track */
  ::-webkit-scrollbar-track {
-  
+    padding: 2px;
     box-shadow: inset 0 0 3px rgb(209, 217, 233);
     border-radius: 23px;
     background-color: #EFF3FB;
@@ -109,11 +110,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: width 0.9s;
 }
 /* .custom-col-span {
-  grid-column: span 0.5 ;
+  grid-column: span 0.5 
   width: 50%;
 } */
 
+div[title]:hover::after{
+  position:absolute ;
+  left: 50%;
+  z-index: 1;
+  top:-15%;
 
+
+
+
+
+
+  
+  content: attr(title);
+  width: fit-content;
+  font-size: 14px;
+  padding: 2px;
+  color: #002A78;
+  background-color: white;;
+  
+}
 
 
 

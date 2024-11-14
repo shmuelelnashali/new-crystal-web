@@ -78,7 +78,7 @@ const {beginning_date,end_date,activityDay}=eventDate
 
       <div className="z-50 h-[50%] max-h-[50%] w-[50%] fixed bg-white  rounded-md flex flex-col gap-y-3 p-3 px-6">
         <div onClick={openExclusion} className="absolute left-4 top-4 ">
-          <Image src={"/x.svg"} width={22} height={22} />
+          <Image src={"/x.svg"} width={22} height={22} alt="x"/>
         </div>
         <div className="flex flex-col  py-2">
           <div className="font-bold text-2xl">החרגות </div>
@@ -106,6 +106,7 @@ const {beginning_date,end_date,activityDay}=eventDate
               src="MagnifyingGlass.svg"
               width={20}
               height={20}
+              alt="MagnifyingGlass.svg"
             />
             <div className=" relative flex justify-center">
               {

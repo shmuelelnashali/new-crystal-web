@@ -15,7 +15,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (
-      error?.response?.status == 401 &&
+      error?.response?.Status == 401 &&
       window.location.pathname !== "/login"
     ) {
       window.location.replace("/login");

@@ -18,11 +18,11 @@ export default function Events({
   const { year, month, day} = missionDay;
   // console.log(activity);
 
-  useEffect(() => {
-    if (events === "new" || events === "edit") {
-      setEvents("add");
-    }
-  }, [missionDay]);
+  // useEffect(() => {
+  //   if (events === "new" || events === "edit") {
+  //     setEvents("add");
+  //   }
+  // },[missionDay]);
   return (
     <>
       {!activity && events !== "new" && events !== "edit" && (

@@ -16,7 +16,7 @@ export default function PopupDelete({
     try {
       await axios
         .put(`api/${urlPage}/${objectToDelete.id}`)
-        .then((res) => res.status);
+        .then((res) => res.Status);
     } catch (error) {
       console.error("error with delete", error);
     }
@@ -32,7 +32,12 @@ export default function PopupDelete({
   const objectId = objectToDelete
   ? `${objectToDelete.id || ""}`.trim()
   : "";
-
+  const objectMission = objectToDelete
+  ? `${objectToDelete.taskName || ""}`.trim()
+  : "";
+  const stringForReportMeasure = objectToDelete
+  ? `${objectToDelete.measure || ""}`.trim()
+  :""
   return (
     <div className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50">
       <div className="bg-white py-2 px-2 w-[50%] rounded-xl text-right">
@@ -47,7 +52,10 @@ export default function PopupDelete({
           {messageText} 
           "{stringForEmployee && ` "${stringForEmployee}"`} 
           {stringForAgreement && ` "${stringForAgreement}"`}
-          {objectId}"?
+          {stringForReportMeasure && `"${stringForReportMeasure}"`} 
+          {objectId}
+          {objectMission}
+          "?
           
         </p>
         <div className="flex w-full  justify-end mt-4">

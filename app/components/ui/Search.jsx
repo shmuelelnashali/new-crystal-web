@@ -8,7 +8,7 @@ export default function Search({textBtn, addNew, addImage, bg, searchText,missio
     {" bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]":!missionDay})}>
      
 
-      <input className={clsx("rounded-full outline-none h-full placeholder:text-blue_color w-full bg-[#EFF3FB]" ,
+      <input className={clsx("rounded-full pr-2 outline-none h-full placeholder:text-blue_color w-full bg-[#EFF3FB]" ,
       {"bg-white border":bg},
        {"w-[85%]":!missionDay}  )}
      
