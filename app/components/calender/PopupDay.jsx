@@ -16,18 +16,28 @@ export default function PopupDay({
 }) {
   const { year, month, day, dayOfWeek } = missionDay;
   console.log();
-  const [eventDate, setEventDate] = useState({
-    // beginning_date: `${year}-${month}-${day}`,
-    // end_date: `${year}-${month}-${day}`,
-    // activityDay: dayOfWeek,
+  const [eventDate, setEventDate] = useState({});
+  const [date, setDate] = useState({
+    beginning_date: `${year}-${month}-${day}`,
+    end_date: `${year}-${month}-${day}`,
+    activityDay: dayOfWeek,
   });
+
   useEffect(() => {
-    setEventDate({
+    setEventDate([
+      {
+        beginning_date: `${year}-${month}-${day}`,
+        end_date: `${year}-${month}-${day}`,
+        activityDay: dayOfWeek,
+      },
+    ]);
+    setDate({
       beginning_date: `${year}-${month}-${day}`,
       end_date: `${year}-${month}-${day}`,
       activityDay: dayOfWeek,
     });
   }, [missionDay]);
+
   const [activity, setActivity] = useState(false);
 
   useEffect(() => {
@@ -37,20 +47,19 @@ export default function PopupDay({
         console.log(response.data);
 
         if (response.data.length > 0) {
-          setEventDate(response.data[0]);
+          setEventDate(response.data);
           setActivity(true);
         } else {
           setActivity(false);
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
-        throw error;
       }
     }
 
     fetchData();
-    toast.success("hello");
   }, [missionDay]);
+
   const mission = () => {
     setOpenPopUp(false);
     setMissionDay(null);
@@ -59,8 +68,8 @@ export default function PopupDay({
 
   const addNewEvent = async () => {
     const event = {
-      beginning_date: eventDate.beginning_date,
-      end_date: eventDate.end_date,
+      beginning_date: date.beginning_date,
+      end_date: date.end_date,
       event: "Sunday",
       is_global: true,
     };
@@ -69,7 +78,7 @@ export default function PopupDay({
         const response = await axios.post(`/events`, event);
         setOpenPopUp(false);
         setMissionDay(null);
-        return response.Status;
+        return response.status;
       } catch (error) {
         console.error("error fetching : ", error?.response?.data?.message);
       }
@@ -77,10 +86,10 @@ export default function PopupDay({
     if (events === "edit") {
       {
         try {
-          const response = await axios.put(`/events/${eventDate.id}`, event);
+          const response = await axios.put(`/events/${eventDate[0].id}`, event);
           setOpenPopUp(false);
           setMissionDay(null);
-          return response.Status;
+          return response.status;
         } catch (error) {
           console.error("error fetching : ", error?.response?.data?.message);
         }
@@ -108,15 +117,17 @@ export default function PopupDay({
             {day}/{month}/{year}
           </div>
 
-          <div className="flex justify-center items-center p-2">
+          {/* <div className="flex justify-center items-center p-2">
             <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
               סוג פעילות
             </h2>
-          </div>
+          </div> */}
         </div>
 
         <div className=" h-full w-full">
           <Events
+            date={date}
+            setDate={setDate}
             events={events}
             setEvents={setEvents}
             missionDay={missionDay}

@@ -10,7 +10,7 @@ import { parse, isEqual, isWithinInterval } from "date-fns";
 import MissionTable from "@/app/components/missions/MissionTable";
 import PopupMission from "@/app/components/missions/PopupMission";
 import * as XLSX from "xlsx";
-import axios, { Axios } from "axios";
+// import axios, { Axios } from "axios";
 
 const data = [
   {
@@ -289,7 +289,9 @@ export default function Mission() {
   const handleExportToExcel = () => {
     const formattedMissions = missions.map((mission) => ({
       ...mission,
-      Sections: Array.isArray(mission.Sections) ? mission.Sections.join(", ") : mission.Sections,
+      Sections: Array.isArray(mission.Sections)
+        ? mission.Sections.join(", ")
+        : mission.Sections,
     }));
     const ws = XLSX.utils.json_to_sheet(formattedMissions);
     const wb = XLSX.utils.book_new();
@@ -319,7 +321,7 @@ export default function Mission() {
   return (
     <div className="h-full px-3  ">
       <div className="flex  ">
-        <div className="  w-full flex ">
+        <div className="w-full flex ">
           <Search
             className="w-full"
             textBtn={"הוסף משימה"}

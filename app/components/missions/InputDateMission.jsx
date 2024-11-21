@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import { parse, format, isValid, parseISO } from "date-fns";
+// import { CalendarIcon } from "../../../public/bit.svg";
 export default function InputDateMission({
   labelName,
   formData,
@@ -53,7 +54,7 @@ export default function InputDateMission({
     <div className="w-full relative">
       <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
         <Image
-          src="/calender.svg"
+          src="calendar.svg"
           width={20}
           height={20}
           alt="calender"
@@ -69,7 +70,7 @@ export default function InputDateMission({
           // console.log(labelName,"change");
         }}
         value={
-          formatDateForInput(formData)||''
+          formatDateForInput(formData) || ""
           // לשאול אם מקבלים תאריך מהמשימה או תאריך של היום
           // (labelName === "Opening_date" && formatDateForInput(openingDate)) ||
           // (labelName === "Closing_date" && formatDateForInput(closingDate)) ||

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 
 export const addNewUnitInServer = async (url, name, parentId) => {
   let parentName;

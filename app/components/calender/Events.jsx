@@ -4,7 +4,7 @@ import AddEvent from "./AddEvent";
 import Event from "./Event";
 import Image from "next/image";
 import EditEvent from "./EditEvent";
-
+import ExcludedEvent from "./ExcludedEvent";
 
 export default function Events({
   missionDay,
@@ -13,9 +13,12 @@ export default function Events({
   setEvents,
   eventDate,
   setEventDate,
-  activity
+  activity,
+  date,
+  setDate,
 }) {
-  const { year, month, day} = missionDay;
+  const [ex, setEx] = useState(0);
+  const { year, month, day } = missionDay;
   // console.log(activity);
 
   // useEffect(() => {
@@ -24,44 +27,69 @@ export default function Events({
   //   }
   // },[missionDay]);
   return (
-    <>
+    <div>
       {!activity && events !== "new" && events !== "edit" && (
-        <div className="  h-full flex justify-center items-center">
-          <Image
-            onClick={() => setEvents("new")}
-            src="addEvent.svg"
-            width={240}
-            height={155}
-            alt="e"
-          />
+        <div>
+          <div className="flex justify-center items-center p-2">
+            <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
+              סוג פעילות
+            </h2>
+          </div>
+          <div className="  h-full flex justify-center items-center">
+            <Image
+              onClick={() => setEvents("new")}
+              src="addEvent.svg"
+              width={240}
+              height={155}
+              alt="e"
+            />
+          </div>
         </div>
       )}
-
       {events == "new" && (
         <AddEvent
-        setEvents={setEvents}
+          date={date}
+          setDate={setDate}
+          setEvents={setEvents}
           missionDay={missionDay}
           setMissionDay={setMissionDay}
           eventDate={eventDate}
           setEventDate={setEventDate}
         />
       )}
-
       {events == "edit" && (
         <EditEvent
+          date={date}
+          setDate={setDate}
           missionDay={missionDay}
           setMissionDay={setMissionDay}
           eventDate={eventDate}
           setEventDate={setEventDate}
         />
       )}
-      {activity && events !== "edit" && (
-        <Event
-          missionDay={missionDay}
-          setMissionDay={setMissionDay}
-          eventDate={eventDate}
-        />
-      )}
-    </>
+      {console.log(eventDate)}
+      {Array.isArray(eventDate) &&
+        eventDate.map(
+          (event, index) =>
+            activity &&
+            events !== "edit" &&
+            event?.is_global === 1 && (
+              <Event
+                key={event.id}
+                missionDay={missionDay}
+                setMissionDay={setMissionDay}
+                eventDate={event}
+              />
+            )
+        )}
+      {/* ) : ( */}
+
+      {Array.isArray(eventDate) &&
+        eventDate.map((event, index) =>
+          event.is_global === 0 ? (
+            <ExcludedEvent key={index} event={event} ex={ex} setEx={setEx} />
+          ) : null
+        )}
+    </div>
   );
 }

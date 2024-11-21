@@ -524,7 +524,8 @@ export default function Employees() {
 
   return (
     <div className="flex flex-col gap-y-4 h-full">
-      <div className="flex justify-center">
+      <div className="mx-auto w-1/2 flex justify-center">
+     
         <Search
           addNew={handleAddingNewRow}
           textBtn={" הוסף עובד"}

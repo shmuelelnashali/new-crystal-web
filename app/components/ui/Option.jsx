@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-export default function Option({
-  data,
-  handel,
-  value,
-  toggle,
-  setToggle,
-}) {
+export default function Option({ data, handel, value, toggle, setToggle }) {
   return (
     <div className="w-full">
       <div
@@ -25,6 +19,7 @@ export default function Option({
           src="downArrow.svg"
           width={10}
           height={6}
+          alt="downArrow"
         />
 
         {toggle && (

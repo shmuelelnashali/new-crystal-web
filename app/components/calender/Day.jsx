@@ -58,7 +58,7 @@ export default function Day({
         setMissionDay(`${year}-${month + 1}-${day}`);
       }}
       className={clsx(
-        "h-full w-full rounded-xl flex items-center cursor-pointer flex-col justify-center",
+        "h-10 w-10  rounded-xl flex items-center cursor-pointer flex-col justify-center",
         {
           "bg-blue_color  text-white font-bold":
             dateComparisonResult(today) === true,
@@ -75,10 +75,12 @@ export default function Day({
       {day}
       {/* נקודת צבע כאשר יש פעילות \ אירוע ביום מסוים*/}
       <div
-        className={` w-1 h-1 rounded-full  flex  ${
+        className={`w-1 h-1 rounded-full  flex  ${
           day !== null && isEventDey() ? handleColor() : ""
         } `}
-      ></div>
+      >
+
+      </div>
     </div>
   );
 }

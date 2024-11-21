@@ -41,7 +41,7 @@ export default function MonthTable({
           </li>
         ))}
       </ul>
-      <div className="grid grid-cols-7 gap-1 pt-3 pb-5 h-full  font-medium text-xl text-blue_color/68 justify-center items-center w-full text-center">
+      <div className="grid grid-cols-7 gap-[2px] pt-3 pb-5 h-full  font-medium text-xl text-blue_color/68 justify-center items-center w-full text-center">
         {daysInMonth.map((day, dayIndex) => (
           <Day
             key={dayIndex}

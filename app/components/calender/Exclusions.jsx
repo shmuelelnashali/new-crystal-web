@@ -2,15 +2,21 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 import ExclusionsSearch from "./ExclusionsSearch";
 import Option from "../ui/Option";
+import { CalendarDays } from "lucide-react";
+import axios from "@/app/lib/axios";
 
 export default function Exclusions({
   openExclusion,
+  setMissionDay,
   // eventDate,
   // setEventDate,
   missionDay,
 }) {
+  const [toggle, setToggle] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
+  const [emploeeyEvent, setEmploeeyEvent] = useState([]);
   const today = new Date();
-  console.log(today);
+  // console.log(today);
 
   const day = missionDay?.day
     ? missionDay.day
@@ -19,37 +25,35 @@ export default function Exclusions({
     ? missionDay.month
     : String(today.getMonth() + 1);
   const year = missionDay?.year ? missionDay.year : String(today.getFullYear());
-  // const { year, month, day, dayOfWeek} =
-  console.log(year, month, day);
 
-  const [eventDate, setEventDate] = useState({
+  const [date, setDate] = useState({
     beginning_date: `${year}-${month}-${day}`,
     end_date: `${year}-${month}-${day}`,
   });
-  const { beginning_date, end_date, activityDay } = eventDate;
-  const [openSearch, setOpenSearch] = useState(false);
+  const { beginning_date, end_date, activityDay } = date;
 
   const handelDate = (e, type) => {
     console.log(type);
     if (type == "day") {
       console.log(e);
-      setEventDate((prevState) => ({ ...prevState, activityDay: e }));
-      console.log(eventDate);
+      setDate((prevState) => ({ ...prevState, activityDay: e }));
+      console.log(date);
       return;
     }
     const newDate = e.target.value;
     if (type == "from") {
       const [year, month, day] = newDate.split("-");
-      setEventDate((prevState) => ({
+      setDate((prevState) => ({
         ...prevState,
         beginning_date: `${year}-${month}-${day}`,
       }));
+      console.log(date);
 
       // setMissionDay(`${year}-${month}-${day}`) ;
     }
     if (type == "to") {
       const [year, month, day] = newDate.split("-");
-      setEventDate((prevState) => ({
+      setDate((prevState) => ({
         ...prevState,
         end_date: `${year}-${month}-${day}`,
       }));
@@ -80,9 +84,41 @@ export default function Exclusions({
       dateToRef.current.showPicker();
     }
   };
-  // const handleSelectChange = (event) => {
-  //   setSelectedOption(event.target.value);
-  // };
+  const addExclusionsEvent = async () => {
+    const event = {
+      beginning_date: date.beginning_date,
+      end_date: date.end_date,
+      event: "Sunday",
+      employee_ids: emploeeyEvent,
+      is_global: false,
+    };
+    console.log(event);
+
+    // if (events !== "edit") {
+    try {
+      const response = await axios.post(`/events`, event);
+      setMissionDay(null);
+      console.log(missionDay, "misi");
+
+      openExclusion();
+      return response.status;
+    } catch (error) {
+      console.error("error fetching : ", error?.response?.data?.message);
+    }
+    // }
+    // if (events === "edit") {
+    // {
+    //   try {
+    //     const response = await axios.put(`/events/${eventDate[0].id}`, event);
+    //     // setOpenPopUp(false);
+    //     // setMissionDay(null);
+    //     return response.status;
+    //   } catch (error) {
+    //     console.error("error fetching : ", error?.response?.data?.message);
+    //   }
+    //   // }
+    // }
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center ">
       <div className=" fixed inset-0 bg-[#000000]/20 backdrop-blur-[2px]"></div>
@@ -117,13 +153,14 @@ export default function Exclusions({
               src="MagnifyingGlass.svg"
               width={20}
               height={20}
-              alt="MagnifyingGlass.svg"
-              alt="MagnifyingGlass.svg"
+              alt="MagnifyingGlass"
             />
             <div className=" relative flex justify-center">
               {
                 <ExclusionsSearch
                   openSearch={openSearch}
+                  emploeeyEvent={emploeeyEvent}
+                  setEmploeeyEvent={setEmploeeyEvent}
                   // selectedOption={selectedOption}
                   // setSelectedOption={setSelectedOption}
                 />
@@ -138,6 +175,8 @@ export default function Exclusions({
               data={activity_type}
               handel={handelDate}
               value={activityDay}
+              toggle={toggle}
+              setToggle={setToggle}
             />
           </div>
 
@@ -152,14 +191,12 @@ export default function Exclusions({
                   value={beginning_date}
                   onChange={(e) => handelDate(e, "from")}
                 />
-                <Image
-                  src="/calender.svg"
-                  alt="calendar icon"
-                  width={19}
-                  height={19}
+                <div
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
                   onClick={handleIconClickFrom}
-                />
+                >
+                  <CalendarDays size={20} strokeWidth={1.5} />
+                </div>
               </div>
 
               <Image src="leftArrow.svg" width={25} height={25} alt="r" />
@@ -172,20 +209,21 @@ export default function Exclusions({
                   value={end_date}
                   onChange={(e) => handelDate(e, "to")}
                 />
-                <Image
-                  src="/calender.svg"
-                  alt="calendar icon"
-                  width={19}
-                  height={19}
+                <div
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
                   onClick={handleIconClickTo}
-                />
+                >
+                  <CalendarDays size={20} strokeWidth={1.5} />
+                </div>
               </div>
             </div>
           </div>
         </div>{" "}
         <div className="flex justify-center py-2">
-          <button className="text-lg   py-1 px-5 rounded-full text-white bg-blue_color">
+          <button
+            onClick={() => addExclusionsEvent()}
+            className="text-lg   py-1 px-5 rounded-full text-white bg-blue_color"
+          >
             החל
           </button>
         </div>

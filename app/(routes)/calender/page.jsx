@@ -61,7 +61,9 @@ export default function Calendar() {
         </div> */}
         <div
           className={`h-full overflow-hidden p-2 ${
-            openPopUp ? "w-4/5 pr-3 transition-width" : " w-full px-[5%]"
+            openPopUp && missionDay !== null
+              ? "w-4/5 pr-3 transition-width"
+              : " w-full px-[5%]"
           } `}
         >
           <div className="h-full  flex flex-col">
@@ -74,7 +76,7 @@ export default function Calendar() {
           </div>
         </div>
       </div>
-      {openPopUp && (
+      {openPopUp && missionDay !== null && (
         <div className="border w-1/5 transition-width  flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full p-2 z-40">
           <PopupDay
             missionDay={missionDay}
@@ -89,7 +91,7 @@ export default function Calendar() {
       )}
 
       {exclusions && (
-        <Exclusions missionDay={missionDay} openExclusion={openExclusion} />
+        <Exclusions missionDay={missionDay} openExclusion={openExclusion} setMissionDay={setMissionDay}/>
       )}
     </>
   );
