@@ -20,27 +20,12 @@ export default function TableHead({
       <div className="flex w-full bg-blue_color rounded">
         <div className="w-[50px]"></div>
         <div
-          className={`text-[22px] grid grid-cols-${headLength} gap-3 w-full font-semibold leading-6 py-3 text-center items-center text-white`}
+          className={`text-[20px] grid grid-cols-11 gap-3 w-full font-semibold leading-6 py-3 text-center items-center text-white`}
         >
           {headTable.map((head, index) => (
-            <div key={head} className="relative truncate flex justify-center items-center">
-              <div className="truncate">{head}</div>
-              <div className="mr-1 flex">
-                <MoveDown
-                  onClick={() => handleClickArrows(index,"desc")}
-                  size={15}
-                  color={
-                    columnToSortOn?.index === index  &&columnToSortOn?.direction==='asc'? "gray" : "white"
-                  }
-                />
-                <MoveUp
-                  onClick={() => handleClickArrows(index,"asc")}
-                  size={15}
-                  color={
-                    columnToSortOn?.index === index&&columnToSortOn?.direction==='desc'? "gray" : "white"
-                  }
-                />
-              </div>
+            <div key={head} className={`relative truncate flex justify-center items-center  ${head === "מייל" &&'ml-16'}`}>
+              <div className={`truncate`}>{head}</div>
+             
             </div>
           ))}
         </div>

@@ -1,237 +1,180 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
+import InputDateEmployee from "./employees/InputDateEmployee";
+import InputEmployee from "./employees/InputEmployee";
+import axios from "../lib/axios";
+import { format } from "date-fns";
+import { toast } from "react-hot-toast";
+// import "react-toastify/dist/ReactToastify.css";
 
 export default function UpdateEmployee({
-  data,
-  setUpdateMode,
-  handleChange,
-  toggleUpdateInput,
-  setToggleUpdateInput,
-  ifEmpty,
+  hiddenEmployeeData,
+  setUpdateEmployee,
+  updateEmployeeMood,
 }) {
-  
-  //STATE FOR OPTION
-  const [selectOption, setSelectOption] = useState(null);
-  const [editedObject, setEditedObject] = useState(data);
-  const optionsMap = {
-    solder: ["אזרח", "חייל"],
-    department: ["רכבים", "משקים והמטות"],
-    branch: ["נגמש", "טנקים"],
-    mador: ["נסא", "אמת"],
-    hescem: ["40", "1"],
+  const [formData, setFormData] = useState({
+    hiddenEmployeeData: hiddenEmployeeData,
+    updateEmployeeMood: updateEmployeeMood,
+  });
+  // console.log(formData, "eeee");
+
+  const handleInputChange = (labelName, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      updateEmployeeMood: {
+        ...prev.updateEmployeeMood,
+        [labelName]: value,
+      },
+    }));
+    console.log(formData);
   };
 
-  //THE FORMAT DATE
-  const formatDate = (dateString) => {
-   console.log(dateString);
-    const [year, month, day] = dateString.split("/");
+// השדות שנכנסים לעידכון עובד
+  const updateEmployee = async () => {
+    const formatDate = (date) =>
+      date ? format(new Date(date), "yyyy-MM-dd") : null;
 
-    return `${day}-${month}-${year}`;
-  };
+    const newEmployee = {
+      employee_number: formData.updateEmployeeMood?.employee_number?.toString(),
+      first_name: formData.updateEmployeeMood?.first_name?.trim(),
+      surname: formData.updateEmployeeMood?.surname?.trim(),
+      solider_civilian:
+        formData.updateEmployeeMood?.solider_civilian == "אזרח"
+          ? "0"
+          : formData.updateEmployeeMood?.solider_civilian == "חייל" && "1",
+      department_id: Number(formData.updateEmployeeMood?.department_id),
+      branch_id: Number(formData.updateEmployeeMood?.branch_id),
+      section_id: Number(formData.updateEmployeeMood?.section_id),
+      contract_id: Number(formData.updateEmployeeMood?.contract_id),
+      activity_start: formatDate(formData.updateEmployeeMood?.activity_start),
+      activity_end: formatDate(formData.updateEmployeeMood?.activity_end),
+      mail: formData.updateEmployeeMood?.mail,
+    };
+    // console.log(newEmployee, "the new");
 
-  //OPEN THE OPTION
-  const handleOpen = (key) => {
-    setSelectOption(key);
-    setToggleUpdateInput(!toggleUpdateInput);
-  };
-
-  //CHECK IF THE START DATE BIGGER THEN END DATE
-  const handleDateChange = (e, id, key) => {
-    if (key === "start") {
-      const endDate = formatDate(data.end);
-      const newStartDate = e.target.value;
-      if (newStartDate > endDate) {
-        alert("תאריך התחלה לא יכול להיות גדול מתאריך סיום");
-        return;
-      }
-    } else if (key === "end") {
-      const startDate = formatDate(data.start);
-      const newEndDate = e.target.value;
-      if (newEndDate < startDate) {
-        alert("תאריך סיום לא יכול להיות קטן מתאריך התחלה");
-        return;
-      }
+    // אם שדות חסרים
+    if (
+      Object.values(newEmployee).some(
+        (value) => value === null || value === undefined || value === ""
+      )
+    ) {
+      toast.error("חלק מהשדות חסרים");
+      return;
     }
-    handleChange(e, id, key);
-  };
-
-  
-  const dateFromRef = useRef(null);
-  const dateToRef = useRef(null);
-
-  const handleIconClickFrom = () => {
-    if (dateFromRef.current) {
-      dateFromRef.current.showPicker();
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/api/employees/`,
+        newEmployee
+      );
+      // התראה שעבר בהצלחה
+      toast.success(response.data.message);
+      setUpdateEmployee(false);
+    } catch (error) {
+      console.error("שגיאה בעידכון", error);
+      // מראה את השגיאה
+      toast.error(error.response?.data?.message ||
+        "אירעה שגיאה בעת ניסיון לעדכן את העובד");
     }
   };
 
-  const handleIconClickTo = () => {
-    if (dateToRef.current) {
-      dateToRef.current.showPicker();
+  // אם בחרת שלא לעדכן עובד
+  const cancelUpdate = ()=> toast('בחרת לא לעדכן עובד',
+    {
+      icon: '👌',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+      duration: 1000,
     }
-  };
-  const ref=(key)=>{
-    if(key==="activity_start"){
-      return dateFromRef
-    }
-    if(key==="activity_end"){
-      return dateToRef
-    }
-
-  }
+  );
 
   return (
     <>
-      {Object.entries(editedObject).map(([key, value], i) => (
-        // <div className="w-full p-2">
-        //   <input
-        //     className="w-[80%] text-center rounded-full  border border-1 border-blue_color"
-        //     type={
-        //       key=== "activity_start"||key === "activity_end" ?"date":
-        //       "text"}
-        //     value={value}
-        //   />
-        // </div> 
-         <div key={value} className="relative py-2">
-            {key==="activity_start"||key === "activity_end"?
-            <span>
-              <input
-              ref={ref(key)}
-                className="h-full truncate w-full  text-center border rounded-full border-blue_color  "
-                type={"date"}
-                value={formatDate(value)} 
-                
-              />
-              { key=== "activity_start"  &&
-                <Image
-                src="/calender.svg" 
-                alt="calendar icon"
-                width={19}
-                height={19}
-                className="absolute left-1.5 top-1/2  transform -translate-y-1/2 cursor-pointer text-blue_color"
-                onClick={handleIconClickFrom}/>}
+      <div className="fixed inset-0 flex justify-center items-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50">
+        <div className="bg-white rounded-lg p-5 w-3/4 ">
+          <div className=" p-4 relative flex items-center justify-center">
+            <div
+              className="absolute top-0 left-0 hover:cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation(), setUpdateEmployee(null), cancelUpdate();
+              }}
+            >
+              <Image src={"/x.svg"} width={15} height={15} alt="x" />
+            </div>
 
-              { key === "activity_end" &&
-                <Image
-                src="/calender.svg" 
-                alt="calendar icon"
-                width={19}
-                height={19}
-                className="absolute left-1.5 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
-                onClick={handleIconClickTo}/>}</span>
-              : 
-               <input
-              ref={dateFromRef}
-                className="h-full  w-full text-center border rounded-full border-blue_color  "
-                type={"text"}
-                value={value} 
-                
-              />
-
-
-
-           
-            }
-            
-           {/* { key=== "activity_start"  &&
-              <Image
-              src="/calender.svg" 
-              alt="calendar icon"
-              width={19}
-              height={19}
-              className=" left-1.5 top-0  transform -translate-y-1/2 cursor-pointer text-blue_color"
-              onClick={handleIconClickFrom}/>}
-            { key === "activity_end" &&
-              <Image
-              src="/calender.svg" 
-              alt="calendar icon"
-              width={19}
-              height={19}
-              className=" left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
-              onClick={handleIconClickTo}/>} */}
+            <div className="text-xl truncate tracking-wide py-1 font-medium px-5 mb-4 flex justify-center items-center text-white bg-[#002A78] text-center rounded-full">
+              עריכת עובד
+            </div>
+          </div>
+          <div className=" grid grid-cols-3 px-5 gap-5">
+            {labels.map(({ label, labelName }, index) => (
+              <div key={index} className="mb-4 relative">
+                <div className="block text-[#002A78] truncate font-bold">
+                  {label}
+                </div>
+                {labelName.includes("activity") ? (
+                  <InputDateEmployee
+                    labelName={labelName}
+                    formData={formData.updateEmployeeMood[labelName]}
+                    handleInputChange={handleInputChange}
+                    min={
+                      labelName === "activity_end"
+                        ? formData.updateEmployeeMood["activity_start"]
+                        : null
+                    }
+                    max={
+                      labelName === "activity_start"
+                        ? formData.updateEmployeeMood["activity_end"]
+                        : null
+                    }
+                  />
+                ) : (
+                  <InputEmployee
+                    labelName={labelName}
+                    label={label}
+                    formData={formData.updateEmployeeMood[labelName]}
+                    handleInputChange={handleInputChange}
+                  />
+                )}
               </div>
-        // <div
-        
-        //   key={key}
-        //   className={`relative py-3 ${optionsMap[key] ? "flex " : ""} `}
-        // >
-        //   {console.log(key)}
-        //   <div
-        //   className=" w-full flex item-center text-center"
-        //     onClick={(e) => {
+            ))}
+          </div>
 
-        //       // setUpdateMode(null);
-
-        //       handleOpen(key);
-        //     }}
-        //   >
-        //     <input
-
-        //     onClick={(e)=>{
-        //       e.stopPropagation(); // Stop event propagation
-        //       handleOpen(key);
-
-        //      }}
-
-        //       onChange={(e) => {
-        //         handleDateChange(e, data.id, key);
-        //       }}
-        //       className={` border max-w-full rounded-full md:truncate  pr-2 pl-4 border-blue_color
-
-        //       ${"FOR EMPLOYEES PAGE"}
-        //       ${key === "start" || key === "end" ? "pl-1 pr-3 " : "" }
-        //       ${optionsMap[key] ? "cursor-pointer" : "" }
-
-        //       ${"FOR AGREEMENTS PAGE"}
-        //       ${key === "id" || key=== "enterTime" || key=== "exitTime" || key=== "overTimeLimit" || key=== "hoursAmount" || key=== "breakType"
-        //       ? "w-[66.666667%] m-auto text-center" : "text-center"}
-        //       `}
-
-        //       type={key === "start" || key === "end" ? "date" : "text"}
-        //       value={
-        //         key === "start" || key === "end" ?  formatDate(value) : value
-        //       }
-        //     />
-
-        //     {optionsMap[key] && (
-        //       <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
-        //         <Image
-        //           src={"/optionArrow.svg"}
-        //           width={7}
-        //           height={7}
-        //           alt="arrow"
-        //         />
-        //       </div>
-        //     )}
-        //   </div>
-
-        //   {ifEmpty && value === "" && (
-        //     <div className="absolute text-red-600 text-sm font-medium mr-5">
-        //       שדה זה חסר
-        //     </div>
-        //   )}
-
-        //   {toggleUpdateInput && optionsMap[key] && selectOption === key && (
-        //     <div className="absolute inset-y-7 w-full z-20 mt-1 border  rounded ">
-        //       <ul className="flex flex-col  p-1  bg-white rounded shadowForDrop">
-        //         {optionsMap[key].map((option, index) => (
-        //           <li
-        //             className="  w-full cursor-pointer py-2 px-4  rounded  text-blue_color  hover:bg-blue_color hover:text-white"
-        //             onClick={(e) => {
-        //               handleOpen(key);
-        //               setSelectOption(null);
-        //               handleChange({ target: { value: option } }, data.id, key);
-        //             }}
-        //             key={index}
-        //           >
-        //             {option}
-        //           </li>
-        //         ))}
-        //       </ul>
-        //     </div>
-        //   )}
-        // </div>
-      ))}
+          <div className="flex justify-end">
+            <div
+              onClick={(e) => {
+                e.stopPropagation(), setUpdateEmployee(null), cancelUpdate()
+              }}
+              className="border hover:cursor-pointer border-[#002A78] ml-3 rounded-2xl px-3 p-1"
+            >
+              ביטול
+            </div>
+            <div
+              onClick={updateEmployee}
+              className="flex hover:cursor-pointer bg-[#002A78] gap-2 pl-4 px-2 text-white rounded-2xl p-1"
+            >
+              <Image src={"/edit.svg"} width={15} height={15} alt="edit" />
+              <div>עריכת עובד</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
+
+const labels = [
+  { label: "מספר עובד", labelName: "employee_number" },
+  { label: "שם פרטי", labelName: "first_name" },
+  { label: "שם משפחה", labelName: "surname" },
+  { label: "חייל/אזרח", labelName: "solider_civilian" },
+  { label: "תאריך התחלה", labelName: "activity_start" },
+  { label: "תאריך סיום", labelName: "activity_end" },
+  { label: "ענף", labelName: "branch_id" },
+  { label: "מחלקה", labelName: "department_id" },
+  { label: "מדור", labelName: "section_id" },
+  { label: "סוג הסכם", labelName: "contract_id" },
+  { label: "מייל", labelName: "mail" },
+];

@@ -136,15 +136,17 @@ export default function Mission() {
   // const [loading, setLoading] = useState(true);
   const [showPopupNewMission, setShowPopupNewMission] = useState(false);
 
+  // הפופאפ לפילטר
   const [filterPopUp, setFilterPopUp] = useState(false);
+
+  // מביא את הסינון
+  const [filterData, setFilterData] = useState(null);
 
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   //CONTAIN THE EMPLOYEE TO FREEZE
   const [missionIdToDelete, setMissionIdToDelete] = useState(null);
-  // מביא את הסינון
-  const [filterData, setFilterData] = useState(null);
 
   // useEffect(() => {
   //   const fetchMissions = async () => {
@@ -289,7 +291,9 @@ export default function Mission() {
   const handleExportToExcel = () => {
     const formattedMissions = missions.map((mission) => ({
       ...mission,
-      Sections: Array.isArray(mission.Sections) ? mission.Sections.join(", ") : mission.Sections,
+      Sections: Array.isArray(mission.Sections)
+        ? mission.Sections.join(", ")
+        : mission.Sections,
     }));
     const ws = XLSX.utils.json_to_sheet(formattedMissions);
     const wb = XLSX.utils.book_new();

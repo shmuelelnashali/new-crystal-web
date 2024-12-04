@@ -6,408 +6,195 @@ import EmployeeFilter from "../../components/employees/EmployeeFilter";
 import PopupDelete from "../../components/PopupDelete";
 import Search from "../../components/ui/Search";
 import Table from "../../components/Table";
+
+import PopupFilterEmployees from "@/app/components/employees/PopupFilterEmployees";
+import { parse, isEqual, isWithinInterval, parseISO } from "date-fns";
+
 import axios from "@/app/lib/axios";
+import AddNewEmployee from "@/app/components/employees/AddNewEmployee";
+import { Toaster } from "react-hot-toast";
+
+// import axios from "axios";
 
 export default function Employees() {
-  // const user = [
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  //   {
-  //     id: 1238367,
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     solder: "חייל",
-  //     department: "משאבים אנושיים",
-  //     branch: "טנקים",
-  //     mador: "מדור ציוד נייד",
-  //     hescem: 40,
-  //     activity_start: "2024-07-14",
-  //     activity_end: "2024-07-14",
-  //   },
-  // ];
-
   //FOR CONTAIN THE EMPLOYEES
   const [employees, setEmployees] = useState([]);
+  const [allEmployees, setAllEmployees] = useState([]);
+  // פופאפ לסינון
+  const [filterPopUp, setFilterPopUp] = useState(false);
+
+  // מקבל שהוא הסינונים
+  const [filterData, setFilterData] = useState(null);
+
+  // הוספת עובד חדש
+  const [addNewEmployee, setAddNewEmployee] = useState(false);
+
+  // מחיקת עובד
+  const [deleteEmployee, setDeleteEmployee] = useState(null);
 
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
- 
- 
-  //ON CLICK FOR UPDATE INPUTS
-  const [updateMode, setUpdateMode] = useState(null);
 
-  //ALERT IF FIELD EMPTY
-  const [ifEmpty, setIfEmpty] = useState(false);
+  const showEmployeesOrFilter = filterData
+    ? employees.filter((employee) => {
+        let matches = true;
 
-  //THE TOGGLE FOR SOME OF THE INPUTS
-  const [toggleUpdateInput, setToggleUpdateInput] = useState(false);
+        // ממיר סטרינג מתאריך המשימה לאובייקט כדי לבדוק אותו
+        const employeeOpeningDate = employee.employeeToShow.activity_start
+          ? parseISO(employee.employeeToShow.activity_start)
+          : null;
 
-  {
-    /*FETCH THE DATA */
-  }
+        const employeeClosingDate = employee.employeeToShow.activity_end
+          ? parseISO(employee.employeeToShow.activity_end)
+          : null;
 
-  {
-    /*MAKING THE UPDATE*/
-  }
-  const handleChange = (e, id, field) => {
-    const updatedEmployees = employees.map((employee) => {
-      if (employee.id === id) {
-        return { ...employee, [field]: e.target.value };
-      }
-      return employee;
-    });
+        // ממיר סטרינג מתאריך הפילטר לאובייקט כדי לבדוק אותו
+        const filterOpeningDate = filterData?.activity_start
+          ? parse(filterData.activity_start, "yyyy-MM-dd", new Date())
+          : null;
+        const filterClosingDate = filterData?.activity_end
+          ? parse(filterData.activity_end, "yyyy-MM-dd", new Date())
+          : null;
 
-    setEmployees(updatedEmployees);
-  };
-  //
-  {
-    /*UPDATE IN DB*/
-  }
-  const formatDate = (dateString) => {
-    console.log(dateString);
-    const [day, month, year] = dateString.split("-");
-    return `${year}/${month}/${day}`;
-  };
+        // פילטר רק על תאריך פתיחה
+        if (filterOpeningDate && !filterClosingDate) {
+          if (!isEqual(employeeOpeningDate, filterOpeningDate)) {
+            matches = false;
+          }
+        }
 
+        // פילטר רק על תאריך סגירה
+        if (filterClosingDate && !filterOpeningDate) {
+          if (!isEqual(employeeClosingDate, filterClosingDate)) {
+            matches = false;
+          }
+        }
 
-  const formtData = (data) => {
-    const employeeArray = [];
-    data.map((employee, index) => {
-      employeeArray.push({
-        employee_number: employee.employee_number,
-        firstName: employee.first_name,
-        lastName: employee.surname,
-        solider_civilian:
-          employee.solider_civilian == "0"
-            ? "אזרח"
-            : employee.solider_civilian == "1" && "חייל",
-        department: employee.department_name,
-        branch: employee.branch_name,
-        mador: employee.section_name,
-        contract: employee.contract.code,
-        activity_start: formatDate(employee.activity_start),
-        activity_end: formatDate(employee.activity_end),
-      });
-    });
+        // פילטר על התאריכים
+        if (filterOpeningDate && filterClosingDate) {
+          const isInRange =
+            isWithinInterval(employeeOpeningDate, {
+              start: filterOpeningDate,
+              end: filterClosingDate,
+            }) &&
+            isWithinInterval(employeeClosingDate, {
+              start: filterOpeningDate,
+              end: filterClosingDate,
+            });
+
+          if (!isInRange) {
+            matches = false;
+          }
+        }
+
+        // פילטר מחלקה
+        if (
+          filterData?.department_id &&
+          !employee.employeeToShow.department_id
+            ?.toLowerCase()
+            .includes(filterData.department_id.toLowerCase())
+        ) {
+          matches = false;
+        }
+
+        // פילטר ענף
+        if (
+          filterData?.branch_id &&
+          !employee.employeeToShow.branch_id
+            ?.toLowerCase()
+            .includes(filterData.branch_id.toLowerCase())
+        ) {
+          matches = false;
+        }
+
+        // פילטר מדור
+        if (
+          filterData?.section_id &&
+          !employee.employeeToShow.section_id
+            ?.toLowerCase()
+            .includes(filterData.section_id.toLowerCase())
+        ) {
+          matches = false;
+        }
+
+        // פילטר הסכם
+        if (
+          filterData?.contract_id &&
+          employee.employeeToShow.contract_id !== filterData.contract_id
+        ) {
+          matches = false;
+        }
+
+        console.log(filterData, "filter data");
+        return matches;
+      })
+    : employees;
+
+  const formatData = (data) => {
+    const employees = Array.isArray(data) ? data : [data];
+    const employeeArray = employees
+      .filter((active) => active.is_active === 1)
+      .map((employee) => ({
+        employeeToShow: {
+          employee_number: employee.employee_number,
+          first_name: employee.first_name,
+          surname: employee.surname,
+          solider_civilian:
+            employee.solider_civilian == "0"
+              ? "אזרח"
+              : employee.solider_civilian == "1" && "חייל",
+          department_id: employee.department_id && employee.department_name,
+          branch_id: employee.branch_id && employee.branch_name,
+          section_id: employee.section_id && employee.section_name,
+          contract_id: employee.contract_id && employee.contract.code,
+          activity_start: employee.activity_start,
+          activity_end: employee.activity_end,
+          mail: employee.mail,
+        },
+        updateEmployeeMood: {
+          employee_number: employee.employee_number,
+          first_name: employee.first_name,
+          surname: employee.surname,
+          solider_civilian:
+            employee.solider_civilian == "0"
+              ? "אזרח"
+              : employee.solider_civilian == "1" && "חייל",
+          department_id: employee.department_name && employee.department_id,
+          branch_id: employee.branch_name && employee.branch_id,
+          section_id: employee.section_name && employee.section_id,
+          contract_id: employee.contract.code && employee.contract_id,
+          activity_start: employee.activity_start,
+          activity_end: employee.activity_end,
+          mail: employee.mail,
+        },
+        hiddenEmployeeData: {
+          id: employee.id,
+          is_active: employee.is_active,
+          employee_number: employee.employee_number,
+          first_name: employee.first_name,
+          surname: employee.surname,
+        },
+      }));
+      setAllEmployees(employeeArray)
     setEmployees(employeeArray);
   };
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchEmployees = async () => {
       try {
         const response = await axios.get("/employees");
-        console.log(response.data);
-        formtData(response.data ?? []);
-        // console.log(employees);
+        const data = response.data;
+        formatData(data);
       } catch (error) {
         console.error("error fetching employees: ", error);
-        throw error;
-      } finally {
-        // setLoading(false);
       }
-    }
-    fetchData();
-  },);
+    };
+    fetchEmployees();
+  }, []);
 
-  const formtDepartmentData = (data) => {
+  // console.log(employees,"כל העובדים");
+
+  const formatDepartmentData = (data) => {
     const formatted = data.reduce((acc, company) => {
       acc[company.name] = company.branches.map((branch) => {
         return { [branch.name]: branch.sections || [] };
@@ -415,7 +202,7 @@ export default function Employees() {
       return acc;
     }, {});
 
-    console.log(formatted);
+    // console.log(formatted);
   };
 
   useEffect(() => {
@@ -424,72 +211,28 @@ export default function Employees() {
         const response = await axios.get(
           "departments?appendBranches=true&appendSections=true"
         );
-        console.log(response.data);
+        // console.log(response.data);
 
-        formtDepartmentData(response.data ?? []);
+        formatDepartmentData(response.data ?? []);
       } catch (error) {
         console.error("error fetching employees: ", error);
-        throw error;
+        // throw error;
       } finally {
       }
     }
     fetchDropdownData();
   }, []);
 
-  const checkIfValueIsEmpty = () => {
-    if (updateMode !== null) {
-      const selectedItem = updateMode;
-
-      for (const [key, value] of Object.entries(employees[selectedItem])) {
-        if (value === "") {
-          setIfEmpty(true);
-          return true;
-        }
-      }
-    }
-  };
-
   const handleAddingNewRow = () => {
-    !checkIfValueIsEmpty() && addEmployee();
-  };
-
-  //ADD EMPLOYEE OBJECT
-  const optionsEmployee = {
-    solder: ["אזרח", "חייל"],
-    department: ["רכבים", "משקים והמטות"],
-    branch: ["נגמש", "טנקים"],
-    mador: ["נסא", "אמת"],
-    hescem: ["40", "1"],
-  };
-
-  //ADD NEW ROW TO ADD EMPLOYEE
-  const addEmployee = () => {
-    const newEmployee = {
-      id: "0000000",
-      firstName: "",
-      lastName: "",
-      solder: optionsEmployee.solder[0],
-      department: optionsEmployee.department[0],
-      branch: optionsEmployee.branch[0],
-      mador: optionsEmployee.mador[0],
-      hescem: optionsEmployee.hescem[0],
-      start: "",
-      end: "",
-    };
-    setEmployees((prev) => {
-      const addNew = [newEmployee, ...prev];
-      return addNew;
-    });
-    setUpdateMode(0);
-    setIfEmpty(false);
+    setAddNewEmployee(true);
   };
 
   {
     /*DELETE  EMPLOYEES*/
   }
-  const deleteEmployee = async (employee) => {
+  const deleteEmployeeById = async (employee) => {
     try {
-      setEmployeeIdToDelete(employee);
+      setDeleteEmployee(employee);
       setShowConfirmation(true);
     } catch (error) {
       console.error("error delete employee: ", error);
@@ -510,13 +253,17 @@ export default function Employees() {
     "סוג הסכם",
     "תחילת פעילות",
     "סיום פעילות",
+    "מייל",
   ];
-  const filterArray = [
-    { מחלקה: ["משקים והמטות", "נסא"] },
-    { ענף: ["רכבים", "טנקים"] },
-    { מדור: ["אמת", "נמה"] },
-    { פעיל: ["פעיל", "לא פעיל"] },
-  ];
+
+  const handlePopUpFilter = () => {
+    setFilterPopUp(!filterPopUp);
+  };
+
+  // מסנן את המשימות לפי בחירה
+  const filterSearch = (data) => {
+    setFilterData(data);
+  };
 
   const imageAdd = (
     <Image src={"/addEmployee.svg"} width={20} height={20} alt="plus" />
@@ -524,52 +271,62 @@ export default function Employees() {
 
   return (
     <div className="flex flex-col gap-y-4 h-full">
-      <div className="flex justify-center">
+      <div className="flex  justify-between mx-4">
         <Search
+        searchEmployees={allEmployees}
+        setEmployees={setEmployees}
+        formatData={formatData}
           addNew={handleAddingNewRow}
           textBtn={" הוסף עובד"}
-          updateMode={updateMode}
           addImage={imageAdd}
           searchText={"חיפוש לפי מספר עובד / שם עובד"}
         />
-      </div>
-      <div className="flex p-4   w-full gap-3 justify-center items-center text-blue_color font-normal text-[20px]">
-        סנן לפי:
-        {filterArray.map((filterObject) =>
-          Object.entries(filterObject).map(([labelKey, dataArray]) => (
-            <EmployeeFilter
-              key={labelKey}
-              dataArray={dataArray}
-              label={labelKey}
+
+        <div
+          onClick={handlePopUpFilter}
+          className=" relative  flex text-xl text-center hover:cursor-pointer items-center font-medium  justify-end border-2 border-[#002A78] rounded-full"
+        >
+          <div className="px-3 flex gap-2  truncate">
+            <Image src={"/filter.svg"} width={15} height={15} alt="download" />
+            <div>סינון</div>
+          </div>
+
+          {filterPopUp && (
+            <PopupFilterEmployees
+              setFilterPopUp={setFilterPopUp}
+              filterPopUp={filterPopUp}
+              filterSearch={filterSearch}
+              closeFilter={setFilterPopUp}
             />
-          ))  
-        )}
+          )}
+        </div>
       </div>
+
       <div className=" dirLtr overflow-y-auto rounded-xl">
         <div className=" h-full ">
           <Table
-            data={employees}
-            updateMode={updateMode}
-            setUpdateMode={setUpdateMode}
-            handleChange={handleChange}
-            toggleUpdateInput={toggleUpdateInput}
-            setToggleUpdateInput={setToggleUpdateInput}
-            ifEmpty={ifEmpty}
-            changeTheRowToEdit={checkIfValueIsEmpty}
-            //         changeTheRowToEdit={changeTheRowToEdit}
+            data={showEmployeesOrFilter}
             headTable={headTable}
-            deleteEmployee={deleteEmployee}
+            deleteEmployeeById={deleteEmployeeById}
           />
         </div>
+        <Toaster position="top-center" />
       </div>
       {showConfirmation && (
         <PopupDelete
           popUpState={showConfirmation}
-          objectToDelete={employeeIdToDelete}
+          objectToDelete={deleteEmployee}
           showPopup={setShowConfirmation}
           headerText={`העברת עובד למצב "לא פעיל"`}
           messageText={"האם אתה בטוח שאתה רוצה להקפיא את העובד"}
           btnText={"המשך"}
+        />
+      )}
+
+      {addNewEmployee && (
+        <AddNewEmployee
+          setAddNewEmployee={setAddNewEmployee}
+          setEmployees={setEmployees}
         />
       )}
     </div>

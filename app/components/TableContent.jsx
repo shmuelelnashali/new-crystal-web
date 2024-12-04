@@ -1,80 +1,65 @@
+import { useState } from "react";
 import ReadObject from "./ReadObject";
 import UpdateObject from "./UpdateObject";
 import Image from "next/image";
+import { Toaster } from "react-hot-toast";
 
 export default function TableContent({
   data,
-  updateMode,
-  setUpdateMode,
-  handleChange,
-  toggleUpdateInput,
-  setToggleUpdateInput,
-  ifEmpty,
-  changeTheRowToEdit,
-  deleteEmployee,
+  deleteEmployeeById,
   headLength,
 }) {
-  // console.log(headLength)
-  console.log(data);
+
+  const [updateEmployee, setUpdateEmployee] = useState(null);
+
   return (
     <div className="w-full bg-[#EFF3FB] ">
       <div className="w-full ">
-        {data && data?.map((employee, index) => (
+        {data &&
+          data?.map(({employeeToShow,hiddenEmployeeData, updateEmployeeMood}, index) => (
             <div
-              onClick={(e) => {
-                e.stopPropagation(),
-                  !changeTheRowToEdit() && setUpdateMode(index);
+              onClick={() => {
+                // e.stopPropagation(),
+                  setUpdateEmployee(employeeToShow);
               }}
-              key={index}
-              className={`flex w-full gap-2 border-b  border-t-[#A7BFE8]/30
-
-          ${
-            updateMode === index
-              ? "bg-[#e8eef7]"
-              : " hover:bg-[#e8eef7] transition-transform duration-200 ease-in-out"
-          }
-
-          `}
+              key={hiddenEmployeeData.id}
+              className={`flex w-full gap-2  border-b  border-t-[#A7BFE8]/30 hover:bg-[#e8eef7] transition-transform duration-200 ease-in-out`}
             >
               {/* DELETE BUTTON */}
               <div
                 onClick={(e) => {
-                  e.stopPropagation(), deleteEmployee(employee);
+                  e.stopPropagation(), deleteEmployeeById(hiddenEmployeeData);
                 }}
                 className={`pr-2  flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
               >
-                <Image src={"/trash.svg"} height="30" width="30" alt="trash" />
+                <Image src={"/trash.svg"} height="20" width="20" alt="trash" />
               </div>
-              <div className="w-full  ">
+              
+              {/* <div className="w-full  "> */}
                 <div
-                  className={`grid ${headLength}  w-full justify-around gap-3 font-normal text-[20px] leading-5 text-blue_color`}
+                  className={`grid grid-cols-${headLength}   w-full justify-around gap-3 font-normal text-[18px] leading-5 text-blue_color`}
                 >
-                  {updateMode === index ? (
-                    //RENDER TO UPDATE MOOD
+                  {updateEmployee === employeeToShow
+                  ? (
+                    //עידכון העובד פופאפ
                     <UpdateObject
-                      data={employee}
-                      updateMode={updateMode}
-                      setUpdateMode={setUpdateMode}
-                      handleChange={handleChange}
-                      toggleUpdateInput={toggleUpdateInput}
-                      setToggleUpdateInput={setToggleUpdateInput}
-                      ifEmpty={ifEmpty}
+                    hiddenEmployeeData={hiddenEmployeeData}
+                    updateEmployeeMood={updateEmployeeMood}
+                      setUpdateEmployee={setUpdateEmployee}
                     />
                   ) : (
-                    //RENDER TO READ MOOD
+                    //מצב קריאה
                     <ReadObject
-                      data={employee}
-                      updateMode={updateMode}
-                      setUpdateMode={setUpdateMode}
-                      handleChange={handleChange}
-                      changeTheRowToEdit={changeTheRowToEdit}
-                    />
+                    data={employeeToShow}
+                  />
                   )}
+                  
                 </div>
-              </div>
+              {/* </div> */}
             </div>
           ))}
       </div>
+      {/* <Toaster position="top-center"/> */}
     </div>
   );
 }

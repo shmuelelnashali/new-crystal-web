@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../hooks/UseAuth";
 
 export default function Login() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function Login() {
       router.push("/calender");
       console.log(user);
     } else {
-      login(setErrors, { employee_number: "2222222" });
+      login(setErrors, { employee_number: "1111111" });
     }
   }, [user]);
   return (

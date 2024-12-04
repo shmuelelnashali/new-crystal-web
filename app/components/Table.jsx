@@ -4,23 +4,17 @@ import TableContent from "./TableContent";
 
 export default function Table({
   data,
-  updateMode,
-  setUpdateMode,
-  handleChange,
-  toggleUpdateInput,
-  setToggleUpdateInput,
-  ifEmpty,
-  // changeTheRowToEdit,
+  updateEmployeePopup,
+  setUpdateEmployeePopup,
   headTable,
-  deleteEmployee,
-  changeTheRowToEdit,
+  deleteEmployeeById,
   tableWidth
 }) {
   
 
   
 const headLength=headTable.length
-  console.log(headLength )
+
 
   return (
     <div className={`w-${tableWidth} m-auto dirRtl pr-2 h-full rounded-lg`}
@@ -29,24 +23,19 @@ const headLength=headTable.length
       {/* ראש הטבלה */}
       <div className="max-w-full">
         <TableHead
-          headLength={`grid-cols-${headLength}`}
+          headLength={headLength}
           headTable={headTable}
           data={data}
         />
 
         {/* תוכן הטבלה */}
         <TableContent
-          headLength={`grid-cols-${headLength}`}
+          headLength={headLength}
           data={data}
           headTable={headTable}
-          updateMode={updateMode}
-          setUpdateMode={setUpdateMode}
-          handleChange={handleChange}
-          toggleUpdateInput={toggleUpdateInput}
-          setToggleUpdateInput={setToggleUpdateInput}
-          ifEmpty={ifEmpty}
-          changeTheRowToEdit={changeTheRowToEdit}
-          deleteEmployee={deleteEmployee}
+          setUpdateEmployeePopup={setUpdateEmployeePopup}
+          updateEmployeePopup={updateEmployeePopup}
+          deleteEmployeeById={deleteEmployeeById}
         />
       </div>
     </div>

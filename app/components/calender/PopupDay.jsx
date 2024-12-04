@@ -40,6 +40,7 @@ export default function PopupDay({
         console.log(response.data);
         if (response.data.length > 0) {
           console.log(setEventDate(response.data[0]), setActivity(true));
+        }
         console.log(response.data);
         if (response.data.length > 0) {
           console.log(setEventDate(response.data[0]), setActivity(true));
@@ -51,6 +52,7 @@ export default function PopupDay({
         throw error;
       }
     }
+    
     fetchData();
     toast.success("hello");
   }, [missionDay]);
