@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 
-export default function ExcludedEvent({ event, ex, setEx }) {
+export default function ExcludedEvent({ event, }) {
   const formatDate = (dateString) => {
     console.log(dateString);
     const [day, month, year] = dateString.split("-");
@@ -15,20 +15,9 @@ export default function ExcludedEvent({ event, ex, setEx }) {
     }
   };
 
-  useEffect(() => {
-    const a = ex + 1;
-    setEx(a);
-  }, []);
-  console.log(ex);
+
   return (
     <div className=" ">
-      {ex === 1 && (
-        <div className="flex justify-center items-center px-2 pt-5">
-          <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-            החרגות
-          </h2>
-        </div>
-      )}
 
       {/* {eventDate.map((event, index) => ( */}
       <div className="p-3 border-b-[1px]">

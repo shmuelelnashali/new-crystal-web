@@ -27,14 +27,14 @@ export default function Events({
   //   }
   // },[missionDay]);
   return (
-    <div>
+    <div className="  h-full">
       {!activity && events !== "new" && events !== "edit" && (
-        <div>
-          <div className="flex justify-center items-center p-2">
-            <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-              סוג פעילות
-            </h2>
-          </div>
+        // <div className="h-full">
+        //   <div className="flex justify-center items-center p-2">
+        //     <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
+        //       סוג פעילות
+        //     </h2>
+        //   </div>
           <div className="  h-full flex justify-center items-center">
             <Image
               onClick={() => setEvents("new")}
@@ -44,7 +44,7 @@ export default function Events({
               alt="e"
             />
           </div>
-        </div>
+        // </div>
       )}
       {events == "new" && (
         <AddEvent
@@ -83,11 +83,18 @@ export default function Events({
             )
         )}
       {/* ) : ( */}
+      {activity && events !== "new" && events !== "edit" && (
+        <div className="flex justify-center items-center px-2 pt-5">
+          <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
+            החרגות
+          </h2>
+        </div>
+      )}
 
       {Array.isArray(eventDate) &&
         eventDate.map((event, index) =>
           event.is_global === 0 ? (
-            <ExcludedEvent key={index} event={event} ex={ex} setEx={setEx} />
+            <ExcludedEvent key={index} event={event} />
           ) : null
         )}
     </div>

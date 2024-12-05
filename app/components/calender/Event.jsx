@@ -22,11 +22,6 @@ export default function Event({ missionDay, setMissinDay, eventDate }) {
 
   return (
     <div>
-      <div className="flex justify-center items-center p-2">
-        <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-          סוג פעילות
-        </h2>
-      </div>
       <div className="w-full px-2 ">
         <div className="border bg-[#E4EBF8] flex justify-center items-center rounded-md h-8">
           {event}

@@ -17,7 +17,7 @@ export default function Login() {
       console.log(user);
       setUser(user);
     } else {
-      login(setErrors, { employee_number: "2222222" });
+      login(setErrors, { employee_number: "1111111" });
       setUser(null);
     }
   }, [user]);

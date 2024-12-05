@@ -80,70 +80,63 @@ export default function AddEvent({
 
   //  setState((prevState) => ({...prevState, objkey: objvalue}))
   return (
-    <>
-      <div className="flex justify-center items-center p-2">
-        <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-          סוג פעילות
-        </h2>
-      </div>
-      <div
-        onClick={() => toggle == true && setToggle(false)}
-        className="w-full  h-full px-2 font-normal text-lg "
-      >
-        <div className="w-full ">
-          <div className="font-bold">סוג פעילות</div>
-          <Option
-            data={activity_type}
-            handel={handelDate}
-            value={activityDay}
-            toggle={toggle}
-            setToggle={setToggle}
-          />
-          <div className="flex flex-col w-full ">
-            <div className="py-2">
-              <div className="font-bold py-1"> תאריך </div>
+    <div
+      onClick={() => toggle == true && setToggle(false)}
+      className="w-full  h-full px-2 font-normal text-lg "
+    >
+      <div className="w-full ">
+        <div className="font-bold">סוג פעילות</div>
+        <Option
+          data={activity_type}
+          handel={handelDate}
+          value={activityDay}
+          toggle={toggle}
+          setToggle={setToggle}
+        />
+        <div className="flex flex-col w-full ">
+          <div className="py-2">
+            <div className="font-bold py-1"> תאריך </div>
 
-              <div className="w-full flex justify-center  gap-1">
-                <div className="w-1/2 relative">
-                  <input
-                    ref={dateFromRef}
-                    className=" w-full  border rounded-full border-blue_color px-3 "
-                    type="date"
-                    value={beginning_date}
-                    onChange={(e) => handelDate(e, "from")}
-                  />
+            <div className="w-full flex justify-center  gap-1">
+              <div className="w-1/2 relative">
+                <input
+                  ref={dateFromRef}
+                  className=" w-full  border rounded-full border-blue_color px-3 "
+                  type="date"
+                  value={beginning_date}
+                  onChange={(e) => handelDate(e, "from")}
+                />
 
-                  <div
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
-                    onClick={handleIconClickFrom}
-                  >
-                    <CalendarDays size={20} strokeWidth={1.5} />
-                  </div>
+                <div
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
+                  onClick={handleIconClickFrom}
+                >
+                  <CalendarDays size={20} strokeWidth={1.5} />
                 </div>
+              </div>
 
-                <Image src="leftArrow.svg" width={25} height={25} alt="r" />
+              <Image src="leftArrow.svg" width={25} height={25} alt="r" />
 
-                <div className=" w-1/2 relative">
-                  <input
-                    ref={dateToRef}
-                    className=" w-full border rounded-full border-blue_color px-2 "
-                    type="date"
-                    value={end_date}
-                    onChange={(e) => handelDate(e, "to")}
-                    min={beginning_date}
-                  />
-                  <div
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
-                    onClick={handleIconClickTo}
-                  >
-                    <CalendarDays size={20} strokeWidth={1.5} />
-                  </div>
+              <div className=" w-1/2 relative">
+                <input
+                  ref={dateToRef}
+                  className=" w-full border rounded-full border-blue_color px-2 "
+                  type="date"
+                  value={end_date}
+                  onChange={(e) => handelDate(e, "to")}
+                  min={beginning_date}
+                />
+                <div
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
+                  onClick={handleIconClickTo}
+                >
+                  <CalendarDays size={20} strokeWidth={1.5} />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

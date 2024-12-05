@@ -185,192 +185,187 @@ export default function TabieSettings({ data, headers, page, add }) {
   };
 
   return (
-    <div>
-      <div className="flex-1 flex flex-col overflow-hidden  rounded-lg h-full ">
-        <div className=" px-2  dirLtr h-full rounded-2xl  overflow-auto">
-          <div className=" dirRtl bg-[#EFF3FB] rounded-lg h-full">
-            <div className="p-2 pb-0 text-white rounded-lg sticky top-0 bg-[#EFF3FB] w-full">
-              <div className="grid grid-cols-9  sticky top-0 rounded-lg p-2 bg-blue_color justify-center ">
-                {headers.map((header, index) => (
-                  <div
-                    key={header}
-                    className=" text-center  truncate font-semibold text-xl"
-                  >
-                    {header}
-                  </div>
-                ))}
-                <div
-                  className="text-center text-xl font-semibold col-end-10
-                 "
-                >
-                  פעולות
-                </div>
-              </div>
+    <>
+      <div className="p-2 pb-0 dirRtl text-white rounded-lg sticky z-50  top-0 bg-[#EFF3FB] w-full">
+        <div className="grid grid-cols-9 sticky top-0 rounded-lg p-2 bg-blue_color justify-center ">
+          {headers.map((header, index) => (
+            <div
+              key={header}
+              className=" text-center  truncate font-semibold text-xl"
+            >
+              {header}
             </div>
-            <div className="flex flex-col px-2  text-base ">
-              {data.map((row, rowIndex) => (
-                <div
-                  key={rowIndex}
-                  className="grid grid-cols-9 relative whitespace-nowrap justify-center border-b-[2px] py-2.5"
-                >
-                  {Object.entries(row).map(
-                    ([code_key, code_value], index) =>
-                      code_key !== "id" && (
+          ))}
+          <div
+            className="text-center text-xl font-semibold col-end-10
+                 "
+          >
+            פעולות
+          </div>
+        </div>
+      </div>
+      <div className="bg-[#EFF3FB] dirRtl flex flex-col px-2  text-base ">
+        {data.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className="w-full grid grid-cols-9 relative whitespace-nowrap justify-center border-b-[2px] py-2.5"
+          >
+            {Object.entries(row).map(
+              ([code_key, code_value], index) =>
+                code_key !== "id" && (
+                  <div
+                    className={clsx(
+                      {
+                        " col-span-2 ":
+                          index === Object.entries(row).length - 1 &&
+                          updateIndex === rowIndex,
+                      },
+                      {
+                        " w-full col-span-6  ":
+                          pathName.includes("stages") &&
+                          index === Object.entries(row).length - 1,
+                        // &&
+                        // updateIndex === rowIndex,
+                      },
+                      {
+                        " w-full col-span-5":
+                          pathName.includes("users") &&
+                          index === Object.entries(row).length - 1 &&
+                          updateIndex === rowIndex,
+                      }
+                    )}
+                  >
+                    {updateIndex === rowIndex && index !== 0 ? (
+                      <div
+                        className={`" flex   ${
+                          code_key === "permissions" ? " w-fit " : " w-full "
+                        }px-2 "`}
+                      >
                         <div
-                          className={clsx(
-                            {
-                              " col-span-2 ":
-                                index === Object.entries(row).length - 1 &&
-                                updateIndex === rowIndex,
-                            },
-                            {
-                              " w-full col-span-6":
-                                pathName.includes("stages") &&
-                                index === Object.entries(row).length - 1 &&
-                                updateIndex === rowIndex,
-                            },
-                            {
-                              " w-full col-span-5":
-                                pathName.includes("users") &&
-                                index === Object.entries(row).length - 1 &&
-                                updateIndex === rowIndex,
-                            }
-                          )}
-                        >
-                          {updateIndex === rowIndex && index !== 0 ? (
-                            <div
-                              className={`" flex   ${
-                                code_key === "permissions"
-                                  ? " w-fit "
-                                  : " w-full "
-                              }px-2 "`}
-                            >
-                              <div
-                                className={`" rounded-full flex w-fit "
+                          className={`" rounded-full flex w-fit "
                              ${
                                index === Object.entries(row).length - 1 &&
                                "  bg-gradient-to-r  from-blue_color via-blue_color to-[#EFF3FB] w-full"
                              }`}
-                              >
-                                {code_key === "permissions" ? (
-                                  <>
-                                    <div className=" relative ">
-                                      <Select
-                                        isMulti
-                                        onChange={handleSelectChange}
-                                        options={options}
-                                        value={selectedOptions}
-                                        components={{
-                                          DropdownIndicator:
-                                            CustomDropdownIndicator,
-                                        }}
-                                        className="min-w-36 "
-                                        styles={customSelectStyles}
-                                        placeholder={updateRow[code_key] || ""}
-                                      />
-                                    </div>
-                                    <button
-                                      onClick={() =>
-                                        updateAxios(updateRow, code_key.id)
-                                      }
-                                      className={`${
-                                        pathName.includes("stages")
-                                          ? " px-4 "
-                                          : " w-fit px-4 "
-                                      }  flex justify-center border border-blue_color rounded-full text-white`}
-                                    >
-                                      שמור שינויים
-                                    </button>
-                                  </>
-                                ) : (
-                                  <>
-                                    <input
-                                      className={`" text-center w-full rounded-full outline-none border border-blue_color "
-                              `}
-                                      onFocus={() => handelCanghe(code_key, "")}
-                                      onChange={(e) =>
-                                        handelCanghe(code_key, e.target.value)
-                                      }
-                                      value={updateRow[code_key] || ""}
-                                    />
-
-                                    {index ===
-                                      Object.entries(row).length - 1 && (
-                                      <button
-                                        onClick={() => console.log(updateRow)}
-                                        className={`${
-                                          pathName.includes("stages")
-                                            ? " px-4 "
-                                            : " w-full "
-                                        }  flex justify-center border border-blue_color rounded-full text-white`}
-                                      >
-                                        שמור שינויים
-                                      </button>
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          ) : (
-                            <div
-                              key={index}
-                              className="flex gap-2 justify-center text-center w-full"
-                            >
-                              {code_key.includes("price") && (
-                                <Image
-                                  className=" right-7 "
-                                  src={"/shekelSine.svg"}
-                                  width={10}
-                                  height={10}
-                                  alt=""
+                        >
+                          {code_key === "permissions" ? (
+                            <>
+                              <div className=" relative ">
+                                <Select
+                                  isMulti
+                                  onChange={handleSelectChange}
+                                  options={options}
+                                  value={selectedOptions}
+                                  components={{
+                                    DropdownIndicator: CustomDropdownIndicator,
+                                  }}
+                                  className="min-w-36 "
+                                  styles={customSelectStyles}
+                                  placeholder={updateRow[code_key] || ""}
                                 />
+                              </div>
+                              <button
+                                onClick={() =>
+                                  updateAxios(updateRow, code_key.id)
+                                }
+                                className={`${
+                                  pathName.includes("stages")
+                                    ? " px-4 "
+                                    : " w-fit px-4 "
+                                }  flex justify-center border border-blue_color rounded-full text-white`}
+                              >
+                                שמור שינויים
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <input
+                                className={`" text-center w-full rounded-full outline-none border border-blue_color "
+                              `}
+                                onFocus={() => handelCanghe(code_key, "")}
+                                onChange={(e) =>
+                                  handelCanghe(code_key, e.target.value)
+                                }
+                                value={updateRow[code_key] || ""}
+                              />
+
+                              {index === Object.entries(row).length - 1 && (
+
+
+                                <button
+                                  onClick={() => console.log(updateRow)}
+                                  className={`${
+                                    pathName.includes("stages")
+                                      ? " px-4 "
+                                      : " w-full "
+                                  }  flex justify-center border border-blue_color rounded-full text-white`}
+                                >
+                                  שמור שינויים
+                                </button>
                               )}
-                              <span className="dirLtr  ">{code_value}</span>
-                            </div>
+                            </>
                           )}
                         </div>
-                      )
-                  )}
-                  <div className="flex cursor-pointer justify-around col-end-10 ">
-                    <div
-                      className={`${
-                        updateIndex === rowIndex
-                          ? "bg-blue_color/20 border border-blue_color/5"
-                          : "bg-blue_color border border-blue_color"
-                      }  gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
-                      onClick={() => {
-                        setUpdateIndex(data[0].name !== null ? rowIndex : 0);
-                        setUpdateRow(data[0].name !== null ? row : "");
-                      }}
-                    >
-                      <Image
-                        src={"/editing.svg"}
-                        width={15}
-                        height={16}
-                        alt={"uu"}
-                      />
+                      </div>
+                    ) : code_key.includes("price") ? (
+                      <div
+                        key={index}
+                        className="flex gap-2 justify-center  text-center w-full"
+                      >
+                        <Image
+                          className=" right-7 "
+                          src={"/shekelSine.svg"}
+                          width={10}
+                          height={10}
+                          alt=""
+                        />
 
-                      <button>עריכת שורה</button>
-                    </div>
-
-                    <Image
-                      onClick={() => {
-                        setDeleteRow(row), console.log(row);
-                      }}
-                      src={"/bit.svg"}
-                      width={15}
-                      height={16}
-                      alt={"uu"}
-                    />
+                        <span className="dirLtr  ">{code_value}</span>
+                      </div>
+                    ) : (
+                      <div className={clsx(" text-center ",{
+                        " text-right":
+                          pathName.includes("stages") &&
+                          index === Object.entries(row).length - 1,
+                        // &&
+                        // updateIndex === rowIndex,
+                      },)}>{code_value}</div>
+                    )}
                   </div>
-                </div>
-              ))}
+                )
+            )}
+            <div className="flex cursor-pointer justify-around col-end-10 ">
+              <div
+                className={`${
+                  updateIndex === rowIndex
+                    ? "bg-blue_color/20 border border-blue_color/5"
+                    : "bg-blue_color border border-blue_color"
+                }  gap-1 flex px-3 w-fit text-white rounded-full cursor-pointer "`}
+                onClick={() => {
+                  setUpdateIndex(data[0].name !== null ? rowIndex : 0);
+                  setUpdateRow(data[0].name !== null ? row : "");
+                }}
+              >
+                <Image src={"/editing.svg"} width={15} height={16} alt={"uu"} />
+
+                <button>עריכת שורה</button>
+              </div>
+
+              <Image
+                onClick={() => {
+                  setDeleteRow(row), console.log(row);
+                }}
+                src={"/bit.svg"}
+                width={15}
+                height={16}
+                alt={"uu"}
+              />
             </div>
-            <div></div>
           </div>
-        </div>
+        ))}
       </div>
+      <div></div>{" "}
       {deleteRow && <DeleteRow row={deleteRow} showPopup={setDeleteRow} />}
-    </div>
+    </>
   );
 }
