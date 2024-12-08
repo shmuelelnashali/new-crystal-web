@@ -177,20 +177,19 @@ export default function Employees() {
       }));
     setAllEmployees(employeeArray);
     setEmployees(employeeArray);
-  };  
-  
+  };
+
   const fetchEmployees = async () => {
-      try {
-        const response = await axios.get("/employees");
-        const data = response.data;
-        formatData(data);
-      } catch (error) {
-        console.error("error fetching employees: ", error);
-      }
-    };
+    try {
+      const response = await axios.get("/employees");
+      const data = response.data;
+      formatData(data);
+    } catch (error) {
+      console.error("error fetching employees: ", error);
+    }
+  };
 
   useEffect(() => {
- 
     fetchEmployees();
   }, []);
 
@@ -272,23 +271,24 @@ export default function Employees() {
   );
 
   return (
-    <div className="flex flex-col gap-y-4 h-full">
-      <div className="flex  justify-between mx-4">
-        <Search
-          searchEmployees={allEmployees}
-          setEmployees={setEmployees}
-          formatData={formatData}
-          addNew={handleAddingNewRow}
-          textBtn={" הוסף עובד"}
-          addImage={imageAdd}
-          searchText={"חיפוש לפי מספר עובד / שם עובד"}
-        />
-
+    <div className="w-full flex flex-col gap-y-4 h-full">
+      <div className="flex  w-full justify-between mx-4">
+        <div className="w-1/2">
+          <Search
+            searchEmployees={allEmployees}
+            setEmployees={setEmployees}
+            formatData={formatData}
+            addNew={handleAddingNewRow}
+            textBtn={" הוסף עובד"}
+            addImage={imageAdd}
+            searchText={"חיפוש לפי מספר עובד / שם עובד"}
+          />
+        </div>
         <div
           onClick={handlePopUpFilter}
-          className=" relative  flex text-xl text-center hover:cursor-pointer items-center font-medium  justify-end border-2 border-[#002A78] rounded-full"
+          className="ml-5 relative  flex text-xl text-center hover:cursor-pointer items-center font-medium  justify-end border-2 border-[#002A78] rounded-full"
         >
-          <div className="px-3 flex gap-2  truncate">
+          <div className="px-4 flex gap-2  truncate">
             <Image src={"/filter.svg"} width={15} height={15} alt="download" />
             <div>סינון</div>
           </div>
@@ -329,7 +329,7 @@ export default function Employees() {
         <AddNewEmployee
           setAddNewEmployee={setAddNewEmployee}
           setEmployees={setEmployees}
-          fetchEmployees ={fetchEmployees }
+          fetchEmployees={fetchEmployees}
         />
       )}
     </div>

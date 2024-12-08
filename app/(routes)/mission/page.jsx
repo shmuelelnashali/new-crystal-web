@@ -321,7 +321,7 @@ export default function Mission() {
   return (
     <div className="h-full px-3  ">
       <div className="flex  ">
-        <div className="w-full flex ">
+        <div className="w-full flex justify-between mx-4">
           <Search
             className="w-full"
             textBtn={"הוסף משימה"}
