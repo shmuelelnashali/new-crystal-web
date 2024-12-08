@@ -82,9 +82,9 @@ export default function AddEvent({
   return (
     <div
       onClick={() => toggle == true && setToggle(false)}
-      className="w-full  h-full px-2 font-normal text-lg "
+      className="w-full   px-2 font-normal text-lg "
     >
-      <div className="w-full ">
+      <div className=" w-full ">
         <div className="font-bold">סוג פעילות</div>
         <Option
           data={activity_type}
