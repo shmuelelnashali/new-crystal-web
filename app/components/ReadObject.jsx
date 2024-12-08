@@ -1,25 +1,19 @@
 import Image from "next/image";
+import { formatDate } from "../util/dateFormat";
+import Flow from "./missions/Flow";
 
-export default function ({ data, index, setUpdateMode }) {
-  //GIVE THE UPDATE FORMAT DATE FOR READ MOOD
-  const formatDateForRead = (dateString) => {
-    if (dateString.includes("-")) {
-      const newDate = dateString.split("-");
-      return `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
-    }
-    const [day, month, year] = dateString.split("/");
-    return `${day}/${month}/${year}`;
-  };
+export default function ({ data }) {
 
   return (
     <>
       {Object.entries(data).map(([key, value], i) => (
         <div
           key={key}
-          className={`h-full  px-4 truncate flex flex-col  items-center justify-center  py-4 relative text-center `}
+          className={`truncate items-center justify-center text-center`}
         >
-           { value}
-
+          <Flow  value={key === "activity_end" || key === "activity_start"
+            ? formatDate(value)
+            : value}/>
         </div>
       ))}
     </>
