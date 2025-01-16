@@ -91,7 +91,7 @@ export default function Calendar() {
       )}
 
       {exclusions && (
-        <Exclusions missionDay={missionDay} openExclusion={openExclusion} setMissionDay={setMissionDay}/>
+        <Exclusions missionDay={missionDay} setExclusions={setExclusions} setMissionDay={setMissionDay}/>
       )}
     </>
   );

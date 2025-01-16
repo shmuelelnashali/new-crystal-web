@@ -6,11 +6,12 @@ import { CalendarDays } from "lucide-react";
 import axios from "@/app/lib/axios";
 
 export default function Exclusions({
-  openExclusion,
+  setExclusions,
   setMissionDay,
   // eventDate,
   // setEventDate,
   missionDay,
+  eventObj,
 }) {
   const [toggle, setToggle] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -27,8 +28,8 @@ export default function Exclusions({
   const year = missionDay?.year ? missionDay.year : String(today.getFullYear());
 
   const [date, setDate] = useState({
-    beginning_date: `${year}-${month}-${day}`,
-    end_date: `${year}-${month}-${day}`,
+    beginning_date: eventObj?.beginning_date || `${year}-${month}-${day}`,
+    end_date: eventObj?.end_date || `${year}-${month}-${day}`,
   });
   const { beginning_date, end_date, activityDay } = date;
 
@@ -100,7 +101,7 @@ export default function Exclusions({
       setMissionDay(null);
       console.log(missionDay, "misi");
 
-      openExclusion();
+      setExclusions(false);
       return response.status;
     } catch (error) {
       console.error("error fetching : ", error?.response?.data?.message);
@@ -123,8 +124,11 @@ export default function Exclusions({
     <div className="fixed inset-0 z-50 flex items-center justify-center ">
       <div className=" fixed inset-0 bg-[#000000]/20 backdrop-blur-[2px]"></div>
 
-      <div className="z-50 h-[50%] max-h-[50%] w-[50%] fixed bg-white  rounded-md flex flex-col gap-y-3 p-3 px-6">
-        <div onClick={openExclusion} className="absolute left-4 top-4 ">
+      <div className="z-50 h-[40%]  w-[50%] fixed bg-white  rounded-md flex flex-col gap-y-3 p-3 px-6">
+        <div
+          onClick={() => setExclusions(false)}
+          className="absolute left-4 top-4 "
+        >
           <Image src={"/x.svg"} width={22} height={22} alt="x" />
         </div>
         <div className="flex flex-col  py-2">
@@ -138,87 +142,88 @@ export default function Exclusions({
             בחרו את סוג היום, טווח התאריכים ולחצו על החל.
           </p>
         </div>
-        <div className="  h-[65%] ">
-          <div className=" relative  w-1/2 ">
-            <input
-              onClick={() => {
-                setOpenSearch(!openSearch), console.log(openSearch);
-              }}
-              type="text"
-              className=" outline-none w-full h-full p-2 bg-[#EFF3FB] rounded-full placeholder:text-blue_color"
-              placeholder="חפש עובד"
-            />
-            <Image
-              className="absolute transform -translate-y-1/2 left-3 top-1/2 "
-              src="MagnifyingGlass.svg"
-              width={20}
-              height={20}
-              alt="MagnifyingGlass"
-            />
-            <div className=" relative flex justify-center">
-              {
-                <ExclusionsSearch
-                  openSearch={openSearch}
-                  emploeeyEvent={emploeeyEvent}
-                  setEmploeeyEvent={setEmploeeyEvent}
-                  // selectedOption={selectedOption}
-                  // setSelectedOption={setSelectedOption}
-                />
-              }
+        <div className="w-full flex flex-1 gap-6">
+          <div className="p-4  w-full flex ">
+            <div className=" relative h-10 w-full ">
+              <input
+                onClick={() => {
+                  setOpenSearch(!openSearch), console.log(openSearch);
+                }}
+                type="text"
+                className=" outline-none w-full h-full p-2 bg-[#EFF3FB] rounded-full placeholder:text-blue_color"
+                placeholder="חפש עובד"
+              />
+              <Image
+                className="absolute transform -translate-y-1/2 left-3 top-1/2 "
+                src="MagnifyingGlass.svg"
+                width={20}
+                height={20}
+                alt="MagnifyingGlass"
+              />
+              <div className=" flex justify-center">
+                {
+                  <ExclusionsSearch
+                    openSearch={openSearch}
+                    emploeeyEvent={emploeeyEvent}
+                    setEmploeeyEvent={setEmploeeyEvent}
+                    employees={eventObj?.employees}
+                  />
+                }
+              </div>
             </div>
           </div>
+          <div className="p-4 flex flex-col w-full gap-5 justify-around">
+            <div className="  w-full font-bold">
+              סוג פעילות
+              <Option
+                data={activity_type}
+                handel={handelDate}
+                value={activityDay}
+                toggle={toggle}
+                setToggle={setToggle}
+              />
+            </div>
+
+            <div className="w-full ">
+              <div className=" font-bold">תאריך</div>
+              <div className="flex gap-1 h-[32px]">
+                <div className="w-1/2 relative ">
+                  <input
+                    ref={dateFromRef}
+                    className=" w-full h-full border rounded-full border-blue_color px-3 "
+                    type="date"
+                    value={beginning_date}
+                    onChange={(e) => handelDate(e, "from")}
+                  />
+                  <div
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
+                    onClick={handleIconClickFrom}
+                  >
+                    <CalendarDays size={20} strokeWidth={1.5} />
+                  </div>
+                </div>
+
+                <Image src="leftArrow.svg" width={25} height={25} alt="r" />
+
+                <div className=" w-1/2 relative">
+                  <input
+                    ref={dateToRef}
+                    className="h-full  w-full border rounded-full border-blue_color px-2 "
+                    type="date"
+                    value={end_date}
+                    onChange={(e) => handelDate(e, "to")}
+                  />
+                  <div
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
+                    onClick={handleIconClickTo}
+                  >
+                    <CalendarDays size={20} strokeWidth={1.5} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>{" "}
         </div>
-        <div className="px-14 flex w-full gap-5 ">
-          <div className="  w-full font-bold">
-            סוג פעילות
-            <Option
-              data={activity_type}
-              handel={handelDate}
-              value={activityDay}
-              toggle={toggle}
-              setToggle={setToggle}
-            />
-          </div>
-
-          <div className="w-full ">
-            <div className=" font-bold">תאריך</div>
-            <div className="flex gap-1 h-[32px]">
-              <div className="w-1/2 relative ">
-                <input
-                  ref={dateFromRef}
-                  className=" w-full h-full border rounded-full border-blue_color px-3 "
-                  type="date"
-                  value={beginning_date}
-                  onChange={(e) => handelDate(e, "from")}
-                />
-                <div
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
-                  onClick={handleIconClickFrom}
-                >
-                  <CalendarDays size={20} strokeWidth={1.5} />
-                </div>
-              </div>
-
-              <Image src="leftArrow.svg" width={25} height={25} alt="r" />
-
-              <div className=" w-1/2 relative">
-                <input
-                  ref={dateToRef}
-                  className="h-full  w-full border rounded-full border-blue_color px-2 "
-                  type="date"
-                  value={end_date}
-                  onChange={(e) => handelDate(e, "to")}
-                />
-                <div
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-blue_color"
-                  onClick={handleIconClickTo}
-                >
-                  <CalendarDays size={20} strokeWidth={1.5} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>{" "}
         <div className="flex justify-center py-2">
           <button
             onClick={() => addExclusionsEvent()}

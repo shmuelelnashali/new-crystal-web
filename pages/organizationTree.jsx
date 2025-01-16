@@ -18,6 +18,8 @@ import PopupDisconnect from "@/app/components/organizationTree/PopupDisconnect";
 import PopupDelete from "@/app/components/organizationTree/PopupDelete";
 import Header from "@/app/components/ui/Header";
 import { addNewUnitInServer } from "@/app/components/organizationTree/PopUpCreateUnit";
+import { AuthProvider } from "@/app/hooks/AuthContext";
+import { useRouter } from "next/router";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -187,13 +189,16 @@ export default function OrganizationTreeComponent() {
     []
   );
 
+
   return (
     <div
       onClick={() => setShowPopUpSelectUnit(false)}
       className="bg-white p-2  flex flex-col h-screen"
     >
       <div dir="rtl" className="">
+        <AuthProvider>
         <Header />
+        </AuthProvider>
       </div>
 
       <BtnWithSelectPopUp

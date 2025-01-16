@@ -74,7 +74,7 @@ export default function AddUser({ fields, setOpenPopup }) {
             </div>
             <div className="pt-7 pb-4 px-10 gap-5 grid grid-cols-2">
               {fields.map((field, index) => (
-                <div className="flex flex-col   ">
+                <div key={index} className="flex flex-col   ">
                   <label className=" text-lg font-semibold" htmlFor="">
                     {field.label}
                   </label>

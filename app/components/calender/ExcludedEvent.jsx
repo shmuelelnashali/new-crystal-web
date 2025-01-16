@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 
-export default function ExcludedEvent({ event, }) {
+export default function ExcludedEvent({ event }) {
   const formatDate = (dateString) => {
     console.log(dateString);
     const [day, month, year] = dateString.split("-");
@@ -15,12 +15,10 @@ export default function ExcludedEvent({ event, }) {
     }
   };
 
-
   return (
-    <div className=" ">
-
+    <div className="dirRtl pr-2 ">
       {/* {eventDate.map((event, index) => ( */}
-      <div className="p-3 border-b-[1px]">
+      <div className="p-4 border-b-[1px]">
         <div className=" w-full border h-8 rounded-full flex  border-[#E4EBF8] ">
           <div className="w-7/12 h-8 items-center text-lg flex justify-center bg-[#E4EBF8] rounded-full">
             {event.employees[0]?.name}
@@ -47,7 +45,6 @@ export default function ExcludedEvent({ event, }) {
           </div>
         )}
       </div>
-      {/* ))} */}
     </div>
   );
 }

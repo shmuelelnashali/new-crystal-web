@@ -5,7 +5,7 @@ import ReportSelection from "../../components/reports/ReportSelection";
 import ReportGenerator from "../../components/reports/ReportGenerator";
 
 export default function Report() {
-  const [createRepo, setCreateRepo] = useState(false);
+  const [createRepo, setCreateRepo] = useState(true);
   const oldRepo = [
   //   "  דו”ח נוכחות  - מותאם לישראל ישראלי",
   //   "דו”ח נוכחות  - מותאם לישראל ישראלי",

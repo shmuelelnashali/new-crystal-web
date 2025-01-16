@@ -186,7 +186,7 @@ export default function TabieSettings({ data, headers, page, add }) {
 
   return (
     <>
-      <div className="p-2 pb-0 dirRtl text-white rounded-lg sticky z-50  top-0 bg-[#EFF3FB] w-full">
+      <div className="p-2 pb-0 dirRtl text-white rounded-lg sticky z-30  top-0 bg-[#EFF3FB] w-full">
         <div className="grid grid-cols-9 sticky top-0 rounded-lg p-2 bg-blue_color justify-center ">
           {headers.map((header, index) => (
             <div
@@ -290,8 +290,6 @@ export default function TabieSettings({ data, headers, page, add }) {
                               />
 
                               {index === Object.entries(row).length - 1 && (
-
-
                                 <button
                                   onClick={() => console.log(updateRow)}
                                   className={`${
@@ -323,13 +321,17 @@ export default function TabieSettings({ data, headers, page, add }) {
                         <span className="dirLtr  ">{code_value}</span>
                       </div>
                     ) : (
-                      <div className={clsx(" text-center ",{
-                        " text-right":
-                          pathName.includes("stages") &&
-                          index === Object.entries(row).length - 1,
-                        // &&
-                        // updateIndex === rowIndex,
-                      },)}>{code_value}</div>
+                      <div
+                        className={clsx(" text-center ", {
+                          " text-right":
+                            pathName.includes("stages") &&
+                            index === Object.entries(row).length - 1,
+                          // &&
+                          // updateIndex === rowIndex,
+                        })}
+                      >
+                        {code_value}
+                      </div>
                     )}
                   </div>
                 )

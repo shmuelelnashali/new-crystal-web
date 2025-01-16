@@ -97,8 +97,8 @@ export default function PopupDay({
     }
   };
   return (
-    <>
-      <div className="flex flex-col h-full ">
+    <div className="h-full flex flex-col ">
+      <div className="flex flex-col h-full overflow-hidden">
         <div className="">
           <div onClick={mission} className="">
             <Image src={"/x.svg"} width={15} height={15} alt="x" />
@@ -117,14 +117,14 @@ export default function PopupDay({
             {day}/{month}/{year}
           </div>
 
-          <div className="flex justify-center items-center p-2">
+          {/* <div className="flex justify-center items-center p-2">
             <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
               סוג פעילות
             </h2>
-          </div>
+          </div> */}
         </div>
 
-        <div className=" h-full w-full">
+        <div className=" flex-1 overflow-hidden">
           <Events
             date={date}
             setDate={setDate}
@@ -139,7 +139,7 @@ export default function PopupDay({
         </div>
       </div>
 
-      <div className="flex justify-center gap-4 pb-10">
+      <div className="flex h-24 justify-center gap-4 pb-8 pt-5">
         <button
           onClick={() => setExclusions(true)}
           className="flex gap-2 items-center px-3 py-2 rounded-full border-[1px]  border-blue_color"
@@ -148,7 +148,7 @@ export default function PopupDay({
           <p>החרגות</p>
         </button>
 
-        { events !== "new" && events !== "edit" && (
+        {!activity && events !== "new" && events !== "edit" && (
           <button
             onClick={() => setEvents("new")}
             className="bg-blue_color flex gap-2 items-center text-white px-3 py-2 rounded-full"
@@ -177,6 +177,6 @@ export default function PopupDay({
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 }

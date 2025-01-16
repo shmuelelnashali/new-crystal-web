@@ -17,12 +17,16 @@ export default function TableHead({
       <div className="flex w-full bg-blue_color rounded">
         <div className="w-[50px]"></div>
         <div
-          className={`text-[20px] grid grid-cols-11 gap-3 w-full font-semibold leading-6 py-3 text-center items-center text-white`}
+          className={`text-[20px] grid grid-cols-${headLength} gap-3 w-full font-semibold leading-6 py-3 text-center items-center text-white`}
         >
           {headTable.map((head, index) => (
-            <div key={head} className={`relative truncate flex justify-center items-center  ${head === "מייל" &&'ml-16'}`}>
+            <div
+              key={head}
+              className={`relative truncate flex justify-center items-center  ${
+                head === "מייל" && "ml-16"
+              }`}
+            >
               <div className={`truncate`}>{head}</div>
-             
             </div>
           ))}
         </div>

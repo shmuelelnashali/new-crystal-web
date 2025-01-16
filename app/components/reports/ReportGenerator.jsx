@@ -3,9 +3,10 @@
 import clsx from "clsx";
 import Image from "next/image";
 import React, { useState } from "react";
+import DateFilter from "./DateFilter";
 
 export default function ReportGenerator() {
-  const [fieldsTo, setFieldsTo] = useState([]);
+  const [fieldsTo, setFieldsTo] = useState([{ field: "תאריך", key: "date" }]);
   const employees = [
     {
       Employee_name: "שמואל",
@@ -235,7 +236,6 @@ export default function ReportGenerator() {
     setFieldsTo(newFieldsTo);
     handleDragEnd();
   };
-  
 
   const removeItem = (item) => {
     const newArr = [...fieldsTo];
@@ -260,7 +260,7 @@ export default function ReportGenerator() {
       <div className=" flex gap-4 pb-3 ">
         {buttons.map((button, index) => (
           <button
-            key={index}
+            key={button}
             className={`border ${
               button.color
                 ? "border-[#B00000] text-[#B00000]"
@@ -273,7 +273,7 @@ export default function ReportGenerator() {
           </button>
         ))}
       </div>
-      <div className="h-full overflow-hidden flex gap-4 ">
+      <div className="h-full overflow-hidden relative flex gap-4 ">
         <div className="bg-white  w-1/5 p-2 rounded-xl ">
           <div className="dirLtr h-full p-4 flex-col overflow-y-auto font-normal text-xl">
             <div className="text-center font-semibold text-2xl pb-2">
@@ -300,7 +300,7 @@ export default function ReportGenerator() {
                   draggable
                   onDragStart={(e) => handleDragStart(e, { key, field })}
                   onDragEnd={handleDragEnd}
-                  key={i}
+                  key={field}
                   className="border-b-[1px] py-4 px-4 flex  "
                 >
                   <p>{field}</p>
@@ -310,8 +310,8 @@ export default function ReportGenerator() {
           </div>
         </div>
 
-        <div className="flex flex-col h-full w-4/5  rounded-lg  gap-1 ">
-          <div className="bg-white h-2/5 rounded-lg flex flex-col p-2 overflow-hidden ">
+        <div className="flex  flex-col h-full w-4/5 relative rounded-lg gap-1 ">
+          <div className="bg-white h-2/5 rounded-lg flex flex-col p-2   ">
             <div className=" flex items-center">
               <div className="inline bg-blue_color rounded-[4px] px-8 py-1 text- text-white ">
                 מסננים
@@ -340,51 +340,34 @@ export default function ReportGenerator() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={(e) => handleDrop(e)}
-              className="py-2  flex-1  overflow-y-auto"
+              className="py-2  flex-1  "
             >
-              <div className="justify-items-center grid grid-cols-3 gap-3">
+              <div className="justify-items-center grid grid-cols-3 gap-3 overflow-y-auto">
                 {fieldsTo.map((fieldObj, i) => (
-                  <div key={i} className="w-full px-5">
+                  <div key={fieldObj} className="w-full  px-5">
                     <p className="block text-lg font-semibold">
                       {fieldObj.field}
                     </p>
 
-                    <div className="w-full flex gap-2">
+                    <div className="">
                       {fieldObj.field === "תאריך" ? (
-                        <div className="w-full flex gap-2">
-                          <div className="justify-end flex ga bg-blue_color rounded-full w-3/5">
-                            <p className="w-1/4 text-white  ">dddd</p>
-                            <input
-                              type="date"
-                              className=" outline-none px-3 border  border-blue_color rounded-full "
-                            />
-                          </div>
+                        <DateFilter />
+                      ) : (
+                        <div className="w-full flex gap-2 ">
+                          <input
+                            type="text"
+                            className=" outline-none pr-3 border w-full border-blue_color rounded-full "
+                          />
                           <Image
+                            onClick={() => removeItem(fieldObj)}
                             className=""
-                            src="/leftArrow.svg"
-                            width={24}
-                            height={22}
+                            src="/bit.svg"
+                            width={15}
+                            height={15}
                             alt=""
                           />
-                          <input
-                            type="date"
-                            className=" outline-none px-3 border border-blue_color rounded-full "
-                          />
                         </div>
-                      ) : (
-                        <input
-                          type="text"
-                          className=" outline-none pr-3 border w-full border-blue_color rounded-full "
-                        />
                       )}
-                      <Image
-                        onClick={() => removeItem(fieldObj)}
-                        className=""
-                        src="/bit.svg"
-                        width={15}
-                        height={15}
-                        alt=""
-                      />
                     </div>
                   </div>
                 ))}
@@ -408,7 +391,10 @@ export default function ReportGenerator() {
             <div className="w-fit dirLtr h-full overflow-auto ">
               <div className="flex dirRtl px-2">
                 {fieldsTo.map((field, index) => (
-                  <div key={field} className="flex flex-col justify-center text-center  ">
+                  <div
+                    key={field}
+                    className="flex flex-col justify-center text-center  "
+                  >
                     <div
                       key={index}
                       className={clsx(
@@ -422,10 +408,10 @@ export default function ReportGenerator() {
                       {field.field}
                     </div>
                     <div className="bg-white">
-                      {employees.map((employee, Index) => (
+                      {employees.map((employee, index) => (
                         <p
                           className="p-2  text-center whitespace-nowrap "
-                          key={Index}
+                          key={employee}
                         >
                           {employee[field.key]}
                         </p>
@@ -435,13 +421,16 @@ export default function ReportGenerator() {
                 ))}
               </div>
             </div>
-           
-              {fieldsTo.length <= 10 && (
-                <div className="bg-[#EFF3FB]  flex-1 border-dashed border-2 border-blue_color rounded-lg p-2  flex justify-center items-center">
-                  <Image src={"addFilid.svg"} width={422} height={200} alt="addFilid.svg"/>
-                </div>
-              )}{" "}
-            
+            {fieldsTo.length <= 10 && (
+              <div className="bg-[#EFF3FB]  flex-1 border-dashed border-2 border-blue_color rounded-lg p-2  flex justify-center items-center">
+                <Image
+                  src={"addFilid.svg"}
+                  width={422}
+                  height={200}
+                  alt="addFilid.svg"
+                />
+              </div>
+            )}{" "}
             {/* <div className=" flex ">
             
               

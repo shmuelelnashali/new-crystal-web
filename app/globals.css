@@ -41,6 +41,9 @@ li.nav {
 .grid-cols-10 {
   grid-template-columns: repeat(10, 1fr);
 }
+.grid-cols-11 {
+  grid-template-columns: repeat(11, 1fr);
+}
 .presentTable {
   display: grid;
   grid-template-columns: repeat(14, 1fr);

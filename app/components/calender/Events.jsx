@@ -5,6 +5,8 @@ import Event from "./Event";
 import Image from "next/image";
 import EditEvent from "./EditEvent";
 import ExcludedEvent from "./ExcludedEvent";
+import GeneralActivity from "./GeneralActivity";
+import ExcludedActivity from "./ExcludedActivity";
 
 export default function Events({
   missionDay,
@@ -19,7 +21,10 @@ export default function Events({
 }) {
   const [ex, setEx] = useState(0);
   const { year, month, day } = missionDay;
-  // console.log(activity);
+  const eventArray = Object.values(eventDate);
+  const isExcludedEvent = eventArray.some((event) => event.is_global === 0);
+  const isEvent = eventArray.some((event) => event.is_global === 1);
+  console.log(isExcludedEvent);
 
   // useEffect(() => {
   //   if (events === "new" || events === "edit") {
@@ -27,27 +32,24 @@ export default function Events({
   //   }
   // },[missionDay]);
   return (
-    <div className="  h-full">
-      {!activity && events !== "new" && events !== "edit" && (
-        // <div className="h-full">
-        //   <div className="flex justify-center items-center p-2">
-        //     <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-        //       סוג פעילות
-        //     </h2>
-        //   </div>
-          <div className="  h-full flex justify-center items-center">
-            <Image
-              onClick={() => setEvents("new")}
-              src="addEvent.svg"
-              width={240}
-              height={155}
-              alt="e"
-            />
-          </div>
-        // </div>
-      )}
-      {events == "new" && (
-        <AddEvent
+    <div className=" h-full flex flex-col ">
+      <GeneralActivity
+        isEvent={isEvent}
+        activity={activity}
+        events={events}
+        date={date}
+        setDate={setDate}
+        setEvents={setEvents}
+        missionDay={missionDay}
+        setMissionDay={setMissionDay}
+        eventDate={eventDate}
+        setEventDate={setEventDate}
+      />
+
+      {isExcludedEvent && (
+        <ExcludedActivity
+          activity={activity}
+          events={events}
           date={date}
           setDate={setDate}
           setEvents={setEvents}
@@ -57,46 +59,6 @@ export default function Events({
           setEventDate={setEventDate}
         />
       )}
-      {events == "edit" && (
-        <EditEvent
-          date={date}
-          setDate={setDate}
-          missionDay={missionDay}
-          setMissionDay={setMissionDay}
-          eventDate={eventDate}
-          setEventDate={setEventDate}
-        />
-      )}
-      {console.log(eventDate)}
-      {Array.isArray(eventDate) &&
-        eventDate.map(
-          (event, index) =>
-            activity &&
-            events !== "edit" &&
-            event?.is_global === 1 && (
-              <Event
-                key={event.id}
-                missionDay={missionDay}
-                setMissionDay={setMissionDay}
-                eventDate={event}
-              />
-            )
-        )}
-      {/* ) : ( */}
-      {activity && events !== "new" && events !== "edit" && (
-        <div className="flex justify-center items-center px-2 pt-5">
-          <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-            החרגות
-          </h2>
-        </div>
-      )}
-
-      {Array.isArray(eventDate) &&
-        eventDate.map((event, index) =>
-          event.is_global === 0 ? (
-            <ExcludedEvent key={index} event={event} />
-          ) : null
-        )}
     </div>
   );
 }

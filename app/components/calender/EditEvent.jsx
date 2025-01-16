@@ -81,12 +81,12 @@ export default function EditEvent({
   ];
 
   return (
-    <>
-      <div className="flex justify-center items-center p-2">
-        <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
-          סוג פעילות
-        </h2>
-      </div>
+    // <>
+      // <div className="flex justify-center items-center p-2">
+      //   <h2 className=" w-4/5 p-2 border rounded-full font-semibold text-lg text-center text-white bg-blue_color">
+      //     סוג פעילות
+      //   </h2>
+      // </div>
       <div className="w-full px-2 font-normal text-lg ">
         <div className="w-full ">
           <div className="font-bold">סוג פעילות</div>
@@ -140,6 +140,6 @@ export default function EditEvent({
           </div>
         </div>
       </div>
-    </>
+    // </>
   );
 }
