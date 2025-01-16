@@ -1,8 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { useReactFlow } from "reactflow";
-import axios from "@/app/lib/Axios";
-import { useEffect } from "react";
+import { usePopUpOptions } from "./GlobalState";
 
 const Container = styled.div`
   width: 225px;
@@ -39,58 +37,43 @@ const Item = styled.div`
 `;
 
 export default function PopUpForDeleteDisconnectInTree({
-  setShowPopUp,
   filteredIds,
-  setShowPopUpDelete,
-  setShowPopUpDisconnect,
+  setPopUpDeleteUnitWithPeople,
+  setPopUpDeleteEmptyUnit,
+  setPopUpDisconnect,
+  employees,
   setEmployeesNumber,
-  unitToDeleteOrDisconnect,
+  unitName,
+  level,
 }) {
-  // const { setEdges } = useReactFlow();
+  const { setPopUpForDeleteAndDisconnect } = usePopUpOptions();
 
-  const getAllEmployees = async () => {
-    try {
-      const respons = await axios.get("employees");
-      return respons.data;
-    } catch (error) {
-      console.error(error);
-    }
+  const levelMapping = {
+    מחלקה: "department_name",
+    ענף: "branch_name",
+    מדור: "section_name",
   };
 
-  const getEmployeesNumberByDepartment = async () => {
-    const allEmployees = await getAllEmployees();
-    const employeesByDepartment = allEmployees.filter(
-      (employee) => employee.department_name === unitToDeleteOrDisconnect.name
+  const getEmployeesNumberByUnit = () => {
+    const levelKey = levelMapping[level];
+    const employeesByUnit = employees.filter(
+      (employee) => employee[levelKey] === unitName
     ).length;
 
-    return employeesByDepartment;
+    setEmployeesNumber(employeesByUnit);
+    return employeesByUnit;
   };
-
-  useEffect(() => {
-    const getEmployeesNumber = async () => {
-      if (unitToDeleteOrDisconnect) {
-        const count = await getEmployeesNumberByDepartment();
-        console.log(count);
-        
-        setEmployeesNumber(count);
-      }
-    };
-
-    getEmployeesNumber();
-  }, [unitToDeleteOrDisconnect]);
-
-
-  // const disconnectEdge = () => {
-  //   setEdges((prevEdges) =>
-  //     prevEdges.filter((edge) => !filteredIds.includes(edge.id))
-  //   );
-  // };
 
   const deleteNodePopUp = () => {
-    setShowPopUpDelete(true);
+    if (getEmployeesNumberByUnit() > 0) {
+      setPopUpDeleteUnitWithPeople(true);
+      return;
+    }
+    setPopUpDeleteEmptyUnit(true);
   };
+
   const disconnectNodePopUp = () => {
-    setShowPopUpDisconnect(true);
+    setPopUpDisconnect(true);
   };
 
   const options = [
@@ -103,9 +86,10 @@ export default function PopUpForDeleteDisconnectInTree({
       {options.map((option, index) => (
         <Item
           key={index}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             option.func();
-            setShowPopUp(false);
+            setPopUpForDeleteAndDisconnect(false);
           }}
         >
           <span className="pr-3">{option.name}</span>
