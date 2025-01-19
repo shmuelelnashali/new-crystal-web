@@ -11,10 +11,11 @@ export default function Logo() {
   };
   return (<>
     <Image onClick={toggle}
-    src="/logo.svg"
-    width={220}
-    height={50}
-    alt="crystal logo"
+    src="logo.svg"
+    width={221}
+    height={56}
+    alt="crystal_logo"
+    priority
   />
   {popup && <PopupUser toggle={toggle} />}
   </>

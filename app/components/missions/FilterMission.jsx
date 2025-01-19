@@ -2,35 +2,30 @@ import { CircleX } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function FilterMission({closeFilter, filterSearch, setFilterPopUp, filterPopUp}) {
+export default function FilterMission({
+  closeFilter, 
+  filterSearch, 
+  setFilterPopUp, 
+  filterPopUp,
+  formData,
+  setFormData
+}) {
   const [openLabel, setOpenLabel] = useState(null);
-  const [selectOption, setSelectOption] = useState({});
-  const [formData, setFormData] = useState({});
+
 
   //   פותח אפשריות בחירה
   const handleOption = (labelName, option) => {
-    setSelectOption((prev) => ({
-      ...prev,
-      [labelName]: option,
-    }));
     setFormData((prev) => ({
       ...prev,
       [labelName]: option,
     }));
-    console.log(formData,"data");
-    
-    // setOpenLabel(null);
   };
 
   //   מנקה את הבחירה בלחיצה על האיקס
   const clearOption = (labelName) => {
-    setSelectOption((prev) => ({
-      ...prev,
-      [labelName]: null, // Clear the selected option
-    }));
     setFormData((prev) => ({
       ...prev,
-      [labelName]: "", // Clear the formData value as well
+      [labelName]: "",
     }));
     
   };
@@ -116,7 +111,7 @@ export default function FilterMission({closeFilter, filterSearch, setFilterPopUp
                   <CircleX
                     size={20}
                     color={
-                      selectOption[labelName] || formData[labelName]
+                      formData[labelName] || formData[labelName]
                         ? "red"
                         : "#a5a7aa"
                     }
@@ -129,14 +124,14 @@ export default function FilterMission({closeFilter, filterSearch, setFilterPopUp
                   >
                     <div
                       className={`px-3 flex justify-between relative truncate w-full ${
-                        selectOption[labelName]
+                        formData[labelName]
                           ? "text-[#002A78]"
                           : "text-gray-400"
                       }`}
                     >
                       <div>
-                        {selectOption[labelName]?
-                        selectOption[labelName] :
+                        {formData[labelName]?
+                        formData[labelName] :
                         labelName === 'Year' ? 'YYYY' :
                         'בחר ' + label}
                       </div>
@@ -173,7 +168,7 @@ export default function FilterMission({closeFilter, filterSearch, setFilterPopUp
                     <div className="w-full relative mt-1">
                       <div className="absolute hover:cursor-pointer left-2 top-1/2 transform -translate-y-1/2">
                         <Image
-                          src="/calender.svg"
+                          src="/calendar.svg"
                           width={20}
                           height={20}
                           alt="calender"

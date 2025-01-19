@@ -10,15 +10,13 @@ export default function PopupFilterEmployees({
   closeFilter,
   filterSearch,
   setFilterPopUp,
-  filterPopUp
+  filterPopUp,
+formData,
+setFormData,
 }) {
 
   // פתיחת אפשרויות לבחירה
   const [openLabel, setOpenLabel] = useState(null);
-  // תפיסת הבחירה
-  const [selectOption, setSelectOption] = useState({});
-  // הבחירה לחיפוש
-  const [formData, setFormData] = useState({});
 
   // להביא מחלקות
   const [departments, setDepartments] = useState([]);
@@ -33,39 +31,49 @@ export default function PopupFilterEmployees({
 
   //   פותח אפשריות בחירה
   const handleOption = (labelName, option) => {
-    setSelectOption((prev) => ({
-      ...prev,
-      [labelName]: option,
-    }));
     setFormData((prev) => ({
       ...prev,
       [labelName]: option,
     }));
   };
 
-  //   מנקה את הבחירה בלחיצה על האיקס
-  const clearOption = (labelName) => {
-    setSelectOption((prev) => ({
-      ...prev,
-      [labelName]: null, // Clear the selected option
-    }));
-    setFormData((prev) => ({
-      ...prev,
-      [labelName]: "", // Clear the formData value as well
-    }));
+  // מנקה את הבחירה בלחיצה על האיקס
+  const clearOption = (labelName) => {   
+      setFormData((prev) => {
+        const updatedFormData = { ...prev };
+        delete updatedFormData[labelName];
+        return updatedFormData;
+      });
   };
 
+  // מנקה את כל הסינונים
+  const clearAll = ()=>{
+    filterSearch({})
+    setFormData({})
+    closeFilter(false)
+    toast(`הסינון שלך בוטל`, {
+      icon: "👌",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+      duration: 1500
+    });
+  }
+  
+  // מביא את מה שביקשת לסנן
   const handleFilterData = () => {
     filterSearch(formData);
     closeFilter(false);
   };
 
-  //   האפשריות שמופיעות בלחיצה
+  // האפשריות שמופיעות בלחיצה
   const toggleOptionMenu = (labelName) => {
     setOpenLabel((prev) => (prev === labelName ? null : labelName));
   };
 
-  //   אפשריות בהתאם ללחיצה
+  // אפשריות בהתאם ללחיצה
   const getOptionsArray = (labelName) => {
     switch (labelName) {
       case "contract_id":
@@ -81,86 +89,38 @@ export default function PopupFilterEmployees({
     }
   };
 
-  // // להביא מחלקות
-  // useEffect(() => {
-  //   const fetchDepartments = async () => {
-  //     try {
-  //       const response = await axios.get(`/departments`);
-  //       console.log(
-  //         response.data.map((dept) => dept.name),
-  //         "departments"
-  //       );
-  //       setDepartments(response.data.map((dept) => dept.name));
-  //     } catch (error) {
-  //       console.error("שגיאה בהבאת מחלקות", error);
-  //       setDepartments([]);
-  //     }
-  //   };
-  //   fetchDepartments();
-  // }, []);
+  // אפשריות בהתאם ללחיצה על הסינון
+  const getTheKeyToast = (key) => {
+    switch (key) {
+      case "contract_id":
+        return "הסכם";
+      case "section_id":
+        return "מדור";
+      case "branch_id":
+        return "ענף";
+      case "department_id":
+        return "מחלקה";
+      case "activity_start":
+        return "תחילת פעילות";
+      case "activity_end":
+        return "סיום פעילות";
+      default:
+        return [];
+    }
+  };
 
-  // // להביא ענפים
-  // useEffect(() => {
-  //   const fetchBranches = async () => {
-  //     try {
-  //       const response = await axios.get(`/branches`);
-  //       console.log(
-  //         response.data.map((dept) => dept.name),
-  //         "branches"
-  //       );
-  //       setBranches(response.data.map((dept) => dept.name));
-  //     } catch (error) {
-  //       console.error("שגיאה בהבאת מחלקות", error);
-  //       setBranches([]);
-  //     }
-  //   };
-  //   fetchBranches();
-  // }, []);
 
-  // // להביא קוד הסכם
-  // useEffect(() => {
-  //   const fetchContracts = async () => {
-  //     try {
-  //       const response = await axios.get(`/contracts`);
-  //       console.log(
-  //         response.data.map((dept) => dept.code),
-  //         "contracts"
-  //       );
-  //       setContracts(response.data.map((dept) => dept.code));
-  //     } catch (error) {
-  //       console.error("שגיאה בהבאת מחלקות", error);
-  //       setContracts([]);
-  //     }
-  //   };
-  //   fetchContracts();
-  // }, []);
 
-  // // להביא מדורים
-  // useEffect(() => {
-  //   const fetchSections = async () => {
-  //     try {
-  //       const response = await axios.get(`/sections`);
-  //       console.log(response.data, "sections");
-  //       setSections(response.data.map((dept) => dept.name));
-  //     } catch (error) {
-  //       console.error("שגיאה בהבאת מחלקות", error);
-  //       setSections([]);
-  //     }
-  //   };
-  //   fetchSections();
-  // }, []);
-
+  // להביא את מה שצריך לסנן
   const fetchData = async (endpoint, setState, key, errorMessage) => {
     try {
       const response = await axios.get(endpoint);
-      console.log(response.data.map((item) => item[key]), endpoint);
       setState(response.data.map((item) => item[key]));
     } catch (error) {
       console.error(errorMessage, error);
       setState([]);
     }
   };
-  
   useEffect(() => {
     const fetchAllData = async () => {
       const endpoints = [
@@ -177,25 +137,27 @@ export default function PopupFilterEmployees({
   
     fetchAllData();
   }, []);
-  useEffect(() => {
-    console.log(formData, "datalhvlvlhvl");
-  }, [formData]);
 
+
+
+  // על מה קרה הסינון
   const activeFilter = () => {
     const filterDetails = Object.entries(formData)
-      .map(([key, value]) => `${value}`)
-      .join(", ");
+      .map(([key, value]) => `${
+        getTheKeyToast(key)}: ${value}`)
+      .join("\n");
   
-    toast(`סינון הופעל על ${filterDetails}`, {
+    toast(`סינון הופעל על\n${filterDetails}`, {
       icon: "🔍",
       style: {
+        textAlign:"right",
         borderRadius: "10px",
         background: "#333",
         color: "#fff",
       },
-      // duration: 1000,
     });
   };
+
   return (
     <>
       <div
@@ -222,7 +184,7 @@ export default function PopupFilterEmployees({
                     <CircleX
                       size={20}
                       color={
-                        selectOption[labelName] || formData[labelName]
+                        formData[labelName]
                           ? "red"
                           : "#a5a7aa"
                       }
@@ -237,7 +199,8 @@ export default function PopupFilterEmployees({
                       label={label}
                       openLabel={openLabel}
                       setOpenLabel={setOpenLabel}
-                      selectOption={selectOption}
+                      // selectOption={selectOption}
+                      formData={formData}
                     />
                   ) : (
                     labelName.includes("activity") && (
@@ -255,9 +218,7 @@ export default function PopupFilterEmployees({
 
           <div className="flex justify-between mt-6">
             <div
-              onClick={() => {
-                closeFilter(false);
-              }}
+              onClick={() => {clearAll()}}
               className="border hover:cursor-pointer border-[#002A78] rounded-full px-6 bg-white"
             >
               ביטול
@@ -291,7 +252,4 @@ const labels = [
 
 const arrow = ["department_id", "branch_id", "section_id", "contract_id"];
 
-// const departments = ["Murazik, Leffler and Mueller", "Status", "Paying_factor"];
-// const branches = ["Sipes, Rau and Medhurst", "2023", "2024"];
-// const madors = ["Homenick-Ankunding", "נסא", "תקיפה", "תחמושת"];
-// const agreement = [70, 214, 232, 157, 657];
+

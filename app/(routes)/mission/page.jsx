@@ -2,15 +2,13 @@
 import Search from "../../components/ui/Search";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// import MissionTable from "@/app/components/missions/MissionTable";
 import PopupDelete from "@/app/components/PopupDelete";
-// import PopupMission from "@/app/components/missions/PopupMission";
-import FilterMission from "@/app/components/FilterMission";
+import FilterMission from "@/app/components/missions/FilterMission";
 import { parse, isEqual, isWithinInterval } from "date-fns";
 import MissionTable from "@/app/components/missions/MissionTable";
 import PopupMission from "@/app/components/missions/PopupMission";
 import * as XLSX from "xlsx";
-// import axios, { Axios } from "axios";
+import { Toaster } from "react-hot-toast";
 
 const data = [
   {
@@ -129,11 +127,10 @@ const data = [
   },
 ];
 export default function Mission() {
-  // const [updateMode, setUpdateMode] = useState(null);
 
   //FOR CONTAIN THE MISSION
   const [missions, setMissions] = useState(data);
-  // const [loading, setLoading] = useState(true);
+
   const [showPopupNewMission, setShowPopupNewMission] = useState(false);
 
   const [filterPopUp, setFilterPopUp] = useState(false);
@@ -145,6 +142,9 @@ export default function Mission() {
   const [missionIdToDelete, setMissionIdToDelete] = useState(null);
   // מביא את הסינון
   const [filterData, setFilterData] = useState(null);
+
+  // מכיל את מה שצריך לסנן עליו
+  const [formData, setFormData] = useState({});
 
   // useEffect(() => {
   //   const fetchMissions = async () => {
@@ -338,8 +338,8 @@ export default function Mission() {
             <div className="px-3 flex gap-2  truncate">
               <Image
                 src={"/filter.svg"}
-                width={15}
-                height={15}
+                width={16}
+                height={14}
                 alt="download"
               />
               <div>סינון</div>
@@ -351,6 +351,8 @@ export default function Mission() {
                 filterPopUp={filterPopUp}
                 filterSearch={filterSearch}
                 closeFilter={setFilterPopUp}
+                formData={formData}
+                setFormData={setFormData}
               />
             )}
           </div>
@@ -375,7 +377,6 @@ export default function Mission() {
           </div>
         </div>
       </div>
-      {/* {filterPopUp && <div><FilterMission/></div>} */}
 
       <MissionTable
         data={showMissionsOrFilter}
@@ -404,6 +405,8 @@ export default function Mission() {
           setMissions={setMissions}
         />
       )}
+
+<Toaster position="top-center" />
     </div>
   );
 }

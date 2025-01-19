@@ -189,7 +189,8 @@ const absenceData = [
   },
 ];
 
-const headerData = ["קוד היעדרות", "שם היעדרות", "תאריך התחלה", "תאריך סיום"];
+const headerData = ["קוד היעדרות",
+   "שם היעדרות", "תאריך התחלה", "תאריך סיום"];
 
 export default function ManageAbsence() {
   const [absenceArray, setabsenceArray] = useState(absenceData);

@@ -2,11 +2,11 @@
 
 import axios from "@/app/lib/axios";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Search({
   textBtn,
-  formatData,
   addNew,
   addImage,
   bg,
@@ -14,14 +14,19 @@ export default function Search({
   missionDay,
   searchEmployees,
   setEmployees,
+  searchPopupAttendances,
+  setSearchPopupAttendances,
 }) {
+  const pathName = usePathname()
+
   const [query, setQuery] = useState("");
+
 
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase(); // Convert query to lowercase for case-insensitive comparison
     setQuery(searchQuery);
 
-    if (searchQuery.trim()) {
+    // if (searchQuery.trim()) {
       // חיפוש על העובדים לפי שם/מספר
       const filteredEmployees = searchEmployees.filter((employee) => {
         const employeeNumber = employee.employeeToShow.employee_number
@@ -39,24 +44,26 @@ export default function Search({
         );
       });
       setEmployees(filteredEmployees);
-    } else {
-      setEmployees(searchEmployees); // מחזיר חזרה את העובדים
-    }
+    // } else {
+    //   setEmployees(searchEmployees); // מחזיר חזרה את העובדים
+    // }
   };
 
   return (
     <div
       className={clsx(
-        "w-full justify-center flex  h-10 border border-white relative rounded-full items-center ",
+        "w-full justify-center  flex  h-10 border border-white relative rounded-full items-center ",
         {
           " bg-gradient-to-r from-blue_color via-blue_color to-[#EFF3FB]":
             !missionDay,
+            
         }
       )}
     >
       <input
+      onClick={()=>setSearchPopupAttendances(!searchPopupAttendances)}
         className={clsx(
-          "rounded-full pr-2 outline-none h-full placeholder:text-blue_color w-full bg-[#EFF3FB]",
+          "rounded-full pr-2 outline-none hover:cursor-pointer h-full placeholder:text-blue_color w-full bg-[#EFF3FB]",
           { "bg-white border": bg },
           { "w-[85%]": !missionDay }
         )}

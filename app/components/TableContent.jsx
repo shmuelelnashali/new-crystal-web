@@ -2,7 +2,6 @@ import { useState } from "react";
 import ReadObject from "./ReadObject";
 import UpdateObject from "./UpdateObject";
 import Image from "next/image";
-import { Toaster } from "react-hot-toast";
 
 export default function TableContent({
   data,
@@ -32,10 +31,10 @@ export default function TableContent({
                 }}
                 className={`pr-2  flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
               >
+                
                 <Image src={"/trash.svg"} height="20" width="20" alt="trash" />
               </div>
               
-              {/* <div className="w-full  "> */}
                 <div
                   className={`grid grid-cols-${headLength}   w-full justify-around gap-3 font-normal text-[18px] leading-5 text-blue_color`}
                 >
@@ -55,11 +54,9 @@ export default function TableContent({
                   )}
                   
                 </div>
-              {/* </div> */}
             </div>
           ))}
       </div>
-      {/* <Toaster position="top-center"/> */}
     </div>
   );
 }

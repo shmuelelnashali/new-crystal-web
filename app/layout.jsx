@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     <AuthProvider>
       <html lang="he" dir="rtl">
         <body
-          className={`h-screen p-2 flex  flex-col text-blue_color  ${open_sans.className}`}
+          className={`h-screen p-2 flex  flex-col text-blue_color  ${open_sans.className} overflow-hidden`}
         >
           <Header />
           {/* <ToastContainer

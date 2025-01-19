@@ -20,10 +20,11 @@ export default function Employees() {
   //FOR CONTAIN THE EMPLOYEES
   const [employees, setEmployees] = useState([]);
   const [allEmployees, setAllEmployees] = useState([]);
+
   // פופאפ לסינון
   const [filterPopUp, setFilterPopUp] = useState(false);
 
-  // מקבל שהוא הסינונים
+  // הסינונים שהוא מקבל
   const [filterData, setFilterData] = useState(null);
 
   // הוספת עובד חדש
@@ -34,6 +35,9 @@ export default function Employees() {
 
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+    // הבחירה לחיפוש
+  const [formData, setFormData] = useState({});
 
   const showEmployeesOrFilter = filterData
     ? employees.filter((employee) => {
@@ -179,6 +183,8 @@ export default function Employees() {
     setEmployees(employeeArray);
   };
 
+  
+
   const fetchEmployees = async () => {
     try {
       const response = await axios.get("/employees");
@@ -195,34 +201,17 @@ export default function Employees() {
 
   // console.log(employees,"כל העובדים");
 
-  const formatDepartmentData = (data) => {
-    const formatted = data.reduce((acc, company) => {
-      acc[company.name] = company.branches.map((branch) => {
-        return { [branch.name]: branch.sections || [] };
-      });
-      return acc;
-    }, {});
+  // const formatDepartmentData = (data) => {
+  //   const formatted = data.reduce((acc, company) => {
+  //     acc[company.name] = company.branches.map((branch) => {
+  //       return { [branch.name]: branch.sections || [] };
+  //     });
+  //     return acc;
+  //   }, {});
 
-    // console.log(formatted);
-  };
+  //   // console.log(formatted);
+  // };
 
-  useEffect(() => {
-    async function fetchDropdownData() {
-      try {
-        const response = await axios.get(
-          "departments?appendBranches=true&appendSections=true"
-        );
-        // console.log(response.data);
-
-        formatDepartmentData(response.data ?? []);
-      } catch (error) {
-        console.error("error fetching employees: ", error);
-        // throw error;
-      } finally {
-      }
-    }
-    fetchDropdownData();
-  }, []);
 
   const handleAddingNewRow = () => {
     setAddNewEmployee(true);
@@ -261,7 +250,7 @@ export default function Employees() {
     setFilterPopUp(!filterPopUp);
   };
 
-  // מסנן את המשימות לפי בחירה
+  // מסנן את העובדים לפי בחירה
   const filterSearch = (data) => {
     setFilterData(data);
   };
@@ -299,6 +288,8 @@ export default function Employees() {
               filterPopUp={filterPopUp}
               filterSearch={filterSearch}
               closeFilter={setFilterPopUp}
+              formData={formData}
+              setFormData={setFormData}
             />
           )}
         </div>

@@ -5,12 +5,11 @@ export default function ArrowEmployeesFilter({
   toggleOptionMenu,
   labelName,
   label,
-  selectOption,
   getOptionsArray,
   openLabel,
   handleOption,
   setOpenLabel,
-  fetchDepartments,
+  formData
 }) {
     const menuRef = useRef(null);
     useEffect(() => {
@@ -33,12 +32,12 @@ export default function ArrowEmployeesFilter({
     >
       <div
         className={`px-3 flex justify-between relative truncate w-full ${
-          selectOption[labelName] ? "text-[#002A78]" : "text-gray-400"
+          formData[labelName] ? "text-[#002A78]" : "text-gray-400"
         }`}
       >
         <div>
-          {selectOption[labelName]
-            ? selectOption[labelName]
+          {formData[labelName]
+            ? formData[labelName]
             // : labelName === "Year"
             // ? "YYYY"
             : "בחר " + label}
