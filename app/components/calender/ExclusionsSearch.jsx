@@ -54,7 +54,7 @@ export default function ExclusionsSearch({
 
       setUsers(sortedArray);
     } else {
-      setUsers(response.data ?? []);
+      setUsers(data ?? []);
     }
   };
   useEffect(() => {

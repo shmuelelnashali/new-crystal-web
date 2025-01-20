@@ -159,12 +159,20 @@ export default function PopupDay({
         )}
 
         {(events === "new" || events === "edit") && (
-          <button
-            onClick={() => addNewEvent()}
-            className="bg-blue_color flex gap-2 items-center text-white px-5 py-2 rounded-full"
-          >
-            <p>שמור</p>
-          </button>
+          <>
+            <button
+              onClick={() => addNewEvent()}
+              className="bg-blue_color flex gap-2 items-center text-white px-5 py-2 rounded-full"
+            >
+              <p>שמור</p>
+            </button>
+            <button
+              onClick={() => setEvents("add")}
+              className="bg-blue_color flex gap-2 items-center text-white px-5 py-2 rounded-full"
+            >
+              <p>בטל</p>
+            </button>
+          </>
         )}
 
         {activity && events !== "new" && events !== "edit" && (

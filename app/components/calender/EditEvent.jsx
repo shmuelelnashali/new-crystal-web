@@ -98,7 +98,7 @@ export default function EditEvent({
             setToggle={setToggle}
           />
           <div className="flex flex-col w-full ">
-            <div className="py-2">
+            <div className="">
               <div className="font-bold py-1"> תאריך </div>
 
               <div className="w-full flex justify-center  gap-1">
