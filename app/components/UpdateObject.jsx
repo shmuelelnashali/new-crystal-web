@@ -5,7 +5,6 @@ import InputEmployee from "./employees/InputEmployee";
 import axios from "../lib/axios";
 import { format } from "date-fns";
 import { toast } from "react-hot-toast";
-// import "react-toastify/dist/ReactToastify.css";
 
 export default function UpdateEmployee({
   hiddenEmployeeData,
@@ -26,7 +25,7 @@ export default function UpdateEmployee({
         [labelName]: value,
       },
     }));
-    console.log(formData);
+    // console.log(formData);
   };
 
 // השדות שנכנסים לעידכון עובד
@@ -155,7 +154,7 @@ export default function UpdateEmployee({
               onClick={updateEmployee}
               className="flex hover:cursor-pointer bg-[#002A78] gap-2 pl-4 px-2 text-white rounded-2xl p-1"
             >
-              <Image src={"/edit.svg"} width={15} height={15} alt="edit" />
+              <Image src={"/edit.svg"} width={18} height={18} alt="edit" />
               <div>עריכת עובד</div>
             </div>
           </div>

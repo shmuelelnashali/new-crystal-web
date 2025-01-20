@@ -84,7 +84,8 @@ export default function MissionTable({
       return 0
     });
   };
-
+  
+  
   const headLength = headTable.length;
 
   return (

@@ -8,25 +8,9 @@ import { toast } from "react-hot-toast";
 
 export default function AddNewEmployee({
   setAddNewEmployee,
-  setEmployees,
   fetchEmployees,
 }) {
   const [formData, setFormData] = useState({});
-
-  //   // useEffect(() => {
-  //   const postMission = async (newMission) => {
-  //     try {
-  //       const response = await axios.post(
-  //         `http://127.0.0.1:8000/api/employees/`,
-  //         newMission
-  //       );
-  //       setFormData((prev) => [response.data, ...prev]);
-  //     } catch (error) {
-  //       console.error("שגיאה ביצירת המשימה", error);
-  //     }
-  //   };
-  //   //   postMission();
-  //   // }, []);
 
   const onSubmit = async () => {
     const formatDate = (date) =>
@@ -56,7 +40,6 @@ export default function AddNewEmployee({
         `http://127.0.0.1:8000/api/employees/`,
         newEmployee
       );
-      //   setEmployees((prev) => [...prev,newEmployee ]);
       toast.success(response.data.message);
       setAddNewEmployee(false);
       fetchEmployees();

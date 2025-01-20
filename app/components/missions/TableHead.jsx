@@ -1,16 +1,42 @@
 import { MoveDown, MoveUp } from "lucide-react";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function TableHead({
   headTable,
-  headLength,
-  // handleSortDirectionChange,
   columnToSortOn,
   setColumnToSortOn,
 }) {
+  const pathName = usePathname()
+
+  
+  
   const handleClickArrows = (index, direction) => {
-    setColumnToSortOn({ index: index, direction: direction });
+    setColumnToSortOn({ index, direction }); 
+    const columnName = headTable[index]; 
+    
+    if (direction === "asc") {
+      toast(`סדר עולה הוחל על\n${columnName}`, {
+        icon: '⬆️',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    } else {
+      toast(`סדר יורד הוחל על\n${columnName}`, {
+        icon: '⬇️',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    }
   };
+  
 
   return (
     <div className="flex w-full bg-[#EFF3FB] p-1 sticky top-0 z-10">
@@ -27,6 +53,29 @@ export default function TableHead({
               }`}
             >
               <div className={`truncate`}>{head}</div>
+
+              {pathName.includes("mission") && 
+              <div className="mr-1 flex">
+              <MoveDown
+                onClick={() => {
+                  handleClickArrows(index,"desc")
+                }}
+                size={15}
+                color={
+                  columnToSortOn?.index === index  &&columnToSortOn?.direction==='asc'? "gray" : "white"
+                }
+              />
+              <MoveUp
+                onClick={() => {
+                  handleClickArrows(index,"asc") 
+                }}
+                size={15}
+                color={
+                  columnToSortOn?.index === index&&columnToSortOn?.direction==='desc'? "gray" : "white"
+                }
+              />
+            </div>}
+             
             </div>
           ))}
         </div>

@@ -49,7 +49,7 @@ export default function InputDateEmployee({
     <div className="w-full relative">
       <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
         <Image
-          src="/calender.svg"
+          src="/calendar.svg"
           width={20}
           height={20}
           alt="calender"
