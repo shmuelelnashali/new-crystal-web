@@ -84,6 +84,7 @@ function OrganizationTreeComponent() {
   const [employeesNumber, setEmployeesNumber] = useState(null);
   const [employees, setEmployees] = useState(null);
 
+
   const { message, setMessage } = useMessage();
   const { setPopUpForDeleteAndDisconnect } = usePopUpOptions();
   const { setPopUpForDeleteInClient } = usePopUpOptionsInClient();
@@ -430,7 +431,6 @@ function OrganizationTreeComponent() {
     return isValid;
   };
 
-  
   useEffect(() => {
     if (message) {
       message.status === "success"

@@ -1,22 +1,25 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Handle, Position, useReactFlow } from "reactflow";
+import { Handle, Position } from "reactflow";
 import "reactflow/dist/style.css";
 import PopUpForDeleteDisconnectInTree from "./PopUpForDeleteDisconnectInTree";
 import PopUpForDeleteInClient from "./PopUpForDeleteInClient";
-import { usePopUpOptions, usePopUpOptionsInClient } from "./GlobalState";
+import {
+  usePopUpOptions,
+  usePopUpOptionsInClient,
+  useDisconnected,
+  useColorFlag,
+} from "./GlobalState";
 
 export default function CustomNode({ id, data }) {
-  // const { getEdges } = useReactFlow();
-  // const edges = getEdges();
-  // const filteredEdgs = edges.filter((edge) => edge.target === id);
-  // const filteredIds = [];
-  // filteredEdgs.forEach((edge) => filteredIds.push(edge.id));
   const { popUpForDeleteAndDisconnect, setPopUpForDeleteAndDisconnect } =
     usePopUpOptions();
   const { popUpForDeleteInClient, setPopUpForDeleteInClient } =
     usePopUpOptionsInClient();
+  const { disconnected } = useDisconnected();
+  const [disconnectedColor, setDisconnectedColor] = useState(false);
+  const { flagColor } = useColorFlag();
 
   const whichPopUpToDisplay = () => {
     data.dbId
@@ -26,7 +29,7 @@ export default function CustomNode({ id, data }) {
 
   const handlePopUp = () => {
     if (data.level === "מדור") return;
-  
+
     const objLevel = {
       מחלקה: {
         url: "departments",
@@ -35,18 +38,36 @@ export default function CustomNode({ id, data }) {
       ענף: { url: "branches", type: "ענף" },
       מדור: { url: "sections", type: "מדור" },
     };
-  
+
     const hierarchy = ["יחידת על", "מחלקה", "ענף", "מדור"];
     const currentLevelIndex = hierarchy.indexOf(data.level);
     const levelToCreate = hierarchy[currentLevelIndex + 1];
-  
+
     data.setDisplayPopUpCreateNewUnit(true);
     data.setSelectedLevel(objLevel[levelToCreate]);
   };
-  
+
+  const paintTheDisconnectedNodes = () => {
+    const { nodesId } = disconnected;
+    if (nodesId.includes(id)) {
+      setDisconnectedColor(true);
+    }
+  };
+
+  useEffect(() => {
+    if (disconnected) {
+      paintTheDisconnectedNodes();
+    }
+  }, [disconnected]);
 
   return (
-    <div className="w-[180px] h-[90px] bg-[#E4EBF8] rounded-xl flex justify-center items-center text-[22px] font-normal text-[#002A78] shadow cursor-default relative py-3 pl-5 pr-4">
+    <div
+      className={`w-[180px] h-[90px] ${
+        disconnectedColor && flagColor ? "bg-[#FCDADA]" : "bg-[#E4EBF8]"
+      }  rounded-xl flex justify-center items-center text-[22px] font-normal ${
+        disconnectedColor && flagColor ? "text-[#B00000]" : "text-[#002A78]"
+      }  shadow cursor-default relative py-3 pl-5 pr-4`}
+    >
       <Handle
         type="target"
         position={Position.Top}
@@ -78,7 +99,15 @@ export default function CustomNode({ id, data }) {
         {data.level}
       </div>
       <div className="text-lg">{data.name}</div>
-      <div className="w-5 h-5 bg-white rounded-full border border-solid border-[#002A78] flex items-center justify-center absolute text-2xl text-[#002A78] left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2">
+      <div
+        className={`w-5 h-5 bg-white rounded-full border border-solid ${
+          disconnectedColor && flagColor
+            ? "border-[#B00000]"
+            : "border-[#002A78]"
+        }  flex items-center justify-center absolute text-2xl ${
+          disconnectedColor && flagColor ? "text-[#B00000]" : "text-[#002A78]"
+        } left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2`}
+      >
         +
       </div>
       <Handle

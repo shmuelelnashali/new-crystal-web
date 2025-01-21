@@ -1,18 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
+import axios from "@/app/lib/Axios";
 import { useReactFlow } from "reactflow";
-
+import { useDisconnected, useColorFlag } from "./GlobalState";
 
 export default function PopupDisconnect({
   unitToDeleteOrDisconnect,
   setPopUpDisconnect,
 }) {
   const { nodeId, level, name, dbId } = unitToDeleteOrDisconnect;
-  const { setEdges } = useReactFlow();
+  const { getNodes, getEdges, setEdges } = useReactFlow();
+  const { setDisconnected } = useDisconnected();
+  const { setFlagColor } = useColorFlag();
 
   const handleDisconnectUnit = () => {
     setEdges((prevEdges) => prevEdges.filter((edge) => edge.target !== nodeId));
+  };
+
+  const findTheDisconnected = () => {
+    const nodes = getNodes();
+    const edges = getEdges();
+    const disconnectedEdges = [];
+    const disconnectedNodes = [];
+
+    const rootNode = nodes.find((node) => node.id === nodeId);
+    disconnectedNodes.push(rootNode);
+
+    let childrenEdges = edges.filter((edge) => edge.source === nodeId);
+    if (childrenEdges.length > 0) {
+      disconnectedEdges.push(...childrenEdges);
+
+      childrenEdges.forEach((edge) => {
+        const node = nodes.find((node) => node.id === edge.target);
+        disconnectedNodes.push(node);
+
+        childrenEdges = edges.filter((edge) => edge.source === node.id);
+        if (childrenEdges.length > 0) {
+          disconnectedEdges.push(...childrenEdges);
+
+          childrenEdges.forEach((edge) => {
+            const node = nodes.find((node) => node.id === edge.target);
+            disconnectedNodes.push(node);
+          });
+        }
+      });
+    }
+
+    const nodesId = [];
+    disconnectedNodes.forEach((node) => {
+      nodesId.push(node.id);
+    });
+
+    const edgesId = [];
+    disconnectedEdges.forEach((edge) => {
+      edgesId.push(edge.id);
+    });
+
+    setDisconnected({ nodesId, edgesId });
   };
 
   const getCorrectSuffix = () => {
@@ -25,12 +69,16 @@ export default function PopupDisconnect({
     }
   };
 
+  useEffect(() => {
+    findTheDisconnected();
+  }, []);
+
   return (
     <div
       dir="rtl"
       className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50"
     >
-      <div className="bg-white  w-2/5 rounded-xl text-right pr-7 pl-3 py-3">
+      <div className="bg-white w-2/5 rounded-xl text-right pr-7 pl-3 py-3">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold leading-6 text-[#002A78] pt-3">
             ניתוק קשר
@@ -48,7 +96,7 @@ export default function PopupDisconnect({
         </div>
 
         <p className="text-[#002A78] text-xl font-normal pb-3">
-          האם ברצונך לנתק את "{level}" {name} {getCorrectSuffix()} ?
+          האם ברצונך לנתק את {level} {name} {getCorrectSuffix()} ?
         </p>
         <div className="flex w-full  justify-end pl-2 pb-1">
           <button
@@ -58,7 +106,9 @@ export default function PopupDisconnect({
             ביטול
           </button>
           <button
-            onClick={handleDisconnectUnit}
+            onClick={() => {
+              handleDisconnectUnit(), setFlagColor(true);
+            }}
             className="bg-blue_color text-white rounded-full px-6  mr-1 text-xl font-normal"
           >
             נתק

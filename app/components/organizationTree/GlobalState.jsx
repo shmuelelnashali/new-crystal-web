@@ -6,6 +6,8 @@ const PopUpOptionsInClientContext = createContext(null);
 const MessageContext = createContext(null);
 const SelectMonths = createContext(null);
 const SelectYears = createContext(null);
+const FlagColorContext = createContext(null);
+const DisconnectContext = createContext(null);
 
 export function AppProviders({ children }) {
   const [popUpForDeleteAndDisconnect, setPopUpForDeleteAndDisconnect] =
@@ -14,6 +16,8 @@ export function AppProviders({ children }) {
   const [message, setMessage] = useState(null);
   const [displaySelectMonths, setDisplaySelectMonths] = useState(false);
   const [displaySelectYears, setDisplaySelectYears] = useState(false);
+  const [disconnected, setDisconnected] = useState(null);
+  const [flagColor, setFlagColor] = useState(false);
 
   return (
     <MessageContext.Provider value={{ message, setMessage }}>
@@ -29,7 +33,13 @@ export function AppProviders({ children }) {
             <SelectYears.Provider
               value={{ displaySelectYears, setDisplaySelectYears }}
             >
-              {children}
+              <DisconnectContext.Provider
+                value={{ disconnected, setDisconnected }}
+              >
+                <FlagColorContext.Provider value={{ flagColor, setFlagColor }}>
+                  {children}
+                </FlagColorContext.Provider>
+              </DisconnectContext.Provider>
             </SelectYears.Provider>
           </SelectMonths.Provider>
         </PopUpOptionsInClientContext.Provider>
@@ -56,4 +66,12 @@ export const useSelectMonths = () => {
 
 export const useSelectYears = () => {
   return useContext(SelectYears);
+};
+
+export const useDisconnected = () => {
+  return useContext(DisconnectContext);
+};
+
+export const useColorFlag = () => {
+  return useContext(FlagColorContext);
 };
