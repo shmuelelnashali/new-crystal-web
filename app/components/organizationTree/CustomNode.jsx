@@ -93,7 +93,7 @@ export default function CustomNode({ id, data }) {
         }}
         className="absolute left-0 top-2 cursor-pointer"
       >
-        <Image src={"/more.svg"} width={17} height={17} alt="more" />
+        <Image src={"/more.svg"} width={17} height={17} alt="more"/>
       </div>
       <div className="text-xs font-normal text-[#002A784A] w-fit absolute right-2 top-1">
         {data.level}
@@ -129,7 +129,6 @@ export default function CustomNode({ id, data }) {
       />
       {popUpForDeleteAndDisconnect === id && (
         <PopUpForDeleteDisconnectInTree
-          // filteredIds={filteredIds}
           setPopUpDeleteUnitWithPeople={data.setPopUpDeleteUnitWithPeople}
           setPopUpDeleteEmptyUnit={data.setPopUpDeleteEmptyUnit}
           setPopUpDisconnect={data.setPopUpDisconnect}

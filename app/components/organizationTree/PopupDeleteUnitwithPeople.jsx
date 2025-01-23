@@ -4,7 +4,6 @@ import Image from "next/image";
 import axios from "@/app/lib/Axios";
 import CustomCalendar from "./CustomCalendar";
 import { useMessage, useSelectMonths, useSelectYears } from "./GlobalState";
-import Employees from "@/app/(routes)/employees/page";
 
 export default function PopupDeleteUnitwithPeople({
   unitToDeleteOrDisconnect,
@@ -80,7 +79,6 @@ export default function PopupDeleteUnitwithPeople({
       deleteUnitWithEmployees(), setPopUpDeleteUnitWithPeople(false);
     }
   };
-
 
   return (
     <div
@@ -168,7 +166,7 @@ export default function PopupDeleteUnitwithPeople({
           )}
 
           <h3 className="text-lg font-semibold text-blue_color pt-2 pb-[2px]">
-            לאיזה מדור תרצה לשייך את העובדים?
+            {`לאיזה מדור תרצה לשייך את ה${level !== "מדור"? "עובד": "עובדים"} ?`}
           </h3>
           <div className="pb-2 flex relative">
             <div
@@ -220,7 +218,7 @@ export default function PopupDeleteUnitwithPeople({
             )}
           </div>
           <h3 className="text-lg font-semibold text-blue_color pb-[2px]">
-            מאיזה תאריך העובדים יעברו למדור החדש ?
+           {`מאיזה תאריך ה${level !== "מדור"? "עובד יעבור": "עובדים יעברו"} למדור החדש ?`}
           </h3>
           {<CustomCalendar startDate={startDate} setStartDate={setStartDate} />}
         </div>
