@@ -1,0 +1,19 @@
+import Image from "next/image";
+
+export default function BtnForAddNewUnit({ setPopUpSelectUnit }) {
+  return (
+    <div className="p-5 absolute z-10">
+      <button
+        onClick={(e) => {
+          e.stopPropagation(), setPopUpSelectUnit(true);
+        }}
+        className="bg-[#002A78] w-[128px] h-[42px] border-none rounded-[35px] flex items-center justify-center cursor-pointer"
+      >
+        <span className="text-white text-xl w mr-[8px]">
+          הוסף
+        </span>
+        <Image className="text-white" src={"./plusForTree.svg"} alt="plusForTree" width={20} height={20} />
+      </button>
+    </div>
+  );
+}

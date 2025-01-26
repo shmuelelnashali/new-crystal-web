@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { useReactFlow } from "reactflow";
+import { usePopUpOptions } from "./GlobalState";
 
 const Container = styled.div`
   width: 225px;
@@ -37,22 +37,44 @@ const Item = styled.div`
 `;
 
 export default function PopUpForDeleteDisconnectInTree({
-  setShowPopUp,
   filteredIds,
-  setShowPopUpDelete,
-  setShowPopUpDisconnect
+  setPopUpDeleteUnitWithPeople,
+  setPopUpDeleteEmptyUnit,
+  setPopUpDisconnect,
+  employees,
+  setEmployeesNumber,
+  unitName,
+  level,
 }) {
-  
-  const { setEdges } = useReactFlow();
+  const { setPopUpForDeleteAndDisconnect } = usePopUpOptions();
 
-  const disconnectEdge = () => {
-    setEdges((prevEdges) =>
-      prevEdges.filter((edge) => !filteredIds.includes(edge.id))
-    );
+  const levelMapping = {
+    מחלקה: "department_name",
+    ענף: "branch_name",
+    מדור: "section_name",
   };
 
-  const deleteNodePopUp = () => {setShowPopUpDelete(true)};
-  const disconnectNodePopUp = () => {setShowPopUpDisconnect(true)};
+  const getEmployeesNumberByUnit = () => {
+    const levelKey = levelMapping[level];
+    const employeesByUnit = employees.filter(
+      (employee) => employee[levelKey] === unitName
+    ).length;
+
+    setEmployeesNumber(employeesByUnit);
+    return employeesByUnit;
+  };
+
+  const deleteNodePopUp = () => {
+    if (getEmployeesNumberByUnit() > 0) {
+      setPopUpDeleteUnitWithPeople(true);
+      return;
+    }
+    setPopUpDeleteEmptyUnit(true);
+  };
+
+  const disconnectNodePopUp = () => {
+    setPopUpDisconnect(true);
+  };
 
   const options = [
     { name: "מחק", func: deleteNodePopUp },
@@ -64,9 +86,10 @@ export default function PopUpForDeleteDisconnectInTree({
       {options.map((option, index) => (
         <Item
           key={index}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             option.func();
-            setShowPopUp(false);
+            setPopUpForDeleteAndDisconnect(false);
           }}
         >
           <span className="pr-3">{option.name}</span>

@@ -1,10 +1,9 @@
 "use client";
-
 import styled from "styled-components";
 
 const Container = styled.div`
   width: 161px;
-  height: 109px;
+  height: 43px;
   background-color: #ffffff;
   border: 0.6px solid #000000cc;
   border-radius: 8px;
@@ -13,8 +12,8 @@ const Container = styled.div`
   justify-content: center;
   box-shadow: 0px 0px 10px #ffffff80;
   position: absolute;
-  top: 54px;
-  left: 78px;
+  top: -20px;
+  left: -40px;
   z-index: 10;
 `;
 
@@ -36,30 +35,21 @@ const Item = styled.div`
   }
 `;
 
-export default function PopUpForTree({
-  setShowPopUpCreateUnit,
-  setSelectedLevel,
+export default function PopUpDeleteInClient({
+  setPopUpForDeleteInClient,
+  setPopUpDeleteEmptyUnit,
 }) {
-  const objLevel = {
-    departments: "מחלקה",
-    branches: "ענף",
-    sections: "מדור",
-  };
-
   return (
-    <>
-      <Container>
-        {Object.entries(objLevel).map(([url, type], index) => (
-          <Item
-            key={index}
-            onClick={() => {
-              setShowPopUpCreateUnit(true), setSelectedLevel({ url, type });
-            }}
-          >
-            <span className="pr-3">הוסף {type}</span>
-          </Item>
-        ))}
-      </Container>
-    </>
+    <Container>
+      <Item
+        onClick={(e) => {
+          e.stopPropagation(),
+            setPopUpDeleteEmptyUnit(true),
+            setPopUpForDeleteInClient(false);
+        }}
+      >
+        <span className="pr-3">מחק</span>
+      </Item>
+    </Container>
   );
 }

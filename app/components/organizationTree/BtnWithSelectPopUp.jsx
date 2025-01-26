@@ -1,44 +1,54 @@
 "use client";
 
 import { useState } from "react";
-import BtnForOrganizationTree from "./BtnForOrganizationTree";
-import PopUpForTree from "./PopUpForTree";
-import { PopUpCreateUnit } from "./PopUpCreateUnit";
+import BtnForAddNewUnit from "./BtnForAddNewUnit";
+import SelectNewUnitType from "./SelectNewUnitType";
+import { PopUpCreateNewUnit } from "./PopUpCreateNewUnit";
 
 export default function BtnWithSelectPopUp({
-  showPopUpSelectUnit,
-  setShowPopUpSelectUnit,
+  popUpSelectUnit,
+  setPopUpSelectUnit,
   setNodes,
   unitName,
   setUnitName,
   selectedLevel,
-  setSelectedLevel
-
-
-
-
-  
+  setSelectedLevel,
+  setUnitToDeleteOrDisconnect,
+  employees,
+  setEmployeesNumber,
+  setPopUpDeleteEmptyUnit,
+  setPopUpForDeleteInClient,
+  displayPopUpCreateNewUnit,
+  setDisplayPopUpCreateNewUnit,
 }) {
-  const [showPopUpCreateUnit, setShowPopUpCreateUnit] = useState(false);
+  const [idCounter, setIdCounter] = useState(0);
 
   return (
     <div className="relative">
-      <BtnForOrganizationTree setShowPopUpSelectUnit={setShowPopUpSelectUnit} />
+      <BtnForAddNewUnit setPopUpSelectUnit={setPopUpSelectUnit} />
 
-      {showPopUpSelectUnit && (
-        <PopUpForTree
-          setShowPopUpCreateUnit={setShowPopUpCreateUnit}
+      {popUpSelectUnit && (
+        <SelectNewUnitType
+          setDisplayPopUpCreateNewUnit={setDisplayPopUpCreateNewUnit}
+          setPopUpSelectUnit={setPopUpSelectUnit}
           setSelectedLevel={setSelectedLevel}
         />
       )}
 
-      {showPopUpCreateUnit && (
-        <PopUpCreateUnit
-          setShowPopUpCreateUnit={setShowPopUpCreateUnit}
+      {displayPopUpCreateNewUnit && (
+        <PopUpCreateNewUnit
+          setDisplayPopUpCreateNewUnit={setDisplayPopUpCreateNewUnit}
           selectedLevel={selectedLevel}
           setNodes={setNodes}
           unitName={unitName}
           setUnitName={setUnitName}
+          setUnitToDeleteOrDisconnect={setUnitToDeleteOrDisconnect}
+          employees={employees}
+          setEmployeesNumber={setEmployeesNumber}
+          setPopUpDeleteEmptyUnit={setPopUpDeleteEmptyUnit}
+          idCounter={idCounter}
+          setIdCounter={setIdCounter}
+          setPopUpForDeleteInClient={setPopUpForDeleteInClient}
         />
       )}
     </div>
