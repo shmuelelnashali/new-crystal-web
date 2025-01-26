@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 import { he } from "date-fns/locale";
+import toast from "react-hot-toast";
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "";
@@ -29,16 +30,16 @@ const timeStructure = (timeValue) => {
   if (timeValue.length === 2 && !timeValue.includes(":")) {
     timeValue += ":";
   } else if (timeValue.length === 5 && timeValue.split(":").length === 2) {
-    timeValue += ":";
+    timeValue += ":00";
   }
 
   // Split the input into hours, minutes, and seconds
   const [hours, minutes, seconds] = timeValue.split(":");
 
   // Validate hours, minutes, and seconds
-  if (hours && parseInt(hours) > 23) return null;
-  if (minutes && parseInt(minutes) > 59) return null;
-  if (seconds && parseInt(seconds) > 59) return null;
+  if (hours && parseInt(hours) > 23) return 
+  if (minutes && parseInt(minutes) > 59) return 
+  if (seconds && parseInt(seconds) > 59) return 
 
   return timeValue;
 };

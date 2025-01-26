@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Search({
+export default function  Search({
   textBtn,
   addNew,
   addImage,
