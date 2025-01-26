@@ -13,10 +13,18 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        blue_color: '#002A78',
-      }
+        blue_color: "#002A78",
+        light_blue: " #F7F9FD",
+      },
+      gridTemplateColumns: {
+        // Create a dynamic grid based on a number
+        dynamic: "repeat(var(--grid-cols), minmax(0, 1fr))",
+      },
+      boxShadow: {
+        input: " 0px 0px 6.12px -4.68px #0000001A",
+      },
     },
   },
+
   plugins: [],
 };
-
