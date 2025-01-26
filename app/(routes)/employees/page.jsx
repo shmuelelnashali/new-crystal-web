@@ -179,7 +179,7 @@ export default function Employees() {
           surname: employee.surname,
         },
       }));
-    setAllEmployees(employeeArray);
+    setAllEmployees(employeeArray); 
     setEmployees(employeeArray);
   };
 
@@ -303,7 +303,7 @@ export default function Employees() {
             deleteEmployeeById={deleteEmployeeById}
           />
         </div>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" /> 
       </div>
       {showConfirmation && (
         <PopupDelete

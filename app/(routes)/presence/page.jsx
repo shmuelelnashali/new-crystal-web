@@ -12,6 +12,7 @@ import Image from "next/image";
 import SearchPopup from "@/app/components/presence/SearchPopup";
 import PopupForMissions from "@/app/components/presence/PopupForMissions";
 import PopupDelete from "@/app/components/PopupDelete";
+import { Toaster } from "react-hot-toast";
 
 // const arr = {
 //   date_time: "1978-07-28 ",
@@ -116,9 +117,9 @@ export default function Page() {
       console.error(error);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const formatEmployees = (data) => {
     // console.log(data,"before");
@@ -217,7 +218,7 @@ export default function Page() {
         />
       )}
     </div> 
-    
+    <Toaster position="top-center" /> 
     </>
   );
 }

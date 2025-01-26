@@ -2,15 +2,9 @@ import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import ToggleCode from "./ToggleCode";
 
-export function CodeSelector({ value, onChange, isOpen, setIsOpen }) {
+export function CodeSelector({ value, onClick, isOpen, setIsOpen }) {
   
-  // const [isOpen, setIsOpen] = useState(false);
   // const buttonRef = useRef(null);
-
-  // const handleCodeSelect = (code) => {
-  //   onChange(code);
-  //   setIsOpen(false);
-  // };
 
     // useEffect(() => {
     //   if (isOpen && buttonRef.current) {
@@ -22,14 +16,13 @@ export function CodeSelector({ value, onChange, isOpen, setIsOpen }) {
     // }, [isOpen]);
 
   return (
-    <>
-      {/* <div className=" "> */}
+    
       <div
       // ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-white  hover:cursor-pointer flex border border-blue_color rounded-full items-center relative w-full"
+        onClick={() => {onClick(), setIsOpen(!isOpen)}}
+        className="bg-white  hover:cursor-pointer flex border border-blue_color truncate rounded-full items-center relative w-full"
       >
-        <div className="w-full text-center">{value || "-"}</div>
+        <div className="w-full text-center truncate pl-5 pr-2">{value || "-"}</div>
         <Image
           src="/downArrow.svg"
           width={10}
@@ -39,14 +32,13 @@ export function CodeSelector({ value, onChange, isOpen, setIsOpen }) {
         />
       </div>
 
-      {/* </div> */}
-      {/* {isOpen && (
-        <ToggleCode
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onSelect={handleCodeSelect}
-        />
-      )} */}
-    </>
-  );
+
+);
 }
+{/* {isOpen && (
+  <ToggleCode
+    isOpen={isOpen}
+    onClose={() => setIsOpen(false)}
+    onSelect={handleCodeSelect}
+  />
+)} */}

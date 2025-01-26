@@ -7,9 +7,10 @@ import { format, isValid, parse } from "date-fns";
 import { CirclePlus } from "lucide-react";
 import BtnAddMission from "./BtnAddMission";
 import StartEndMissionTime from "./StartEndMissionTime";
-import { Ojuju } from "next/font/google";
 import ManualUpdates from "./ManualUpdates";
 import { timeStructure } from "@/app/util/dateFormat";
+import AttendanceMissions from "./AttendanceMissions";
+import toast from "react-hot-toast";
 
 export default function PopupForMissions({
   setPopUpForMission,
@@ -35,6 +36,8 @@ export default function PopupForMissions({
   const [updatesHistory, setUpdatesHistory] = useState(false);
   //  להביא את המשימות בעריכה
   const [getMission, setGetMission] = useState(false);
+  const [getMissionFilter, setGetMissionFilter] = useState([]);
+  const [getIndex, setGetIndex] = useState(null);
   // על איזו משימה לחצתי כדי לערוך
   // const [clickedMissionId,
   // ] = useState(null);
@@ -43,29 +46,109 @@ export default function PopupForMissions({
   // שינוי משימה
   const [mission_id_num_name, setMission_id_num_name] = useState(null);
 
-  const handleChange = (missionId, fieldName, value) => {
-    const updatedMissions = missions.map((mission) => {
-      if (mission.mission_id === missionId) {
+  const handleChange =  (mission,  value) => {
+    const updatedMissions = missions.map((missionVal) => {
+      if (missionVal.mission_id === mission.mission_id) {
         return {
-          ...mission,
-          [fieldName]: value, // Update the specific field for this mission
+          ...missionVal,
+          ...value, // Update the specific field for this mission
         };
       }
-      return mission; // Keep other missions unchanged
-    });
-
-    setMissions(updatedMissions);
+      
+      return missionVal; // Keep other missions unchanged
+    });    
+    setMissions(updatedMissions)
   };
 
   // האינפוט של השעות
-  const handleTimeChange = (field, missionId, e) => {
-    let inputValue = e.target.value;
-    //HH/MM/SS פונקצייה שעושה מבנה של
-    const formattedValue = timeStructure(inputValue);
+  const handleTimeChange = async (mission, e) => {
+    let inputValue = e.target.value.replace(/[^\d]/g, ''); 
+    const isStartTime = e.target.name === "start_time";
+    
+    // Only process if we have a complete time value (HH:MM)
+    // if (inputValue.length === 5) {
 
-    if (formattedValue !== null) {
-      handleChange(missionId, field, formattedValue);
+    //HH:MM שומר על מבנה 
+    let displayValue = inputValue;
+    if (inputValue.length > 2) {
+      displayValue = inputValue.slice(0, 2) + ":" + inputValue.slice(2);
     }
+  
+    // לא מורשה מעל 24:00
+    const validatedValue = timeStructure(displayValue);
+      
+      if (validatedValue !== null) {
+        // Update local state first
+        handleChange(mission, {
+          [isStartTime ? "start_time" : "end_time"]: validatedValue,
+        });
+  
+        // Prepare the updated mission data
+        const updatedMission = {
+          attendance_id: nameAndDateForRow.id,
+          mission_id: mission.mission_id,
+          mission_name: mission.mission_name,
+          mission_number: mission.mission_number,
+          start_time: isStartTime ? validatedValue : mission.start_time,
+          end_time: !isStartTime ? validatedValue : mission.end_time,
+        };
+        console.log(updatedMission);
+        
+        try {
+          // Only make the API call when we have a complete time value
+          const response = await axios.put(
+            `/attendanceMissions/${nameAndDateForRow.id}`,
+            updatedMission
+          );
+          // console.log(response,"ss");
+  
+          // Update state after successful API call
+          setMissions(prevMissions =>
+            prevMissions.map(missionVal =>
+              missionVal.mission_id === nameAndDateForRow.id
+                ? { ...missionVal, ...updatedMission }
+                : missionVal
+            )
+          );
+  
+          setMission_id_num_name(prev => ({
+            ...prev,
+            ...updatedMission,
+          }));
+          toast.success(response.data.message);
+        } catch (error) {
+          if (error.response?.data) {
+            console.log(error.response.data, "eee");
+            
+            let errorDetails = '';
+            
+            // Handle nested arrays in the error object
+            if (typeof error.response.data === 'object') {
+              Object.entries(error.response.data).forEach(([key, messages]) => {
+                if (Array.isArray(messages)) {
+                  // Join all messages from the array with newlines
+                  errorDetails += messages.join('\n');
+                  if (errorDetails) errorDetails += '\n'; // Add newline between different fields
+                }
+              });
+            }
+        
+            toast.error(`שגיאה בעידכון המשימה\n${errorDetails.trim()}`);
+            return;
+          }
+        
+          console.error(
+            "שגיאה בעידכון המשימה",
+            error.response?.data || error.message
+          );
+        }
+      }
+    // } else {
+    //   // Just update local state while typing
+    //   handleChange(mission, {
+    //     [isStartTime ? "start_time" : "end_time"]: inputValue,
+    //   });
+    // }
   };
 
   // להביא את המשימות לפי נוכחות יומית
@@ -95,6 +178,7 @@ export default function PopupForMissions({
   const closePopUp = () => {
     setPopUpForMission(false);
   };
+
   // כפתור הוספת משימה
   const addMissionBtn = () => {
     setAddMissions(true);
@@ -108,59 +192,71 @@ export default function PopupForMissions({
       const response = await axios.get(`/missions`);
       const data = response.data;
       setTheMissionFetch(data);
+      setGetMissionFilter(data)
     } catch (error) {
       console.error(error);
     }
   };
 
   // המשימות על מצב עריכה
-  const handleMissionUpdate = (missionId, e) => {
-    e.stopPropagation();
-    setMission_id_num_name(missionId);
-  };
+ const handleMissionUpdate = (mission, e, index) => {
+  e.stopPropagation();
+  
+  // If clicking on the same mission that's already being edited, close the edit mode
+  if (mission_id_num_name && mission.mission_id === mission_id_num_name.mission_id) {
+    setMission_id_num_name(null);
+    setGetIndex(null);
+  } else {
+    // Otherwise, set the new mission for editing
+    setMission_id_num_name(mission);
+    setGetIndex(index);
+  }
+};
 
   // המשימה שהשתנתה
   const handleMissionChange = async (mis, e) => {
     e.stopPropagation();
-    
+
     // Create the updated mission data
     const updatedMission = {
+      attendance_id: nameAndDateForRow.id,
+      mission_id: mis.mission_id,
       mission_name: mis.mission_name,
       mission_number: mis.mission_number,
       start_time: mission_id_num_name.start_time || mis.start_time,
-      end_time: mission_id_num_name.end_time || mis.end_time
+      end_time: mission_id_num_name.end_time || mis.end_time,
     };
-    
-    console.log(mission_id_num_name,"rr");
+
     try {
       // Send the updated data in the PUT request
       const response = await axios.put(
-        `/attendanceMissions/${mission_id_num_name.mission_id}`, 
+        `/attendanceMissions/${nameAndDateForRow.id}`,
         updatedMission
       );
-  
+
       // Update local state only after successful API call
-      setMissions(missions.map(mission => {
-        if (mission.mission_id === mission_id_num_name.mission_id) {
-          return {
-            ...mission,
-            ...updatedMission
-          };
-        }
-        return mission;
-      }));
-  
+      setMissions(
+        missions.map((mission) => {
+          if (mission.mission_id === nameAndDateForRow.id) {
+            return {
+              ...mission,
+              ...updatedMission,
+            };
+          }
+          return mission;
+        })
+      );
+
       // Update the selected mission state
-      setMission_id_num_name(prev => ({
+      setMission_id_num_name((prev) => ({
         ...prev,
-        ...updatedMission
+        ...updatedMission,
       }));
-  
+
       // Close the mission selection dropdown
       setGetMission(false);
-  
     } catch (error) {
-      console.error('Failed to update mission:', error);
+      console.error("Failed to update mission:", error);
       // Optionally add error handling UI feedback here
     }
   };
@@ -231,125 +327,23 @@ export default function PopupForMissions({
                   </div>
                   {/* המשימות */}
                   <div className="dirLtr h-[85%] overflow-y-auto ">
-                    {missions.map((mission) => (
-                      <div
-                        onClick={(e) => {
-                          handleMissionUpdate(mission, e);
-                        }}
-                        className="flex dirRtl "
-                        key={mission.mission_id}
-                      >
-                        {mission_id_num_name?.mission_id ===
-                          mission.mission_id && (
-                          <div
-                            onClick={() => {
-                              deleteMissionById(mission);
-                            }}
-                            className="bg-red-100 my-0.5 px-0.5 mx-0.5 rounded-md flex items-center justify-center"
-                          >
-                            <Image
-                              src={"/trash.svg"}
-                              width={20}
-                              height={20}
-                              alt="trash"
-                            />
-                          </div>
-                        )}
-
-                        <div
-                          // onClick={(e) => {
-                          //   handleMissionUpdate(mission.mission_id, e);
-                          // }}
-                          className="w-full justify-center items-center"
-                        >
-                          <div className="bg-[#E4EBF8]   flex items-center justify-around py-1 mx-2 rounded-lg my-2">
-                            {mission_id_num_name?.mission_id !==
-                            mission.mission_id ? (
-                              <>
-                                <div className="w-[50%] pr-4 text-center">
-                                  {mission.mission_number}
-                                </div>
-                                <div className="w-[50%] truncate text-center">
-                                  {mission.mission_name}
-                                </div>
-                              </>
-                            ) : (
-                              <div
-                                onClick={(e) => {
-                                  handleSearchMission(e);
-                                }}
-                                className="w-[95%] cursor-pointer relative flex justify-around items-center border border-blue_color rounded-full bg-white"
-                              >
-                                <Image
-                                  className="absolute left-2 "
-                                  src={"/downArrow.svg"}
-                                  width={10}
-                                  height={10}
-                                  alt="arrow"
-                                />
-                                <input
-                                  className="w-full outline-none cursor-pointer rounded-full truncate pl-2 pr-4 placeholder:text-blue_color"
-                                  type="text"
-                                  // value={`${
-                                  //   mission_id_num_name.mission_number
-                                  // }${"\u00A0".repeat(30)}${mission_id_num_name.mission_name}`}
-                                  // onChange={(e)=>handleMissionChange(e, mission)}
-                                  placeholder={
-                                    isFocused
-                                      ? ""
-                                      : `${
-                                          mission_id_num_name.mission_number
-                                        }${"\u00A0".repeat(30)}${
-                                          mission_id_num_name.mission_name
-                                        }`
-                                  }
-                                  onFocus={() => setIsFocused(true)} // Trigger when the input is focused
-                                  onBlur={() => setIsFocused(false)} // Trigger when the input loses focus
-                                />
-                                {getMission && (
-                                  <>
-                                    <div className="absolute dirLtr top-full z-50 border w-full max-h-60 overflow-y-auto bg-white rounded-lg px-1 py-1">
-                                      {theMissionFetch.map((mis, index) => (
-                                        <div
-                                          key={index}
-                                          onClick={(e) =>
-                                            handleMissionChange(mis, e)
-                                          }
-                                          className="hover:bg-blue_color py-2 px-2 hover:cursor-pointer hover:text-white hover:rounded-lg"
-                                        >
-                                          <div className="flex dirRtl w-full text-right">
-                                            <div className="w-[50%]">
-                                              {mis.mission_number}
-                                            </div>
-                                            <div className="w-[50%] truncate">
-                                              {mis.mission_name}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                    {/* סוגר את הפופאפ בלחיצה בחוץ */}
-                                    {/* <div
-                                      onClick={setGetMission(false)}
-                                      className="fixed hover:cursor-default  inset-0  "
-                                    ></div> */}
-                                  </>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                          {/* שעת התחלה ושעת סיום */}
-                          <StartEndMissionTime
-                            clickOnMissions={
-                              mission_id_num_name?.mission_id ===
-                              mission.mission_id
-                            }
-                            handleTimeChange={handleTimeChange}
-                            mission={mission}
-                          />
-                        </div>
-                      </div>
-                    ))}
+                    <AttendanceMissions 
+                    missions={missions}
+                    mission_id_num_name={mission_id_num_name}
+                    isFocused={isFocused}
+                    setIsFocused={setIsFocused}
+                    getMission={getMission}
+                    setGetMission={setGetMission}
+                    theMissionFetch={theMissionFetch}
+                    handleMissionUpdate={handleMissionUpdate}
+                    handleSearchMission={handleSearchMission}
+                    handleTimeChange={handleTimeChange}
+                    handleMissionChange={handleMissionChange}
+                    deleteMissionById={deleteMissionById}
+                    getIndex={getIndex}
+                    getMissionFilter={getMissionFilter}
+                    setGetMissionFilter={setGetMissionFilter}
+                    />
                   </div>
                 </>
               ) : (

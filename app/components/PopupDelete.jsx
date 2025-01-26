@@ -12,13 +12,22 @@ export default function PopupDelete({
   urlPage,
   nameAndDateForRow
 }) {
-  console.log(objectToDelete.mission_id,"id");
+  // console.log(objectToDelete.mission_id,"id");
   
   const axiosDelete = async () => {
-    console.log(objectToDelete,"obbbbb");
+    // console.log(objectToDelete,"obbbbb");
     
     try {
-      const response =await axios.delete(`/employees/${objectToDelete.id}`,{is_active:0})
+      let urlToDelete = ''
+      if (objectToDelete.id) {
+        urlToDelete = `/employees/${objectToDelete.id}`,{is_active:0}
+      } else if(objectToDelete.mission_id){
+        urlToDelete = `/api/attendanceMissions/${objectToDelete.mission_id}`
+      }
+       else{
+       new Error ('url לא מזוהה')
+      }
+      const response =await axios.delete(urlToDelete)
       const deleted = response.data.message
       toast.success(deleted)
       console.log(deleted,"dddddd");
@@ -41,28 +50,28 @@ export default function PopupDelete({
   );
   
   const stringForEmployee = objectToDelete
-  ? `${objectToDelete.first_name || ""} ${objectToDelete.surname || ""}`.trim()
+  ? `${objectToDelete?.first_name || ""} ${objectToDelete?.surname || ""}`.trim()
   : "";
 
   const stringForAttendancesMission = objectToDelete
-  ? `${objectToDelete.mission_name || ""}`.trim()
+  ? `${objectToDelete?.mission_name || ""}`.trim()
   : "";
 
   const stringForAttendancesMissionDate = objectToDelete
-  ? `מ${nameAndDateForRow.date_time || ""}`.trim()
+  ? `${nameAndDateForRow?.date_time || ""}`.trim()
   : "";
 
   const stringForAgreement = objectToDelete
-  ? `${objectToDelete.agreement || ""}`.trim()
+  ? `${objectToDelete?.agreement || ""}`.trim()
   : "";
   const objectId = objectToDelete
-  ? `${objectToDelete.id || ""}`.trim()
+  ? `${objectToDelete?.id || ""}`.trim()
   : "";
   const objectMission = objectToDelete
-  ? `${objectToDelete.taskName || ""}`.trim()
+  ? `${objectToDelete?.taskName || ""}`.trim()
   : "";
   const stringForReportMeasure = objectToDelete
-  ? `${objectToDelete.measure || ""}`.trim()
+  ? `${objectToDelete?.measure || ""}`.trim()
   :""
   return (
     <div className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50">
@@ -75,11 +84,13 @@ export default function PopupDelete({
         </div>
         <h1 className="font-bold leading-6	"> {headerText} </h1>
         <p>
-          {messageText} "{stringForEmployee||objectToDelete?.first_name}{stringForAttendancesMission}{objectToDelete?.lastName}{objectToDelete?.agreementName} 
-          {/* {objectToDelete?.id} */}
-          " {stringForAttendancesMissionDate}?
-          
-        </p>
+  {messageText} "{stringForEmployee || objectToDelete?.first_name}
+  {stringForAttendancesMission ? `${stringForAttendancesMission}` : ""}
+  {objectToDelete?.lastName ? `${objectToDelete.lastName}` : ""}
+  {objectToDelete?.agreementName ? `${objectToDelete.agreementName}` : ""}"
+  {stringForAttendancesMissionDate ? ` מ ${stringForAttendancesMissionDate}` : ""} ?
+</p>
+
         <div className="flex w-full  justify-end mt-4">
           <button
             onClick={() => {showPopup(false), cancelDelete()}}

@@ -23,17 +23,22 @@ export default function PresenceTableHead() {
         {headers.map((header, index) => (
           <div
             className={clsx("flex justify-center truncate items-center", {
-              "col-span-3 grid grid-cols-3 ": Array.isArray(header),
+              "col-span-3 grid grid-cols-3  ": Array.isArray(header),
+            
             })}
             key={index}
           >
             {Array.isArray(header)
               ? header.map((subHeader, subIndex) => (
                   <div
-                    className="flex justify-center items-center"
+                    className={clsx(`flex  w-full justify-center  items-center`,{})}
                     key={subIndex}
                   >
-                   <div className="truncate">{subHeader}</div> 
+                   <div className={clsx(`truncate w-full`,{
+                      " text-center pr-8 ": subHeader === "יציאה",
+                      " text-left ": subHeader === "כניסה" || subHeader === "קוד פעילות",
+                    })}
+                    >{subHeader}</div> 
                   </div>
                 ))
               : <div className="truncate">{header}</div> }

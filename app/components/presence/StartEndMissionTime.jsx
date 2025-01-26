@@ -4,6 +4,7 @@ export default function StartEndMissionTime({
   handleTimeChange,
   mission,
   clickOnMissions,
+  index
 }) {
   return (
     <div className="  py-2  border-t border-t-[#E0E6EF] border-b border-b-[#E0E6EF] mt-1">
@@ -16,9 +17,10 @@ export default function StartEndMissionTime({
             <input
             onClick={(e)=>e.stopPropagation()}
               className="rounded-full border border-blue_color w-[80%] text-center"
-              value={mission.start_time.slice(0, 5)}
+              name="start_time"
+              value={mission.start_time.slice(0, 5)||"-"}
               onChange={(e) =>
-                handleTimeChange("start_time", mission.mission_id, e)
+                handleTimeChange(mission, e)
               }
             />
           )}
@@ -31,9 +33,10 @@ export default function StartEndMissionTime({
             <input
             onClick={(e)=>e.stopPropagation()}
               className="rounded-full border border-blue_color  w-[80%] text-center"
-              value={mission.end_time.slice(0, 5)}
+              name="end_time"
+              value={mission.end_time.slice(0, 5)||"-"}
               onChange={(e) =>
-                handleTimeChange("end_time", mission.mission_id, e)
+                handleTimeChange(mission, e)
               }
             />
           )}
