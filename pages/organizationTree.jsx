@@ -27,6 +27,7 @@ import {
   usePopUpOptionsInClient,
   useMessage,
 } from "@/app/components/organizationTree/GlobalState";
+import { AuthProvider } from "@/app/hooks/AuthContext";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));

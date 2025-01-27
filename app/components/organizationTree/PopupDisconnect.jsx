@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 import { useReactFlow } from "reactflow";
 import { useDisconnected, useColorFlag } from "./GlobalState";
 
