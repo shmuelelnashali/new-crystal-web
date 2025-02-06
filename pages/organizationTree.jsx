@@ -27,6 +27,7 @@ import {
   usePopUpOptionsInClient,
   useMessage,
 } from "@/app/components/organizationTree/GlobalState";
+import { AuthProvider } from "@/app/hooks/AuthContext";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -83,7 +84,6 @@ function OrganizationTreeComponent() {
     useState(null);
   const [employeesNumber, setEmployeesNumber] = useState(null);
   const [employees, setEmployees] = useState(null);
-
 
   const { message, setMessage } = useMessage();
   const { setPopUpForDeleteAndDisconnect } = usePopUpOptions();
@@ -457,7 +457,7 @@ function OrganizationTreeComponent() {
     >
       <div dir="rtl" className="">
         <AuthProvider>
-        <Header />
+          <Header />
         </AuthProvider>
       </div>
 
