@@ -24,7 +24,6 @@ export default function PopupForMissions({
 }) {
   // console.log(nameAndDateForRow, "nmmmmmmm");
 
-  // כפתור עריכה או מחיקה
   const [theMissionFetch, setTheMissionFetch] = useState([]);
   // המשימות של הנוכחות היומית
   const [missions, setMissions] = useState([]);
@@ -36,119 +35,239 @@ export default function PopupForMissions({
   const [updatesHistory, setUpdatesHistory] = useState(false);
   //  להביא את המשימות בעריכה
   const [getMission, setGetMission] = useState(false);
+  // פילטר על המשימות לפי מספר
   const [getMissionFilter, setGetMissionFilter] = useState([]);
+  // מיקום המשימה שלחצתי כדי לערוך
   const [getIndex, setGetIndex] = useState(null);
-  // על איזו משימה לחצתי כדי לערוך
-  // const [clickedMissionId,
-  // ] = useState(null);
   // אם לחצתי על האינפוט
   const [isFocused, setIsFocused] = useState(false);
   // שינוי משימה
-  const [mission_id_num_name, setMission_id_num_name] = useState(null);
+  const [localMission, SetLocalMission] = useState(null);
+  const [pendingChanges, setPendingChanges] = useState(null);
 
-  const handleChange =  (mission,  value) => {
-    const updatedMissions = missions.map((missionVal) => {
-      if (missionVal.mission_id === mission.mission_id) {
+  const [newMission, setNewMission] = useState({});
+
+  const handleChange = (mission, value) => {
+    const updatedMissions = missions.map((missionVal, index) => {
+      if (missionVal.mission_id === mission.mission_id && index === getIndex) {
         return {
           ...missionVal,
           ...value, // Update the specific field for this mission
         };
       }
-      
+
       return missionVal; // Keep other missions unchanged
-    });    
-    setMissions(updatedMissions)
+    });
+    setMissions(updatedMissions);
   };
 
   // האינפוט של השעות
-  const handleTimeChange = async (mission, e) => {
-    let inputValue = e.target.value.replace(/[^\d]/g, ''); 
+  const handleTimeChange = (mission, e) => {
+    let inputValue = e.target.value.replace(/[^\d]/g, "");
     const isStartTime = e.target.name === "start_time";
-    
-    // Only process if we have a complete time value (HH:MM)
-    // if (inputValue.length === 5) {
 
-    //HH:MM שומר על מבנה 
+    if (inputValue.length > 4) {
+      inputValue = inputValue.slice(0, 4);
+    }
+
     let displayValue = inputValue;
     if (inputValue.length > 2) {
       displayValue = inputValue.slice(0, 2) + ":" + inputValue.slice(2);
     }
-  
-    // לא מורשה מעל 24:00
-    const validatedValue = timeStructure(displayValue);
-      
-      if (validatedValue !== null) {
-        // Update local state first
-        handleChange(mission, {
-          [isStartTime ? "start_time" : "end_time"]: validatedValue,
-        });
-  
-        // Prepare the updated mission data
-        const updatedMission = {
-          attendance_id: nameAndDateForRow.id,
-          mission_id: mission.mission_id,
-          mission_name: mission.mission_name,
-          mission_number: mission.mission_number,
-          start_time: isStartTime ? validatedValue : mission.start_time,
-          end_time: !isStartTime ? validatedValue : mission.end_time,
-        };
-        console.log(updatedMission);
-        
+
+    const validatedValue = timeStructure(displayValue) || displayValue;
+
+    if (validatedValue !== null) {
+      handleChange(mission, {
+        [isStartTime ? "start_time" : "end_time"]: displayValue,
+      });
+
+      // עידכון השינויים
+      setPendingChanges((prev) => ({
+        ...prev,
+        attendance_id: nameAndDateForRow.id,
+        mission_index: getIndex,
+        mission_id: mission.mission_id,
+        mission_name: prev?.mission_name || mission.mission_name,
+        mission_number: prev?.mission_number || mission.mission_number,
+        [isStartTime ? "start_time" : "end_time"]: validatedValue,
+        // Preserve the other time if it exists
+        [isStartTime ? "end_time" : "start_time"]:
+          prev?.[isStartTime ? "end_time" : "start_time"] ||
+          mission[isStartTime ? "end_time" : "start_time"],
+      }));
+      console.log(pendingChanges, "changeTime");
+    }
+  };
+
+  // עידכון שם ומספר משימה
+  const handleMissionChange = async (mis, e) => {
+    console.log(mis, "missss");
+
+    e.stopPropagation();
+
+    setPendingChanges((prev) => ({
+      ...prev,
+      attendance_id: nameAndDateForRow.id,
+      mission_index: getIndex,
+      mission_id: mis.mission_id,
+      mission_name: mis.mission_name,
+      mission_number: mis.mission_number,
+      start_time: prev?.start_time || mis.start_time,
+      end_time: prev?.end_time || mis.end_time,
+    }));
+
+    setMissions(
+      missions.map((mission, index) => {
+        if (
+          mission.mission_id === localMission?.mission_id &&
+          index === getIndex
+        ) {
+          return {
+            ...mission,
+            mission_number: mis.mission_number,
+            mission_name: mis.mission_name,
+          };
+        }
+        return mission;
+      })
+    );
+
+    // Update the selected mission state
+    SetLocalMission((prev) => ({
+      ...prev,
+      mission_number: mis.mission_number,
+      mission_name: mis.mission_name,
+    }));
+
+    setGetMission(false);
+  };
+
+  // עידכון המשימה
+  const handleMissionUpdate = async (mission, e, index) => {
+    e.stopPropagation();
+    // בלחיצה שנייה או על משימה אחרת
+    if (localMission || getIndex !== null) {
+      // אם יש שינויים
+      if (pendingChanges && pendingChanges.mission_index === getIndex) {
+        const { mission_index, ...dataToSend } = pendingChanges;
+
+        const { start_time, end_time } = dataToSend;
         try {
-          // Only make the API call when we have a complete time value
+          // 1️⃣מביא את המשימות בלי המשימה שעורכים כרגע
+          const existingMissions = missions.filter(
+            (m) =>
+              m.attendance_id === mission.attendance_id &&
+              m.mission_id !== mission.mission_id
+          );
+          // 2️⃣ ממיין את המשימות כדי לבדוק מי קודם למי
+          const sortedMissions = [...existingMissions].sort((a, b) => {
+            return (
+              new Date(`2000-01-01T${a.end_time}`) -
+              new Date(`2000-01-01T${b.end_time}`)
+            );
+          });
+
+          // 3️⃣עושה את המשימות לפני ואחרי המשימה שעורכים כרגע כאובייקטים
+          const currentMissionEndTime = new Date(`2000-01-01T${end_time}`);
+          const currentMissionStartTime = new Date(`2000-01-01T${start_time}`);
+          // כל המשימות שמסתיימות לפני סיום המשימה שעורכים כרגע
+          const previousMissions = sortedMissions.filter(
+            (m) => new Date(`2000-01-01T${m.end_time}`) < currentMissionEndTime
+          );
+          // כל המשימות שמתחילות לפני תחילת המשימה שעורכים כרגע
+          const nextMissions = sortedMissions.filter(
+            (m) =>
+              new Date(`2000-01-01T${m.start_time}`) > currentMissionStartTime
+          );
+
+          // 4️⃣ Get relevant end times and start times
+          const previousEndTimes = previousMissions
+            .map((m) => m.end_time)
+            .filter(Boolean);
+          const nextStartTimes = nextMissions
+            .map((m) => m.start_time)
+            .filter(Boolean);
+
+          // 5️⃣ אם תחילת זמן של המשימה שעורכים קטן מזמן סיום של משימה קודמת
+          const isStartTimeInvalid = previousEndTimes.some(
+            (existingEndTime) =>
+              new Date(`2000-01-01T${start_time}`) <
+              new Date(`2000-01-01T${existingEndTime}`)
+          );
+
+          // 6️⃣ אם סיום זמן של המשימה שעורכים גדוך מזמן התחלה של משימה הבאה
+          const isEndTimeInvalid = nextStartTimes.some(
+            (nextStartTime) =>
+              new Date(`2000-01-01T${end_time}`) >
+              new Date(`2000-01-01T${nextStartTime}`)
+          );
+
+          // 7️⃣ Validate that end_time is after start_time
+          const isSelfTimeInvalid =
+            new Date(`2000-01-01T${end_time}`) <=
+            new Date(`2000-01-01T${start_time}`);
+
+          if (isStartTimeInvalid) {
+            toast.error("זמן ההתחלה חייב להיות גדול מזמן סיום משימה קודמת");
+            return;
+          }
+
+          if (isEndTimeInvalid) {
+            toast.error("זמן הסיום חייב להיות קטן מזמן התחלה של המשימה הבאה");
+            return;
+          }
+
+          if (isSelfTimeInvalid) {
+            toast.error("זמן הסיום חייב להיות גדול מזמן ההתחלה");
+            return;
+          }
+
           const response = await axios.put(
-            `/attendanceMissions/${nameAndDateForRow.id}`,
-            updatedMission
+            `/attendanceMissions/${mission.id}`,
+            dataToSend
           );
-          // console.log(response,"ss");
-  
-          // Update state after successful API call
-          setMissions(prevMissions =>
-            prevMissions.map(missionVal =>
-              missionVal.mission_id === nameAndDateForRow.id
-                ? { ...missionVal, ...updatedMission }
-                : missionVal
-            )
-          );
-  
-          setMission_id_num_name(prev => ({
-            ...prev,
-            ...updatedMission,
-          }));
+          // console.log(dataToSend,"send");
+
           toast.success(response.data.message);
+
+          setPendingChanges(null);
         } catch (error) {
           if (error.response?.data) {
-            console.log(error.response.data, "eee");
-            
-            let errorDetails = '';
-            
-            // Handle nested arrays in the error object
-            if (typeof error.response.data === 'object') {
+            let errorDetails = "";
+
+            if (typeof error.response.data === "object") {
               Object.entries(error.response.data).forEach(([key, messages]) => {
                 if (Array.isArray(messages)) {
-                  // Join all messages from the array with newlines
-                  errorDetails += messages.join('\n');
-                  if (errorDetails) errorDetails += '\n'; // Add newline between different fields
+                  errorDetails += messages.join("\n");
+                  if (errorDetails) errorDetails += "\n";
                 }
               });
             }
-        
+
             toast.error(`שגיאה בעידכון המשימה\n${errorDetails.trim()}`);
             return;
           }
-        
+
           console.error(
             "שגיאה בעידכון המשימה",
             error.response?.data || error.message
           );
         }
       }
-    // } else {
-    //   // Just update local state while typing
-    //   handleChange(mission, {
-    //     [isStartTime ? "start_time" : "end_time"]: inputValue,
-    //   });
-    // }
+    }
+
+    if (
+      localMission &&
+      mission.mission_id === localMission.mission_id &&
+      index === getIndex
+    ) {
+      SetLocalMission(null);
+      setGetIndex(null);
+    } else {
+      SetLocalMission(mission);
+      setGetIndex(index);
+    }
   };
 
   // להביא את המשימות לפי נוכחות יומית
@@ -161,10 +280,11 @@ export default function PopupForMissions({
         `/attendanceMissions/getByAttendaceId/${nameAndDateForRow?.id}`
       );
       const data = response.data;
-      console.log(data);
-
-      setMissions(data);
-      setIsMissions(true);
+      // console.log(data, "data");
+      if (data.length > 0) {
+        setMissions(data);
+        setIsMissions(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -191,73 +311,12 @@ export default function PopupForMissions({
     try {
       const response = await axios.get(`/missions`);
       const data = response.data;
+      console.log(data, "aaa");
+
       setTheMissionFetch(data);
-      setGetMissionFilter(data)
+      setGetMissionFilter(data);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  // המשימות על מצב עריכה
- const handleMissionUpdate = (mission, e, index) => {
-  e.stopPropagation();
-  
-  // If clicking on the same mission that's already being edited, close the edit mode
-  if (mission_id_num_name && mission.mission_id === mission_id_num_name.mission_id) {
-    setMission_id_num_name(null);
-    setGetIndex(null);
-  } else {
-    // Otherwise, set the new mission for editing
-    setMission_id_num_name(mission);
-    setGetIndex(index);
-  }
-};
-
-  // המשימה שהשתנתה
-  const handleMissionChange = async (mis, e) => {
-    e.stopPropagation();
-
-    // Create the updated mission data
-    const updatedMission = {
-      attendance_id: nameAndDateForRow.id,
-      mission_id: mis.mission_id,
-      mission_name: mis.mission_name,
-      mission_number: mis.mission_number,
-      start_time: mission_id_num_name.start_time || mis.start_time,
-      end_time: mission_id_num_name.end_time || mis.end_time,
-    };
-
-    try {
-      // Send the updated data in the PUT request
-      const response = await axios.put(
-        `/attendanceMissions/${nameAndDateForRow.id}`,
-        updatedMission
-      );
-
-      // Update local state only after successful API call
-      setMissions(
-        missions.map((mission) => {
-          if (mission.mission_id === nameAndDateForRow.id) {
-            return {
-              ...mission,
-              ...updatedMission,
-            };
-          }
-          return mission;
-        })
-      );
-
-      // Update the selected mission state
-      setMission_id_num_name((prev) => ({
-        ...prev,
-        ...updatedMission,
-      }));
-
-      // Close the mission selection dropdown
-      setGetMission(false);
-    } catch (error) {
-      console.error("Failed to update mission:", error);
-      // Optionally add error handling UI feedback here
     }
   };
 
@@ -286,7 +345,10 @@ export default function PopupForMissions({
           <div className="text-center flex items-center justify-center gap-3 text-lg border border-t-[#7F94BB] border-b-[#7F94BB] py-1 mt-3">
             <div>{day}</div>
             {nameAndDateForRow.date_time?.split("-").reverse().join("/") ||
-              nameAndDateForRow.date_with_no_attendance}
+              nameAndDateForRow.date_with_no_attendance
+                ?.split("-")
+                .reverse()
+                .join("/")}
           </div>
         </div>
         <div className="flex items-center justify-around py-0.5 border border-b-[#7F94BB]">
@@ -314,7 +376,7 @@ export default function PopupForMissions({
         <>
           <div className=" flex-1 overflow-hidden my-1">
             <div className="h-full ">
-              {isMissions ? (
+              {isMissions || addMissions ? (
                 <>
                   {/* <BtnsEditDelete
                     editOrDelete={editOrDelete}
@@ -327,33 +389,40 @@ export default function PopupForMissions({
                   </div>
                   {/* המשימות */}
                   <div className="dirLtr h-[85%] overflow-y-auto ">
-                    <AttendanceMissions 
-                    missions={missions}
-                    mission_id_num_name={mission_id_num_name}
-                    isFocused={isFocused}
-                    setIsFocused={setIsFocused}
-                    getMission={getMission}
-                    setGetMission={setGetMission}
-                    theMissionFetch={theMissionFetch}
-                    handleMissionUpdate={handleMissionUpdate}
-                    handleSearchMission={handleSearchMission}
-                    handleTimeChange={handleTimeChange}
-                    handleMissionChange={handleMissionChange}
-                    deleteMissionById={deleteMissionById}
-                    getIndex={getIndex}
-                    getMissionFilter={getMissionFilter}
-                    setGetMissionFilter={setGetMissionFilter}
+                    <AttendanceMissions
+                      missions={missions}
+                      localMission={localMission}
+                      isFocused={isFocused}
+                      setIsFocused={setIsFocused}
+                      getMission={getMission}
+                      setGetMission={setGetMission}
+                      theMissionFetch={theMissionFetch}
+                      handleMissionUpdate={handleMissionUpdate}
+                      handleSearchMission={handleSearchMission}
+                      handleTimeChange={handleTimeChange}
+                      handleMissionChange={handleMissionChange}
+                      deleteMissionById={deleteMissionById}
+                      getIndex={getIndex}
+                      getMissionFilter={getMissionFilter}
+                      setGetMissionFilter={setGetMissionFilter}
+                      addMissions={addMissions}
+                      newMission={newMission}
+                      setNewMission={setNewMission}
+                      nameAndDateForRow={nameAndDateForRow}
                     />
                   </div>
                 </>
               ) : (
                 <div className="flex text-[#A1B0CD] h-full  flex-col items-center justify-center">
-                  <CirclePlus
-                    width={123}
-                    height={123}
-                    strokeWidth="0.8"
-                    color="#A1B0CD"
-                  />
+                  <div onClick={addMissionBtn}>
+                    <CirclePlus
+                      width={123}
+                      height={123}
+                      strokeWidth="0.8"
+                      color="#A1B0CD"
+                    />
+                  </div>
+
                   <div>לא דווחו משימות ביום זה</div>
                   <div>לחץ על + על מנת להוסיף אירוע</div>
                 </div>
@@ -363,7 +432,11 @@ export default function PopupForMissions({
           <div className="flex justify-center items-center mt-2 ">
             <BtnAddMission
               addMissionBtn={addMissionBtn}
+              setAddMissions={setAddMissions}
               addMissions={addMissions}
+              newMission={newMission}
+              setMissions={setMissions}
+              fetchMissions={fetchMissions}
             />
           </div>
         </>

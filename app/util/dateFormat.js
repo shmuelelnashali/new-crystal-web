@@ -37,8 +37,8 @@ const timeStructure = (timeValue) => {
   const [hours, minutes, seconds] = timeValue.split(":");
 
   // Validate hours, minutes, and seconds
-  if (hours && parseInt(hours) > 23) return 
-  if (minutes && parseInt(minutes) > 59) return 
+  if (hours && parseInt(hours) > 23) return null
+  if (minutes && parseInt(minutes) > 59) return null
   if (seconds && parseInt(seconds) > 59) return 
 
   return timeValue;

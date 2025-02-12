@@ -15,18 +15,27 @@ export default function PopupDelete({
   // console.log(objectToDelete.mission_id,"id");
   
   const axiosDelete = async () => {
-    // console.log(objectToDelete,"obbbbb");
+    console.log(objectToDelete,"obbbbb");
     
     try {
       let urlToDelete = ''
       if (objectToDelete.id) {
-        urlToDelete = `/employees/${objectToDelete.id}`,{is_active:0}
-      } else if(objectToDelete.mission_id){
-        urlToDelete = `/api/attendanceMissions/${objectToDelete.mission_id}`
-      }
+        console.log(objectToDelete);
+        
+        // if(typeof objectToDelete.attendance_id === 'number'){
+          urlToDelete = `${urlPage}/${objectToDelete.id}`
+        // }
+        // urlToDelete = `/employees/${objectToDelete.id}`
+        
+      } 
+      // else if(objectToDelete.mission_id){
+      //   urlToDelete = `/api/attendanceMissions/${objectToDelete.mission_id}`
+      // }
        else{
        new Error ('url לא מזוהה')
       }
+      console.log(urlToDelete);
+      
       const response =await axios.delete(urlToDelete)
       const deleted = response.data.message
       toast.success(deleted)
@@ -58,7 +67,7 @@ export default function PopupDelete({
   : "";
 
   const stringForAttendancesMissionDate = objectToDelete
-  ? `${nameAndDateForRow?.date_time || ""}`.trim()
+  ? `${nameAndDateForRow?.date_time.split("-").reverse().join("/") || ""}`.trim()
   : "";
 
   const stringForAgreement = objectToDelete
