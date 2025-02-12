@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 import CustomCalendar from "./CustomCalendar";
 import { useMessage, useSelectMonths, useSelectYears } from "./GlobalState";
 

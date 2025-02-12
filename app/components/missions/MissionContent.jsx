@@ -6,6 +6,8 @@ import { formatDate } from "@/app/util/dateFormat";
 import Flow from "./Flow";
 
 export default function MissionContent({ headLength, data, deleteEmployee, }) {
+  console.log(data);
+  
   
   const [popupToEditMission, setPopupToEditMission] = useState(null);
  // המידע של דיווח אמצעים

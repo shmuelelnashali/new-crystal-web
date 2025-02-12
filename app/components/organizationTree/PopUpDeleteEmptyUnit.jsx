@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import axios from "@/app/lib/Axios";
+import axios from "@/app/lib/axios";
 import { useMessage } from "./GlobalState";
 
 export default function PopUpDelete({

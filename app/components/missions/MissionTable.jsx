@@ -1,7 +1,11 @@
+'use client'
 import React, { useState } from "react";
 import TableHead from "./TableHead";
 import MissionContent from "./MissionContent";
-import {format, parseISO, compareDesc, compareAsc, parse, isValid } from "date-fns";
+import {
+
+  isValid,
+} from "date-fns";
 import { formatDate } from "@/app/util/dateFormat";
 
 export default function MissionTable({
@@ -10,17 +14,18 @@ export default function MissionTable({
   deleteEmployee,
   tableWidth,
 }) {
-  
+console.log(headTable);
+console.log(data);
+
   // העמוד שממיינים אותו ולאיזה כיון
   const [columnToSortOn, setColumnToSortOn] = useState({
-    index:null,
-    direction:'desc'
+    index: null,
+    direction: "desc",
   });
 
-
   // מיון כל עמודה
-  const sortedData = () => {    
-    const columnKey = headTable[columnToSortOn.index];
+  const sortedData = () => {
+    const columnKey = headTable[columnToSortOn?.index];
     return [...data].sort((a, b) => {
       let valueA;
       let valueB;
@@ -34,23 +39,23 @@ export default function MissionTable({
         valueA = formatDate(a.Closing_date);
         valueB = formatDate(b.Closing_date);
       }
-      if (columnKey === 'שם משימה') {
+      if (columnKey === "שם משימה") {
         valueA = a.Mission_name;
         valueB = b.Mission_name;
       }
-      if (columnKey === 'סוג משימה') {
+      if (columnKey === "סוג משימה") {
         valueA = a.Mission_type;
         valueB = b.Mission_type;
       }
-      if (columnKey === 'שם קצין נושא') {
+      if (columnKey === "שם קצין נושא") {
         valueA = a.Ktzin_nosse_name;
         valueB = b.Ktzin_nosse_name;
       }
-      if (columnKey === 'סטטוס') {
+      if (columnKey === "סטטוס") {
         valueA = a.Status;
         valueB = b.Status;
       }
-      if (columnKey === 'רמת עניין') {
+      if (columnKey === "רמת עניין") {
         valueA = a.Interest_level;
         valueB = b.Interest_level;
       }
@@ -58,13 +63,13 @@ export default function MissionTable({
         valueA = a.Paying_factor;
         valueB = b.Paying_factor;
       }
-       if (columnKey === "מספר משימה") {
-        valueA = Number(a.Mission_number);       
+      if (columnKey === "מספר משימה") {
+        valueA = Number(a.Mission_number);
         valueB = Number(b.Mission_number);
       }
-       if (columnKey === "שנה") {
-        valueA = Number(a.Year);    
-        valueB = Number(b.Year);     
+      if (columnKey === "שנה") {
+        valueA = Number(a.Year);
+        valueB = Number(b.Year);
       }
 
       // if (isValid(valueA) && isValid(valueB)) {
@@ -73,7 +78,9 @@ export default function MissionTable({
       //     : compareAsc(valueA, valueB);
       // }
       if (isValid(valueA) && isValid(valueB)) {
-        return columnToSortOn.direction === "desc" ? valueB - valueA : valueA - valueB;
+        return columnToSortOn.direction === "desc"
+          ? valueB - valueA
+          : valueA - valueB;
       }
 
       if (typeof valueA === "string" && typeof valueB === "string") {
@@ -81,12 +88,11 @@ export default function MissionTable({
           ? valueB.localeCompare(valueA, "he")
           : valueA.localeCompare(valueB, "he");
       }
-      return 0
+      return 0;
     });
   };
-  
-  
-  const headLength = headTable.length;
+
+  const headLength = headTable?.length;
 
   return (
     <div

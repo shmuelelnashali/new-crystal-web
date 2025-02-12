@@ -13,7 +13,7 @@ export default function Nav() {
     { text: "נוכחות", link: "/presence" },
     { text: "עובדים", link: "/employees" },
     { text: " ניהול משימות", link: "/mission" },
-    { text: "דרישות אמצעים", link: "/fff" },
+    { text: "דרישות אמצעים", link: "/financialRequirements" },
     { text: "ניהול עץ אירגוני", link: "/organizationTree" },
     { text: "ניהול לוחות שנה", link: "/calender" },
     { text: "דוחות", link: "/reports" },
