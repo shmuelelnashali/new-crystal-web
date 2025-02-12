@@ -9,6 +9,7 @@ const axios = Axios.create({
   timeout: 30000,
   withCredentials: true,
 });
+
 axios.interceptors.response.use(
   (response) => {
     return response;

@@ -14,7 +14,6 @@ export default function Login() {
   useEffect(() => {
     if (user) {
       router.push("/calender");
-      console.log(user);
       setUser(user);
     } else {
       login(setErrors, { employee_number: "1111111" });
