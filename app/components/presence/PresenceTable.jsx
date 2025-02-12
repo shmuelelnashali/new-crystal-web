@@ -9,7 +9,9 @@ export default function PresenceTable({
   popUpForMission,
   setPopUpForMission,
   nameAndDateForRow,
-  setNameAndDateForRow
+  setNameAndDateForRow,
+  selectedDate,
+  setSelectedDate,
 }) {
   return (
     <div className="  flex flex-col pr-2 bg-white rounded-lg relative   ">
@@ -24,6 +26,8 @@ export default function PresenceTable({
         setData={setData}
         nameAndDateForRow={nameAndDateForRow}
         setNameAndDateForRow={setNameAndDateForRow}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </div>
   );

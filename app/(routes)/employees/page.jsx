@@ -313,6 +313,7 @@ export default function Employees() {
           headerText={`העברת עובד למצב "לא פעיל"`}
           messageText={"האם אתה בטוח שאתה רוצה להקפיא את העובד"}
           btnText={"המשך"}
+          urlPage={`/employees`}
         />
       )}
 

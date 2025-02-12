@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import StartEndMissionTime from "./StartEndMissionTime";
 import Image from "next/image";
+import NewAttendanceMission from "./NewAttendanceMission";
 
 export default function AttendanceMissions({
   missions,
-  mission_id_num_name,
+  localMission,
   isFocused,
   setIsFocused,
   getMission,
@@ -18,26 +19,33 @@ export default function AttendanceMissions({
   getIndex,
   getMissionFilter,
   setGetMissionFilter,
+  addMissions,
+  newMission,
+  setNewMission,
+  nameAndDateForRow,
 }) {
-  console.log(getMissionFilter, "gg");
+  //   console.log(getMissionFilter, "gg");
 
+  //איזו משימות לסנן
   const [query, setQuery] = useState("");
 
+  //עושה חיפוש למשימות
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase();
     setQuery(searchQuery);
-  
+
     const filteredMissions = theMissionFetch.filter((mission) => {
       const missionNumber = mission.mission_number?.toString().trim();
       return missionNumber && missionNumber.startsWith(searchQuery);
     });
-  
+
     setGetMissionFilter(filteredMissions);
   };
 
   return (
     <div>
       {missions.map((mission, index) => (
+        // בלחיצה זה עובר למצב עריכה
         <div
           onClick={(e) => {
             handleMissionUpdate(mission, e, index);
@@ -45,11 +53,11 @@ export default function AttendanceMissions({
           className="flex dirRtl "
           key={`${mission.mission_id}-${index}`}
         >
-            {/* אם זה על מצב עריכה יש כפתור מחיקה */}
+          {/* אם זה על מצב עריכה יש כפתור מחיקה */}
           {index === getIndex && (
             <div
-              onClick={() => {
-                deleteMissionById(mission);
+              onClick={(e) => {
+                e.stopPropagation(), deleteMissionById(mission);
               }}
               className="bg-red-100 my-0.5 px-0.5 mx-0.5 rounded-md flex items-center justify-center"
             >
@@ -94,18 +102,12 @@ export default function AttendanceMissions({
                     type="text"
                     value={query}
                     onChange={handleSearch}
-                    // value={`${
-                    //   mission_id_num_name.mission_number
-                    // }${"\u00A0".repeat(30)}${mission_id_num_name.mission_name}`}
-                    // onChange={(e)=>handleMissionChange(e, mission)}
                     placeholder={
                       isFocused || query !== ""
                         ? ""
-                        : `${
-                            mission_id_num_name.mission_number
-                          }${"\u00A0".repeat(30)}${
-                            mission_id_num_name.mission_name
-                          }`
+                        : `${localMission.mission_number}${"\u00A0".repeat(
+                            30
+                          )}${localMission.mission_name}`
                     }
                     onFocus={() => setIsFocused(true)} // Trigger when the input is focused
                     onBlur={() => setIsFocused(false)} // Trigger when the input loses focus
@@ -113,7 +115,7 @@ export default function AttendanceMissions({
                   {/* להביא את המשימות */}
                   {getMission && (
                     <>
-                      <div className="absolute dirLtr top-full z-50 border w-full max-h-60 overflow-y-auto bg-white rounded-lg px-1 py-1">
+                      <div className="absolute dirLtr top-7 z-50 border w-full max-h-60 overflow-y-auto bg-white rounded-lg px-1 py-1">
                         {getMissionFilter.map((mis, index) => (
                           <div
                             key={index}
@@ -136,8 +138,8 @@ export default function AttendanceMissions({
                         onClick={(e) => {
                           e.stopPropagation();
                           setGetMission(false);
-                          setQuery('')
-                          setGetMissionFilter([])
+                          setQuery("");
+                          setGetMissionFilter([]);
                         }}
                         className="fixed hover:cursor-default  inset-0  "
                       ></div>
@@ -156,6 +158,25 @@ export default function AttendanceMissions({
           </div>
         </div>
       ))}
+
+      {/* הוספת משימה חדשה */}
+      {addMissions && (
+        <NewAttendanceMission
+          // handleSearchMission={handleSearchMission}
+          // handleSearch={handleSearch}
+          // query={query}
+          // setQuery={setQuery}
+          isFocused={isFocused}
+          setIsFocused={setIsFocused}
+          // getMission={getMission}
+          newMission={newMission}
+          setNewMission={setNewMission}
+          nameAndDateForRow={nameAndDateForRow}
+          // setGetMissionFilter={setGetMissionFilter}
+          // localMission={localMission}
+          // handleMissionChange={handleMissionChange}
+        />
+      )}
     </div>
   );
 }

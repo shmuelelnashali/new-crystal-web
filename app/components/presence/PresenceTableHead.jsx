@@ -1,7 +1,11 @@
 import clsx from "clsx";
 import React from "react";
 
-export default function PresenceTableHead() {
+export default function 
+
+
+
+PresenceTableHead() {
   const headers = [
     "תאריך",
     "מספר עובד",
@@ -19,7 +23,7 @@ export default function PresenceTableHead() {
 
   return (
     <>
-      <div className="presentTable items-center dirRtl sticky top-0 z-10 justify-around text-white bg-blue_color py-2 rounded-md">
+      <div className="presentTable items-center dirRtl font-semibold sticky top-0 z-10 justify-around text-white bg-blue_color py-2 rounded-md">
         {headers.map((header, index) => (
           <div
             className={clsx("flex justify-center truncate items-center", {
@@ -31,12 +35,12 @@ export default function PresenceTableHead() {
             {Array.isArray(header)
               ? header.map((subHeader, subIndex) => (
                   <div
-                    className={clsx(`flex  w-full justify-center  items-center`,{})}
+                    className={clsx(`flex  w-full justify-center text-center  items-center`,{})}
                     key={subIndex}
                   >
                    <div className={clsx(`truncate w-full`,{
-                      " text-center pr-8 ": subHeader === "יציאה",
-                      " text-left ": subHeader === "כניסה" || subHeader === "קוד פעילות",
+                      // " text-center  ": subHeader === "יציאה",
+                      // " text-center ": subHeader === "כניסה" || subHeader === "קוד פעילות",
                     })}
                     >{subHeader}</div> 
                   </div>

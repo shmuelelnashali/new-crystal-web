@@ -6,19 +6,23 @@ export default function StartEndMissionTime({
   clickOnMissions,
   index
 }) {
+  // console.log(mission,"mmmmm");
+  const defaultTime = '00:00';
+  const startTime = mission?.start_time ? mission.start_time.slice(0, 5) : defaultTime;
+  const endTime = mission?.end_time ? mission.end_time.slice(0, 5) : defaultTime;
   return (
     <div className="  py-2  border-t border-t-[#E0E6EF] border-b border-b-[#E0E6EF] mt-1">
       <div className="flex items-center justify-around">
         <div className=" text-center flex flex-col items-center justify-center w-1/4">
           <div className="w-full truncate">שעת התחלה</div>
           {!clickOnMissions ? (
-            <div className="border rounded-full w-[80%] ">{mission.start_time.slice(0, 5)||"-"}</div>
+            <div className="border rounded-full w-[80%] ">{startTime}</div>
           ) : (
             <input
             onClick={(e)=>e.stopPropagation()}
               className="rounded-full border border-blue_color w-[80%] text-center"
               name="start_time"
-              value={mission.start_time.slice(0, 5)||"-"}
+              value={startTime}
               onChange={(e) =>
                 handleTimeChange(mission, e)
               }
@@ -28,13 +32,13 @@ export default function StartEndMissionTime({
         <div className=" text-center flex flex-col items-center justify-center w-1/4">
           <div className="w-full truncate">שעת סיום</div>
           {!clickOnMissions ? (
-            <div className="border rounded-full w-[80%]">{mission.end_time.slice(0, 5)||"-"}</div>
+            <div className="border rounded-full w-[80%]">{endTime}</div>
           ) : (
             <input
             onClick={(e)=>e.stopPropagation()}
               className="rounded-full border border-blue_color  w-[80%] text-center"
               name="end_time"
-              value={mission.end_time.slice(0, 5)||"-"}
+              value={endTime}
               onChange={(e) =>
                 handleTimeChange(mission, e)
               }
