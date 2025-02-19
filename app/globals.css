@@ -38,6 +38,12 @@ li.nav {
   color: #002a78;
   list-style-type: initial;
 }
+.grid-cols-8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, 1fr);
+}
 .grid-cols-10 {
   grid-template-columns: repeat(10, 1fr);
 }
