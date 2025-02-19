@@ -94,7 +94,7 @@ export default function PresenceTableContent({
   };
 
   const handleChange = (rowIndex, fieldName, value, entryIndex) => {
-    console.log(value, "value");
+    // console.log(value, "value");
 
     const updatedData = [...realFakeData];
     if (fieldName === "activity_code") {
@@ -122,7 +122,7 @@ export default function PresenceTableContent({
       employee_id: updatedData[rowIndex].employee_id,
       attendance_index: getIndex,
       entrances_exits: updatedData[rowIndex].entrances_exits.map((key) => ({
-        activity_code: key.activity_code ? key.activity_code?.code : "-",
+        activity_code: key.activity_code ? key.activity_code?.code : 0,
         entrance: key.entrance ? key.entrance : "-",
         exit: key.exit ? key.exit : "-",
       })),
@@ -168,30 +168,6 @@ export default function PresenceTableContent({
   //   setRealFakeData(updatedData);
   //   setIsOpen(false);
   // };
-
-  // להביא את המשימות לפי נוכחות יומית
-  // const fetchMissions = async () => {
-  //   // console.log(nameAndDateForRow.id);
-
-  //   if (!nameAndDateForRow?.id) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(
-  //       `/attendanceMissions/getByAttendaceId/${nameAndDateForRow?.id}`
-  //     );
-  //     const data = response.data;
-  //     console.log(data, "data");
-
-  //     setIsMissions(true);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchMissions();
-  // }, []);
 
   // בלחיצה על הכפתור נפתח משימות לאותו יום
   const handleButtonClick = (e, valueForTheRow) => {
@@ -286,19 +262,6 @@ export default function PresenceTableContent({
 
     if (changes && changes.attendance_index === getIndex) {
       const { attendance_index, ...attendance } = changes;
-
-      // Preserve the original activity codes or use the new ones
-      // const updatedAttendance = {
-      //   ...attendance,
-      //   entrances_exits: attendance.entrances_exits.map((entry, index) => ({
-      //     ...entry,
-      //     activity_code:
-      //       realFakeData[rowIndex].entrances_exits[index].activity_code_value ||
-      //       (typeof entry.activity_code === "string"
-      //         ? realFakeData[rowIndex].entrances_exits[index].activity_code
-      //         : entry.activity_code),
-      //   })),
-      // };
 
       try {
         console.log(attendance, "attendance");

@@ -180,7 +180,7 @@ export default function Page() {
   return (
     <>
       {popUpForMission && (
-        <div className="border w-[24%]   flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full  z-40">
+        <div className="border w-[20%]   flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full  z-40">
           <PopupForMissions
             nameAndDateForRow={nameAndDateForRow}
             popUpForMission={popUpForMission}

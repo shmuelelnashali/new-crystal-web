@@ -88,7 +88,7 @@ export function EntriesSection({
                 <div className="truncate">
                   {typeof entryValue === "string" && entryValue.includes(":")
                     ? entryValue.split(":").slice(0, 2).join(":")
-                    : entryValue == 0
+                    : entryValue == 0 || entryValue === '-'
                     ? "-"
                     : entryValue?.name}
                 </div>

@@ -22,7 +22,6 @@ export default function Search({
   goToNextMonth,
   goToPrevMonth,
 }) {
-  console.log(searchEmployees);
   
 
   const [query, setQuery] = useState("");

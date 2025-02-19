@@ -42,23 +42,57 @@ export default function PopupForMissions({
   // אם לחצתי על האינפוט
   const [isFocused, setIsFocused] = useState(false);
   // שינוי משימה
-  const [localMission, SetLocalMission] = useState(null);
+  const [localMission, setLocalMission] = useState(null);
   const [pendingChanges, setPendingChanges] = useState(null);
 
   const [newMission, setNewMission] = useState({});
 
-  const handleChange = (mission, value) => {
-    const updatedMissions = missions.map((missionVal, index) => {
-      if (missionVal.mission_id === mission.mission_id && index === getIndex) {
+  // const handleChange = (mission, value) => {
+  //   const updatedMissions = missions.map((missionVal, index) => {
+  //     if (missionVal.mission_id === mission.mission_id && index === getIndex) {
+  //       return {
+  //         ...missionVal,
+  //         ...value, // Update the specific field for this mission
+  //       };
+  //     }
+
+  //     return missionVal; // Keep other missions unchanged
+  //   });
+  //   setMissions(updatedMissions);
+  // };
+
+  // שם ושעות משימה
+  const handleCombinedChanges = (mission, changes) => {
+    const updatedChanges = {
+      attendance_id: nameAndDateForRow.id,
+      mission_index: getIndex,
+      mission_id: changes.mission_id || mission.mission_id,
+      mission_name: changes.mission_name || mission.mission_name,
+      mission_number: changes.mission_number || mission.mission_number,
+      start_time: changes.start_time || mission.start_time,
+      end_time: changes.end_time || mission.end_time,
+    };
+
+    setPendingChanges(updatedChanges);
+
+    // מעדכן את המשימות
+    setMissions(missions.map((m, index) => {
+      if (m.mission_id === mission.mission_id && index === getIndex) {
         return {
-          ...missionVal,
-          ...value, // Update the specific field for this mission
+          ...m,
+          ...changes
         };
       }
+      return m;
+    }));
 
-      return missionVal; // Keep other missions unchanged
-    });
-    setMissions(updatedMissions);
+    // אם יש שינויים
+    if (changes.mission_name || changes.mission_number) {
+      setLocalMission(prev => ({
+        ...prev,
+        ...changes
+      }));
+    }
   };
 
   // האינפוט של השעות
@@ -78,70 +112,28 @@ export default function PopupForMissions({
     const validatedValue = timeStructure(displayValue) || displayValue;
 
     if (validatedValue !== null) {
-      handleChange(mission, {
-        [isStartTime ? "start_time" : "end_time"]: displayValue,
-      });
+      const timeChanges = {
+        [isStartTime ? "start_time" : "end_time"]: validatedValue
+      };
 
-      // עידכון השינויים
-      setPendingChanges((prev) => ({
-        ...prev,
-        attendance_id: nameAndDateForRow.id,
-        mission_index: getIndex,
-        mission_id: mission.mission_id,
-        mission_name: prev?.mission_name || mission.mission_name,
-        mission_number: prev?.mission_number || mission.mission_number,
-        [isStartTime ? "start_time" : "end_time"]: validatedValue,
-        // Preserve the other time if it exists
-        [isStartTime ? "end_time" : "start_time"]:
-          prev?.[isStartTime ? "end_time" : "start_time"] ||
-          mission[isStartTime ? "end_time" : "start_time"],
-      }));
-      console.log(pendingChanges, "changeTime");
+      handleCombinedChanges(mission, timeChanges);
     }
   };
 
-  // עידכון שם ומספר משימה
-  const handleMissionChange = async (mis, e) => {
-    console.log(mis, "missss");
-
+  // שינוי שם המשימה
+  const handleMissionChange = (mis, e) => {
     e.stopPropagation();
 
-    setPendingChanges((prev) => ({
-      ...prev,
-      attendance_id: nameAndDateForRow.id,
-      mission_index: getIndex,
+    const missionChanges = {
       mission_id: mis.mission_id,
       mission_name: mis.mission_name,
-      mission_number: mis.mission_number,
-      start_time: prev?.start_time || mis.start_time,
-      end_time: prev?.end_time || mis.end_time,
-    }));
+      mission_number: mis.mission_number
+    };
 
-    setMissions(
-      missions.map((mission, index) => {
-        if (
-          mission.mission_id === localMission?.mission_id &&
-          index === getIndex
-        ) {
-          return {
-            ...mission,
-            mission_number: mis.mission_number,
-            mission_name: mis.mission_name,
-          };
-        }
-        return mission;
-      })
-    );
-
-    // Update the selected mission state
-    SetLocalMission((prev) => ({
-      ...prev,
-      mission_number: mis.mission_number,
-      mission_name: mis.mission_name,
-    }));
-
+    handleCombinedChanges(localMission, missionChanges);
     setGetMission(false);
   };
+
 
   // עידכון המשימה
   const handleMissionUpdate = async (mission, e, index) => {
@@ -262,10 +254,10 @@ export default function PopupForMissions({
       mission.mission_id === localMission.mission_id &&
       index === getIndex
     ) {
-      SetLocalMission(null);
+      setLocalMission(null);
       setGetIndex(null);
     } else {
-      SetLocalMission(mission);
+      setLocalMission(mission);
       setGetIndex(index);
     }
   };
@@ -371,7 +363,7 @@ export default function PopupForMissions({
         </div>
       </div>
       {updatesHistory ? (
-        <ManualUpdates />
+        <ManualUpdates attendance_id={nameAndDateForRow.id}/>
       ) : (
         <>
           <div className=" flex-1 overflow-hidden my-1">
