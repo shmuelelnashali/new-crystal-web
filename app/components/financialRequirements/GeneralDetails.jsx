@@ -35,7 +35,7 @@ export default function GeneralDetails() {
   );
 }
 
-const Input = ({ item }) => {
+const Input = ({item}) => {
   return (
     <>
       <div
