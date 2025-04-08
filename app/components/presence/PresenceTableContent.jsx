@@ -11,7 +11,7 @@ import clsx from "clsx";
 export default function PresenceTableContent({
   data,
   setPopUpForMission,
-  setNameAndDateForRow, 
+  setNameAndDateForRow,
   selectedDate,
   eventExist,
 }) {
@@ -41,7 +41,7 @@ export default function PresenceTableContent({
   // לפתוח את המשימות
   const [isOpen, setIsOpen] = useState(false);
   // הימים בחודש
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
   //  סטייט מנהל הגרירה
   const [dragState, setDragState] = useState({
     isDragging: false,
@@ -70,10 +70,10 @@ export default function PresenceTableContent({
   // אם יש אירוע לוקחים את התאריך והאירוע
   const myEvents = (eventExist) => {
     if (!eventExist || eventExist.length === 0) return;
-    const eventData = eventExist.map((item)=>({
+    const eventData = eventExist.map((item) => ({
       date: item.beginning_date,
-      event: item.event
-    }))
+      event: item.event,
+    }));
     setTheEvent(eventData);
   };
   useEffect(() => {
@@ -81,8 +81,6 @@ export default function PresenceTableContent({
       myEvents(eventExist);
     }
   }, [eventExist]);
-  
-  
 
   // מוסיף כניסה ויציאה
   const addEntrancesExitsEntry = (rowIndex) => {
@@ -145,7 +143,6 @@ export default function PresenceTableContent({
     });
     setIsOpen(false);
   };
- 
 
   // בלחיצה על הכפתור נפתח משימות לאותו יום
   const handleButtonClick = (e, valueForTheRow) => {
@@ -183,34 +180,36 @@ export default function PresenceTableContent({
   // בודק מתי יש נוכחות
   const compareDate = (day) => {
     const date = `${year}-${padZero(month + 1)}-${padZero(day)}`;
-    const attendance = attendanceToShow.find((data) => data?.date_time === date);
+    const attendance = attendanceToShow.find(
+      (data) => data?.date_time === date
+    );
     return attendance || null;
   };
 
   // ממיר את האירוע
-  const eventTranslate = (event)=>{
+  const eventTranslate = (event) => {
     switch (event) {
       case "Sunday":
-        return "א'"
+        return "א'";
       case 1:
-        return "א'"
+        return "א'";
       case 2:
-        return "ב'"
+        return "ב'";
       case 3:
-        return "ג'"
+        return "ג'";
       case 4:
-        return "ד'"
+        return "ד'";
       case 5:
-        return "ה'"
+        return "ה'";
       case 6:
-        return "ו'"
+        return "ו'";
       case 7:
-        return "ז'"
+        return "ז'";
       default:
         break;
     }
-  }
-   
+  };
+
   // בונה את טבלת כל הימים בחודש
   const buildAttendanceArray = (year, month) => {
     const days = generateDaysArray(year, month);
@@ -224,12 +223,13 @@ export default function PresenceTableContent({
         const [days, months, years] = day.split("/");
         const dates = `${years}-${months}-${days}`;
         // אם יש אירוע באותו יום
-        const eventForDate = theEvent.find((item) => item.date === dates)?.event || null;
+        const eventForDate =
+          theEvent.find((item) => item.date === dates)?.event || null;
         // לשים אירוע או יום בשבוע
         const eventValue = eventForDate || new Date(dates).getDay() + 1;
         // אם אין נוכחות באותו יום:
         return {
-          event:eventValue,
+          event: eventValue,
           date_with_no_attendance: dates,
           employee_id: alwaysDetail.employee_id,
           employee_number: alwaysDetail.employee_number,
@@ -377,12 +377,21 @@ export default function PresenceTableContent({
                   className="flex gap-2 truncate pr-7 "
                   key={`date-${rowIndex}-${keyForAll}`}
                 >
-                 {rowValue.event&&(<div className={clsx(` flex items-center justify-center  w-5 `,{
-                  "bg-blue_color text-sm text-white rounded-full w-5 h-5":typeof rowValue.event === "string",
-                  "text-blue_color text-sm text-center":typeof rowValue.event === "number",
-                 })}>
-                    {eventTranslate(rowValue.event)}
-                  </div>)}
+                  {rowValue.event && (
+                    <div
+                      className={clsx(
+                        ` flex items-center justify-center  w-5 `,
+                        {
+                          "bg-blue_color text-sm text-white rounded-full w-5 h-5":
+                            typeof rowValue.event === "string",
+                          "text-blue_color text-sm text-center":
+                            typeof rowValue.event === "number",
+                        }
+                      )}
+                    >
+                      {eventTranslate(rowValue.event)}
+                    </div>
+                  )}
                   {keyForAll === "date_time" ||
                   keyForAll === "date_with_no_attendance"
                     ? valueForAll
@@ -394,11 +403,7 @@ export default function PresenceTableContent({
                     : valueForAll.split("-").slice(1).map(padZero).join("/")}
                 </div>
               ) : // אם זה כניסה ויציאה
-              
-              
-              
-              
-              
+
               keyForAll === "entrances_exits" ? (
                 <div
                   key={`entries-${rowIndex}`}
@@ -446,25 +451,27 @@ export default function PresenceTableContent({
                 >
                   {activeEditRow === rowIndex ? (
                     <input
-                    className="rounded-full outline-none border border-blue_color w-[70%] text-center flex items-center justify-center"
-                    type="text"
-                    value={valueForAll}
-                    onChange={(e) => {
-                      let inputValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                  
-                      if (inputValue.length > 2) {
-                        inputValue = inputValue.slice(0, -2) + "." + inputValue.slice(-2); // Insert "." before last two digits
-                      }
-                      if(inputValue.length > 5){
-                        return
-                      }
-                      if (/^\d*(\.\d{0,2})?$/.test(inputValue)) {
-                        handleChange(rowIndex, keyForAll, inputValue);
-                      }
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  
+                      className="rounded-full outline-none border border-blue_color w-[70%] text-center flex items-center justify-center"
+                      type="text"
+                      value={valueForAll}
+                      onChange={(e) => {
+                        let inputValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+
+                        if (inputValue.length > 2) {
+                          inputValue =
+                            inputValue.slice(0, -2) +
+                            "." +
+                            inputValue.slice(-2); // Insert "." before last two digits
+                        }
+                        if (inputValue.length > 5) {
+                          return;
+                        }
+                        if (/^\d*(\.\d{0,2})?$/.test(inputValue)) {
+                          handleChange(rowIndex, keyForAll, inputValue);
+                        }
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
                   ) : (
                     <div className="truncate">
                       {valueForAll === 0 ? "-" : valueForAll}
