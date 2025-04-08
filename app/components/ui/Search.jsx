@@ -1,5 +1,4 @@
 "use client";
-
 import axios from "@/app/lib/axios";
 import clsx from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -30,7 +29,6 @@ export default function Search({
   const handleSearch = (e) => {
     const searchQuery = e.target.value.toLowerCase(); // Convert query to lowercase for case-insensitive comparison
     setQuery(searchQuery);
-
     // if (searchQuery.trim()) {
     // חיפוש על העובדים לפי שם/מספר
     const filteredEmployees = searchEmployees.filter((employee) => {
@@ -53,22 +51,16 @@ export default function Search({
     //   setEmployees(searchEmployees); // מחזיר חזרה את העובדים
     // }
   };
-
   const handleInputClick = () => {
-    if (setSearchPopupAttendances && setSearchPopupAttendances) {
+    if (setSearchPopupAttendances &&  setSearchPopupAttendances ) {
       setSearchPopupAttendances(!searchPopupAttendances);
     }
   };
-
-  const handleBtn = () => {
-    if (addNew) {
-      addNew();
+  const handleBtn =()=>{
+    if(addNew){
+      addNew()
     }
-  };
-  // const [selectedDate, setSelectedDate] = useState(new Date());
-
-  // const year = selectedDate.getFullYear();
-  // const month = selectedDate.getMonth();
+  }
   return (
     <div
       className={clsx(
@@ -91,7 +83,6 @@ export default function Search({
         //  onInput={handleSearch}
         placeholder={searchText}
       />
-
       {!missionDay && (
         <button
           onClick={(e) => {
@@ -108,3 +99,27 @@ export default function Search({
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

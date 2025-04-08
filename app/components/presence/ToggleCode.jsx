@@ -2,7 +2,7 @@ import activity from "@/app/(routes)/settings/activity_code/page";
 import axios from "@/app/lib/axios";
 import React, { useEffect, useState } from "react";
 
-export default function ToggleCode({ isOpen, onClose,onChange,handleChange ,rowIndex}) {
+export default function ToggleCode({ isOpen, onClose,onChange, handleChange, rowIndex}) {
   const [codes, setCodes] = useState([]);
 
   const fetchCodes = async () => {

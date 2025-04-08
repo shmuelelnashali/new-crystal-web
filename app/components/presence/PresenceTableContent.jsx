@@ -6,7 +6,6 @@ import ToggleCode from "./ToggleCode";
 import { timeStructure } from "@/app/util/dateFormat";
 import axios from "@/app/lib/axios";
 import toast from "react-hot-toast";
-
 export default function PresenceTableContent({
   data,
   setData,
@@ -24,7 +23,6 @@ export default function PresenceTableContent({
   // const [editingRowIndex, setEditingRowIndex] = useState(null);
   // const [popUpForMission, setPopUpForMission] = useState(false);
   // const [attendanceToUpdate, setAttendanceToUpdate] = useState([]);
-
   // DB-הנוכחות שקיימת ב
   const [attendanceToShow, setAttendanceToShow] = useState([]);
   // המידע של העובד אם אין נוכחות
@@ -43,31 +41,36 @@ export default function PresenceTableContent({
   const [getIndex, setGetIndex] = useState(null);
   // לפתוח את המשימות
   const [isOpen, setIsOpen] = useState(false);
-  // האם יש משימה היום או לא
-  const [isMissions, setIsMissions] = useState(false);
+  // הימים בחודש
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  //  סטייט מנהל הגרירה
+  const [dragState, setDragState] = useState({
+    isDragging: false,
+    originRowIndex: null,
+    draggedHours: null,
+    hoveredRows: new Set(),
+  });
 
   // מביא את הנוכחות שקיימת
   const myData = (data) => {
     const show = data.map((item) => item.attendanceToShow);
     setAttendanceToShow(show);
+    // const update = data.map((item) => item.attendanceToUpdate);
+    // setAttendanceToUpdate(update);
     // אם אין נוכחות
     if (data.length > 0) {
       setAlwaysDetail(data[0].alwaysDetail);
     }
   };
-
   useEffect(() => {
     if (data && data.length > 0) {
       myData(data);
     }
   }, [data]);
-
   // מוסיף כניסה ויציאה
   const addEntrancesExitsEntry = (rowIndex) => {
     const updatedData = [...realFakeData];
-
     const currentEntries = updatedData[rowIndex].entrances_exits;
-
     if (updatedData[rowIndex].date_with_no_attendance) return;
     if (currentEntries.length < 3) {
       const newEntryIndex = currentEntries.length;
@@ -76,18 +79,15 @@ export default function PresenceTableContent({
         entrance: "00:00",
         exit: "00:00",
       };
-
       updatedData[rowIndex].entrances_exits.push(newEntry);
       setRealFakeData(updatedData);
       setActiveEntryIndex(newEntryIndex);
     }
   };
-
   // מוחק כניסה ויציאה
   const deleteLastEntry = (rowIndex, entryIndex) => {
     const updatedData = [...realFakeData];
     const entries = updatedData[rowIndex].entrances_exits;
-
     entries.splice(entryIndex, 1);
 
     setRealFakeData(updatedData);
@@ -111,14 +111,9 @@ export default function PresenceTableContent({
       };
     }
     console.log(updatedData, "update");
-
     setRealFakeData(updatedData);
     setChanges({
-      // (prev) => ({
-      // ...prev,
-      // [rowIndex]: {
-      // ...prev[rowIndex],
-
+     
       employee_id: updatedData[rowIndex].employee_id,
       attendance_index: getIndex,
       entrances_exits: updatedData[rowIndex].entrances_exits.map((key) => ({
@@ -199,14 +194,11 @@ export default function PresenceTableContent({
     setNameAndDateForRow(valueForTheRow);
     setPopUpForMission(true);
   };
-
   // להוסיף 0 אם אין מספר לתאריך
   const padZero = (num) => String(num).padStart(2, "0");
-
   // לקבל את הימים בחודש
   const getDaysInMonth = (year, month) =>
     new Date(year, month + 1, 0).getDate();
-
   // עושה את הימים בחודש
   const generateDaysArray = (year, month) => {
     const daysInMonth = getDaysInMonth(year, month);
@@ -224,21 +216,17 @@ export default function PresenceTableContent({
         return formattedDate;
       }),
     ];
-
     return allDates;
   };
-
   // מביא את הימים
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
-
   // בודק מתי יש נוכחות
   const compareDate = (day) => {
     const date = `${year}-${padZero(month + 1)}-${padZero(day)}`;
     const attendance = attendanceToShow.find((data) => data.date_time === date);
     return attendance || null;
   };
-
   // בונה את טבלת כל הימים בחודש
   const buildAttendanceArray = (year, month) => {
     const days = generateDaysArray(year, month);
@@ -250,7 +238,7 @@ export default function PresenceTableContent({
           return attendanceData;
         }
         const [days, months, years] = day.split("/");
-        const dates = `${years}-${months}-${days}`;
+        const dates = `${years}-${days}-${months}`;
         // אם אין נוכחות
         return {
           date_with_no_attendance: dates,
@@ -274,19 +262,15 @@ export default function PresenceTableContent({
         };
       });
   };
-
   useEffect(() => {
     const attendanceArray = buildAttendanceArray(year, month);
     setRealFakeData(attendanceArray);
   }, [year, month, attendanceToShow, alwaysDetail]);
-
-  // עןשה אינפוטים על השורה ועידכון
+  // עושה אינפוטים על השורה ועידכון
   const handleRowClick = async (rowIndex, e) => {
     e.stopPropagation();
-
     if (changes && changes.attendance_index === getIndex) {
       const { attendance_index, ...attendance } = changes;
-
       // Preserve the original activity codes or use the new ones
       // const updatedAttendance = {
       //   ...attendance,
@@ -299,19 +283,13 @@ export default function PresenceTableContent({
       //         : entry.activity_code),
       //   })),
       // };
-
       try {
-        console.log(attendance, "attendance");
-
         const response = await axios.post(`/attendances`, attendance);
         toast.success(response.data.message);
         setChanges(null);
       } catch (error) {
         if (error.response?.data) {
-          console.log(error.response.data);
-
           let errorDetails = "";
-
           if (
             error.response.data.errors &&
             typeof error.response.data.errors === "object"
@@ -338,13 +316,68 @@ export default function PresenceTableContent({
           "שגיאה בעידכון המשימה",
           error.response?.data || error.message
         );
-
         return;
       }
     }
-
     setActiveEditRow(activeEditRow === rowIndex ? null : rowIndex);
   };
+
+  const handleRowDragStart = (e, rowIndex) => {
+    e.preventDefault();
+    const originRow = realFakeData[rowIndex];
+    const originEntry = originRow.entrances_exits[0];
+
+    setDragState({
+      isDragging: true,
+      originRowIndex: rowIndex,
+      draggedHours: { entrance: originEntry.entrance, exit: originEntry.exit },
+      hoveredRows: new Set(),
+    });
+  };
+
+  const handleRowMouseEnter = (rowIndex) => {
+    if (dragState.isDragging) {
+      setDragState((prev) => {
+        const newSet = new Set(prev.hoveredRows);
+        newSet.add(rowIndex);
+        return { ...prev, hoveredRows: newSet };
+      });
+    }
+  };
+
+  const handleMouseUp = (e) => {
+    if (!dragState.isDragging) return;
+
+    let originRowIdx;
+
+    const updatedData = realFakeData.map((row, idx) => {
+      if (dragState.hoveredRows.has(idx)) {
+        const updatedEntries = row.entrances_exits.map((entry) => ({
+          ...entry,
+          entrance: dragState.draggedHours.entrance,
+          exit: dragState.draggedHours.exit,
+        }));
+
+        originRowIdx = idx;
+        return { ...row, entrances_exits: updatedEntries };
+      }
+      return row;
+    });
+
+    setRealFakeData(updatedData);
+
+    setDragState({
+      isDragging: false,
+      originRowIndex: null,
+      draggedHours: null,
+      hoveredRows: new Set(),
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => window.removeEventListener("mouseup", handleMouseUp);
+  }, [dragState, realFakeData]);
 
   return (
     <div className="h-full bg-[#F7F9FD]  dirLtr overflow-y-auto">
@@ -354,7 +387,7 @@ export default function PresenceTableContent({
           key={`row-${rowIndex}-${
             rowValue.date_time || rowValue.date_with_no_attendance
           }`}
-          className="flex-col  presentTable dirRtl justify-center items-center hover:bg-[#e1e8f3] hover:rounded-lg border-b border-b-[#A7BFE8]/30 transition-transform duration-200 ease-in-out"
+          className="flex-col  presentTable dirRtl justify-center items-center hover:bg-[#E1E8F3] hover:rounded-lg border-b border-b-[#A7BFE8]/30 transition-transform duration-200 ease-in-out"
         >
           {Object.entries(rowValue).map(
             ([keyForAll, valueForAll]) =>
@@ -377,11 +410,15 @@ export default function PresenceTableContent({
                         .slice(0, 2)
                         .map(padZero)
                         .join("/")
-                    : "-"}
+                    : valueForAll.split("-").slice(1).map(padZero).join("/")}
                 </div>
               ) : // אם זה כניסה ויציאה
               keyForAll === "entrances_exits" ? (
-                <div key={`entries-${rowIndex}`} className="col-span-3">
+                <div
+                  key={`entries-${rowIndex}`}
+                  className="col-span-3"
+                  onMouseEnter={() => handleRowMouseEnter(rowIndex)}
+                >
                   <EntriesSection
                     handleRowClick={handleRowClick}
                     entries={valueForAll}
@@ -395,6 +432,9 @@ export default function PresenceTableContent({
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     setActiveEntryIndex={setActiveEntryIndex}
+                    handleRowDragStart={handleRowDragStart}
+                    draggingRow={dragState.originRowIndex}
+                    isHover={dragState.hoveredRows}
                   />
                   {isOpen && activeEditRow == rowIndex && (
                     <ToggleCode
@@ -402,7 +442,6 @@ export default function PresenceTableContent({
                       onClose={() => setIsOpen(false)}
                       // onChange={(code) =>
                       //   handleCodeSelect(rowIndex, activeEntryIndex, code)
-
                       // }
                       handleChange={handleChange}
                       rowIndex={rowIndex}
@@ -463,7 +502,6 @@ export default function PresenceTableContent({
                 </div>
               ))
           )}
-
           <div className="pl-1">
             <button
               onClick={(e) => handleButtonClick(e, rowValue)}

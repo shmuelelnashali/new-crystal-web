@@ -14,7 +14,6 @@ import PopupForMissions from "@/app/components/presence/PopupForMissions";
 import PopupDelete from "@/app/components/PopupDelete";
 import { Toaster } from "react-hot-toast";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-
 export default function Page() {
   const [data, setData] = useState([]);
   const [employeesName, setEmployeesName] = useState([]);
@@ -24,7 +23,6 @@ export default function Page() {
   const [popupDelete, setPopupDelete] = useState(false);
   // מחיקת משימה
   const [deleteMission, setDeleteMission] = useState(null);
-
   // השורה של הנוכחות
   const [editingRowIndex, setEditingRowIndex] = useState(null);
   // הפופאפ של המשימות
@@ -118,7 +116,6 @@ export default function Page() {
     setData(attendanceArray);
     // console.log(attendanceArray, "arr");
   };
-
   const fetchData = async () => {
     try {
       const response = await axios.get(`/attendances`);
@@ -134,7 +131,6 @@ export default function Page() {
     fetchData();
     // }
   }, [employeeAttendance]);
-
   // פורמט כדי להציג עובדים
   const formatEmployees = (data) => {
     const employees = Array.isArray(data) ? data : [data];
@@ -167,7 +163,6 @@ export default function Page() {
   useEffect(() => {
     fetchEmployees();
   }, []);
-
   const deleteMissionById = async (mission) => {
     try {
       setDeleteMission(mission);
@@ -176,7 +171,6 @@ export default function Page() {
       console.error("error delete mission: ", error);
     }
   };
-
   return (
     <>
       {popUpForMission && (

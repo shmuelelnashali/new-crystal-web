@@ -5,7 +5,6 @@ import ToggleCode from "./ToggleCode";
 import { CodeSelector } from "./CodeSelector";
 import { parse, format, isValid } from "date-fns";
 import { timeStructure } from "@/app/util/dateFormat";
-
 export function EntriesSection({
   entries,
   rowIndex,
@@ -20,13 +19,15 @@ export function EntriesSection({
   setIsOpen,
   rawInputs,
   setRawInputs,
+  handleRowDragStart,
+  draggingRow,
+  isHover,
 }) {
   // const [isOpen, setIsOpen] = useState(false);
   // const [rawInputs, setRawInputs] = useState({});
 
   const handleTimeChange = (entryIndex, entryKey, e) => {
     let inputValue = e.target.value.replace(/[^\d]/g, "");
-
     //HH:MM שומר על מבנה
     let displayValue = inputValue;
     if (inputValue.length > 2) {
@@ -43,14 +44,12 @@ export function EntriesSection({
       ...prev,
       [`${entryIndex}-${entryKey}`]: displayValue,
     }));
-
     if (inputValue.length >= 4) {
       const updatedEntries = [...entries];
       const currentEntry = { ...updatedEntries[entryIndex] };
       currentEntry[entryKey] = validatedValue;
       updatedEntries[entryIndex] = currentEntry;
       handleChange(rowIndex, "entrances_exits", updatedEntries);
-
       console.log(rawInputs, "rr");
       // Clear raw input after successful update
       setRawInputs((prev) => ({
@@ -60,24 +59,36 @@ export function EntriesSection({
     }
   };
 
+  const handleMouseDown = (e, rowIndex, entryKey) => {
+    if (entryKey == "activity_code") return;
+
+    handleRowDragStart(e, rowIndex);
+  };
+
   return (
-    <div
-      className="flex   flex-col items-center justify-center "
-    >
+    <div className="flex flex-col items-center justify-center ">
       {entries.map((entry, entryIndex) => (
         <div
-        onClick={(e) => handleRowClick(rowIndex, e)}
+          onClick={(e) => handleRowClick(rowIndex, e)}
           key={`entry-${entryIndex}-${entry.entrance}-${entry.exit}`}
           className="group relative w-full justify-center items-center flex truncate"
         >
           {Object.entries(entry).map(([entryKey, entryValue]) =>
             editingRowIndex !== rowIndex ? (
               <div
+                onMouseDown={(e) => handleMouseDown(e, rowIndex, entryKey)}
                 key={`${entryKey}-${entryIndex}`}
                 className={clsx(
                   ` flex items-center justify-center py-2 truncate`,
                   {
-                    "bg-[#A7BFE826]/15 w-1/3": entryKey !== "activity_code",
+                    "border-t-[1.5px] border-r-[1.5px] border-b-[1.5px] border-[#002A78] rounded-tr rounded-br":
+                      draggingRow === rowIndex && entryKey === "entrance",
+                    "border-t-[1.5px] border-l-[1.5px] border-b-[1.5px] border-[#002A78] rounded-tl rounded-bl":
+                      draggingRow === rowIndex && entryKey === "exit",
+                    "bg-[#A7BFE826] w-1/3":
+                      !isHover.has(rowIndex) && entryKey !== "activity_code",
+                    "bg-[#002a782c] w-1/3":
+                      isHover.has(rowIndex) && entryKey !== "activity_code",
                     " w-1/3": entryKey == "activity_code",
                     "border-t border-t-[#A7BFE826]/15":
                       entryIndex >= entries.length - (newEntriesCount || 0) &&
@@ -137,7 +148,6 @@ export function EntriesSection({
               // onSelect={handleCodeSelect}
             />
           )} */}
-
           {entries.length < 3 && entryIndex === entries.length - 1 && (
             <Image
               src="/plus.svg"
@@ -151,7 +161,6 @@ export function EntriesSection({
               className="absolute top-2.5 left-0.5 hover:cursor-pointer hidden group-hover:block"
             />
           )}
-
           {/* Conditionally render Delete (red X) icon */}
           {entries.length > 1 && (
             <Image
