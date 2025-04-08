@@ -73,7 +73,7 @@ export default function page() {
     <div className=" py-2 h-full dirLtr overflow-y-auto">
       {/* <Table data={data} headTable={headers} /> */}
 
-      <NewRequirement />
+       <NewRequirement /> 
     </div>
   );
 }
