@@ -19,8 +19,8 @@ export default function Nav() {
     { text: "דוחות", link: "/reports" },
     { text: "הגדרות", link: "/settings" },
   ];
-  console.log(pathName);
-  console.log(user);
+  // console.log(pathName);
+  // console.log(user);
   // const router = useRouter();
   // useEffect(() => {
   //   if (!user) {

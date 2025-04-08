@@ -13,6 +13,7 @@ import { parse, isEqual, isWithinInterval, parseISO } from "date-fns";
 import axios from "@/app/lib/axios";
 import AddNewEmployee from "@/app/components/employees/AddNewEmployee";
 import { Toaster } from "react-hot-toast";
+import clsx from "clsx";
 
 // import axios from "axios";
 
@@ -36,7 +37,10 @@ export default function Employees() {
   //SHOW THE FREEZE POP UP
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-    // הבחירה לחיפוש
+  // מביא את כל העובדים גם הלא פעילים
+  const [showAllEmployees, setShowAllEmployees] = useState(false);
+
+  // הבחירה לחיפוש
   const [formData, setFormData] = useState({});
 
   const showEmployeesOrFilter = filterData
@@ -137,7 +141,7 @@ export default function Employees() {
   const formatData = (data) => {
     const employees = Array.isArray(data) ? data : [data];
     const employeeArray = employees
-      .filter((active) => active.is_active === 1)
+      .filter((active) => (showAllEmployees ? true : active.is_active === 1))
       .map((employee) => ({
         employeeToShow: {
           employee_number: employee.employee_number,
@@ -179,11 +183,9 @@ export default function Employees() {
           surname: employee.surname,
         },
       }));
-    setAllEmployees(employeeArray); 
+    setAllEmployees(employeeArray);
     setEmployees(employeeArray);
   };
-
-  
 
   const fetchEmployees = async () => {
     try {
@@ -197,7 +199,12 @@ export default function Employees() {
 
   useEffect(() => {
     fetchEmployees();
-  }, []);
+  }, [showAllEmployees]);
+
+  const handleShowAllEmployees = () => {
+    setShowAllEmployees(!showAllEmployees);
+    setFilterData(null);
+  };
 
   // console.log(employees,"כל העובדים");
 
@@ -211,7 +218,6 @@ export default function Employees() {
 
   //   // console.log(formatted);
   // };
-
 
   const handleAddingNewRow = () => {
     setAddNewEmployee(true);
@@ -273,25 +279,43 @@ export default function Employees() {
             searchText={"חיפוש לפי מספר עובד / שם עובד"}
           />
         </div>
-        <div
-          onClick={handlePopUpFilter}
-          className="ml-5 relative  flex text-xl text-center hover:cursor-pointer items-center font-medium  justify-end border-2 border-[#002A78] rounded-full"
-        >
-          <div className="px-4 flex gap-2  truncate">
-            <Image src={"/filter.svg"} width={15} height={15} alt="download" />
-            <div>סינון</div>
+        <div className="flex gap-3">
+          <div
+            onClick={handleShowAllEmployees}
+            className={clsx(
+              `flex px-4 text-xl text-center hover:cursor-pointer items-center font-medium  justify-end border-2 border-[#002A78] rounded-full`,
+              {}
+            )}
+          >
+            <div>
+              {showAllEmployees ? "להציג רק את הפעילים" : "להציג את כל העובדים"}
+            </div>
           </div>
+          <div
+            onClick={handlePopUpFilter}
+            className="ml-5 relative  flex text-xl text-center hover:cursor-pointer items-center font-medium  justify-end border-2 border-[#002A78] rounded-full"
+          >
+            <div className="px-4 flex gap-2  truncate">
+              <Image
+                src={"/filter.svg"}
+                width={15}
+                height={15}
+                alt="download"
+              />
+              <div>סינון</div>
+            </div>
 
-          {filterPopUp && (
-            <PopupFilterEmployees
-              setFilterPopUp={setFilterPopUp}
-              filterPopUp={filterPopUp}
-              filterSearch={filterSearch}
-              closeFilter={setFilterPopUp}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          )}
+            {filterPopUp && (
+              <PopupFilterEmployees
+                setFilterPopUp={setFilterPopUp}
+                filterPopUp={filterPopUp}
+                filterSearch={filterSearch}
+                closeFilter={setFilterPopUp}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -303,7 +327,7 @@ export default function Employees() {
             deleteEmployeeById={deleteEmployeeById}
           />
         </div>
-        <Toaster position="top-center" /> 
+        <Toaster position="top-center" />
       </div>
       {showConfirmation && (
         <PopupDelete

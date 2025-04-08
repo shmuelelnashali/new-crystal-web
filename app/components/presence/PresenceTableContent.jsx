@@ -6,17 +6,14 @@ import ToggleCode from "./ToggleCode";
 import { timeStructure } from "@/app/util/dateFormat";
 import axios from "@/app/lib/axios";
 import toast from "react-hot-toast";
+import clsx from "clsx";
+
 export default function PresenceTableContent({
   data,
-  setData,
-  editingRowIndex,
-  setEditingRowIndex,
-  popUpForMission,
   setPopUpForMission,
-  nameAndDateForRow,
-  setNameAndDateForRow,
+  setNameAndDateForRow, 
   selectedDate,
-  setSelectedDate,
+  eventExist,
 }) {
   const [formData, setFormData] = useState({});
   // const [newEntries, setNewEntries] = useState({});
@@ -25,6 +22,8 @@ export default function PresenceTableContent({
   // const [attendanceToUpdate, setAttendanceToUpdate] = useState([]);
   // DB-הנוכחות שקיימת ב
   const [attendanceToShow, setAttendanceToShow] = useState([]);
+  // האירוע
+  const [theEvent, setTheEvent] = useState([]);
   // המידע של העובד אם אין נוכחות
   const [alwaysDetail, setAlwaysDetail] = useState([]);
   // DB-עושה טבלה אם אין נוכחות ב
@@ -67,6 +66,24 @@ export default function PresenceTableContent({
       myData(data);
     }
   }, [data]);
+
+  // אם יש אירוע לוקחים את התאריך והאירוע
+  const myEvents = (eventExist) => {
+    if (!eventExist || eventExist.length === 0) return;
+    const eventData = eventExist.map((item)=>({
+      date: item.beginning_date,
+      event: item.event
+    }))
+    setTheEvent(eventData);
+  };
+  useEffect(() => {
+    if (eventExist && eventExist.length > 0) {
+      myEvents(eventExist);
+    }
+  }, [eventExist]);
+  
+  
+
   // מוסיף כניסה ויציאה
   const addEntrancesExitsEntry = (rowIndex) => {
     const updatedData = [...realFakeData];
@@ -93,8 +110,9 @@ export default function PresenceTableContent({
     setRealFakeData(updatedData);
   };
 
+  // עושה את השינויים
   const handleChange = (rowIndex, fieldName, value, entryIndex) => {
-    console.log(value, "value");
+    // console.log(value, "value");
 
     const updatedData = [...realFakeData];
     if (fieldName === "activity_code") {
@@ -113,11 +131,10 @@ export default function PresenceTableContent({
     console.log(updatedData, "update");
     setRealFakeData(updatedData);
     setChanges({
-     
       employee_id: updatedData[rowIndex].employee_id,
       attendance_index: getIndex,
       entrances_exits: updatedData[rowIndex].entrances_exits.map((key) => ({
-        activity_code: key.activity_code ? key.activity_code?.code : "-",
+        activity_code: key.activity_code ? key.activity_code?.code : 0,
         entrance: key.entrance ? key.entrance : "-",
         exit: key.exit ? key.exit : "-",
       })),
@@ -125,68 +142,10 @@ export default function PresenceTableContent({
         updatedData[rowIndex].date_time ||
         updatedData[rowIndex].date_with_no_attendance,
       waiting_time: Number(updatedData[rowIndex].waiting_time),
-      // },
     });
     setIsOpen(false);
   };
-  // console.log(changes, "changes");
-
-  // שינוי קוד פעילות
-  // const handleCodeSelect = (rowIndex, entryIndex, codeData) => {
-  //   console.log(codeData,"code");
-
-  //   const updatedData = [...realFakeData];
-  //   if (updatedData[rowIndex]?.entrances_exits?.[entryIndex]) {
-  //     updatedData[rowIndex].entrances_exits[entryIndex].activity_code.name = codeData.name
-
-  //     setChanges((prev) => ({
-  //       ...prev,
-  //       // [rowIndex]: {
-  //       ...prev[rowIndex],
-  //       employee_id: updatedData[rowIndex].employee_id,
-  //       attendance_index: getIndex,
-  //       entrances_exits: updatedData[rowIndex].entrances_exits.map(
-  //         (key, i) => ({
-  //           activity_code: i === entryIndex ? key.activity_code?.code : 0, // Use the code value for database
-  //           entrance: key.entrance ? key.entrance : "-",
-  //           exit: key.exit ? key.exit : "-",
-  //         })
-  //       ),
-  //       date_time:
-  //         updatedData[rowIndex].date_time ||
-  //         updatedData[rowIndex].date_with_no_attendance,
-  //       waiting_time: Number(updatedData[rowIndex].waiting_time),
-  //       // },
-  //     }));
-  //   }
-
-  //   setRealFakeData(updatedData);
-  //   setIsOpen(false);
-  // };
-
-  // להביא את המשימות לפי נוכחות יומית
-  // const fetchMissions = async () => {
-  //   // console.log(nameAndDateForRow.id);
-
-  //   if (!nameAndDateForRow?.id) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(
-  //       `/attendanceMissions/getByAttendaceId/${nameAndDateForRow?.id}`
-  //     );
-  //     const data = response.data;
-  //     console.log(data, "data");
-
-  //     setIsMissions(true);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchMissions();
-  // }, []);
+ 
 
   // בלחיצה על הכפתור נפתח משימות לאותו יום
   const handleButtonClick = (e, valueForTheRow) => {
@@ -224,9 +183,34 @@ export default function PresenceTableContent({
   // בודק מתי יש נוכחות
   const compareDate = (day) => {
     const date = `${year}-${padZero(month + 1)}-${padZero(day)}`;
-    const attendance = attendanceToShow.find((data) => data.date_time === date);
+    const attendance = attendanceToShow.find((data) => data?.date_time === date);
     return attendance || null;
   };
+
+  // ממיר את האירוע
+  const eventTranslate = (event)=>{
+    switch (event) {
+      case "Sunday":
+        return "א'"
+      case 1:
+        return "א'"
+      case 2:
+        return "ב'"
+      case 3:
+        return "ג'"
+      case 4:
+        return "ד'"
+      case 5:
+        return "ה'"
+      case 6:
+        return "ו'"
+      case 7:
+        return "ז'"
+      default:
+        break;
+    }
+  }
+   
   // בונה את טבלת כל הימים בחודש
   const buildAttendanceArray = (year, month) => {
     const days = generateDaysArray(year, month);
@@ -238,9 +222,14 @@ export default function PresenceTableContent({
           return attendanceData;
         }
         const [days, months, years] = day.split("/");
-        const dates = `${years}-${days}-${months}`;
-        // אם אין נוכחות
+        const dates = `${years}-${months}-${days}`;
+        // אם יש אירוע באותו יום
+        const eventForDate = theEvent.find((item) => item.date === dates)?.event || null;
+        // לשים אירוע או יום בשבוע
+        const eventValue = eventForDate || new Date(dates).getDay() + 1;
+        // אם אין נוכחות באותו יום:
         return {
+          event:eventValue,
           date_with_no_attendance: dates,
           employee_id: alwaysDetail.employee_id,
           employee_number: alwaysDetail.employee_number,
@@ -258,31 +247,19 @@ export default function PresenceTableContent({
           waiting_time: 0,
           extra_hours: 0,
           absence_to_pay: 0,
-          employee_is_active: alwaysDetail.employee_is_active,
         };
       });
   };
   useEffect(() => {
     const attendanceArray = buildAttendanceArray(year, month);
     setRealFakeData(attendanceArray);
-  }, [year, month, attendanceToShow, alwaysDetail]);
-  // עושה אינפוטים על השורה ועידכון
+  }, [year, month, attendanceToShow, alwaysDetail, theEvent, eventExist]);
+
+  // עןשה אינפוטים על השורה ועידכון
   const handleRowClick = async (rowIndex, e) => {
     e.stopPropagation();
     if (changes && changes.attendance_index === getIndex) {
       const { attendance_index, ...attendance } = changes;
-      // Preserve the original activity codes or use the new ones
-      // const updatedAttendance = {
-      //   ...attendance,
-      //   entrances_exits: attendance.entrances_exits.map((entry, index) => ({
-      //     ...entry,
-      //     activity_code:
-      //       realFakeData[rowIndex].entrances_exits[index].activity_code_value ||
-      //       (typeof entry.activity_code === "string"
-      //         ? realFakeData[rowIndex].entrances_exits[index].activity_code
-      //         : entry.activity_code),
-      //   })),
-      // };
       try {
         const response = await axios.post(`/attendances`, attendance);
         toast.success(response.data.message);
@@ -393,15 +370,19 @@ export default function PresenceTableContent({
             ([keyForAll, valueForAll]) =>
               keyForAll !== "employee_id" &&
               keyForAll !== "id" &&
+              keyForAll !== "event" &&
               (keyForAll === "date_with_no_attendance" ||
               keyForAll === "date_time" ? (
                 <div
-                  className="flex gap-1 pr-7"
+                  className="flex gap-2 truncate pr-7 "
                   key={`date-${rowIndex}-${keyForAll}`}
                 >
-                  <div className="bg-blue_color text-white text-sm rounded-full flex items-center justify-center  w-5 h-5">
-                    א'{" "}
-                  </div>
+                 {rowValue.event&&(<div className={clsx(` flex items-center justify-center  w-5 `,{
+                  "bg-blue_color text-sm text-white rounded-full w-5 h-5":typeof rowValue.event === "string",
+                  "text-blue_color text-sm text-center":typeof rowValue.event === "number",
+                 })}>
+                    {eventTranslate(rowValue.event)}
+                  </div>)}
                   {keyForAll === "date_time" ||
                   keyForAll === "date_with_no_attendance"
                     ? valueForAll
@@ -413,6 +394,11 @@ export default function PresenceTableContent({
                     : valueForAll.split("-").slice(1).map(padZero).join("/")}
                 </div>
               ) : // אם זה כניסה ויציאה
+              
+              
+              
+              
+              
               keyForAll === "entrances_exits" ? (
                 <div
                   key={`entries-${rowIndex}`}
@@ -502,10 +488,11 @@ export default function PresenceTableContent({
                 </div>
               ))
           )}
-          <div className="pl-1">
+
+          <div className="pl-1 truncate">
             <button
               onClick={(e) => handleButtonClick(e, rowValue)}
-              className={` px-3 rounded-full whitespace-nowrap ${
+              className={`  rounded-full whitespace-nowrap w-full truncate ${
                 rowValue.date_time != null
                   ? "bg-blue_color text-white cursor-pointer"
                   : "bg-gray-400 text-white cursor-pointer"

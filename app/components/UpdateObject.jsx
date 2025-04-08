@@ -17,6 +17,8 @@ export default function UpdateEmployee({
   });
   // console.log(formData, "eeee");
 
+  const [toggle, setToggle] = useState(false);
+
   const handleInputChange = (labelName, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -133,6 +135,8 @@ export default function UpdateEmployee({
                   <InputEmployee
                     labelName={labelName}
                     label={label}
+                    toggle={toggle}
+                    setToggle={setToggle}
                     formData={formData.updateEmployeeMood[labelName]}
                     handleInputChange={handleInputChange}
                   />
@@ -155,7 +159,7 @@ export default function UpdateEmployee({
               className="flex hover:cursor-pointer bg-[#002A78] gap-2 pl-4 px-2 text-white rounded-2xl p-1"
             >
               <Image src={"/edit.svg"} width={18} height={18} alt="edit" />
-              <div>עריכת עובד</div>
+              <div>שמור</div>
             </div>
           </div>
         </div>
