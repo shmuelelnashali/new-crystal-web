@@ -12,6 +12,7 @@ export default function PresenceTable({
   setNameAndDateForRow,
   selectedDate,
   setSelectedDate,
+  eventExist
 }) {
   return (
     <div className="  flex flex-col pr-2 bg-white rounded-lg relative   ">
@@ -28,6 +29,7 @@ export default function PresenceTable({
         setNameAndDateForRow={setNameAndDateForRow}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+        eventExist={eventExist}
       />
     </div>
   );

@@ -12,6 +12,8 @@ export default function SearchPopup({ data, setSearchPopup, searchPopup, employe
   }, {});
 
   const handleEmployeeAttendance = (search)=>{    
+    console.log(search,"ee");
+    
     setEmployeeAttendance(search.employeeToShow.employee_number)
     setSearchPopup(false)
   }

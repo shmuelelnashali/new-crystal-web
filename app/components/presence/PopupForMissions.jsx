@@ -138,6 +138,11 @@ export default function PopupForMissions({
   // עידכון המשימה
   const handleMissionUpdate = async (mission, e, index) => {
     e.stopPropagation();
+    // כשיש הוספת משימה חדשה אי אפשר לעדכן משימה
+    if(addMissions){
+      toast.error('לא ניתן לערוך משימה בזמן הוספת משימה חדשה')
+      return
+    }
     // בלחיצה שנייה או על משימה אחרת
     if (localMission || getIndex !== null) {
       // אם יש שינויים

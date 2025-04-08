@@ -97,7 +97,7 @@ export function EntriesSection({
               <div
                 key={`${entryKey}-${entryIndex}-edit`}
                 className={clsx(
-                  `h-full py-2 px-3  w-1/3 flex items-center justify-center`,
+                  `h-full  py-2 px-3  w-1/3 flex items-center justify-center`,
                   {
                     "w-1/3": entryKey === "activity_code",
                     "bg-[#A7BFE826]/15 w-1/3": entryKey !== "activity_code",

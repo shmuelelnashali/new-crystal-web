@@ -28,14 +28,14 @@ export default function ArrowEmployeesFilter({
   return (
     <div
       onClick={() => toggleOptionMenu(labelName)}
-      className=" bg-white hover:cursor-pointer text-right rounded-lg py-1  flex justify-between w-full items-center mt-1"
+      className=" bg-white hover:cursor-pointer truncate text-right rounded-lg py-1  flex justify-between w-full items-center mt-1"
     >
       <div
         className={`px-3 flex justify-between relative truncate w-full ${
           formData[labelName] ? "text-[#002A78]" : "text-gray-400"
         }`}
       >
-        <div>
+        <div className="truncate">
           {formData[labelName]
             ? formData[labelName]
             // : labelName === "Year"
@@ -56,11 +56,11 @@ export default function ArrowEmployeesFilter({
           ref={menuRef}
           className="absolute w-[90%]  top-10 bg-white border border-gray-300 rounded shadow-lg mt-1 z-10"
         >
-          <ul className="flex flex-col  p-2">
+          <ul className="flex flex-col truncate  p-2">
             {getOptionsArray(labelName).map((option, index) => (
               <li
                 key={index}
-                className="cursor-pointer px-2 py-1 hover:bg-[#002A78] hover:text-white rounded-lg"
+                className="cursor-pointer px-2 py-1 truncate hover:bg-[#002A78] hover:text-white rounded-lg"
                 onClick={() => handleOption(labelName, option)}
               >
                 {option}
