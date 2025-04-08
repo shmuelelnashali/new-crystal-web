@@ -9,7 +9,7 @@ export default function PresenceTable({
   popUpForMission,
   setPopUpForMission,
   nameAndDateForRow,
-  setNameAndDateForRow
+  setNameAndDateForRow,
 }) {
   return (
     <div className="  flex flex-col pr-2 bg-white rounded-lg relative   ">

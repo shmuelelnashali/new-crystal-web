@@ -19,10 +19,10 @@ export function CodeSelector({ value, onClick, isOpen, setIsOpen }) {
     
       <div
       // ref={buttonRef}
-        onClick={() => {onClick(), setIsOpen(!isOpen)}}
+        onClick={(e) => {onClick(e), setIsOpen(!isOpen)}}
         className="bg-white  hover:cursor-pointer flex border border-blue_color truncate rounded-full items-center relative w-full"
       >
-        <div className="w-full text-center truncate pl-5 pr-2">{value || "-"}</div>
+        <div className="w-full text-center truncate pl-5 pr-2">{value?.name || "-"}</div>
         <Image
           src="/downArrow.svg"
           width={10}

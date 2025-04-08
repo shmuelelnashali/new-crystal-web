@@ -13,38 +13,7 @@ import SearchPopup from "@/app/components/presence/SearchPopup";
 import PopupForMissions from "@/app/components/presence/PopupForMissions";
 import PopupDelete from "@/app/components/PopupDelete";
 import { Toaster } from "react-hot-toast";
-
-// const arr = {
-//   date_time: "1978-07-28 ",
-//   employee_number: "6126811",
-//   fullName: "Leo Sauer",
-//   entrances_exits: [
-//     {
-//       activity_code: 1,
-//       entrance: "01:30",
-//       exit: "10:30",
-//     },
-//     {
-//       activity_code: 1,
-//       entrance: "11:30",
-//       exit: "13:00",
-//     },
-//     {
-//       activity_code: 1,
-//       entrance: "14:00",
-//       exit: "23:00",
-//     },
-//   ],
-//   contract_id: 3,
-//   attendance_for_pay: 18.5,
-//   waiting_time: 1.69,
-//   extra_hours: 0.66,
-//   total_attendance_time: "19:30",
-
-//   employee_isActive: 0,
-//   event: "Sunday",
-// };
-
+import { ArrowLeft, ArrowRight } from "lucide-react";
 export default function Page() {
   const [data, setData] = useState([]);
   const [employeesName, setEmployeesName] = useState([]);
@@ -53,38 +22,38 @@ export default function Page() {
   const [popupDelete, setPopupDelete] = useState(false);
   // מחיקת משימה
   const [deleteMission, setDeleteMission] = useState(null);
-
   // השורה של הנוכחות
   const [editingRowIndex, setEditingRowIndex] = useState(null);
   // הפופאפ של המשימות
   const [popUpForMission, setPopUpForMission] = useState(false);
   // המידע של
   const [nameAndDateForRow, setNameAndDateForRow] = useState({});
+  // חיפוש נוכחות של עובד מסוים
+  const [employeeAttendance, setEmployeeAttendance] = useState(null);
 
   const formatData = (data) => {
-    console.log(data, "kkkk");
-
-    const employees = Array.isArray(data) ? data : [data];
-    const employeeArray = employees
-      .filter((active) => active.employee_is_active === 1)
+    // console.log(data, "kkkk");
+    const attendance = Array.isArray(data) ? data : [data];
+    const attendanceArray = attendance
+      .filter((active) => {
+        return (
+          active.employee_is_active === 1 &&
+          active.employee_number === "1111111"
+        );
+        // employeeAttendance;
+      })
       .map((employee) => ({
-        employeeToShow: {
-          date_time: formatDatePresence(employee.date_time),
+        attendanceToShow: {
+          id: employee.id,
+          employee_id: employee.employee_id,
+          date_time: employee.date_time,
           employee_number: employee.employee_number,
           full_name: employee.full_name,
           entrances_exits: Array.isArray(employee.entrances_exits)
             ? employee.entrances_exits.map((key) => ({
-                activity_code:
-                  Array.isArray(key.activity_code) &&
-                  key.activity_code.length > 0
-                    ? key.activity_code[0].code && key.activity_code[0].name
-                    : "",
-                entrance: key.entrance
-                  ? key.entrance.split(":").slice(0, 2).join(":")
-                  : "-",
-                exit: key.exit
-                  ? key.exit.split(":").slice(0, 2).join(":")
-                  : "-",
+                activity_code: key.activity_code ? key.activity_code : "-",
+                entrance: key.entrance ? key.entrance : "-",
+                exit: key.exit ? key.exit : "-",
               }))
             : [],
           contract_code: employee.contract_code,
@@ -96,18 +65,28 @@ export default function Page() {
           employee_is_active:
             employee.employee_is_active == "1" ? "פעיל" : "לא פעיל",
         },
-        searchEmployee: {
+        searchAttendanceToShow: {
           full_name: employee.full_name,
         },
-        hiddenEmployeeData: {
-          id: employee.employee_id,
+        alwaysDetail: {
+          employee_id: employee.employee_id,
+          employee_number: employee.employee_number,
+          full_name: employee.full_name,
+          contract_code: employee.contract_code,
+          employee_is_active:
+            employee.employee_is_active == "1" ? "פעיל" : "לא פעיל",
+          entrance: "00:00:00",
+          exit: "00:00:00",
+        },
+        hiddenAttendanceData: {
+          employee_id: employee.employee_id,
           date_time: formatDate(employee.date_time),
           date_day: formatDateToDay(employee.date_time),
         },
       }));
-    setData(employeeArray);
+    setData(attendanceArray);
+    console.log(attendanceArray, "arr");
   };
-
   const fetchData = async () => {
     try {
       const response = await axios.get(`/attendances`);
@@ -117,12 +96,14 @@ export default function Page() {
       console.error(error);
     }
   };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
+  // כשיש חיפוש על נוכחות של עובד מסוים
+  useEffect(() => {
+    // if(employeeAttendance){
+    fetchData();
+    // }
+  }, [employeeAttendance]);
+  // פורמט כדי להציג עובדים
   const formatEmployees = (data) => {
-    // console.log(data,"before");
     const employees = Array.isArray(data) ? data : [data];
     const employeeArray = employees
       .filter((active) => active.is_active === 1)
@@ -135,10 +116,9 @@ export default function Page() {
           section_name: employee.section_name,
         },
       }));
-    // setAllEmployees(employeeArray);
     setEmployeesName(employeeArray);
   };
-
+  // להביא את העובדים כדי לחפש עובד מסוים
   const fetchEmployees = async () => {
     try {
       const response = await axios.get(`/employees`);
@@ -151,7 +131,6 @@ export default function Page() {
   useEffect(() => {
     fetchEmployees();
   }, []);
-
   const deleteMissionById = async (mission) => {
     try {
       setDeleteMission(mission);
@@ -160,65 +139,68 @@ export default function Page() {
       console.error("error delete mission: ", error);
     }
   };
-
   return (
     <>
-   {popUpForMission &&  (
-            <div className="border w-[24%]   flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full  z-40">
-        <PopupForMissions
-          nameAndDateForRow={nameAndDateForRow}
-          popUpForMission={popUpForMission}
-          setPopUpForMission={setPopUpForMission}
-          deleteMissionById={deleteMissionById}
-        />
+      {popUpForMission && (
+        <div className="border w-[24%]   flex  border-r-blue_color  flex-col gap-y-1 absolute top-0 left-0 bg-white h-full  z-40">
+          <PopupForMissions
+            nameAndDateForRow={nameAndDateForRow}
+            popUpForMission={popUpForMission}
+            setPopUpForMission={setPopUpForMission}
+            deleteMissionById={deleteMissionById}
+          />
         </div>
       )}
-    <div className="h-full  flex flex-col overflow-hidden">
-      {/* סרגל החיפוש */}
-      <div className=" w-[40%] relative flex justify-center items-center ">
-        <Search
-          searchPopupAttendances={searchPopup}
-          setSearchPopupAttendances={setSearchPopup}
-          searchText={"חיפוש לפי מספר עובד/ שם עובד"}
-          textBtn={"4.6.24"}
-        />
+      <div className="h-full  flex flex-col overflow-hidden">
+        {/* סרגל החיפוש */}
+        <div className="flex  w-full justify-center mx-4">
+          <div className=" w-1/2 relative flex justify-center items-center ">
+            <Search
+              searchPopupAttendances={searchPopup}
+              setSearchPopupAttendances={setSearchPopup}
+              searchText={"חיפוש לפי מספר עובד/ שם עובד"}
+              textBtn={"02/2024"}
+              leftArrow={<ArrowLeft size={20} />}
+              rightArrow={<ArrowRight size={20} />}
+            />
+            {/* פופאפ החיפוש */}
+            {searchPopup && (
+              <SearchPopup
+                data={employeesName}
+                searchPopup={searchPopup}
+                setSearchPopup={setSearchPopup}
+                employeeAttendance={employeeAttendance}
+                setEmployeeAttendance={setEmployeeAttendance}
+              />
+            )}
+          </div>
+        </div>
+        <div className="overflow-y-auto dirLtr mt-5 ">
+          {/* הטבלה */}
+          <PresenceTable
+            popUpForMission={popUpForMission}
+            setPopUpForMission={setPopUpForMission}
+            editingRowIndex={editingRowIndex}
+            setEditingRowIndex={setEditingRowIndex}
+            data={data}
+            setData={setData}
+            nameAndDateForRow={nameAndDateForRow}
+            setNameAndDateForRow={setNameAndDateForRow}
+          />
+        </div>
+        {popupDelete && (
+          <PopupDelete
+            popUpState={popupDelete}
+            showPopup={setPopupDelete}
+            objectToDelete={deleteMission}
+            nameAndDateForRow={nameAndDateForRow}
+            headerText={`מחיקת משימה`}
+            messageText={"האם אתה בטוח שאתה רוצה למחוק את משימה"}
+            btnText={"מחק"}
+          />
+        )}
       </div>
-      {/* פופאפ החיפוש */}
-      {searchPopup && (
-        <SearchPopup
-          data={employeesName}
-          searchPopup={searchPopup}
-          setSearchPopup={setSearchPopup}
-        />
-      )}
-      <div className="overflow-y-auto dirLtr mt-5 ">
-        {/* הטבלה */}
-        <PresenceTable
-          popUpForMission={popUpForMission}
-          setPopUpForMission={setPopUpForMission}
-          editingRowIndex={editingRowIndex}
-          setEditingRowIndex={setEditingRowIndex}
-          data={data}
-          setData={setData}
-          nameAndDateForRow={nameAndDateForRow}
-          setNameAndDateForRow={setNameAndDateForRow}
-        />
-      </div>
-     
-
-      {popupDelete && (
-        <PopupDelete
-          popUpState={popupDelete}
-          showPopup={setPopupDelete}
-          objectToDelete={deleteMission}
-          nameAndDateForRow={nameAndDateForRow}
-          headerText={`מחיקת משימה`}
-          messageText={"האם אתה בטוח שאתה רוצה למחוק את משימה"}
-          btnText={"מחק"}
-        />
-      )}
-    </div> 
-    <Toaster position="top-center" /> 
+      <Toaster position="top-center" />
     </>
   );
 }

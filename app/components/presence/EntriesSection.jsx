@@ -5,7 +5,6 @@ import ToggleCode from "./ToggleCode";
 import { CodeSelector } from "./CodeSelector";
 import { parse, format, isValid } from "date-fns";
 import { timeStructure } from "@/app/util/dateFormat";
-
 export function EntriesSection({
   entries,
   rowIndex,
@@ -20,39 +19,35 @@ export function EntriesSection({
   setIsOpen,
   rawInputs,
   setRawInputs,
+  handleRowDragStart,
+  draggingRow,
+  isHover,
 }) {
   // const [isOpen, setIsOpen] = useState(false);
   // const [rawInputs, setRawInputs] = useState({});
 
   const handleTimeChange = (entryIndex, entryKey, e) => {
-    let inputValue = e.target.value.replace(/[^\d]/g, ''); 
-  
-    //HH:MM שומר על מבנה 
+    let inputValue = e.target.value.replace(/[^\d]/g, "");
+    //HH:MM שומר על מבנה
     let displayValue = inputValue;
     if (inputValue.length > 2) {
       displayValue = inputValue.slice(0, 2) + ":" + inputValue.slice(2);
     }
-  
     // לא מורשה מעל 24:00
     const validatedValue = timeStructure(displayValue);
-  
     if (validatedValue === null) {
       return;
     }
-  console.log(validatedValue);
-  
     setRawInputs((prev) => ({
       ...prev,
       [`${entryIndex}-${entryKey}`]: displayValue,
     }));
-  
     if (inputValue.length >= 4) {
       const updatedEntries = [...entries];
       const currentEntry = { ...updatedEntries[entryIndex] };
-      currentEntry[entryKey] = validatedValue; 
+      currentEntry[entryKey] = validatedValue;
       updatedEntries[entryIndex] = currentEntry;
       handleChange(rowIndex, "entrances_exits", updatedEntries);
-  
       console.log(rawInputs, "rr");
       // Clear raw input after successful update
       setRawInputs((prev) => ({
@@ -61,27 +56,38 @@ export function EntriesSection({
       }));
     }
   };
-  
+
+  const handleMouseDown = (e, rowIndex, entryKey) => {
+    if (entryKey == "activity_code") return;
+
+    handleRowDragStart(e, rowIndex);
+  };
 
   return (
-    <div
-      onClick={() => handleRowClick(rowIndex)}
-      className="flex  col-span-3 flex-col items-center justify-center r"
-    >
+    <div className="flex flex-col items-center justify-center ">
       {entries.map((entry, entryIndex) => (
         <div
+          onClick={(e) => handleRowClick(rowIndex, e)}
           key={`entry-${entryIndex}-${entry.entrance}-${entry.exit}`}
           className="group relative w-full justify-center items-center flex truncate"
         >
           {Object.entries(entry).map(([entryKey, entryValue]) =>
             editingRowIndex !== rowIndex ? (
               <div
+                onMouseDown={(e) => handleMouseDown(e, rowIndex, entryKey)}
                 key={`${entryKey}-${entryIndex}`}
                 className={clsx(
                   ` flex items-center justify-center py-2 truncate`,
                   {
-                    "bg-[#A7BFE826]/15 w-1/4": entryKey !== "activity_code",
-                    " w-2/4": entryKey == "activity_code",
+                    "border-t-[1.5px] border-r-[1.5px] border-b-[1.5px] border-[#002A78] rounded-tr rounded-br":
+                      draggingRow === rowIndex && entryKey === "entrance",
+                    "border-t-[1.5px] border-l-[1.5px] border-b-[1.5px] border-[#002A78] rounded-tl rounded-bl":
+                      draggingRow === rowIndex && entryKey === "exit",
+                    "bg-[#A7BFE826] w-1/3":
+                      !isHover.has(rowIndex) && entryKey !== "activity_code",
+                    "bg-[#002a782c] w-1/3":
+                      isHover.has(rowIndex) && entryKey !== "activity_code",
+                    " w-1/3": entryKey == "activity_code",
                     "border-t border-t-[#A7BFE826]/15":
                       entryIndex >= entries.length - (newEntriesCount || 0) &&
                       entryKey !== "activity_code",
@@ -90,10 +96,11 @@ export function EntriesSection({
               >
                 <div className="truncate">
                   {typeof entryValue === "string" && entryValue.includes(":")
-                  ? entryValue.split(":").slice(0, 2).join(":")
-                  : entryValue}
+                    ? entryValue.split(":").slice(0, 2).join(":")
+                    : entryValue == 0
+                    ? "-"
+                    : entryValue?.name}
                 </div>
-                
               </div>
             ) : (
               <div
@@ -101,15 +108,15 @@ export function EntriesSection({
                 className={clsx(
                   `h-full py-2 px-3  w-1/3 flex items-center justify-center`,
                   {
-                    "w-2/4": entryKey === "activity_code",
-                    "bg-[#A7BFE826]/15 w-1/4": entryKey !== "activity_code",
+                    "w-1/3": entryKey === "activity_code",
+                    "bg-[#A7BFE826]/15 w-1/3": entryKey !== "activity_code",
                   }
                 )}
               >
                 {/* <div> */}
                 {entryKey !== "activity_code" ? (
                   <input
-                    className=" rounded-full outline-none border truncate border-blue_color w-full text-center flex items-center justify-center"
+                    className=" rounded-full outline-none border truncate border-blue_color w-3/4 text-center flex items-center justify-center"
                     type="text"
                     value={
                       rawInputs[`${entryIndex}-${entryKey}`] ||
@@ -118,16 +125,17 @@ export function EntriesSection({
                         : "")
                     }
                     onChange={(e) => handleTimeChange(entryIndex, entryKey, e)}
+                    onClick={(e) => e.stopPropagation()}
                   />
                 ) : (
-                  
                   <CodeSelector
                     value={entryValue}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
-                    onClick={() => setActiveEntryIndex(entryIndex)}
+                    onClick={(e) => {
+                      e.stopPropagation(), setActiveEntryIndex(entryIndex);
+                    }}
                   />
-
                 )}
               </div>
               // </div>
@@ -140,7 +148,6 @@ export function EntriesSection({
               // onSelect={handleCodeSelect}
             />
           )} */}
-
           {entries.length < 3 && entryIndex === entries.length - 1 && (
             <Image
               src="/plus.svg"
@@ -151,10 +158,9 @@ export function EntriesSection({
                 e.stopPropagation();
                 onAddEntry(rowIndex);
               }}
-              className="absolute top-2.5 left-2 hover:cursor-pointer hidden group-hover:block"
+              className="absolute top-2.5 left-0.5 hover:cursor-pointer hidden group-hover:block"
             />
           )}
-
           {/* Conditionally render Delete (red X) icon */}
           {entries.length > 1 && (
             <Image
@@ -166,7 +172,7 @@ export function EntriesSection({
                 e.stopPropagation();
                 onDeleteEntry(rowIndex, entryIndex);
               }}
-              className="absolute top-2.5 right-2 hover:cursor-pointer hidden group-hover:block"
+              className="absolute top-2.5 right-0 hover:cursor-pointer hidden group-hover:block"
             />
           )}
         </div>

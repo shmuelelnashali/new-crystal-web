@@ -31,12 +31,12 @@ export default function PresenceTableHead() {
             {Array.isArray(header)
               ? header.map((subHeader, subIndex) => (
                   <div
-                    className={clsx(`flex  w-full justify-center  items-center`,{})}
+                    className={clsx(`flex  w-full justify-center text-center  items-center`,{})}
                     key={subIndex}
                   >
                    <div className={clsx(`truncate w-full`,{
-                      " text-center pr-8 ": subHeader === "יציאה",
-                      " text-left ": subHeader === "כניסה" || subHeader === "קוד פעילות",
+                      // " text-center pr-8 ": subHeader === "יציאה",
+                      // " text-left ": subHeader === "כניסה" || subHeader === "קוד פעילות",
                     })}
                     >{subHeader}</div> 
                   </div>

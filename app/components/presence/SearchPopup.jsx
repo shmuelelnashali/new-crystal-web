@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
-
-export default function SearchPopup({ data, setSearchPopup, searchPopup }) {
+export default function SearchPopup({ data, setSearchPopup, searchPopup, employeeAttendance, setEmployeeAttendance }) {
   const groupedData = data.reduce((acc, current) => {
     const { section_name } = current.employeeToShow;
     if (!acc[section_name]) {
@@ -10,11 +9,14 @@ export default function SearchPopup({ data, setSearchPopup, searchPopup }) {
     acc[section_name].push(current.employeeToShow);
     return acc;
   }, {});
-
+  const handleEmployeeAttendance = (search)=>{
+    setEmployeeAttendance(search.employeeToShow.employee_number)
+    setSearchPopup(false)
+  }
   return (
     <>
       <div
-        className={`absolute z-50 w-[55%] border bg-white rounded-lg px-3 py-1 dirLtr overflow-y-auto h-[40%] `}
+        className={`absolute z-50 w-full left-0 right-0 top-full border bg-white rounded-lg px-3 py-1 dirLtr overflow-y-auto max-h-[40vh] `}
       >
         {Object.entries(groupedData).map(([sectionName, employees]) => (
           <div key={sectionName} className="mb-4">
@@ -22,11 +24,10 @@ export default function SearchPopup({ data, setSearchPopup, searchPopup }) {
             <div className="font-bold text-lg py-2  border-b text-center text-blue_color ">
               {" מדור " + sectionName}
             </div>
- 
             {data.map((search, index) => (
               <div
                 onClick={() => {
-                  // setSearchPopup(false)
+                  handleEmployeeAttendance(search)
                 }}
                 className={`hover:bg-blue_color dirRtl justify-between pr-1 hover:rounded-xl hover:cursor-pointer py-3 flex hover:text-white border-b border-b-[#A7BFE8]/30`}
                 key={`${sectionName}-${index}`}
@@ -57,3 +58,8 @@ export default function SearchPopup({ data, setSearchPopup, searchPopup }) {
     </>
   );
 }
+
+
+
+
+
