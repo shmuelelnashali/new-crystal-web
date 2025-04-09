@@ -1,0 +1,26 @@
+{employeeSelect && (
+                  <div
+                    dir="ltr"
+                    className="w-[73%] max-h-[271px] bg-white absolute top-6 pr-[9px] z-10"
+                    style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
+                  >*
+                    <div className="max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto pr-4">
+                      {employees.map((employee, index) => (
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEmployeeDetails({
+                              name: `${employee.first_name} ${employee.surname}`,
+                              dbId: employee.id,
+                            }),
+                              setEmployeeSelect(false);
+                          }}
+                          key={index}
+                          className="h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0] optionsHover"
+                        >
+                          {`${employee.first_name} ${employee.surname}`}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}

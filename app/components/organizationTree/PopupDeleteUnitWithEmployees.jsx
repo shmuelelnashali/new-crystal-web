@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "@/app/lib/axios";
 import CustomCalendar from "./CustomCalendar";
+import EmployeesSelctor from "../ui/EmployeesSelctor";
 import { useMessage, useSelectMonths, useSelectYears } from "./GlobalState";
 
 export default function PopupDeleteUnitwithPeople({
@@ -20,7 +21,7 @@ export default function PopupDeleteUnitwithPeople({
   const [unitName, setUnitName] = useState({});
   const [sections, setSections] = useState(null);
   const [startDate, setStartDate] = useState(null);
-  const [employeeDetails, setEmployeeDetails] = useState({});
+  const [employeeDetails, setEmployeeDetails] = useState([]);
 
   const { setMessage } = useMessage();
   const { setDisplaySelectMonths } = useSelectMonths();
@@ -124,7 +125,7 @@ export default function PopupDeleteUnitwithPeople({
                   onClick={(e) => {
                     e.stopPropagation(), setEmployeeSelect(true);
                   }}
-                  className={`w-[73%] py-2 bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light ${
+                  className={`w-4/6 py-2 bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light ${
                     employeeDetails.name ? "text-[#002A78]" : "text-[#002A7887]"
                   }  flex items-center justify-between z-50`}
                 >
@@ -139,27 +140,14 @@ export default function PopupDeleteUnitwithPeople({
                 {employeeSelect && (
                   <div
                     dir="ltr"
-                    className="w-[73%] max-h-[271px] bg-white absolute top-6 pr-[9px] z-10"
+                    className="absolute z-10 bg-white w-4/6 top-8 rounded-br-md rounded-bl-md"
                     style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
                   >
-                    <div className="max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto pr-4">
-                      {employees.map((employee, index) => (
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setEmployeeDetails({
-                              name: `${employee.first_name} ${employee.surname}`,
-                              dbId: employee.id,
-                            }),
-                              setEmployeeSelect(false);
-                          }}
-                          key={index}
-                          className="h-[48px] text-[18px] font-normal text-[#002A78] flex items-center justify-end pr-3 border-b-[2px] border-[#f0f1f0] optionsHover"
-                        >
-                          {`${employee.first_name} ${employee.surname}`}
-                        </div>
-                      ))}
-                    </div>
+                    <EmployeesSelctor
+                      users={employees}
+                      emploeeySelected={employeeDetails}
+                      setEmploeeySelected={setEmployeeDetails}
+                    />
                   </div>
                 )}
               </div>
@@ -176,7 +164,7 @@ export default function PopupDeleteUnitwithPeople({
               onClick={(e) => {
                 e.stopPropagation(), setSectionSelect(true);
               }}
-              className={`w-[73%] py-2 bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light ${
+              className={` w-4/6 py-2 bg-white px-6 rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] text-[16.8px] font-light ${
                 unitName.name ? "text-[#002A78]" : "text-[#002A7887]"
               }  flex items-center justify-between ${
                 employeeSelect ? "z-0" : "z-50"
@@ -193,7 +181,7 @@ export default function PopupDeleteUnitwithPeople({
             {sectionSelect && (
               <div
                 dir="ltr"
-                className="w-[73%] max-h-[271px] bg-white absolute top-6 pr-[9px] z-10"
+                className="w-4/6 max-h-[271px] bg-white absolute top-6 pr-[9px] z-10"
                 style={{ boxShadow: "0px 4px 4px 1px rgba(0, 0, 0, 0.25)" }}
               >
                 <div className="max-h-[271px] bg-white py-4 pl-[80px] overflow-y-auto pr-4">

@@ -180,7 +180,7 @@ export default function CustomCalendar({ startDate, setStartDate }) {
   };
 
   return (
-    <div className="inline-flex relative z-0 w-[73%]">
+    <div className="inline-flex relative z-0 w-4/6">
       <CustomDatePicker
         className={`w-full py-2  bg-white rounded-[41px] border-[0.84px] border-[#002A7842] shadow-[0_2.4px_6px_-5.68px] pr-6 pl-5 ${
           startDate ? "text-[#002A78]" : "text-[#002A7887]"
