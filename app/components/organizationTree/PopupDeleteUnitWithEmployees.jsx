@@ -80,8 +80,6 @@ export default function PopupDeleteUnitwithPeople({
       deleteUnitWithEmployees(), setPopUpDeleteUnitWithPeople(false);
     }
   };
-  console.log();
-  
 
   return (
     <div
@@ -149,7 +147,10 @@ export default function PopupDeleteUnitwithPeople({
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
-                            setEmployeeDetails(employee),
+                            setEmployeeDetails({
+                              name: `${employee.first_name} ${employee.surname}`,
+                              dbId: employee.id,
+                            }),
                               setEmployeeSelect(false);
                           }}
                           key={index}

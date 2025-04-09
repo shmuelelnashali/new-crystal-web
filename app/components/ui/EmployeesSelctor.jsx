@@ -39,7 +39,7 @@ export default function EmployeesSelctor({users ,emploeeySelected, setEmploeeySe
             <div dir="rtl" className="flex ">
               <div className="flex justify-center items-center">
                 <div
-                  onClick={() => handleV(user)}
+                  onClick={(e) => {handleV(user),e.stopPropagation()}}
                   className={`flex justify-center items-center mr-2 border border-blue_color w-4 h-4 ${
                     check(user) ? "bg-blue_color " : ""
                   }`}
@@ -49,9 +49,11 @@ export default function EmployeesSelctor({users ,emploeeySelected, setEmploeeySe
                   )}
                 </div>
               </div>
-              <div onClick={handleSearch} className="p-2">
-                <div>{user.first_name || user.name}</div>
-                <div>{user.id}</div>
+              <div 
+              // onClick={handleSearch}
+               className="p-2">
+                <div>{user?.first_name || user.name}</div>
+                <div>{user?.id}</div>
               </div>
             </div>
             <div className=" mx-4 border border-b-[#EFF3FB]"></div>
