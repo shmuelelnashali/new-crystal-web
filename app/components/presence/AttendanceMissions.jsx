@@ -9,7 +9,7 @@ export default function AttendanceMissions({
   isFocused,
   setIsFocused,
   getMission,
-  setGetMission,
+  setGetMission, 
   theMissionFetch,
   handleMissionUpdate,
   handleSearchMission,

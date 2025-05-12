@@ -17,13 +17,12 @@ PresenceTableHead() {
     "ש. המתנה",
     "ש. נוספות",
     "היעדרות לשכר",
-    "סטטוס",
     "משימות",
   ];
 
   return (
     <>
-      <div className="presentTable items-center dirRtl font-semibold sticky top-0 z-10 justify-around text-white bg-blue_color py-2 rounded-md">
+      <div className="presentTable items-center dirRtl font-semibold sticky top-0 z-40 justify-around text-white bg-blue_color py-2 rounded-md">
         {headers.map((header, index) => (
           <div
             className={clsx("flex justify-center truncate items-center", {

@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "@/app/lib/axios";
 import CustomCalendar from "./CustomCalendar";
@@ -66,7 +67,7 @@ export default function PopupDeleteUnitwithPeople({
     return "זה";
   };
 
-  const handleResetClick = (e) => {
+  const handleResetsClick = (e) => {
     e.stopPropagation(),
       setSectionSelect(false),
       setDisplaySelectMonths(false),
@@ -79,6 +80,8 @@ export default function PopupDeleteUnitwithPeople({
       deleteUnitWithEmployees(), setPopUpDeleteUnitWithPeople(false);
     }
   };
+  console.log();
+  
 
   return (
     <div
@@ -89,7 +92,7 @@ export default function PopupDeleteUnitwithPeople({
       }}
     >
       <div
-        onClick={handleResetClick}
+        onClick={handleResetsClick}
         className="bg-white py-3 pr-7 pl-4 w-[45%] rounded-xl text-right"
       >
         <div>
@@ -146,10 +149,7 @@ export default function PopupDeleteUnitwithPeople({
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
-                            setEmployeeDetails({
-                              name: `${employee.first_name} ${employee.surname}`,
-                              dbId: employee.id,
-                            }),
+                            setEmployeeDetails(employee),
                               setEmployeeSelect(false);
                           }}
                           key={index}
@@ -166,7 +166,9 @@ export default function PopupDeleteUnitwithPeople({
           )}
 
           <h3 className="text-lg font-semibold text-blue_color pt-2 pb-[2px]">
-            {`לאיזה מדור תרצה לשייך את ה${level !== "מדור"? "עובד": "עובדים"} ?`}
+            {`לאיזה מדור תרצה לשייך את ה${
+              level !== "מדור" ? "עובד" : "עובדים"
+            } ?`}
           </h3>
           <div className="pb-2 flex relative">
             <div
@@ -218,7 +220,9 @@ export default function PopupDeleteUnitwithPeople({
             )}
           </div>
           <h3 className="text-lg font-semibold text-blue_color pb-[2px]">
-           {`מאיזה תאריך ה${level !== "מדור"? "עובד יעבור": "עובדים יעברו"} למדור החדש ?`}
+            {`מאיזה תאריך ה${
+              level !== "מדור" ? "עובד יעבור" : "עובדים יעברו"
+            } למדור החדש ?`}
           </h3>
           {<CustomCalendar startDate={startDate} setStartDate={setStartDate} />}
         </div>

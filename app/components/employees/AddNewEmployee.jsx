@@ -11,6 +11,7 @@ export default function AddNewEmployee({
   fetchEmployees,
 }) {
   const [formData, setFormData] = useState({});
+  const [toggle, setToggle] = useState(false);
 
   const onSubmit = async () => {
     const formatDate = (date) =>
@@ -128,7 +129,10 @@ export default function AddNewEmployee({
                 <InputEmployee
                   labelName={labelName}
                   label={label}
+                  formData={formData[labelName]}
                   handleInputChange={handleInputChange}
+                  toggle={toggle}
+                  setToggle={setToggle}
                 />
               )}
             </div>

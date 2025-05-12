@@ -17,7 +17,7 @@ import CustomEdge from "@/app/components/organizationTree/CustomEdge";
 import BtnWithSelectPopUp from "@/app/components/organizationTree/BtnWithSelectPopUp";
 import axios from "@/app/lib/axios";
 import PopupDisconnect from "@/app/components/organizationTree/PopupDisconnect";
-import PopupDeleteUnitwithPeople from "@/app/components/organizationTree/PopupDeleteUnitwithPeople";
+import PopupDeleteUnitwithPeople from "@/app/components/organizationTree/PopupDeleteUnitWithEmployees";
 import PopUpDeleteEmptyUnit from "@/app/components/organizationTree/PopUpDeleteEmptyUnit";
 import Header from "@/app/components/ui/Header";
 import { addNewUnitInServer } from "@/app/components/organizationTree/PopUpCreateNewUnit";

@@ -164,7 +164,7 @@ setFormData,
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="absolute hover:cursor-default top-full right- mt-2  z-50  w-96 p-4 bg-white shadow-lg border border-gray-300 rounded-lg"
+        className="absolute hover:cursor-default top-full right- mt-2  z-50  w-[300px] p-4 bg-white shadow-lg border border-gray-300 rounded-lg"
       >
         <div className="bg-[#EFF3FB] p-2 rounded-lg ">
           <div className="font-bold">סינונים</div>

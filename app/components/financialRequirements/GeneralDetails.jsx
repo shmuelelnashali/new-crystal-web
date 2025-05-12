@@ -68,7 +68,7 @@ const TaskOpenerDetails = () => {
     <>
       <div className="flex flex-col gap-2 bg-[#E4E8F3] p-4 rounded-xl font-normal text-center ">
         <div className=" flex flex-col  bg-white px-5 py-2  rounded-xl gap-y-1">
-          <div className="font-semibold">{"שם פותח המשימה"}</div>
+          <div className="font-semibold ">{"שם פותח המשימה"}</div>
 
           <div>{openerDetails.taskName}</div>
         </div>

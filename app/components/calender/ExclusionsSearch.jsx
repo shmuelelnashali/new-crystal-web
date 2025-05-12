@@ -2,6 +2,7 @@ import axios from "@/app/lib/axios";
 import { clsx } from "clsx";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import EmployeesSelctor from "../ui/EmployeesSelctor";
 
 export default function ExclusionsSearch({
   openSearch,
@@ -11,7 +12,7 @@ export default function ExclusionsSearch({
 }) {
   console.log(employees);
 
-  const [user, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
   // const [emploeeyEvent, setEmploeeyEvent] = useState([]);
   console.log(emploeeyEvent);
 
@@ -25,20 +26,20 @@ export default function ExclusionsSearch({
     }
   };
 
-  const handleV = (user) => {
-    const index = emploeeyEvent.indexOf(user.id);
-    const updatedEmploeeyEvent = [...emploeeyEvent];
+  // const handleV = (user) => {
+  //   const index = emploeeyEvent.indexOf(user.id);
+  //   const updatedEmploeeyEvent = [...emploeeyEvent];
 
-    console.log(updatedEmploeeyEvent);
+  //   console.log(updatedEmploeeyEvent);
 
-    if (index !== -1) {
-      updatedEmploeeyEvent.splice(index, 1);
-      setEmploeeyEvent(updatedEmploeeyEvent);
-    } else {
-      updatedEmploeeyEvent.push(user.id);
-      setEmploeeyEvent(updatedEmploeeyEvent);
-    }
-  };
+  //   if (index !== -1) {
+  //     updatedEmploeeyEvent.splice(index, 1);
+  //     setEmploeeyEvent(updatedEmploeeyEvent);
+  //   } else {
+  //     updatedEmploeeyEvent.push(user.id);
+  //     setEmploeeyEvent(updatedEmploeeyEvent);
+  //   }
+  // };
   const handelUsers = (data) => {
     if (employees) {
       const employeeIds = employees.map((employee) => employee.id);
@@ -85,7 +86,8 @@ export default function ExclusionsSearch({
         "px-1 p-2 z-50 overflow-auto bg-white absolute w-[92%] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
       )}
     >
-      <div
+      <EmployeesSelctor users={users} emploeeySelected={emploeeyEvent} setEmploeeySelected={setEmploeeyEvent}/>
+      {/* <div
         className={
           " max-h-[20vh] overflow-y-auto"
           // { " h-[30vh] overflow-auto ": openSearch },
@@ -115,7 +117,7 @@ export default function ExclusionsSearch({
             <div className=" mx-4 border border-b-[#EFF3FB]"></div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

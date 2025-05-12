@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-
 export default function SearchPopup({ data, setSearchPopup, searchPopup, employeeAttendance, setEmployeeAttendance }) {
   const groupedData = data.reduce((acc, current) => {
     const { section_name } = current.employeeToShow;
@@ -12,6 +11,8 @@ export default function SearchPopup({ data, setSearchPopup, searchPopup, employe
   }, {});
 
   const handleEmployeeAttendance = (search)=>{    
+    console.log(search,"ee");
+    
     setEmployeeAttendance(search.employeeToShow.employee_number)
     setSearchPopup(false)
   }
@@ -61,3 +62,8 @@ export default function SearchPopup({ data, setSearchPopup, searchPopup, employe
     </>
   );
 }
+
+
+
+
+
