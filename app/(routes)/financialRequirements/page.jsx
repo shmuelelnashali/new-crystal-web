@@ -1,3 +1,31 @@
+// 'use client'
+// import React from 'react'
+// import { useForm } from 'react-hook-form';
+
+// export default function page() {
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//   } = useForm();
+
+//   return (
+//     <div className=' '>
+//     <form onSubmit={handleSubmit((data) => console.log(data))}>
+//       <input  className=' border'{...register('firstName')} />
+//       <input {...register('lastName', { required: true })} />
+//       {errors.lastName && <p>Last name is required.</p>}
+//       <input {...register('age', { pattern: /\d+/ })} />
+//       {errors.age && <p>Please enter number for age.</p>}
+//       <input type="submit" />
+//     </form></div>
+//   );
+// }
+
+  
+
+
+
 import React from "react";
 import NewRequirement from "../../components/financialRequirements/NewRequirement";
 import Table from "@/app/components/financialRequirements/Table";
