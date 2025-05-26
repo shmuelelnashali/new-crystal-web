@@ -21,7 +21,7 @@
 import React, { useState } from "react";
 import RowDisplay from "./RowDisplay";
 
-export default function PositionDays() {
+export default function PositionDays({register}) {
   const [rowData, setRowData] = useState({
     name: "",
     requiredDays: "0",
@@ -38,15 +38,16 @@ export default function PositionDays() {
     { header: "פירוט", key: "details", placeholder: "" },
   ];
 
-  const handleInputChange = (updatedRow) => {
-    setRowData(updatedRow);
-  };
+  // const handleInputChange = (updatedRow) => {
+  //   setRowData(updatedRow);
+  // };
 
   return (
     <RowDisplay
+      register={register}
+      title={"positionDays"}
       headers={headersAndInputs}
-      inputs={rowData} // Pass the data object
-      onInputChange={handleInputChange} // Handle updates
+      // handleSubmit={handleSubmit}
     />
   );
 }

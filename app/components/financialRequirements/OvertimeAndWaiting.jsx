@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RowDisplay from "./RowDisplay";
 
-export default function OvertimeAndWaiting() {
+export default function OvertimeAndWaiting({ register }) {
   const [rowData, setRowData] = useState({
     branchName: "",
     resourceName: "",
@@ -28,9 +28,10 @@ export default function OvertimeAndWaiting() {
 
   return (
     <RowDisplay
+    grid={"8"}
+      register={register}
+      title={"overtimeAndWaiting"}
       headers={headersAndInputs}
-      inputs={rowData} // Pass the data object
-      onInputChange={handleInputChange} // Handle updates
     />
   );
 }

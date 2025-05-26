@@ -10,6 +10,7 @@ import OvertimeAndWaiting from "./OvertimeAndWaiting";
 import OtherExpenses from "./OtherExpenses";
 import Files from "./Files";
 import Comments from "./Comments";
+import { useForm } from "react-hook-form";
 
 export default function NewRequirement() {
   const newRequirementObj = {
@@ -49,26 +50,29 @@ export default function NewRequirement() {
       component: Comments,
     },
   };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const [formData, setFormData] = useState({
-    otherExpenses: {},
-    workingHours: {},
-    overtimeAndWaiting: {},
-    positionDays: {},
-  });
-  const [expandedItem, setExpandedItem] = useState([]);
-  const [totalCost, setTotalCost] = useState(0.00);
-
-  const handleInputChange = (section, updatedData) => {
-    {
-      console.log(section);
-    }
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [section]: updatedData,
-    }));
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
   };
+
+  const [expandedItem, setExpandedItem] = useState([]);
+  const [totalCost, setTotalCost] = useState(0.0);
+
+  // const handleInputChange = (section, updatedData) => {
+  //   {
+  //     console.log(section);
+  //   }
+
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     [section]: updatedData,
+  //   }));
+  // };
 
   // const open = (key) => {
   //   const newExpandedItem = [expandedItem];
@@ -92,41 +96,45 @@ export default function NewRequirement() {
       >
         {expandedItem === true ? "סגור הכל" : " פתח הכל"}
       </div>
-
-      {Object.entries(newRequirementObj).map(([key, item]) => {
-        const ComponentToRender = item.component;
-        return (
-          <div key={key} className=" p-2  ">
-            <div className="p-6 items-center rounded-2xl bg-light_blue hover:cursor-pointer ">
-              <div
-                className="font-bold flex text-xl gap-4 "
-                onClick={() =>
-                  setExpandedItem(expandedItem === key ? null : key)
-                }
-              >
-                <Image
-                  src={item.image}
-                  width={28}
-                  height={28}
-                  alt={item.name}
-                />
-                {item.name}
-              </div>
-
-              {expandedItem === key && (
-                <ComponentToRender
-                  formData={formData[key]}
-                  setFormData={(updatedData) =>
-                    handleInputChange(key, updatedData)
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {Object.entries(newRequirementObj).map(([key, item]) => {
+          const ComponentToRender = item.component;
+          return (
+            <div key={key} className=" p-2  ">
+              <div className="p-6 items-center rounded-2xl bg-light_blue hover:cursor-pointer ">
+                <div
+                  className="font-bold flex text-xl gap-4 "
+                  onClick={() =>
+                    setExpandedItem(expandedItem === key ? null : key)
                   }
-                />
-              )}
-              {expandedItem === true && <ComponentToRender />}
-            </div>
-          </div>
-        );
-      })}
+                >
+                  <Image
+                    src={item.image}
+                    width={28}
+                    height={28}
+                    alt={item.name}
+                  />
+                  {item.name}
+                </div>
 
+                {expandedItem === key && (
+                  <ComponentToRender
+                    register={register}
+                    handleSubmit={handleSubmit}
+                    // onSubmit={onSubmit}
+                    // formData={formData[key]}
+                    // setFormData={(updatedData) =>
+                    //   handleInputChange(key, updatedData)
+                    // }
+                  />
+                )}
+                {expandedItem === true && <ComponentToRender />}
+              </div>
+            </div>
+          );
+        })}
+        <input type="submit" value={"שלח"}></input>
+      </form>
       <div className="object-bottom p-2 ">
         <div className="text-center font-bold text-3xl">
           <span className="ml-10">עלות כוללת</span>
@@ -136,7 +144,7 @@ export default function NewRequirement() {
           </span>
         </div>
         <div className="flex justify-between pt-4">
-          <button className="  text-white bg-blue_color rounded-full p-2">
+          <button className="text-white bg-blue_color rounded-full p-2">
             העברה לאישור רמ"ד
           </button>
           <button className=" font-  border border-blue_color rounded-3xl p-2">

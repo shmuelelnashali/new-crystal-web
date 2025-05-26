@@ -42,12 +42,11 @@ export default function InputRow({ inputs, headers, onInputChange }) {
               key={index}
               className={`${
                 fields.header === "פירוט" ? "col-span-2" : ""
-              } pl-2 pr-0 py-2`}
+              } pl-2 pr-0 py-2 bg-blue_color`}
             >
-          {/* <div className="bg-blue_color">{fields.header}</div> */}
+              <div className="">{fields.header}</div>
               {fields.header === "פירוט" ? (
                 <div className="flex gap-2">
-                  
                   <textarea
                     className="border border-[#002A7842]  focus:border-[#8497BE] focus:bg-[#8497BE] focus:outline-none w-full h-[26px] text-[#002A78]   rounded-lg pr-2"
                     onChange={(e) => handleChange(fields.key, e.target.value)}

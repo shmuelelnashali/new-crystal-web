@@ -1,30 +1,38 @@
 import React from "react";
 
-export default function GeneralDetails() {
-  const inputs = {
-    expirimentNane: { label: "שם ניסוי" },
-    subjectOfficer: { label: "קצין נושא" },
-    levelOfIntrest: { label: "רמת ענין" },
-    expirimentEssence: { label: "מהות הניסוי" },
-    client: { label: "לקוח" },
-    gmash: { label: 'ג"מש' },
-    securityClassification: { label: "סיווג בטחוני" },
-    leadingSection: { label: "מדור מוביל" },
-  };
+export default function GeneralDetails({ register }) {
+  const inputs = [
+    { key: "expirimentNane", label: "שם ניסוי" },
+    { key: "subjectOfficer ", label: "קצין נושא" },
+    { key: "levelOfIntrest", label: "רמת ענין" },
+    { key: "expirimentEssence", label: "מהות הניסוי" },
+    { key: "client", label: "לקוח" },
+    { key: "gmash", label: 'ג"מש' },
+    { key: "securityClassification", label: "סיווג בטחוני" },
+    { key: "leadingSection", label: "מדור מוביל" },
+  ];
 
-  const handleBlur = (key) => (event) => {
-    const newValue = event.target.value;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [key]: newValue,
-    }));
-  };
+  // const handleBlur = (key) => (event) => {
+  //   const newValue = event.target.value;
+  //   setFormValues((prevValues) => ({
+  //     ...prevValues,
+  //     [key]: newValue,
+  //   }));
+  // };
 
   return (
     <div className="flex w-full   ">
       <div className="w-4/5   grid grid-cols-3     ">
-        {Object.entries(inputs).map(([key, item]) => (
-          <Input key={key} item={item.label} onBlur={handleBlur} />
+        {inputs.map((item, index) => (
+          <Input
+            key={index}
+            title={"generalDetails"}
+            label={item.label}
+            header={item.key}
+            register={register}
+            // item={item.label}
+            // onBlur={handleBlur}
+          />
         ))}
       </div>
 
@@ -35,19 +43,22 @@ export default function GeneralDetails() {
   );
 }
 
-const Input = ({item}) => {
+const Input = ({ register, title, label, header }) => {
   return (
     <>
       <div
         className={` justify-between flex flex-col p-4 gap-2 ${
-          item === "מדור מוביל" && "  col-span-2 "
+          label === "מדור מוביל" && "  col-span-2 "
         } `}
       >
-        <label className=" text-right font-bold text-[#002A78]">{item}</label>
+        <label className=" text-right font-bold text-[#002A78]">{label}</label>
         <input
+          {...register(`${title}.${header}`, {
+            required: `${header} נדרש`,
+          })}
           type="text"
           // value={experimentName}
-          placeholder={item}
+          placeholder={label}
           className="  h-9   px-4 bg-[#EBEEF5] border border-[#002A78]/10  outline-none  text-[#002A78] rounded-xl"
 
           // onChange={handleInputChange}
