@@ -95,10 +95,11 @@ export default function page() {
       task_status: "נפתחה משימה",
     },
   ];
-  console.log(headers);
+  // console.log(headers);
 
   return (
     <div className=" py-2 h-full dirLtr overflow-y-auto">
+
       {/* <Table data={data} headTable={headers} /> */}
 
        <NewRequirement /> 

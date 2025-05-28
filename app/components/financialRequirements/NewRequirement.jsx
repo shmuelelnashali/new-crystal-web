@@ -54,6 +54,7 @@ export default function NewRequirement() {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -62,39 +63,32 @@ export default function NewRequirement() {
 
   const [expandedItem, setExpandedItem] = useState([]);
   const [totalCost, setTotalCost] = useState(0.0);
+  const toggleInArray = (value) => {
+    setExpandedItem((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((item) => item !== value);
+      } else {
+        return [...prev, value];
+      }
+    });
+  };
+  const toggleAll = () => {
+    if (expandedItem.length === Object.keys(newRequirementObj).length) {
+      setExpandedItem([]);
+    } else {
+      setExpandedItem(Object.keys(newRequirementObj));
+    }
+  };
 
-  // const handleInputChange = (section, updatedData) => {
-  //   {
-  //     console.log(section);
-  //   }
-
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [section]: updatedData,
-  //   }));
-  // };
-
-  // const open = (key) => {
-  //   const newExpandedItem = [expandedItem];
-  //   console.log(newExpandedItem);
-
-  //   if (newExpandedItem.includes(key)) {
-  //     const index = expandedItem.indexOf(key);
-  //     newExpandedItem.splice(index, 1);
-  //   } else {
-  //     newExpandedItem.push(key);
-  //     console.log(newExpandedItem);
-  //   }
-
-  //   setExpandedItem(newExpandedItem);
-  // };
   return (
     <div className="dirRtl h-full flex flex-col justify-between">
       <div
         className="text-end font-bold ml-4 cursor-pointer"
-        onClick={() => setExpandedItem(expandedItem === true ? null : true)}
+        onClick={toggleAll}
       >
-        {expandedItem === true ? "סגור הכל" : " פתח הכל"}
+        {expandedItem.length === Object.keys(newRequirementObj).length
+          ? "סגור הכל"
+          : " פתח הכל"}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {Object.entries(newRequirementObj).map(([key, item]) => {
@@ -104,9 +98,7 @@ export default function NewRequirement() {
               <div className="p-6 items-center rounded-2xl bg-light_blue hover:cursor-pointer ">
                 <div
                   className="font-bold flex text-xl gap-4 "
-                  onClick={() =>
-                    setExpandedItem(expandedItem === key ? null : key)
-                  }
+                  onClick={() => toggleInArray(key)}
                 >
                   <Image
                     src={item.image}
@@ -117,18 +109,14 @@ export default function NewRequirement() {
                   {item.name}
                 </div>
 
-                {expandedItem === key && (
+                {expandedItem.includes(key) && (
                   <ComponentToRender
                     register={register}
                     handleSubmit={handleSubmit}
-                    // onSubmit={onSubmit}
-                    // formData={formData[key]}
-                    // setFormData={(updatedData) =>
-                    //   handleInputChange(key, updatedData)
-                    // }
+                    errors={errors}
+                    control={control}
                   />
                 )}
-                {expandedItem === true && <ComponentToRender />}
               </div>
             </div>
           );

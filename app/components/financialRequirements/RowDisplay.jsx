@@ -1,34 +1,106 @@
 import React from "react";
+import { FaPlus, FaTrash } from "react-icons/fa";
 
-export default function RowDisplay({ title, headers, register, grid }) {
+export default function RowDisplay({
+  title,
+  headers,
+  register,
+  control,
+  fields,
+  append,
+  remove,
+  grid,
+  errors,
+}) {
   return (
     <div>
-      <div className="bg-white p-2 flex flex-col">
+      <div className="bg-white  m-3 border border-[#002A78]/30 flex flex-col gap-2">
         <div
-          className={`  bg-blue_color text-white grid ${
+          className={`bg-blue_color p-2 pr-5 text-white grid ${
             grid ? "grid-cols-8" : "grid-cols-6"
           }`}
         >
           {headers.map((head, index) => (
             <div key={`${head.name},${index}`}>{head.header}</div>
           ))}
+          {/* <div>פעולות</div> */}
         </div>
-        <div className={`grid ${grid ? "grid-cols-8" : "grid-cols-6"}`}>
-          {headers.map((head, index) => (
-            <div key={index}>
-              <input
-                {...register(`${title}.${head.key}`, {
-                  required: `${head.header} is required`,
-                })}
-                type="text"
-                className=" border w-full"
-              />
+
+        {Array.isArray(fields) &&
+          fields.map((field, rowIndex) => (
+            <div
+              key={field.id}
+              className={`grid items-center ${
+                grid ? "grid-cols-8" : "grid-cols-6"
+              }`}
+            >
+              {console.log(field)}
+              {headers.map((head, colIndex) => (
+                <div key={colIndex} className="">
+                  <input
+                    {...register(`${title}[${rowIndex}].${head.key}`, {
+                      required: `${head.header} is required`,
+                    })}
+                    defaultValue={field[head.key]}
+                    type="text"
+                    className="border w-full"
+                  />
+                  {errors?.[title]?.[rowIndex]?.[head.key] && (
+                    <p className="text-red-500 text-sm">
+                      {errors[title][rowIndex][head.key].message}
+                    </p>
+                  )}
+                </div>
+              ))}
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => remove(rowIndex)}
+                  className="text-red-500"
+                >
+                  {/* <FaTrash /> */}
+                </button>
+              </div>
             </div>
           ))}
-        </div>
-        <div></div>
       </div>
+      <button
+        type="button"
+        onClick={() =>
+          append(Object.fromEntries(headers.map((h) => [h.key, ""])))
+        }
+        className=" w-fit px-3 py-1.5 rounded-full text-white mt-2 bg-blue_color "
+      >
+        שורה חדשה
+      </button>
     </div>
+    // <div>
+    //   <div className="bg-white p-2 flex flex-col">
+    //     <div
+    //       className={`  bg-blue_color text-white grid ${
+    //         grid ? "grid-cols-8" : "grid-cols-6"
+    //       }`}
+    //     >
+    //       {headers.map((head, index) => (
+    //         <div key={`${head.name},${index}`}>{head.header}</div>
+    //       ))}
+    //     </div>
+    //     <div className={`grid ${grid ? "grid-cols-8" : "grid-cols-6"}`}>
+    //       {headers.map((head, index) => (
+    //         <div key={index}>
+    //           <input
+    //             {...register(`${title}.${head.key}`, {
+    //               required: `${head.header} is required`,
+    //             })}
+    //             type="text"
+    //             className=" border w-full"
+    //           />
+    //         </div>
+    //       ))}
+    //     </div>
+    //     <div></div>
+    //   </div>
+    // </div>
   );
 }
 

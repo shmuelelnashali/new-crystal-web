@@ -1,35 +1,7 @@
-// import React, { useState } from "react";
-// import RowDisplay from "./RowDisplay";
-
-// export default function PositionDays() {
-//   const [sum, setsum] = useState("00:00")
-//   const headersAndInputs = [
-//     { header: "שם", placeholder: "יש לבחור" },
-//     { header: "כמות ימים נדרשת", placeholder: "0" },
-//     { header: "עלות ליחידה", placeholder: "0" },
-//     { header: "עלות כוללת", placeholder: "00:00", sum:true },
-//     { header: "פירוט",  placeholder: "" },
-//   ];
-
-//   return (
-//     <RowDisplay
-//       headers={headersAndInputs}
-
-//     />
-//   );
-// }
-import React, { useState } from "react";
+import { useFieldArray } from "react-hook-form";
 import RowDisplay from "./RowDisplay";
 
-export default function PositionDays({register}) {
-  const [rowData, setRowData] = useState({
-    name: "",
-    requiredDays: "0",
-    unitCost: "0",
-    totalCost: "00:00",
-    details: "",
-  });
-
+export default function PositionDays({ register, control, errors }) {
   const headersAndInputs = [
     { header: "שם", key: "name", placeholder: "יש לבחור" },
     { header: "כמות ימים נדרשת", key: "requiredDays", placeholder: "0" },
@@ -37,17 +9,20 @@ export default function PositionDays({register}) {
     { header: "עלות כוללת", key: "totalCost", placeholder: "00:00", sum: true },
     { header: "פירוט", key: "details", placeholder: "" },
   ];
-
-  // const handleInputChange = (updatedRow) => {
-  //   setRowData(updatedRow);
-  // };
-
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "positionDays",
+  });
   return (
     <RowDisplay
-      register={register}
-      title={"positionDays"}
+      title="positionDays"
       headers={headersAndInputs}
-      // handleSubmit={handleSubmit}
+      register={register}
+      control={control}
+      fields={fields}
+      append={append}
+      remove={remove}
+      errors={errors}
     />
   );
 }
