@@ -12,8 +12,8 @@ export default function Search({
   bg,
   searchText,
   missionDay,
-  searchEmployees,
-  setEmployees,
+  searchItems,
+  setItems,
   searchPopupAttendances,
   setSearchPopupAttendances,
   rightArrow,
@@ -21,7 +21,7 @@ export default function Search({
   goToNextMonth,
   goToPrevMonth,
 }) {
-  
+  // console.log("searchEmployees", searchEmployees);
 
   const [query, setQuery] = useState("");
 
@@ -30,36 +30,43 @@ export default function Search({
     setQuery(searchQuery);
     // if (searchQuery.trim()) {
     // חיפוש על העובדים לפי שם/מספר
-    const filteredEmployees = searchEmployees.filter((employee) => {
-      const employeeNumber = employee.employeeToShow.employee_number
-        ?.toString()
-        .trim();
-      const employeeName = employee.employeeToShow.first_name
-        ?.trim()
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-
-      return (
-        (employeeName && employeeName.startsWith(searchQuery)) ||
-        (employeeNumber && employeeNumber.startsWith(searchQuery))
-      );
+    const filteredEmployees = searchItems.filter((item) => {
+      if (item.task_number) {
+       return item.task_number.toString().trim().startsWith(searchQuery);
+      }
+      if (item.Mission_number) {
+       return item.Mission_number.toString().trim().startsWith(searchQuery);
+      }
+      if (item.employeeToShow) {
+        const employeeNumber = item.employeeToShow.employee_number
+          ?.toString()
+          .trim();
+        const employeeName = item.employeeToShow.first_name
+          ?.trim()
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        return (
+          (employeeName && employeeName.startsWith(searchQuery)) ||
+          (employeeNumber && employeeNumber.startsWith(searchQuery))
+        );
+      }
     });
-    setEmployees(filteredEmployees);
+    setItems(filteredEmployees);
     // } else {
     //   setEmployees(searchEmployees); // מחזיר חזרה את העובדים
     // }
   };
   const handleInputClick = () => {
-    if (setSearchPopupAttendances &&  setSearchPopupAttendances ) {
+    if (setSearchPopupAttendances && setSearchPopupAttendances) {
       setSearchPopupAttendances(!searchPopupAttendances);
     }
   };
-  const handleBtn =()=>{
-    if(addNew){
-      addNew()
+  const handleBtn = () => {
+    if (addNew) {
+      addNew();
     }
-  }
+  };
   return (
     <div
       className={clsx(
@@ -87,7 +94,7 @@ export default function Search({
           onClick={(e) => {
             e.stopPropagation(), handleBtn();
           }}
-          className="w-[20%] flex justify-center gap-2 items-center  whitespace-nowrap  left-0 text-gray-100 font-normal  text-[20px] "
+          className="w-[20%] flex justify-center gap-1 items-center  whitespace-nowrap  left-0 text-gray-100 font-normal  text-base "
         >
           <div onClick={goToPrevMonth}>{rightArrow}</div>
           <div className="truncate">{textBtn}</div>
@@ -98,27 +105,3 @@ export default function Search({
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

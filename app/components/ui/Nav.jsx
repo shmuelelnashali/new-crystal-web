@@ -31,8 +31,9 @@ export default function Nav() {
     <div className="rounded-l-full rounded-r-full text-base  bg-[#EFF3FB] px-6 py-2.5">
       <ul className="flex gap-x-8 justify-around items-center h-full text-blue_color/30  ">
         {navBar.map((nav, index) => (
-          <Link key={index} href={user ? nav.link : "/login"}>
-            {/* // <Link key={index} href={nav.link}> */}
+          // <Link key={index} href={user ? nav.link : "/login"}>
+       
+           <Link key={index} href={nav.link}>
             <li
               className={`whitespace-nowrap ${
                 pathName.includes(nav.link) ? "nav" : ""

@@ -3,12 +3,26 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function TableHead({
+export default function TablesHead({
   headTable,
+  headLength,
   columnToSortOn,
   setColumnToSortOn,
 }) {
   const pathName = usePathname();
+
+  // מיפוי התנאים לפי ראוטים
+  const getCurrentRoute = ()=>{
+    const routes ={
+      mission: "/mission",
+      financialRequirements: "/financialRequirements",
+      // employees: "/employees"
+    }
+    return Object.keys(routes).find(route => 
+      pathName.includes(routes[route])
+    );
+  }
+  const currentRoute = getCurrentRoute();
 
   const handleClickArrows = (index, direction) => {
     setColumnToSortOn({ index, direction });
@@ -18,7 +32,7 @@ export default function TableHead({
       toast(`סדר עולה הוחל על\n${columnName}`, {
         icon: "⬆️",
         style: {
-          borderRadius: "10px",
+          borderRadius: "10px", 
           background: "#333",
           color: "#fff",
         },
@@ -38,11 +52,10 @@ export default function TableHead({
   return (
     <div className="flex w-full bg-[#EFF3FB] p-1 sticky top-0 z-10">
       <div className="flex w-full bg-blue_color rounded">
-        <div className="w-[50px]"></div>
+        <div className="w-[60px]"></div>
         <div
-          className={`text-[20px] grid ${
-            pathName.includes("employees") ? "grid-cols-11" : "grid-cols-10"
-          } gap-3 w-full font-semibold leading-6 py-3 text-center items-center text-white`}
+          className={`text-base grid ${headLength
+          } gap-3 w-full font-semibold  py-2 text-center items-center text-white`}
         >
           {headTable.map((head, index) => (
             <div
@@ -53,13 +66,13 @@ export default function TableHead({
             >
               <div className={`truncate`}>{head}</div>
 
-              {pathName.includes("mission") && (
+              {currentRoute && (
                 <div className="mr-1 flex">
                   <MoveDown
                     onClick={() => {
                       handleClickArrows(index, "desc");
                     }}
-                    size={15}
+                    size={13}
                     color={
                       columnToSortOn?.index === index &&
                       columnToSortOn?.direction === "asc"
@@ -71,7 +84,7 @@ export default function TableHead({
                     onClick={() => {
                       handleClickArrows(index, "asc");
                     }}
-                    size={15}
+                    size={13}
                     color={
                       columnToSortOn?.index === index &&
                       columnToSortOn?.direction === "desc"

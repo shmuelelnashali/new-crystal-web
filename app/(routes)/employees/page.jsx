@@ -14,6 +14,7 @@ import axios from "@/app/lib/axios";
 import AddNewEmployee from "@/app/components/employees/AddNewEmployee";
 import { Toaster } from "react-hot-toast";
 import clsx from "clsx";
+import Tables from "@/app/components/missions/Tables";
 
 // import axios from "axios";
 
@@ -191,6 +192,7 @@ export default function Employees() {
     try {
       const response = await axios.get("/employees");
       const data = response.data;
+      console.log(data, "data from employees");
       formatData(data);
     } catch (error) {
       console.error("error fetching employees: ", error);
@@ -238,19 +240,53 @@ export default function Employees() {
   {
     /*ARRAY FOR THE HEAD OF THE TABLE*/
   }
-  const headTable = [
-    "מספר עובד",
-    "שם פרטי",
-    "שם משפחה",
-    "חייל / אזרח",
-    "מחלקה / יחידה",
-    "ענף",
-    "מדור",
-    "סוג הסכם",
-    "תחילת פעילות",
-    "סיום פעילות",
-    "מייל",
-  ];
+
+  const headers = {
+  "מספר עובד": {
+    field: "employee_number",
+    type: "string",
+  },
+  "שם פרטי": {
+    field: "first_name",
+    type: "string",
+  },
+  "שם משפחה": {
+    field: "surname",
+    type: "string",
+  },
+  "חייל / אזרח": {
+    field: "solider_civilian",
+    type: "string",
+  },
+  "מחלקה / יחידה": {
+    field: "department_id",
+    type: "string",
+  },
+  "ענף": {
+    field: "branch_id",
+    type: "string",
+  },
+  "מדור": {
+    field: "section_id",
+    type: "string",
+  },
+  "סוג הסכם": {
+    field: "contract_id",
+    type: "string",
+  },
+  "תחילת פעילות": {
+    field: "activity_start",
+    type: "date",
+  },
+  "סיום פעילות": {
+    field: "activity_end",
+    type: "date",
+  },
+  "מייל": {
+    field: "mail",
+    type: "string",
+  },
+};
 
   const handlePopUpFilter = () => {
     setFilterPopUp(!filterPopUp);
@@ -270,8 +306,8 @@ export default function Employees() {
       <div className="flex  w-full justify-between mx-4">
         <div className="w-1/2">
           <Search
-            searchEmployees={allEmployees}
-            setEmployees={setEmployees}
+            searchItems={allEmployees}
+            setItems={setEmployees}
             formatData={formatData}
             addNew={handleAddingNewRow}
             textBtn={" הוסף עובד"}
@@ -319,13 +355,19 @@ export default function Employees() {
         </div>
       </div>
 
-      <div className=" dirLtr overflow-y-auto rounded-xl">
+      <div className=" dirLtr  rounded-xl">
         <div className=" h-full ">
-          <Table
+          <Tables
+          data={showEmployeesOrFilter}
+          headTable={Object.keys(headers)}
+          headers={headers}
+          deleteRowObj={deleteEmployeeById}
+          />
+          {/* <Table
             data={showEmployeesOrFilter}
             headTable={headTable}
             deleteEmployeeById={deleteEmployeeById}
-          />
+          /> */}
         </div>
         <Toaster position="top-center" />
       </div>

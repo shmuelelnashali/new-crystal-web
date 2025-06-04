@@ -159,6 +159,7 @@ InputEditMission({ theData, label, labelName }) {
             handleInputChange={handleInputChange}
             selectedMadors={formData.Sections || []}
             valueToEdit={formData[labelName]}
+            fieldName={'Sections'}
           />
         ) : (
             !arrow.includes(labelName)&&

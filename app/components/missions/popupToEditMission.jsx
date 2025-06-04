@@ -9,7 +9,7 @@ import axios from "@/app/lib/axios";
 export default function PopupToEditMission({
   value,
   setShowPopup,
-  deleteEmployee,
+  deleteRowObj,
   updateValue,
   // setReportData,
   // reportData
@@ -196,7 +196,7 @@ export default function PopupToEditMission({
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteEmployee(report);
+                          deleteRowObj(report);
                         }}
                         className={`pr-2  flex items-center justify-center hover:cursor-pointer transform hover:scale-105 transition-transform duration-200 ease-in-out`}
                       >

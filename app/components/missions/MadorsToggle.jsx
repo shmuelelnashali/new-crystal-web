@@ -1,10 +1,13 @@
 import Image from 'next/image';
-import React from 'react'
+import { usePathname } from 'next/navigation';
+import React, { use } from 'react'
 
 import Select, {components} from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
+
+
 
 // בשביל לעשות וי על מה שנבחר
 const CustomOption = (props) => {
@@ -33,14 +36,38 @@ const CustomOption = (props) => {
   );
 };
 
-// עיצוב אישי
+
+ 
+// להביא את החץ 
+const DropdownIndicator = (props) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <Image src="/downArrow.svg" alt="Custom Arrow" width={10} height={10} />
+    </components.DropdownIndicator>
+  );
+};
+
+export default function MadorsToggle({
+  madors, 
+  handleInputChange, 
+  selectedMadors, 
+  valueToEdit,
+  fieldName
+}) {
+
+  
+const pathName = usePathname();
+
+
+    // עיצוב אישי
 const customStyles = {
   control: (base, state) => ({
     ...base,
     borderColor: state.isFocused ? '#bcbfc5' : '#bcbfc5', // Customize the border color
     boxShadow: state.isFocused ? ' #bcbfc5' : null,
     borderRadius: '10px', // Rounding the borders
-    paddingRight: '10px', // Add some padding for the custom arrow
+    paddingRight: '', // Add some padding for the custom arrow
+    // padding: '0px',
     '&:hover': {
       borderColor: '#bcbfc5', // No hover color change
     },
@@ -82,6 +109,8 @@ const customStyles = {
     position: 'absolute',
     zIndex: '1',  
     paddingRight:'2px',
+    padding: '0px'
+    
     
   }),
   menuList: (base) => ({
@@ -99,37 +128,30 @@ const customStyles = {
     backgroundColor: '#002A78', // Background color for selected items
     color:'white',
     borderRadius: '5px',
+    display:pathName.includes('financialRequirements') ?"none": 'flex', // Hides the selected items in financialRequirements route
+     
+    
+    // padding: '0px'
     // paddingRight:'5px',
-    padding: '0.3px 5px 0.3px 0px '
+    
   }),
   multiValueLabel: (base) => ({
     ...base,
-    color: 'white', // Text color for selected items
+    color: 'white',
+    padding: '0px',
+    // backgroundColor: "red" ,// Text color for selected item
+    paddingRight: '5px',
     
   }),
   indicatorsContainer: (base) => ({
     ...base,
     paddingRight: '0px', // Removes the gap between the arrow and selected options
   }),
+  placeholder: (base) => ({
+    ...base,
+    textAlign: 'right',
+  }),
 };
- 
-// להביא את החץ 
-const DropdownIndicator = (props) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <Image src="/downArrow.svg" alt="Custom Arrow" width={10} height={10} />
-    </components.DropdownIndicator>
-  );
-};
-
-export default function MadorsToggle({
-  madors, 
-  handleInputChange, 
-  selectedMadors, 
-  valueToEdit,
-}) {
-
-    // console.log(valueToEdit,"madorval");
     
     //  אם המדורים שבאים זה מערך זה הופך את זה לערכים
     const format = Array.from(madors).map((mador)=>({
@@ -145,7 +167,7 @@ export default function MadorsToggle({
     // מראה את המדורים שנבחרו
     const handleChange = (selected) => {
       const selectedValues = selected ? selected.map((option) => option.value) : [];
-      handleInputChange("Sections", selectedValues); // Update the selected values
+      handleInputChange(fieldName, selectedValues); // Update the selected values
     };
   return (
     <Select

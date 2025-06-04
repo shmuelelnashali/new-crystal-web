@@ -56,6 +56,7 @@ export default function NewRequirement() {
     overtimeAndWaiting: {},
     positionDays: {},
   });
+  
   const [expandedItem, setExpandedItem] = useState([]);
   const [totalCost, setTotalCost] = useState(0.00);
 

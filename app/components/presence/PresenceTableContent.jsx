@@ -52,7 +52,9 @@ export default function PresenceTableContent({
 
   // מביא את הנוכחות שקיימת
   const myData = (data) => {
+    console.log(data, "data");
     const show = data.map((item) => item.attendanceToShow);
+    console.log(show, "show");
     setAttendanceToShow(show);
     // const update = data.map((item) => item.attendanceToUpdate);
     // setAttendanceToUpdate(update);
@@ -423,6 +425,7 @@ export default function PresenceTableContent({
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     setActiveEntryIndex={setActiveEntryIndex}
+                    activeEntryIndex={activeEntryIndex}
                     handleRowDragStart={handleRowDragStart}
                     draggingRow={dragState.originRowIndex}
                     isHover={dragState.hoveredRows}
