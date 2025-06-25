@@ -11,6 +11,7 @@ export default function Tables({
   headers,
   deleteRowObj,
   tableWidth,
+  afterUpdate
 }) {
 console.log(headTable);
 console.log(data);
@@ -136,6 +137,7 @@ const pathname = usePathname();
           headLength={currentConfig.gridCols(headLength)}
           data={sortedData()}
           deleteRowObj={deleteRowObj}
+          afterUpdate={afterUpdate}
         />
       </div>
     </div>

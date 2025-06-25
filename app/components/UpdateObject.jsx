@@ -10,6 +10,7 @@ export default function UpdateEmployee({
   hiddenEmployeeData,
   setUpdateEmployee,
   updateEmployeeMood,
+  afterUpdate
 }) {
   const [formData, setFormData] = useState({
     hiddenEmployeeData: hiddenEmployeeData,
@@ -69,6 +70,7 @@ export default function UpdateEmployee({
       );
       // התראה שעבר בהצלחה
       toast.success(response.data.message);
+      await afterUpdate()
       setUpdateEmployee(false);
     } catch (error) {
       console.error("שגיאה בעידכון", error);

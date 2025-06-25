@@ -4,11 +4,10 @@ import InputDateMission from "./InputDateMission";
 import InputMission from "./InputMission";
 import MadorsToggle from "./MadorsToggle";
 
-export default function 
-InputEditMission({ theData, label, labelName }) {
+export default function InputEditMission({ formData, setFormData, label, labelName }) {
   const [openLabel, setOpenLabel] = useState(null);
   const [selectOption, setSelectOption] = useState({});
-  const [formData, setFormData] = useState(theData||{});
+  // const [formData, setFormData] = useState(theData||{});
 
 
 

@@ -69,7 +69,10 @@ export default function PopupToEditMission({
   // const [value, setValue] = useState(value);
   // לחיצה בשביל מצב עריכה
   const [clickToEdit, setClickToEdit] = useState(false);
-  const handleClickToEdit = () => {
+  // נתוני המשימה 
+  const [formData, setFormData] = useState(value||{});
+
+  const handleSave = () => {
     if (clickToEdit) {
       // putTheChangeData(async() => {
       //   try {
@@ -103,7 +106,7 @@ export default function PopupToEditMission({
           </div>
 
           <div className="text-xl px-5 py-1 tru mb-4 flex justify-center items-center text-white font-semibold bg-blue_color text-center rounded-full">
-            {value.Mission_name}
+            {formData.Mission_name}
           </div>
         </div>
 
@@ -117,7 +120,8 @@ export default function PopupToEditMission({
                 {/* מצב קריאה או עריכה */}
                 <InputReadOrEditMission
                   clickToEdit={clickToEdit}
-                  theData={value}
+                  formData={formData}
+                  setFormData={setFormData}
                   labelName={labelName}
                   label={label}
                 />
@@ -136,7 +140,7 @@ export default function PopupToEditMission({
             ביטול
           </div>
           <div
-            onClick={handleClickToEdit}
+            onClick={handleSave}
             className="px-4 py-1 text-xl bg-blue_color text-white rounded-full hover:cursor-pointer flex justify-center items-center"
           >
             <div className="ml-2">
@@ -220,8 +224,8 @@ export default function PopupToEditMission({
               setPopupReport={setPopupReport}
               reportData={reportData}
               setReportData={setReportData}
-              closingDate={value.Closing_date}
-              openingDate={value.Opening_date}
+              closingDate={formData.Closing_date}
+              openingDate={formData.Opening_date}
             />
           )}
         </div>

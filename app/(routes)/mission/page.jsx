@@ -284,7 +284,7 @@ export default function Mission() {
     : missions;
 
   {
-    /*DELETE  EMPLOYEES*/
+    /*מחיקת משימה*/
   }
   const deleteMission = async (mission) => {
     console.log(mission, "gg");

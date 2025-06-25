@@ -7,9 +7,8 @@ import Flow from "./Flow";
 import { usePathname } from "next/navigation";
 import ReadObject from "../ReadObject";
 import UpdateObject from "../UpdateObject";
-import { m } from "framer-motion";
 
-export default function TablesContent({ headLength, data, deleteRowObj }) {
+export default function TablesContent({ headLength, data, deleteRowObj, afterUpdate }) {
   console.log(data);
 
   const pathName = usePathname();
@@ -64,6 +63,7 @@ export default function TablesContent({ headLength, data, deleteRowObj }) {
           hiddenEmployeeData={item.hiddenEmployeeData}
           updateEmployeeMood={item.updateEmployeeMood}
           setUpdateEmployee={setUpdateEmployee}
+          afterUpdate={afterUpdate}
         />
       ) : (
         <ReadObject data={item.employeeToShow} />
@@ -99,7 +99,7 @@ export default function TablesContent({ headLength, data, deleteRowObj }) {
               }
             }}
             key={item?.id || index}
-            className={`flex w-full gap-2 border-b  border-t-[#A7BFE8]/30
+            className={`flex cursor-pointer w-full gap-2 border-b  border-t-[#A7BFE8]/30
                 ${
                   popupToEditMission === item.id
                     ? "bg-[#e8eef7]"
