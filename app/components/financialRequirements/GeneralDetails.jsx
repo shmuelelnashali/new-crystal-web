@@ -1,15 +1,18 @@
 import React from "react";
+import { Controller } from "react-hook-form";
+import Select from "react-select";
+import RequiermentSelect from "./RequiermentSelect";
 
-export default function GeneralDetails({ register }) {
+export default function GeneralDetails({ register, control, errors }) {
   const inputs = [
     { key: "expirimentNane", label: "שם ניסוי" },
     { key: "subjectOfficer ", label: "קצין נושא" },
+    { key: "leadingSection", label: "מדור מוביל" },
     { key: "levelOfIntrest", label: "רמת ענין" },
     { key: "expirimentEssence", label: "מהות הניסוי" },
     { key: "client", label: "לקוח" },
     { key: "gmash", label: 'ג"מש' },
     { key: "securityClassification", label: "סיווג בטחוני" },
-    { key: "leadingSection", label: "מדור מוביל" },
   ];
 
   // const handleBlur = (key) => (event) => {
@@ -19,20 +22,72 @@ export default function GeneralDetails({ register }) {
   //     [key]: newValue,
   //   }));
   // };
+  const selectInput = ["מדור מוביל", "רמת ענין", 'ג"מש', "סיווג בטחוני"];
+  // const selectOptionsMap = {
+  //   levelOfIntrest: [
+  //     { value: "גבוה", label: "גבוה" },
+  //     { value: "בינוני", label: "בינוני" },
+  //     { value: "נמוך", label: "נמוך" },
+  //   ],
+  //   gmash: [
+  //     { value: "כן", label: "כן" },
+  //     { value: "לא", label: "לא" },
+  //   ],
+  //   securityClassification: [
+  //     { value: 'בלמ"ס', label: 'בלמ"ס' },
+  //     { value: "סודי", label: "סודי" },
+  //     { value: "סודי ביותר", label: "סודי ביותר" },
+  //   ],
+  // };
 
   return (
-    <div className="flex w-full   ">
+    <div className=" flex w-full ">
       <div className="w-4/5   grid grid-cols-3     ">
         {inputs.map((item, index) => (
-          <Input
+          <div
             key={index}
-            title={"generalDetails"}
-            label={item.label}
-            header={item.key}
-            register={register}
-            // item={item.label}
-            // onBlur={handleBlur}
-          />
+            className={`  justify-between flex flex-col p-4 gap-2 
+       
+            `}
+          >
+            <label className=" text-right font-bold text-[#002A78]">
+              {item.label}
+            </label>
+            {selectInput.includes(item.label) ? (
+              <RequiermentSelect
+                itemKey={item.key}
+                label={item.label}
+                control={control}
+              />
+            ) : (
+              <div className="w-full ">
+                <input
+                  {...register(`${"generalDetails"}.${item.key}`, {
+                    required: `${item.label} נדרש`,
+                  })}
+                  type="text"
+                  placeholder={item.label}
+                  className={`${
+                    item.label === "קצין נושא" && "bg-[#EBEEF5]"
+                  } h-9  w-full px-4 border border-[#002A78]/10  outline-none  text-[#002A78] rounded-xl `}
+                />
+                {errors?.["generalDetails"]?.[item.key] && (
+                  <p className="text-red-500 text-sm ">
+                    {errors["generalDetails"][item.key].message}
+                  </p>
+                )}
+              </div>
+            )}{" "}
+          </div>
+          // <Input
+          //   key={index}
+          //   title={"generalDetails"}
+          //   label={item.label}
+          //   header={item.key}
+          //   register={register}
+          //   // item={item.label}
+          //   // onBlur={handleBlur}
+          // />
         ))}
       </div>
 

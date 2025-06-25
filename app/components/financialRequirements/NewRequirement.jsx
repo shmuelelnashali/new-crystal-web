@@ -50,6 +50,7 @@ export default function NewRequirement() {
       component: Comments,
     },
   };
+
   const {
     register,
     handleSubmit,
@@ -82,47 +83,52 @@ export default function NewRequirement() {
 
   return (
     <div className="dirRtl h-full flex flex-col justify-between">
-      <div
-        className="text-end font-bold ml-4 cursor-pointer"
-        onClick={toggleAll}
-      >
-        {expandedItem.length === Object.keys(newRequirementObj).length
-          ? "סגור הכל"
-          : " פתח הכל"}
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {Object.entries(newRequirementObj).map(([key, item]) => {
-          const ComponentToRender = item.component;
-          return (
-            <div key={key} className=" p-2  ">
-              <div className="p-6 items-center rounded-2xl bg-light_blue hover:cursor-pointer ">
-                <div
-                  className="font-bold flex text-xl gap-4 "
-                  onClick={() => toggleInArray(key)}
-                >
-                  <Image
-                    src={item.image}
-                    width={28}
-                    height={28}
-                    alt={item.name}
-                  />
-                  {item.name}
-                </div>
+      <div>
+        <div className="flex justify-between text-end font-bold ml-4 cursor-pointer">
+          <div className="pr-3 ">מסך ראשי</div>
+          <div
+            className="text-end font-bold ml-4 cursor-pointer"
+            onClick={toggleAll}
+          >
+            {expandedItem.length === Object.keys(newRequirementObj).length
+              ? "סגור הכל"
+              : " פתח הכל"}
+          </div>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {Object.entries(newRequirementObj).map(([key, item]) => {
+            const ComponentToRender = item.component;
+            return (
+              <div key={key} className=" p-2  ">
+                <div className="p-6 items-center rounded-2xl bg-light_blue hover:cursor-pointer ">
+                  <div
+                    className="font-bold flex text-xl gap-4 "
+                    onClick={() => toggleInArray(key)}
+                  >
+                    <Image
+                      src={item.image}
+                      width={28}
+                      height={28}
+                      alt={item.name}
+                    />
+                    {item.name}
+                  </div>
 
-                {expandedItem.includes(key) && (
-                  <ComponentToRender
-                    register={register}
-                    handleSubmit={handleSubmit}
-                    errors={errors}
-                    control={control}
-                  />
-                )}
+                  {expandedItem.includes(key) && (
+                    <ComponentToRender
+                      register={register}
+                      handleSubmit={handleSubmit}
+                      errors={errors}
+                      control={control}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-        <input type="submit" value={"שלח"}></input>
-      </form>
+            );
+          })}
+          <input type="submit" value={"שלח"}></input>
+        </form>
+      </div>
       <div className="object-bottom p-2 ">
         <div className="text-center font-bold text-3xl">
           <span className="ml-10">עלות כוללת</span>

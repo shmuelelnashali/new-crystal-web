@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import RowDisplay from "./RowDisplay";
+import { useFieldArray } from "react-hook-form";
 
-export default function OvertimeAndWaiting({ register }) {
-  const [rowData, setRowData] = useState({
-    branchName: "",
-    resourceName: "",
-    dailyHours: "0",
-    days: "0",
-    people: "0",
-    total: "0.00",
-    details: "",
+export default function OvertimeAndWaiting({ register , control, errors }) {
+  // const [rowData, setRowData] = useState({
+  //   branchName: "",
+  //   resourceName: "",
+  //   dailyHours: "0",
+  //   days: "0",
+  //   people: "0",
+  //   total: "0.00",
+  //   details: "",
+  // });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "overtimeAndWaiting",
   });
-
   const headersAndInputs = [
     { header: "שם ענף", key: "branchName", placeholder: "יש לבחור" },
     { header: "שם משאב", key: "resourceName", placeholder: "יש לבחור" },
@@ -22,16 +26,21 @@ export default function OvertimeAndWaiting({ register }) {
     { header: "פירוט", key: "details", placeholder: "" },
   ];
 
-  const handleInputChange = (updatedRow) => {
-    setRowData(updatedRow);
-  };
+  // const handleInputChange = (updatedRow) => {
+  //   setRowData(updatedRow);
+  // };
 
   return (
     <RowDisplay
-    grid={"8"}
+      grid={"8"}
       register={register}
       title={"overtimeAndWaiting"}
       headers={headersAndInputs}
+      control={control}
+      fields={fields}
+      append={append}
+      remove={remove}
+      errors={errors}
     />
   );
 }

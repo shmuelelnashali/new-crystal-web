@@ -1,31 +1,3 @@
-// 'use client'
-// import React from 'react'
-// import { useForm } from 'react-hook-form';
-
-// export default function page() {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
-
-//   return (
-//     <div className=' '>
-//     <form onSubmit={handleSubmit((data) => console.log(data))}>
-//       <input  className=' border'{...register('firstName')} />
-//       <input {...register('lastName', { required: true })} />
-//       {errors.lastName && <p>Last name is required.</p>}
-//       <input {...register('age', { pattern: /\d+/ })} />
-//       {errors.age && <p>Please enter number for age.</p>}
-//       <input type="submit" />
-//     </form></div>
-//   );
-// }
-
-  
-
-
-
 import React from "react";
 import NewRequirement from "../../components/financialRequirements/NewRequirement";
 import Table from "@/app/components/financialRequirements/Table";
@@ -98,11 +70,10 @@ export default function page() {
   // console.log(headers);
 
   return (
-    <div className=" py-2 h-full dirLtr overflow-y-auto">
-
+    <div className="px-10  py-2 h-full dirLtr overflow-y-auto">
       {/* <Table data={data} headTable={headers} /> */}
 
-       <NewRequirement /> 
+      <NewRequirement />
     </div>
   );
 }
