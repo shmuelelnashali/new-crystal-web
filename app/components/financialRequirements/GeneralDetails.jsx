@@ -22,6 +22,7 @@ export default function GeneralDetails({ register, control, errors }) {
   //     [key]: newValue,
   //   }));
   // };
+  
   const selectInput = ["מדור מוביל", "רמת ענין", 'ג"מש', "סיווג בטחוני"];
   // const selectOptionsMap = {
   //   levelOfIntrest: [
