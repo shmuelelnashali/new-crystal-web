@@ -17,22 +17,29 @@ export default function InputEmployee({
     "branch_id",
     "department_id",
   ];
+   const numbersOnly = [
+    "employee_number",
+    "contract_id",
+    "department_id",
+    "branch_id",
+  ];
+
   return (
     <div className="relative w-full">
       <input
-        // type={numbersOnly.includes(labelName) ? "number" : "text"}
-        // placeholder={
-        //   !valueToEdit
-        //     ?
-        //      labelName === "Mission_name" ||
-        //       labelName === "Mission_number" ||
-        //       labelName === "Ktzin_nosse_name"
-        //       ? label
-        //       : empty.includes(labelName)
-        //       ? "-"
-        //       : ""
-        //     : ""
-        // }
+        type={numbersOnly.includes(labelName) ? "number" : "text"}
+        placeholder={''
+          // !valueToEdit
+          //   ?
+          //    labelName === "Mission_name" ||
+          //     labelName === "Mission_number" ||
+          //     labelName === "Ktzin_nosse_name"
+          //     ? label
+          //     : empty.includes(labelName)
+          //     ? "-"
+          //     : ""
+          //   : ""
+        }
         value={formData||''}
         onChange={(e) => {
           //   setInputValue(e.target.value);

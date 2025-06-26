@@ -14,12 +14,14 @@ import axios from "@/app/lib/axios";
 import AddNewEmployee from "@/app/components/employees/AddNewEmployee";
 import { Toaster } from "react-hot-toast";
 import clsx from "clsx";
+import Tables from "@/app/components/missions/Tables";
 
 // import axios from "axios";
 
 export default function Employees() {
-  //FOR CONTAIN THE EMPLOYEES
+  //עובדים
   const [employees, setEmployees] = useState([]);
+  // עובדים בשביל הסינון
   const [allEmployees, setAllEmployees] = useState([]);
 
   // פופאפ לסינון
@@ -34,7 +36,7 @@ export default function Employees() {
   // מחיקת עובד
   const [deleteEmployee, setDeleteEmployee] = useState(null);
 
-  //SHOW THE FREEZE POP UP
+  //פופאפ למחיקה
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   // מביא את כל העובדים גם הלא פעילים
@@ -43,6 +45,7 @@ export default function Employees() {
   // הבחירה לחיפוש
   const [formData, setFormData] = useState({});
 
+  // להראות את כל העובדים או את הסינון
   const showEmployeesOrFilter = filterData
     ? employees.filter((employee) => {
         let matches = true;
@@ -138,11 +141,13 @@ export default function Employees() {
       })
     : employees;
 
+    // פורמט המערך כדי להציג רק פרטים מסוימים
   const formatData = (data) => {
     const employees = Array.isArray(data) ? data : [data];
     const employeeArray = employees
       .filter((active) => (showAllEmployees ? true : active.is_active === 1))
       .map((employee) => ({
+        // מה שרואים בטבלה
         employeeToShow: {
           employee_number: employee.employee_number,
           first_name: employee.first_name,
@@ -159,6 +164,7 @@ export default function Employees() {
           activity_end: employee.activity_end,
           mail: employee.mail,
         },
+        // השדות שמתעדכנים
         updateEmployeeMood: {
           employee_number: employee.employee_number,
           first_name: employee.first_name,
@@ -183,14 +189,18 @@ export default function Employees() {
           surname: employee.surname,
         },
       }));
+      // כל העובדים
     setAllEmployees(employeeArray);
+    // הסינון
     setEmployees(employeeArray);
   };
 
+  // להביא עובדים
   const fetchEmployees = async () => {
     try {
       const response = await axios.get("/employees");
       const data = response.data;
+      console.log(data, "data from employees");
       formatData(data);
     } catch (error) {
       console.error("error fetching employees: ", error);
@@ -201,6 +211,7 @@ export default function Employees() {
     fetchEmployees();
   }, [showAllEmployees]);
 
+  // להציג את כל העובדים או רק את הקיימים
   const handleShowAllEmployees = () => {
     setShowAllEmployees(!showAllEmployees);
     setFilterData(null);
@@ -219,12 +230,13 @@ export default function Employees() {
   //   // console.log(formatted);
   // };
 
-  const handleAddingNewRow = () => {
+  // פופאפ לעובד חדש
+  const handleAddingNewEmployee = () => {
     setAddNewEmployee(true);
   };
 
   {
-    /*DELETE  EMPLOYEES*/
+    /*מחיקת עובד*/
   }
   const deleteEmployeeById = async (employee) => {
     try {
@@ -236,21 +248,55 @@ export default function Employees() {
   };
 
   {
-    /*ARRAY FOR THE HEAD OF THE TABLE*/
+    /*ראש הטבלה*/
   }
-  const headTable = [
-    "מספר עובד",
-    "שם פרטי",
-    "שם משפחה",
-    "חייל / אזרח",
-    "מחלקה / יחידה",
-    "ענף",
-    "מדור",
-    "סוג הסכם",
-    "תחילת פעילות",
-    "סיום פעילות",
-    "מייל",
-  ];
+
+  const headers = {
+  "מספר עובד": {
+    field: "employee_number",
+    type: "string",
+  },
+  "שם פרטי": {
+    field: "first_name",
+    type: "string",
+  },
+  "שם משפחה": {
+    field: "surname",
+    type: "string",
+  },
+  "חייל / אזרח": {
+    field: "solider_civilian",
+    type: "string",
+  },
+  "מחלקה / יחידה": {
+    field: "department_id",
+    type: "string",
+  },
+  "ענף": {
+    field: "branch_id",
+    type: "string",
+  },
+  "מדור": {
+    field: "section_id",
+    type: "string",
+  },
+  "סוג הסכם": {
+    field: "contract_id",
+    type: "string",
+  },
+  "תחילת פעילות": {
+    field: "activity_start",
+    type: "date",
+  },
+  "סיום פעילות": {
+    field: "activity_end",
+    type: "date",
+  },
+  "מייל": {
+    field: "mail",
+    type: "string",
+  },
+};
 
   const handlePopUpFilter = () => {
     setFilterPopUp(!filterPopUp);
@@ -270,10 +316,10 @@ export default function Employees() {
       <div className="flex  w-full justify-between mx-4">
         <div className="w-1/2">
           <Search
-            searchEmployees={allEmployees}
-            setEmployees={setEmployees}
+            searchItems={allEmployees}
+            setItems={setEmployees}
             formatData={formatData}
-            addNew={handleAddingNewRow}
+            addNew={handleAddingNewEmployee}
             textBtn={" הוסף עובד"}
             addImage={imageAdd}
             searchText={"חיפוש לפי מספר עובד / שם עובד"}
@@ -288,7 +334,7 @@ export default function Employees() {
             )}
           >
             <div>
-              {showAllEmployees ? "להציג רק את הפעילים" : "להציג את כל העובדים"}
+              {showAllEmployees ? "לחיצה תציג רק את הפעילים" : "לחיצה תציג את כל העובדים"}
             </div>
           </div>
           <div
@@ -319,13 +365,20 @@ export default function Employees() {
         </div>
       </div>
 
-      <div className=" dirLtr overflow-y-auto rounded-xl">
+      <div className=" dirLtr  rounded-xl">
         <div className=" h-full ">
-          <Table
+          <Tables
+          data={showEmployeesOrFilter}
+          afterUpdate={fetchEmployees}
+          headTable={Object.keys(headers)}
+          headers={headers}
+          deleteRowObj={deleteEmployeeById}
+          />
+          {/* <Table
             data={showEmployeesOrFilter}
             headTable={headTable}
             deleteEmployeeById={deleteEmployeeById}
-          />
+          /> */}
         </div>
         <Toaster position="top-center" />
       </div>

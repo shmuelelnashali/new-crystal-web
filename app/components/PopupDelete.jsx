@@ -12,7 +12,7 @@ export default function PopupDelete({
   urlPage,
   nameAndDateForRow
 }) {
-  // console.log(objectToDelete.mission_id,"id");
+  console.log(objectToDelete,"id");
   
   const axiosDelete = async () => {
     console.log(objectToDelete,"obbbbb");
@@ -76,11 +76,11 @@ export default function PopupDelete({
   const objectId = objectToDelete
   ? `${objectToDelete?.id || ""}`.trim()
   : "";
-  const objectMission = objectToDelete
-  ? `${objectToDelete?.taskName || ""}`.trim()
+  const stringMission = objectToDelete
+  ? `${objectToDelete?.Mission_name || ""}`.trim()
   : "";
   const stringForReportMeasure = objectToDelete
-  ? `${objectToDelete?.measure || ""}`.trim()
+  ? `${objectToDelete?.experiment_name || ""}`.trim()
   :""
   return (
     <div className="fixed inset-0 flex  items-center justify-center bg-[#000000] bg-opacity-30 backdrop-blur-sm z-50">
@@ -95,6 +95,8 @@ export default function PopupDelete({
         <p>
   {messageText} "{stringForEmployee || objectToDelete?.first_name}
   {stringForAttendancesMission ? `${stringForAttendancesMission}` : ""}
+  {stringMission ? `${stringMission}` : ""}
+  {stringForReportMeasure ? `${stringForReportMeasure}` : ""}
   {objectToDelete?.lastName ? `${objectToDelete.lastName}` : ""}
   {objectToDelete?.agreementName ? `${objectToDelete.agreementName}` : ""}"
   {stringForAttendancesMissionDate ? ` מ ${stringForAttendancesMissionDate}` : ""} ?

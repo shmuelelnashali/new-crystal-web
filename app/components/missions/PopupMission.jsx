@@ -265,6 +265,7 @@ export default function PopupMission({ setShowPopup, setMissions }) {
                     madors={madors}
                     handleInputChange={handleInputChange}
                     selectedMadors={formData.Sections || []}
+                    fieldName={'Sections'}
                   />
                 ) : (
                   !arrow.includes(labelName) && (

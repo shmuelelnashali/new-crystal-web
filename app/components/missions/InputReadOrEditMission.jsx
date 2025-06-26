@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import InputEditMission from "./InputEditMission";
 import { format, parseISO } from "date-fns";
 import { formatDate } from "@/app/util/dateFormat";
 
-export default function InputReadOrEditMission({ clickToEdit, theData, label, labelName }) {
-
+export default function InputReadOrEditMission({ clickToEdit, formData, setFormData, label, labelName }) {
   // const formatDate = (dateStr) => {
   //   if (!dateStr || !dateStr.includes("-")) return dateStr;
   //   try {
@@ -18,32 +17,29 @@ export default function InputReadOrEditMission({ clickToEdit, theData, label, la
   return (
     <>
       {!clickToEdit ? (
-        labelName === "Sections" ? (
-          <div className={`flex items-center gap-3 border bg-[#EBEEF5] rounded-lg px-3 py-1`}>
-            {Array.isArray(theData[labelName]) ? (
-              theData[labelName].map((section, index) => (
-                <div key={index} className={`bg-[#002A78]  text-white rounded-md px-2  `}>
-                  {section}
-                </div>
-              ))
-            ) : (
-              <div className={`bg-[#002A78] text-white rounded-md px-2 `}>
-                {theData[labelName]}
+        <div className="w-full border bg-[#EBEEF5] rounded-lg px-3 py-1">
+          {labelName.includes("date") 
+            ? formatDate(formData[labelName])
+            : labelName === "Sections"
+            ? (
+              <div className="flex gap-2 flex-wrap">
+                {Array.isArray(formData[labelName]) 
+                  ? formData[labelName].map((section, index) => (
+                    <span key={index} className="bg-blue_color text-white px-2 py-1 rounded">
+                      {section}
+                    </span>
+                  ))
+                  : formData[labelName]
+                }
               </div>
             )
-            }
-          </div>
-        ) : 
-        (
-          <div className={`w-full border bg-[#EBEEF5] rounded-lg px-3 py-1`}>
-               {labelName === "Opening_date" || labelName === "Closing_date"
-              ? formatDate(theData[labelName])
-              : theData[labelName]}
-          </div>
-        )
+            : formData[labelName]
+          }
+        </div>
       ) : (
         <InputEditMission
-          theData={theData}
+          formData={formData}
+          setFormData={setFormData}
           label={label}
           labelName={labelName}
         />

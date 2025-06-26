@@ -1,3 +1,4 @@
+import { da } from "date-fns/locale";
 import Image from "next/image";
 import React, { useRef } from "react";
 
@@ -6,49 +7,74 @@ export default function DateEmployeesFilter({
   formData,
   setFormData,
 }) {
-    
   // מביא את הלוח שנה
-  const dateFromRef = useRef(null);
-  const dateToRef = useRef(null);
+   const dateRef = useRef(null);
 
-  const handleIconClickFrom = () => {
-    if (dateFromRef.current) {
-      dateFromRef.current.showPicker();
+  //טיפול בשינוי תאריך
+  const handleDateChange = (e) => {
+    const newValue = e.target.value;
+    
+    if (labelName === "activity_start") {
+      // בדיקה שתאריך ההתחלה לא אחרי תאריך הסיום
+      if (formData.activity_end && newValue > formData.activity_end) {
+        toast.error("תאריך התחלה לא יכול להיות אחרי תאריך סיום", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+        return;
+      }
     }
+
+    if (labelName === "activity_end") {
+      // בדיקה שתאריך הסיום לא לפני תאריך ההתחלה
+      if (formData.activity_start && newValue < formData.activity_start) {
+        toast.error("תאריך סיום לא יכול להיות לפני תאריך התחלה", {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+        return;
+      }
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [labelName]: newValue,
+    }));
   };
 
-  const handleIconClickTo = () => {
-    if (dateToRef.current) {
-      dateToRef.current.showPicker();
-    }
-  };
+  // const handleIconClick = () => {
+  //   if (labelName === "activity_start") {
+  //     dateFromRef.current.showPicker();
+  //   } else {
+  //     dateToRef.current.showPicker();
+  //   }
+  // };
 
   return (
     <div className="w-full relative mt-1">
-      <div className="absolute hover:cursor-pointer left-2 top-1/2 transform -translate-y-1/2">
+      <div className="absolute cursor-pointer left-2 top-1/2 transform -translate-y-1/2">
         <Image
           src="/calendar.svg"
           width={20}
           height={20}
           alt="calender"
-          onClick={
-            labelName === "activity_start"
-              ? handleIconClickFrom
-              : handleIconClickTo
-          }
+          onClick={() => dateRef.current?.showPicker()}
         />
       </div>
       <input
         type="date"
-        ref={labelName === "activity_start" ? dateFromRef : dateToRef}
+        ref={dateRef}
         value={formData[labelName] || ""}
+        min={labelName === "activity_end" ? formData.activity_start : undefined}
+        max={labelName === "activity_start" ? formData.activity_end : undefined}
         className="w-full border rounded-lg px-3 py-1 text-[#002A78]"
-        onChange={(e) =>
-          setFormData((prev) => ({
-            ...prev,
-            [labelName]: e.target.value,
-          }))
-        }
+        onChange={handleDateChange}
       />
     </div>
   );

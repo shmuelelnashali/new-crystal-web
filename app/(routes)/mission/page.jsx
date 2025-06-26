@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import PopupDelete from "@/app/components/PopupDelete";
 import FilterMission from "@/app/components/missions/FilterMission";
 import { parse, isEqual, isWithinInterval } from "date-fns";
-import MissionTable from "@/app/components/missions/MissionTable";
+// import MissionTable from "@/app/components/missions/Tables";
 import PopupMission from "@/app/components/missions/PopupMission";
 import * as XLSX from "xlsx";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import Tables from "@/app/components/missions/Tables";
 
 const data = [
   {
@@ -127,9 +128,9 @@ const data = [
   },
 ];
 export default function Mission() {
-
   //FOR CONTAIN THE MISSION
   const [missions, setMissions] = useState(data);
+  const [missionsSearch, setMissionsSearch] = useState(data);
 
   const [showPopupNewMission, setShowPopupNewMission] = useState(false);
 
@@ -162,18 +163,48 @@ export default function Mission() {
   //   fetchMissions();
   // }, []);
 
-  const headers = [
-    "מספר משימה",
-    "שם משימה",
-    "סוג משימה",
-    "שנה",
-    'גמ"ש',
-    "ת.פתיחה",
-    "ת.סגירה",
-    "שם קצין נושא",
-    "סטטוס",
-    "רמת עניין",
-  ];
+  const headers = {
+    "מספר משימה": {
+      field: "Mission_number",
+      type: "number",
+    },
+    "שם משימה": {
+      field: "Mission_name",
+      type: "string",
+    },
+    "סוג משימה": {
+      field: "Mission_type",
+      type: "string",
+    },
+    שנה: {
+      field: "Year",
+      type: "number",
+    },
+    'גמ"ש': {
+      field: "Paying_factor",
+      type: "string",
+    },
+    "ת.פתיחה": {
+      field: "Opening_date",
+      type: "date",
+    },
+    "ת.סגירה": {
+      field: "Closing_date",
+      type: "date",
+    },
+    "שם קצין נושא": {
+      field: "Ktzin_nosse_name",
+      type: "string",
+    },
+    סטטוס: {
+      field: "Status",
+      type: "string",
+    },
+    "רמת עניין": {
+      field: "Interest_level",
+      type: "string",
+    },
+  };
 
   // מביא את כל המשימות או את הסינון
   const showMissionsOrFilter = filterData
@@ -253,7 +284,7 @@ export default function Mission() {
     : missions;
 
   {
-    /*DELETE  EMPLOYEES*/
+    /*מחיקת משימה*/
   }
   const deleteMission = async (mission) => {
     console.log(mission, "gg");
@@ -277,6 +308,21 @@ export default function Mission() {
   // מסנן את המשימות לפי בחירה
   const filterSearch = (formData) => {
     setFilterData(formData);
+  };
+
+  const closeAndResetFilter = () => {
+    setFilterPopUp(false);
+    setFilterData(null);
+    setFormData({});
+    toast(`הסינון בוטל`, {
+      icon: "✅",
+      duration: 1500,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
   };
 
   const add = (
@@ -323,9 +369,11 @@ export default function Mission() {
       <div className="flex  ">
         <div className="w-full flex justify-between mx-4">
           <Search
-            className="w-full"
-            textBtn={"הוסף משימה"}
+            searchItems={missionsSearch}
+            setItems={setMissions}
+            textBtn={"הוספת משימה"}
             addImage={add}
+            searchText={"חיפוש"}
             addNew={handleAddMission}
           />
         </div>
@@ -350,9 +398,11 @@ export default function Mission() {
                 setFilterPopUp={setFilterPopUp}
                 filterPopUp={filterPopUp}
                 filterSearch={filterSearch}
+                closeAndResetFilter={closeAndResetFilter}
                 closeFilter={setFilterPopUp}
                 formData={formData}
                 setFormData={setFormData}
+                labels={labels}
               />
             )}
           </div>
@@ -378,12 +428,13 @@ export default function Mission() {
         </div>
       </div>
 
-      <MissionTable
+      <Tables
         data={showMissionsOrFilter}
         // updateMode={updateMode}
         // setUpdateMode={setUpdateMode}
-        headTable={headers}
-        deleteEmployee={deleteMission}
+        headTable={Object.keys(headers)}
+        headers={headers}
+        deleteRowObj={deleteMission}
       />
 
       {showConfirmation && (
@@ -406,7 +457,15 @@ export default function Mission() {
         />
       )}
 
-<Toaster position="top-center" />
+      <Toaster position="top-center" />
     </div>
   );
 }
+
+const labels = [
+  { label: "תאריך תחילה", labelName: "Opening_date" },
+  { label: "תאריך סיום", labelName: "Closing_date" },
+  { label: "שנה", labelName: "Year" },
+  { label: 'גמ"ש', labelName: "Paying_factor" },
+  { label: "סטטוס", labelName: "Status" },
+];
