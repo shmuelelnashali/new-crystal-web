@@ -6,10 +6,7 @@ import axios from "@/app/lib/axios";
 import { format } from "date-fns";
 import { toast } from "react-hot-toast";
 
-export default function AddNewEmployee({
-  setAddNewEmployee,
-  fetchEmployees,
-}) {
+export default function AddNewEmployee({ setAddNewEmployee, fetchEmployees }) {
   const [formData, setFormData] = useState({});
   const [toggle, setToggle] = useState(false);
 

@@ -4,7 +4,7 @@ import { useFieldArray } from "react-hook-form";
 
 export default function WorkingHours({ register, control, errors }) {
   const headersAndInputs = [
-    { header: "שם מדור ", key: "Mname", placeholder: "יש לבחור" },
+    { header: "שם מדור ", key: "madorName", placeholder: "יש לבחור" },
     { header: " שלב בניסוי", key: "requiredHours", placeholder: "0" },
     { header: "שעות ביממה", key: "unitCost", placeholder: "0" },
     { header: "ימים", key: "unitCost", placeholder: "0" },

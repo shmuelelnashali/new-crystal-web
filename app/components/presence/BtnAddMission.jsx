@@ -9,7 +9,7 @@ export default function BtnAddMission({
   newMission,
   setAddMissions,
   setMissions,
-  fetchMissions
+  fetchMissions,
 }) {
   const addNewAttendanceMission = async (newMission) => {
     if (!newMission || Object.keys(newMission).length === 0) {
@@ -21,11 +21,11 @@ export default function BtnAddMission({
       const response = await axios.post(`/attendanceMissions`, newMission);
       const data = response.data.message;
       const newAddedMission = newMission;
-      console.log(newAddedMission,"new");
-      fetchMissions()
+      console.log(newAddedMission, "new");
+      fetchMissions();
       // setMissions((prev)=> [...prev, newAddedMission])
       toast.success(data);
-      setAddMissions(false)
+      setAddMissions(false);
       console.log(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -47,7 +47,7 @@ export default function BtnAddMission({
       ) : (
         <div
           onClick={() => {
-            addNewAttendanceMission(newMission)
+            addNewAttendanceMission(newMission);
           }}
           className="truncate"
         >

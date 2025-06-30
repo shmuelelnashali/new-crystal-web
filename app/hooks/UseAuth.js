@@ -28,7 +28,7 @@ export default function useAuth({ middleware } = {}) {
       setErrors(error.response.data);
     }
   };
-  
+
   return {
     user,
     login,

@@ -2,7 +2,13 @@ import activity from "@/app/(routes)/settings/activity_code/page";
 import axios from "@/app/lib/axios";
 import React, { useEffect, useState } from "react";
 
-export default function ToggleCode({ isOpen, onClose,onChange, handleChange, rowIndex}) {
+export default function ToggleCode({
+  isOpen,
+  onClose,
+  onChange,
+  handleChange,
+  rowIndex,
+}) {
   const [codes, setCodes] = useState([]);
 
   const fetchCodes = async () => {
@@ -14,17 +20,18 @@ export default function ToggleCode({ isOpen, onClose,onChange, handleChange, row
     fetchCodes();
   }, []);
 
-if (!isOpen) return null;
+  if (!isOpen) return null;
   return (
     <>
       <div className="absolute z-30  overflow-y-auto max-h-64 dirLtr  transform   border bg-white rounded-lg px-1 py-1">
         {codes.map((code, index) => (
           <div
-          onClick={()=>
-            // onChange({ name: code.name, code: code.code })
-            handleChange(rowIndex,"activity_code",code)}
+            onClick={() =>
+              // onChange({ name: code.name, code: code.code })
+              handleChange(rowIndex, "activity_code", code)
+            }
             className="hover:bg-blue_color dirRtl py-2 px-2 hover:cursor-default hover:text-white hover:rounded-lg"
-            key={index} 
+            key={index}
           >
             {code.name}
           </div>

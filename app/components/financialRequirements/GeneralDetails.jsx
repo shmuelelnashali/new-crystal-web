@@ -8,38 +8,14 @@ export default function GeneralDetails({ register, control, errors }) {
     { key: "expirimentNane", label: "שם ניסוי" },
     { key: "subjectOfficer ", label: "קצין נושא" },
     { key: "leadingSection", label: "מדור מוביל" },
-    { key: "levelOfIntrest", label: "רמת ענין" },
     { key: "expirimentEssence", label: "מהות הניסוי" },
     { key: "client", label: "לקוח" },
     { key: "gmash", label: 'ג"מש' },
+    { key: "interest_level_id", label: "רמת ענין" },
     { key: "securityClassification", label: "סיווג בטחוני" },
   ];
 
-  // const handleBlur = (key) => (event) => {
-  //   const newValue = event.target.value;
-  //   setFormValues((prevValues) => ({
-  //     ...prevValues,
-  //     [key]: newValue,
-  //   }));
-  // };
-  
   const selectInput = ["מדור מוביל", "רמת ענין", 'ג"מש', "סיווג בטחוני"];
-  // const selectOptionsMap = {
-  //   levelOfIntrest: [
-  //     { value: "גבוה", label: "גבוה" },
-  //     { value: "בינוני", label: "בינוני" },
-  //     { value: "נמוך", label: "נמוך" },
-  //   ],
-  //   gmash: [
-  //     { value: "כן", label: "כן" },
-  //     { value: "לא", label: "לא" },
-  //   ],
-  //   securityClassification: [
-  //     { value: 'בלמ"ס', label: 'בלמ"ס' },
-  //     { value: "סודי", label: "סודי" },
-  //     { value: "סודי ביותר", label: "סודי ביותר" },
-  //   ],
-  // };
 
   return (
     <div className=" flex w-full ">
@@ -56,6 +32,7 @@ export default function GeneralDetails({ register, control, errors }) {
             </label>
             {selectInput.includes(item.label) ? (
               <RequiermentSelect
+                name={`${"generalDetails"}.${item.key}`}
                 itemKey={item.key}
                 label={item.label}
                 control={control}
@@ -78,7 +55,7 @@ export default function GeneralDetails({ register, control, errors }) {
                   </p>
                 )}
               </div>
-            )}{" "}
+            )}
           </div>
           // <Input
           //   key={index}
@@ -98,32 +75,6 @@ export default function GeneralDetails({ register, control, errors }) {
     </div>
   );
 }
-
-const Input = ({ register, title, label, header }) => {
-  return (
-    <>
-      <div
-        className={` justify-between flex flex-col p-4 gap-2 ${
-          label === "מדור מוביל" && "  col-span-2 "
-        } `}
-      >
-        <label className=" text-right font-bold text-[#002A78]">{label}</label>
-        <input
-          {...register(`${title}.${header}`, {
-            required: `${header} נדרש`,
-          })}
-          type="text"
-          // value={experimentName}
-          placeholder={label}
-          className="  h-9   px-4 bg-[#EBEEF5] border border-[#002A78]/10  outline-none  text-[#002A78] rounded-xl"
-
-          // onChange={handleInputChange}
-          // onBlur={handleBlur}
-        />
-      </div>
-    </>
-  );
-};
 
 const TaskOpenerDetails = () => {
   const openerDetails = {

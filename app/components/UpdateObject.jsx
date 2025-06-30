@@ -10,7 +10,7 @@ export default function UpdateEmployee({
   hiddenEmployeeData,
   setUpdateEmployee,
   updateEmployeeMood,
-  afterUpdate
+  afterUpdate,
 }) {
   const [formData, setFormData] = useState({
     hiddenEmployeeData: hiddenEmployeeData,
@@ -31,7 +31,7 @@ export default function UpdateEmployee({
     // console.log(formData);
   };
 
-// השדות שנכנסים לעידכון עובד
+  // השדות שנכנסים לעידכון עובד
   const updateEmployee = async () => {
     const formatDate = (date) =>
       date ? format(new Date(date), "yyyy-MM-dd") : null;
@@ -70,28 +70,28 @@ export default function UpdateEmployee({
       );
       // התראה שעבר בהצלחה
       toast.success(response.data.message);
-      await afterUpdate()
+      await afterUpdate();
       setUpdateEmployee(false);
     } catch (error) {
       console.error("שגיאה בעידכון", error);
       // מראה את השגיאה
-      toast.error(error.response?.data?.message ||
-        "אירעה שגיאה בעת ניסיון לעדכן את העובד");
+      toast.error(
+        error.response?.data?.message || "אירעה שגיאה בעת ניסיון לעדכן את העובד"
+      );
     }
   };
 
   // אם בחרת שלא לעדכן עובד
-  const cancelUpdate = ()=> toast('בחרת לא לעדכן עובד',
-    {
-      icon: '👌',
+  const cancelUpdate = () =>
+    toast("בחרת לא לעדכן עובד", {
+      icon: "👌",
       style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
       },
       duration: 1000,
-    }
-  );
+    });
 
   return (
     <>
@@ -150,7 +150,7 @@ export default function UpdateEmployee({
           <div className="flex justify-end">
             <div
               onClick={(e) => {
-                e.stopPropagation(), setUpdateEmployee(null), cancelUpdate()
+                e.stopPropagation(), setUpdateEmployee(null), cancelUpdate();
               }}
               className="border hover:cursor-pointer border-[#002A78] ml-3 rounded-2xl px-3 p-1"
             >

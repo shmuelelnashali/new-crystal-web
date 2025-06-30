@@ -32,10 +32,10 @@ export default function Search({
     // חיפוש על העובדים לפי שם/מספר
     const filteredEmployees = searchItems.filter((item) => {
       if (item.task_number) {
-       return item.task_number.toString().trim().startsWith(searchQuery);
+        return item.task_number.toString().trim().startsWith(searchQuery);
       }
       if (item.Mission_number) {
-       return item.Mission_number.toString().trim().startsWith(searchQuery);
+        return item.Mission_number.toString().trim().startsWith(searchQuery);
       }
       if (item.employeeToShow) {
         const employeeNumber = item.employeeToShow.employee_number

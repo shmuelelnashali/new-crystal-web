@@ -86,7 +86,11 @@ export default function ExclusionsSearch({
         "px-1 p-2 z-50 overflow-auto bg-white absolute w-[92%] shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"
       )}
     >
-      <EmployeesSelctor users={users} emploeeySelected={emploeeyEvent} setEmploeeySelected={setEmploeeyEvent}/>
+      <EmployeesSelctor
+        users={users}
+        emploeeySelected={emploeeyEvent}
+        setEmploeeySelected={setEmploeeyEvent}
+      />
       {/* <div
         className={
           " max-h-[20vh] overflow-y-auto"

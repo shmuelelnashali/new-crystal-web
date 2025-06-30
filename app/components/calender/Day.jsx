@@ -9,7 +9,9 @@ export default function Day({
   day,
   month,
   year,
-  evensInYear,events, setEvents
+  evensInYear,
+  events,
+  setEvents,
 }) {
   const today = new Date();
   const date = new Date(year, month, day);
@@ -54,7 +56,7 @@ export default function Day({
   return (
     <div
       onClick={() => {
-        setEvents("add")
+        setEvents("add");
         setMissionDay(`${year}-${month + 1}-${day}`);
       }}
       className={clsx(
@@ -78,9 +80,7 @@ export default function Day({
         className={`w-1 h-1 rounded-full  flex  ${
           day !== null && isEventDey() ? handleColor() : ""
         } `}
-      >
-
-      </div>
+      ></div>
     </div>
   );
 }

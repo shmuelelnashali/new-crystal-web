@@ -8,9 +8,9 @@ import MissionStatus from "@/app/components/financialRequirements/MissionStatus"
 export default function page() {
   return (
     <div className=" py-2 h-full dirLtr ">
-      <MissionStatus />
+      {/* <MissionStatus /> */}
 
-      {/* <NewRequirement /> */}
+      <NewRequirement />
       {/* // <Toaster position="top-center" /> */}
     </div>
   );

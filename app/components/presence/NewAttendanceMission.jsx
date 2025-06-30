@@ -33,7 +33,7 @@ export default function NewAttendanceMission({
     try {
       const response = await axios.get(`/missions`);
       const data = response.data;
-    //   console.log(data, "aaa");
+      //   console.log(data, "aaa");
 
       setTheMissionFetch(data);
       setGetMissionFilter(data);
@@ -57,7 +57,7 @@ export default function NewAttendanceMission({
   // האינפוט של השעות
   const handleNameAndTimeChange = (mission, e, type = "name") => {
     // console.log(mission,"rtrtr");
-    
+
     if (type === "time") {
       let inputValue = e.target.value.replace(/[^\d]/g, "");
       const isStartTime = e.target.name === "start_time";
@@ -78,8 +78,8 @@ export default function NewAttendanceMission({
           [isStartTime ? "start_time" : "end_time"]: validatedValue,
           [isStartTime ? "end_time" : "start_time"]:
             prev?.[isStartTime ? "end_time" : "start_time"],
-        //   mission_id: prev?.mission_id|| mission.mission_id,
-        //   attendance_id: nameAndDateForRow.id,
+          //   mission_id: prev?.mission_id|| mission.mission_id,
+          //   attendance_id: nameAndDateForRow.id,
           //   mission_name: prev?.mission_name || mission.mission_name,
           //   mission_number: prev?.mission_number || mission.mission_number,
         }));
@@ -95,13 +95,13 @@ export default function NewAttendanceMission({
         return updatedMission;
       });
 
-        setNewMission((prev)=>({
-          ...prev,
-          mission_id : mission.mission_id,
-          attendance_id: nameAndDateForRow.id,
-          mission_name: mission.mission_name,
-          mission_number: mission.mission_number,
-        }))
+      setNewMission((prev) => ({
+        ...prev,
+        mission_id: mission.mission_id,
+        attendance_id: nameAndDateForRow.id,
+        mission_name: mission.mission_name,
+        mission_number: mission.mission_number,
+      }));
     }
     // console.log(newMission, "new");
 

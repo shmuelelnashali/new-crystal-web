@@ -141,7 +141,7 @@ export default function Employees() {
       })
     : employees;
 
-    // פורמט המערך כדי להציג רק פרטים מסוימים
+  // פורמט המערך כדי להציג רק פרטים מסוימים
   const formatData = (data) => {
     const employees = Array.isArray(data) ? data : [data];
     const employeeArray = employees
@@ -189,7 +189,7 @@ export default function Employees() {
           surname: employee.surname,
         },
       }));
-      // כל העובדים
+    // כל העובדים
     setAllEmployees(employeeArray);
     // הסינון
     setEmployees(employeeArray);
@@ -252,51 +252,51 @@ export default function Employees() {
   }
 
   const headers = {
-  "מספר עובד": {
-    field: "employee_number",
-    type: "string",
-  },
-  "שם פרטי": {
-    field: "first_name",
-    type: "string",
-  },
-  "שם משפחה": {
-    field: "surname",
-    type: "string",
-  },
-  "חייל / אזרח": {
-    field: "solider_civilian",
-    type: "string",
-  },
-  "מחלקה / יחידה": {
-    field: "department_id",
-    type: "string",
-  },
-  "ענף": {
-    field: "branch_id",
-    type: "string",
-  },
-  "מדור": {
-    field: "section_id",
-    type: "string",
-  },
-  "סוג הסכם": {
-    field: "contract_id",
-    type: "string",
-  },
-  "תחילת פעילות": {
-    field: "activity_start",
-    type: "date",
-  },
-  "סיום פעילות": {
-    field: "activity_end",
-    type: "date",
-  },
-  "מייל": {
-    field: "mail",
-    type: "string",
-  },
-};
+    "מספר עובד": {
+      field: "employee_number",
+      type: "string",
+    },
+    "שם פרטי": {
+      field: "first_name",
+      type: "string",
+    },
+    "שם משפחה": {
+      field: "surname",
+      type: "string",
+    },
+    "חייל / אזרח": {
+      field: "solider_civilian",
+      type: "string",
+    },
+    "מחלקה / יחידה": {
+      field: "department_id",
+      type: "string",
+    },
+    ענף: {
+      field: "branch_id",
+      type: "string",
+    },
+    מדור: {
+      field: "section_id",
+      type: "string",
+    },
+    "סוג הסכם": {
+      field: "contract_id",
+      type: "string",
+    },
+    "תחילת פעילות": {
+      field: "activity_start",
+      type: "date",
+    },
+    "סיום פעילות": {
+      field: "activity_end",
+      type: "date",
+    },
+    מייל: {
+      field: "mail",
+      type: "string",
+    },
+  };
 
   const handlePopUpFilter = () => {
     setFilterPopUp(!filterPopUp);
@@ -334,7 +334,9 @@ export default function Employees() {
             )}
           >
             <div>
-              {showAllEmployees ? "לחיצה תציג רק את הפעילים" : "לחיצה תציג את כל העובדים"}
+              {showAllEmployees
+                ? "לחיצה תציג רק את הפעילים"
+                : "לחיצה תציג את כל העובדים"}
             </div>
           </div>
           <div
@@ -368,11 +370,11 @@ export default function Employees() {
       <div className=" dirLtr  rounded-xl">
         <div className=" h-full ">
           <Tables
-          data={showEmployeesOrFilter}
-          afterUpdate={fetchEmployees}
-          headTable={Object.keys(headers)}
-          headers={headers}
-          deleteRowObj={deleteEmployeeById}
+            data={showEmployeesOrFilter}
+            afterUpdate={fetchEmployees}
+            headTable={Object.keys(headers)}
+            headers={headers}
+            deleteRowObj={deleteEmployeeById}
           />
           {/* <Table
             data={showEmployeesOrFilter}

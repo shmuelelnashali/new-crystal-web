@@ -69,8 +69,8 @@ export default function PopupToEditMission({
   // const [value, setValue] = useState(value);
   // לחיצה בשביל מצב עריכה
   const [clickToEdit, setClickToEdit] = useState(false);
-  // נתוני המשימה 
-  const [formData, setFormData] = useState(value||{});
+  // נתוני המשימה
+  const [formData, setFormData] = useState(value || {});
 
   const handleSave = () => {
     if (clickToEdit) {
@@ -81,7 +81,7 @@ export default function PopupToEditMission({
       //     )
       //     updateValue(((prev)=>[response.data, ...prev]))
       //   } catch (error) {
-      //     console.error("שגיאה בעידכון המשימה", error);          
+      //     console.error("שגיאה בעידכון המשימה", error);
       //   }
       // });
     }

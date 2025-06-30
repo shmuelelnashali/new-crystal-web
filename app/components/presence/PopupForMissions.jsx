@@ -76,21 +76,23 @@ export default function PopupForMissions({
     setPendingChanges(updatedChanges);
 
     // מעדכן את המשימות
-    setMissions(missions.map((m, index) => {
-      if (m.mission_id === mission.mission_id && index === getIndex) {
-        return {
-          ...m,
-          ...changes
-        };
-      }
-      return m;
-    }));
+    setMissions(
+      missions.map((m, index) => {
+        if (m.mission_id === mission.mission_id && index === getIndex) {
+          return {
+            ...m,
+            ...changes,
+          };
+        }
+        return m;
+      })
+    );
 
     // אם יש שינויים
     if (changes.mission_name || changes.mission_number) {
-      setLocalMission(prev => ({
+      setLocalMission((prev) => ({
         ...prev,
-        ...changes
+        ...changes,
       }));
     }
   };
@@ -113,7 +115,7 @@ export default function PopupForMissions({
 
     if (validatedValue !== null) {
       const timeChanges = {
-        [isStartTime ? "start_time" : "end_time"]: validatedValue
+        [isStartTime ? "start_time" : "end_time"]: validatedValue,
       };
 
       handleCombinedChanges(mission, timeChanges);
@@ -127,21 +129,20 @@ export default function PopupForMissions({
     const missionChanges = {
       mission_id: mis.mission_id,
       mission_name: mis.mission_name,
-      mission_number: mis.mission_number
+      mission_number: mis.mission_number,
     };
 
     handleCombinedChanges(localMission, missionChanges);
     setGetMission(false);
   };
 
-
   // עידכון המשימה
   const handleMissionUpdate = async (mission, e, index) => {
     e.stopPropagation();
     // כשיש הוספת משימה חדשה אי אפשר לעדכן משימה
-    if(addMissions){
-      toast.error('לא ניתן לערוך משימה בזמן הוספת משימה חדשה')
-      return
+    if (addMissions) {
+      toast.error("לא ניתן לערוך משימה בזמן הוספת משימה חדשה");
+      return;
     }
     // בלחיצה שנייה או על משימה אחרת
     if (localMission || getIndex !== null) {
@@ -368,7 +369,7 @@ export default function PopupForMissions({
         </div>
       </div>
       {updatesHistory ? (
-        <ManualUpdates attendance_id={nameAndDateForRow.id}/>
+        <ManualUpdates attendance_id={nameAndDateForRow.id} />
       ) : (
         <>
           <div className=" flex-1 overflow-hidden my-1">

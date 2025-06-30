@@ -82,8 +82,8 @@ export default function NewRequirement() {
   };
 
   return (
-    <div className="dirRtl h-full flex flex-col justify-between">
-      <div>
+    <div className=" h-full flex flex-col justify-between overflow-y-auto">
+      <div className="dirRtl ">
         <div className="flex justify-between text-end font-bold ml-4 cursor-pointer">
           <div className="pr-3 ">מסך ראשי</div>
           <div
@@ -95,15 +95,15 @@ export default function NewRequirement() {
               : " פתח הכל"}
           </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form  className="dirRtl " onSubmit={handleSubmit(onSubmit)}>
           {Object.entries(newRequirementObj).map(([key, item]) => {
             const ComponentToRender = item.component;
             return (
-              <div key={key} className=" p-2  ">
+              <div key={key} className=" p-2  " onClick={() => toggleInArray(key)}>
                 <div className="p-6 items-center rounded-2xl bg-light_blue hover:cursor-pointer ">
                   <div
                     className="font-bold flex text-xl gap-4 "
-                    onClick={() => toggleInArray(key)}
+                    
                   >
                     <Image
                       src={item.image}
@@ -113,7 +113,7 @@ export default function NewRequirement() {
                     />
                     {item.name}
                   </div>
-
+<div onClick={(e) => e.stopPropagation()} className="mt-2">
                   {expandedItem.includes(key) && (
                     <ComponentToRender
                       register={register}
@@ -121,7 +121,7 @@ export default function NewRequirement() {
                       errors={errors}
                       control={control}
                     />
-                  )}
+                  )}</div>
                 </div>
               </div>
             );

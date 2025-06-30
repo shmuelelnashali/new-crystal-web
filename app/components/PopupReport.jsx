@@ -98,13 +98,13 @@ export default function PopupReport({
     //     );
     //     setAddNewReport((prev)=>[response.data, ...prev])
     //   } catch (error) {
-    //     console.error("שגיאה ביצירת דיווח אמצעים חדש",error);    
+    //     console.error("שגיאה ביצירת דיווח אמצעים חדש",error);
     //   }
     // });
     console.log(newReport, "new");
 
     setSelectOption({});
-    setPopupReport(false); 
+    setPopupReport(false);
   };
 
   // const handelReportData = () => {

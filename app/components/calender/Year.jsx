@@ -5,7 +5,7 @@ import MonthTable from "./MonthTable";
 import FilterByYear from "./FilterByYear";
 import axios from "@/app/lib/axios";
 
-export default function Year({ missionDay, setMissionDay ,events, setEvents}) {
+export default function Year({ missionDay, setMissionDay, events, setEvents }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [evensInYear, setEvensInYear] = useState([]);
   const monthsInHebrew = [
@@ -87,7 +87,8 @@ export default function Year({ missionDay, setMissionDay ,events, setEvents}) {
               indexMonth={index}
               selectedDate={selectedDate.getFullYear()}
               evensInYear={evensInYear}
-              events={events}setEvents={setEvents}
+              events={events}
+              setEvents={setEvents}
             />
           ))}
         </div>

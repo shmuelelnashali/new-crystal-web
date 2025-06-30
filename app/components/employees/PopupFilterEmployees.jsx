@@ -11,10 +11,9 @@ export default function PopupFilterEmployees({
   filterSearch,
   setFilterPopUp,
   filterPopUp,
-formData,
-setFormData,
+  formData,
+  setFormData,
 }) {
-
   // פתיחת אפשרויות לבחירה
   const [openLabel, setOpenLabel] = useState(null);
 
@@ -27,8 +26,6 @@ setFormData,
   // להביא קודי הסכם
   const [sections, setSections] = useState([]);
 
-
-
   //   פותח אפשריות בחירה
   const handleOption = (labelName, option) => {
     setFormData((prev) => ({
@@ -38,19 +35,19 @@ setFormData,
   };
 
   // מנקה את הבחירה בלחיצה על האיקס
-  const clearOption = (labelName) => {   
-      setFormData((prev) => {
-        const updatedFormData = { ...prev };
-        delete updatedFormData[labelName];
-        return updatedFormData;
-      });
+  const clearOption = (labelName) => {
+    setFormData((prev) => {
+      const updatedFormData = { ...prev };
+      delete updatedFormData[labelName];
+      return updatedFormData;
+    });
   };
 
   // מנקה את כל הסינונים
-  const clearAll = ()=>{
-    filterSearch({})
-    setFormData({})
-    closeFilter(false)
+  const clearAll = () => {
+    filterSearch({});
+    setFormData({});
+    closeFilter(false);
     toast(`הסינון שלך בוטל`, {
       icon: "👌",
       style: {
@@ -58,10 +55,10 @@ setFormData,
         background: "#333",
         color: "#fff",
       },
-      duration: 1500
+      duration: 1500,
     });
-  }
-  
+  };
+
   // מביא את מה שביקשת לסנן
   const handleFilterData = () => {
     filterSearch(formData);
@@ -109,8 +106,6 @@ setFormData,
     }
   };
 
-
-
   // להביא את מה שצריך לסנן
   const fetchData = async (endpoint, setState, key, errorMessage) => {
     try {
@@ -124,33 +119,50 @@ setFormData,
   useEffect(() => {
     const fetchAllData = async () => {
       const endpoints = [
-        { url: "/departments", setter: setDepartments, key: "name", error: "שגיאה בהבאת מחלקות" },
-        { url: "/branches", setter: setBranches, key: "name", error: "שגיאה בהבאת ענפים" },
-        { url: "/contracts", setter: setContracts, key: "code", error: "שגיאה בהבאת קוד הסכם" },
-        { url: "/sections", setter: setSections, key: "name", error: "שגיאה בהבאת מדורים" },
+        {
+          url: "/departments",
+          setter: setDepartments,
+          key: "name",
+          error: "שגיאה בהבאת מחלקות",
+        },
+        {
+          url: "/branches",
+          setter: setBranches,
+          key: "name",
+          error: "שגיאה בהבאת ענפים",
+        },
+        {
+          url: "/contracts",
+          setter: setContracts,
+          key: "code",
+          error: "שגיאה בהבאת קוד הסכם",
+        },
+        {
+          url: "/sections",
+          setter: setSections,
+          key: "name",
+          error: "שגיאה בהבאת מדורים",
+        },
       ];
-  
+
       for (const { url, setter, key, error } of endpoints) {
         fetchData(url, setter, key, error);
       }
     };
-  
+
     fetchAllData();
   }, []);
-
-
 
   // על מה קרה הסינון
   const activeFilter = () => {
     const filterDetails = Object.entries(formData)
-      .map(([key, value]) => `${
-        getTheKeyToast(key)}: ${value}`)
+      .map(([key, value]) => `${getTheKeyToast(key)}: ${value}`)
       .join("\n");
-  
+
     toast(`סינון הופעל על\n${filterDetails}`, {
       icon: "🔍",
       style: {
-        textAlign:"right",
+        textAlign: "right",
         borderRadius: "10px",
         background: "#333",
         color: "#fff",
@@ -183,11 +195,7 @@ setFormData,
                   >
                     <CircleX
                       size={20}
-                      color={
-                        formData[labelName]
-                          ? "red"
-                          : "#a5a7aa"
-                      }
+                      color={formData[labelName] ? "red" : "#a5a7aa"}
                     />
                   </div>
                   {arrow.includes(labelName) ? (
@@ -218,13 +226,17 @@ setFormData,
 
           <div className="flex justify-between mt-6">
             <div
-              onClick={() => {clearAll()}}
+              onClick={() => {
+                clearAll();
+              }}
               className="border hover:cursor-pointer border-[#002A78] rounded-full px-6 bg-white"
             >
               ביטול
             </div>
             <div
-              onClick={() => {handleFilterData(), activeFilter()}}
+              onClick={() => {
+                handleFilterData(), activeFilter();
+              }}
               className="rounded-full hover:cursor-pointer bg-[#002A78] text-white px-6  font-thin"
             >
               החל סינון
@@ -251,5 +263,3 @@ const labels = [
 ];
 
 const arrow = ["department_id", "branch_id", "section_id", "contract_id"];
-
-

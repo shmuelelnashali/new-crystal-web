@@ -24,7 +24,7 @@ export default function PopUpDelete({
       setMessage({ status: "error", response: error.message });
     }
   };
-    
+
   const deleteNodeInClient = () => {
     try {
       setNodes((prevNodes) =>

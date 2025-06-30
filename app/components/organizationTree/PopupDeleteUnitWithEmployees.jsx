@@ -81,7 +81,6 @@ export default function PopupDeleteUnitwithPeople({
     }
   };
   console.log();
-  
 
   return (
     <div
